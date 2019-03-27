@@ -4,7 +4,7 @@
     z-index: auto;
 }
 
-/* Removes line under Addressbar
+/* Removes line under Addressbar */
 .address-top .toolbar-addressbar:after, .address-top .toolbar-mailbar:after {height: 0 !important}
 
 
@@ -46,18 +46,16 @@
 /* Addressfield
   ========================================
 */
-.addressfield {
+.addressfield, .searchfield {
     border: 0 !important;
     font-weight: 400 !important;
     outline: 0 !important;
     outline-offset: 0 !important;
-    padding: 3px 0 3px 10px !important;
+    padding: 3px 0 3px 5px !important;
     max-width: 45vw;
-    margin: 5px auto !important   
-}
-
-.addressfield .pageload .pageload-indicator::-webkit-progress-value, .color-behind-tabs-on .addressfield {
+    margin: 5px auto !important;
     background-color: transparent !important;
+    border-radius: 0 !important
 }
 
 .color-behind-tabs-on .addressfield {
