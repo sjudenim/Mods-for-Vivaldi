@@ -5,19 +5,27 @@
     position: absolute;
     z-index: 1;
     box-shadow: none !important;
-    top: -32px;
+    top: -42px;
     min-height: 42px;
     font-size: 1.1em;
     font-weight: 700;
     width: 100%;
-    opacity: 0;
     transition: .3s ease-out .5s !important;
+}
+
+.startpage .startpage-navigation::after {
+    content: '';
+    display: block;
+    position: absolute;
+    margin-top: 42px;
+    background-color: transparent;
+    height: 20px;
+    width: 100%
 }
 
 .startpage .startpage-navigation:hover {
     top: 0;
-    background: var(--colorBgAlphaHeavier);
-    backdrop-filter: blur(5px);
+    background: var(--colorBgAlpha);
     opacity: 1;
     transition: .3s ease-out .3s !important;
 }
@@ -118,7 +126,7 @@ button.button-startpage:after, .startpage .startpage-folder-navigation button:af
 
 .dials .dial.folder .folder-flap svg {width: 100% !important}
 
-.cb-image svg .folder-tab-color, .thumbnail-image svg .folder-tab-color {fill: var(--colorHighlightBg) !important}
+.cb-image svg .folder-tab-color, .thumbnail-image svg .folder-tab-color {fill: var(--colorFgFaded) !important}
 
 /* Tile titles */
 .dials .dial .button-title {display: none !important}
