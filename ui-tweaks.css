@@ -4,9 +4,6 @@
     color: white;
 }
 
-/* Font smoothing for Windows OS */
-* {text-shadow: 0 0 1px var(--colorAccentFgAlpha) !important}
-
 /* Quick commands */
 .quick-command-container {box-shadow: 0 0 10px 0 rgba(0,0,0,.6) !important}
 
@@ -47,8 +44,7 @@
 /* Puts bottom tabs under the address bar */
 #tabs-container.no-thumbs.bottom, #tabs-container.view-thumbs.bottom {
     order: -1;
-    padding-top: 4px;
-    padding-bottom: 0px;
+    padding-bottom: 0;
 }
 
 .color-behind-tabs-on .bookmark-bar, .color-behind-tabs-on .bookmark-bar button, .bookmark-bar .observer {background-color: var(--colorBg) !important}
@@ -109,6 +105,8 @@ button.button-addressfield:hover {
 /* Pageloading indicator
   ========================================
 */
+.addressfield .pageload .pageload-indicator::-webkit-progress-value {background-color: transparent !important}
+
 /* show pageload bar */ 
 .addressfield .pageload.progressing .pageload-indicator {
     position: fixed;
@@ -191,7 +189,8 @@ input[type=button], input[type=submit] {background-image: none !important}
 /* Side panel
   ========================================
 */
-h1, h2, h3, h4, h5, h6 {
+h1, h2, h3, h4, h5, h6,
+#panels .webpanel-stack .webpanel .webpanel-header h1 {
     margin-bottom: 10px !important;
     font-size: 1.2em;
     font-weight: 500 !important;
@@ -419,7 +418,7 @@ input[type=range] {background-color: var(--colorBgDarker)}
 
 input[type=range]::-webkit-slider-thumb, input[type=range]::-webkit-slider-thumb:active, input[type=range]::-webkit-slider-thumb:focus {border-width: 2px !important}
 
-/* Ddjusts the size of the side panel in the Settings page */
+/* Adjusts the size of the side panel in the Settings page */
 .vivaldi-settings .settings-sidebar .settings-navigation {min-width: 250px !important}
 
 
@@ -437,10 +436,8 @@ input[type=range]::-webkit-slider-thumb, input[type=range]::-webkit-slider-thumb
 
 .vivaldi-tree .tree-row.folder .item-count,
 .vivaldi-tree .tree-row.trash .item-count,
-.history .item-count,
-#history-panel .item-count,
-.favicon,
-.win #tabs-container .favicon,
+.history .item-count, #history-panel .item-count,
+.favicon, .win #tabs-container .favicon,
 .win #tabs-container .tab.pinned:not(.active) .favicon,
 button.fip-previous,
 button.fip-next,
