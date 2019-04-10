@@ -1,8 +1,8 @@
 setTimeout(function wait() {
-	let wrapper = document.querySelector(".toolbar-addressbar.toolbar > .extensions-wrapper");
-	let footer = document.getElementById('footer');
-	if (wrapper != null) {
-		footer.appendChild(wrapper);
+	const extWrapper = document.querySelector('.toolbar.toolbar-mainbar.toolbar-extensions.toolbar-large');
+	const statusBar = document.querySelector('.toolbar-statusbar');
+	if (extWrapper != null) {
+		statusBar.appendChild(extWrapper);
 	}
 	else {
 		setTimeout(wait, 300);
