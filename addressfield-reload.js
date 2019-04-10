@@ -1,9 +1,9 @@
 setTimeout(function wait() {
-    const adrfield = document.querySelector('.addressfield');
+    const adrField = document.querySelector('.addressfield');
     const reload = document.querySelector('.button-toolbar.reload');
     if (reload != null) {
-        adrfield.appendChild(reload);
+        adrField.appendChild(reload);
     } else {
-        setTimeout(wait, 300);
+        setTimeout(wait, 100);
     }
-}, 300);
+}, 100);
