@@ -4,7 +4,7 @@
 .startpage .startpage-navigation {
     position: absolute;
     z-index: 1;
-    box-shadow: none !important;
+    box-shadow: 0 2px 10px 0 rgba(0,0,0,0.2) !important;
     top: -42px;
     min-height: 42px;
     font-size: 1.1em;
@@ -56,7 +56,7 @@
 /* Sub-folder title and button */
 .startpage .startpage-folder-navigation button {
     background-color: transparent !important;
-    font-size: 2.5rem;
+    font-size: 2.8rem;
     font-weight: 300 !important;
     text-shadow: 0 0 10px black !important;
     box-shadow: none;
@@ -94,17 +94,12 @@ button.button-startpage:after, .startpage .startpage-folder-navigation button:af
 /* Speed Dial tiles
   ========================================
 */
-.dials {zoom: 118%}
-
 .sdwrapper .dial-columns {
     position: absolute !important;
     margin-left: -8px !important
 }
 
-.speeddial .dial {
-    width: 12vw !important;
-    height: 10.5vw !important;
-}
+.dials .dial .thumbnail {height: 95% !important}
 
 .dials .dial .thumbnail-image {
     background-color: var(--colorBgAlphaHeavy) !important;
@@ -120,7 +115,7 @@ button.button-startpage:after, .startpage .startpage-folder-navigation button:af
 }
 
 .dials .dial.folder .folder-flap {
-    top: -7px !important;
+    top: -5px !important;
     opacity: .8
 }
 
@@ -135,17 +130,17 @@ button.button-startpage:after, .startpage .startpage-folder-navigation button:af
     display: initial !important;
     background-color: var(--colorBgDarker) !important;
     opacity: .95;
-    width: 100% !important;
+    width: 100vw !important;
     height: 23px;
-    margin-top: -44px;
+    margin-top: -42px;
     border-radius: 0;
-    font-size: .85em;
+    font-size: .98em;
     color: var(--colorFg);
 }
 
 .dials .dial:not(.folder):hover .button-title {
     transform: scale(1.028,1);
-    margin-top: -38px;
+    margin-top: -36px;
     color: var(--colorFgIntense);
 }
 
@@ -153,22 +148,10 @@ button.button-startpage:after, .startpage .startpage-folder-navigation button:af
 
 .dials .dial .editable-title-container>input,
 .dials .dial .editable-title-container>input:active {
-    margin-top: -23px;
+    margin-top: -21px;
     padding-top: 2px;
     width: 12.5 !important;
     font-size: .85em;
     border-radius: 0 !important;
     border: none !important
-}
-
-/* Speed Dial buttons */
-
-.thumb-controls {
-    bottom: 28px !important;
-    right: -18px;
-}
-
-.dials .dial .close {
-    top: 5px !important;
-    right: -18px;
 }
