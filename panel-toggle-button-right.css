@@ -1,4 +1,4 @@
-.paneltogglefooter {
+.panel-clickoutside-ignore.button-toolbar.panel-toggle {
     width: 42px !important;
     opacity: .2;
     position: absolute;
@@ -6,12 +6,13 @@
     padding-top: 1px !important;
 }
 
-.paneltogglefooter:hover, .paneltogglefooter svg:hover {
+.panel-clickoutside-ignore.button-toolbar.panel-toggle:hover, .panel-clickoutside-ignore.button-toolbar.panel-toggle svg:hover {
+    background-color: var(--colorAccentBgFadedMore) !important;
     fill: var(--colorAccentFg) !important;
-    opacity: 1 !important
+    opacity: .8;
 }
 
-.paneltogglefooter.active {
+.panel-clickoutside-ignore.button-toolbar.panel-toggle.active {
     background-color: var(--colorBgDark) !important;
     fill: var(--colorHighlightBg);
     opacity: 1;
