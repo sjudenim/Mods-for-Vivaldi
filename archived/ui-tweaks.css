@@ -1,0 +1,450 @@
+/* Text selection */
+::selection {
+    background-color: var(--colorHighlightBg) !important;
+    color: white;
+}
+
+/* Font smoothing for Windows OS */
+* {text-shadow: 0 0 1px var(--colorAccentFgAlpha) !important}
+
+/* Quick commands */
+.quick-command-container {box-shadow: 0 0 10px 0 rgba(0,0,0,.6) !important}
+
+
+/* Tabs
+  ========================================
+*/
+.tabs-top:not(.mac).color-behind-tabs-on #tabs-container, .tabs-top.mac.hasfocus.color-behind-tabs-on #tabs-container {background-image: none !important}
+
+.tab-position .tab .tab-header {margin-right: 3px}
+
+#tabs-container .tab .tab-audio, .close {background-color: var(--colorBgAlpha) !important}
+
+.win #tabs-container .tab-audio, .win #tabs-container .tab.pinned:not(.active) .tab-audio {left: 4px !important}
+
+.tab-position .tab.unread {font-style: italic}
+
+.tab-position .tab .progress-indicator,
+.tab-group-indicator .tab-indicator.active,
+.tab-group-indicator .tab-indicator:hover:not(.active) {
+    background-color: var(--colorHighlightBg) !important;
+    height: 1px !important;
+}
+
+.tab-group-indicator .tab-indicator {background-color: var(--colorHighlightBgAlpha) !important}
+
+.tabs-at-edge.stacks-on .tab-strip .tab .tab-group-indicator .tab-indicator.active {height: 6px !important}
+
+#tabs-container {border: 0 !important}
+
+/* Replaces the new tab and trash icons */
+#tabs-container .newtab svg path {d: path('M15 9a1 1 0 0 1-1 1h-4v4a1 1 0 0 1-2 0v-4H4a1 1 0 0 1 0-2h4V4a1 1 0 0 1 2 0v4h4a1 1 0 0 1 1 1z')}
+
+.button-tabbar.toggle-trash svg path {d: path('m2 7c-1.105 0-2 0.895-2 2s0.895 2 2 2 2-0.895 2-2-0.895-2-2-2zm14 0c-1.105 0-2 0.895-2 2s0.895 2 2 2 2-0.895 2-2-0.895-2-2-2zm-7 0c-1.105 0-2 0.895-2 2s0.895 2 2 2 2-0.895 2-2-0.895-2-2-2z')}
+
+#tabs-container .newtab:hover, #tabs-container .toggle-trash:hover {fill: var(--colorHighlightBg) !important}
+
+/* Puts bottom tabs under the address bar */
+#tabs-container.no-thumbs.bottom, #tabs-container.view-thumbs.bottom {
+    order: -1;
+    padding-bottom: 0;
+}
+
+.color-behind-tabs-on .bookmark-bar, .color-behind-tabs-on .bookmark-bar button, .bookmark-bar .observer {background-color: var(--colorBg) !important}
+
+.color-behind-tabs-on .bookmark-bar button:hover {background-color: var(--colorBgLighter) !important}
+
+.bookmark-bar {order: -2}
+
+.toolbar.toolbar-addressbar {order: -3}
+
+.stacks-on.tabs-bottom .tab-strip .tab-group-indicator {bottom: 28px}
+
+.stacks-on.tabs-bottom .tab-strip .tab-group-indicator .tab-indicator.active {padding-top: 2px}
+
+
+/* Addressfield
+  ========================================
+*/
+.addressfield form input.url {padding-bottom: 3px !important}
+
+.addressfield .addressfield-siteinfo.certified .siteinfo-symbol,
+.addressfield .addressfield-siteinfo.secure, .addressfield .addressfield-siteinfo.certified {
+    fill: #389a2a !important;
+    background-color: transparent !important;
+}
+
+.addressfield .addressfield-siteinfo.insecure {
+    background-color: transparent !important;
+    fill: #f30 !important;
+}
+
+.siteinfo-text {display: none}
+
+.siteinfo-symbol:hover + .siteinfo-text {display: block}
+
+.drop_down:hover, .drop_down[data-selected], #mail_panel section ul li.selected {background-color: var(--colorHighlightBg) !important}
+
+.address-top .toolbar-addressbar:after, .address-top .toolbar-mailbar:after {background-color: var(--colorBgDark) !important}
+
+
+button.button-addressfield:hover {
+    background-color: transparent !important;
+    border-color: transparent !important;
+}
+
+.addressfield button.button-addressfield.input-dropdown:hover svg, .button-addressfield.reader-mode:hover svg, .button-addressfield.bookmark:hover svg .bookmark-outline {fill: var(--colorHighlightBgDark) !important}
+
+.button-addressfield.bookmark.bookmarked svg .bookmark-outline {fill: var(--colorHighlightBgDark)}
+
+.button-addressfield.bookmark svg .bookmark-animated-fill {fill: var(--colorHighlightBgAlpha)}
+
+.addressfield .pageload:not(.unstarted).progress-done {
+    opacity: 0 !important;
+    border: none !important; 
+}
+
+
+/* Pageloading indicator
+  ========================================
+*/
+.addressfield .pageload .pageload-indicator::-webkit-progress-value {background-color: transparent !important}
+
+/* show pageload bar */ 
+.addressfield .pageload.progressing .pageload-indicator {
+    position: fixed;
+    z-index: 99 !important; 
+    left: 0;
+    top: 0;
+    height: 1px;
+    width: 100vw;
+    background: transparent;
+    opacity: 1 !important;
+}
+
+/* pageload bar colors */
+.addressfield .pageload:not(.unstarted).progressing .pageload-indicator::-webkit-progress-value { 
+    background-size: 100vw;
+    background-position: 0% 0%;
+    background-color: transparent;
+    background-image: linear-gradient(to right, var(--colorHighlightBgAlpha), var(--colorBorderHighlight), var(--colorHighlightBg));
+    transition: 0.4s steps(5) 0s !important; 
+}
+
+.addressfield .pageload:not(.unstarted).progressing .pageload-indicator[value='0']::-webkit-progress-value { background-position: 0% 0% !important;}
+.addressfield .pageload:not(.unstarted).progressing .pageload-indicator[value^='1']:not([value='1']):not([value='100'])::-webkit-progress-value { background-position: 0% 10% !important;}
+.addressfield .pageload:not(.unstarted).progressing .pageload-indicator[value^='2']:not([value='2'])::-webkit-progress-value { background-position: 0% 20% !important;}
+.addressfield .pageload:not(.unstarted).progressing .pageload-indicator[value^='3']:not([value='3'])::-webkit-progress-value { background-position: 0% 30% !important;}
+.addressfield .pageload:not(.unstarted).progressing .pageload-indicator[value^='4']:not([value='4'])::-webkit-progress-value { background-position: 0% 40% !important;}
+.addressfield .pageload:not(.unstarted).progressing .pageload-indicator[value^='5']:not([value='5'])::-webkit-progress-value { background-position: 0% 50% !important;}
+.addressfield .pageload:not(.unstarted).progressing .pageload-indicator[value^='6']:not([value='6'])::-webkit-progress-value { background-position: 0% 60% !important;}
+.addressfield .pageload:not(.unstarted).progressing .pageload-indicator[value^='7']:not([value='7'])::-webkit-progress-value { background-position: 0% 70% !important;}
+.addressfield .pageload:not(.unstarted).progressing .pageload-indicator[value^='8']:not([value='8'])::-webkit-progress-value { background-position: 0% 80% !important;}
+.addressfield .pageload:not(.unstarted).progressing .pageload-indicator[value^='9']:not([value='9'])::-webkit-progress-value { background-position: 0% 90% !important;}
+.addressfield .pageload:not(.unstarted).progressing .pageload-indicator[value='100']::-webkit-progress-value { background-position: 0% 100% !important;}
+
+
+/* Toolbars
+  ========================================
+*/
+.toolbar .button-toolbar {background-color: transparent !important}
+
+._default-focus {
+    outline: transparent !important;
+    outline-offset: 0 !important
+}
+
+.urlSearch .favicon {display: inline !important}
+
+.toolbar.icons button,
+.toolbar.text button {
+    background-image: none !important;
+    background-color: var(--colorBgDark) !important;
+    border-color: var(--colorBg) !important;
+    height: 29px !important;
+    margin-top: -1px !important;
+}
+
+.toolbar.icons button:hover,
+.toolbar.text button:hover {
+    background-image: none !important;
+    background-color: var(--colorHighlightBg) !important;
+    height: 28px !important;
+    margin-top: -1px !important;
+}
+
+.sortselector {
+    font-weight: 500 !important;
+    background-color: var(--colorBg) !important;
+    border-color: var(--colorBgDark) !important;
+    border-bottom: 0 !important;
+    padding-top: 1px !important;
+}
+
+#browser .sortselector .sortselector-dropdown, .sortselector .sortselector-button {background-color: var(--colorBg) !important}
+
+input[type=button], input[type=submit] {background-image: none !important}
+
+/* Won't show horizontal menu and window buttons when no ui */
+#browser.minimal-ui:not(.tabs-top) .topmenu, #browser.minimal-ui:not(.tabs-top) .window-buttongroup {display: none !important}
+
+
+/* Side panel
+  ========================================
+*/
+h1, h2, h3, h4, h5, h6,
+#panels .webpanel-stack .webpanel .webpanel-header h1 {
+    margin-bottom: 10px !important;
+    font-size: 1.2em;
+    font-weight: 500 !important;
+    text-align: center;
+}
+
+.panel-group, #panels-container.overlay .panel-group {
+    background-color: var(--colorBgDarker) !important;
+    opacity: .98;
+}
+
+#panels-container.overlay:not(.switcher) {width: 0 !important}
+
+#switch, #panel_switch:hover, #panel_switch.off, .panel > header {
+    background-color: var(--colorBgDarker) !important;
+    box-shadow: none !important
+}
+
+#switch button {
+    opacity: .8;
+    height: 36px;
+}
+
+#switch button:hover, #switch button.active {
+    background-color: var(--colorBgDarker);
+    fill: var(--colorHighlightBg) !important;
+    border: 0 !important;
+    opacity: .7;
+}
+
+#switch .addwebpanel-wrapper > button.downloads.in-progress div.progress, #switch > button.downloads.in-progress div.progress {
+    background-color: var(--colorHighlightBg);
+    border: 1px solid var(--colorHighlightBg);
+}
+
+#switch button.webviewbtn img {
+    background: transparent !important;
+    filter: grayscale(100%) contrast(60%) invert(100%);
+}
+
+#switch button.webviewbtn.active img {
+    background: none;
+    filter: grayscale(10%) contrast(60%) invert(10%);
+}
+
+
+/* Hides webpanel suggestions */
+.webpanel-suggestions {
+    display: none;
+}
+
+/* Notes */
+.notes-cardwrapper {background-color: var(--colorBgDarker) !important}
+
+.notes svg path {
+    d: path('M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z');
+    transform: scale(.85,.85) translate(5px,5px);
+}
+
+#notes-panel .notes-editor:hover .add-attachments-wrapper button:hover, #notes-panel .notes-editor .add-attachments-wrapper label:hover {background-color: var(--colorAccentBgFadedMore) !important}
+
+#notes-panel .notes-editor .add-attachments-wrapper button.active {background-color: var(--colorHighlightBg) !important}
+
+#notes-panel .notes-editor .note.md {
+    padding: 8px !important;
+    margin: 0 !important;
+}
+
+#panels button.fullwidth.alternate:after {
+    background-image: linear-gradient(var(--colorBgDark), var(--colorBgDark)) !important;
+    border: 0;
+    border-top: 1px solid var(--colorBorder);
+}
+
+
+/* Bookmarks and History
+  ========================================
+*/
+.manager .manager-content, .manager .manager-content .toolbar-wrapper, .manager .navigation,
+.vivaldi-tree {
+    background-color: var(--colorBgAlphaHeavy) !important;
+    opacity: .9 !important;
+    backdrop-filter: blur(10px)
+}
+
+.vivaldi-tree div>div:nth-child(even),
+.manager .manager-treeview div>div:nth-child(even),
+.startpage .history .manager-content .history-tree div>div:nth-child(even) {background-color: var(--colorBgAlpha)}
+
+.manager .manager-editor {border: none !important}
+
+.panel#downloads .download-item .file, .panel#downloads .download-item .file .size {background-color: transparent}
+
+.addbookmark-cardwrapper, .downloaddialog-cardwrapper, .notes-cardwrapper {margin: 0 !important}
+
+.win .vivaldi-tree .tree-item[data-lead] {outline: 1px solid var(--colorHighlightBgAlpha) !important}
+
+.vivaldi-tree .tree-row label > img, .vivaldi-tree .tree-row label .tree-row-image {
+    border-radius: 50%;
+    filter: grayscale(0.6);
+}
+
+.vivaldi-tree .tree-row svg {
+    fill: var(--colorFgAlpha);
+    stroke: var(--colorFgFaded);
+}
+
+
+/* Find in page
+  ========================================
+*/
+/* Main bar */
+.find-in-page {
+    --baseHeight: 3.25em;
+    background-color: var(--colorBg);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    border: 1px solid var(--colorBorder);
+    border-radius: 4px;
+    height: var(--baseHeight);
+    overflow: hidden;
+    margin: 8px auto;
+    right: 0;
+    left: 0;
+    width: 0;
+}
+
+/* Nail page to the top (remove default indent) */
+#browser:not(.inner) .find-in-page + .devtools-container .webpage {
+    top: 0;
+}
+
+/* Hide "Find in Page" label */
+.find-in-page .fip-input label {
+    display: none;
+}
+
+/* Hide "Match Case" checkbox */
+.find-in-page .fip-controls label {
+    display: none;
+}
+
+/* Hide a little blue "x" on the right side of input field */
+.find-in-page .fip-input input[type=search]::-webkit-search-cancel-button {
+    display: none;
+}
+
+/* Indent on the right side of the input field (to prevent counter overlapping text) */
+/* Originally that indent is set to the "x" button that's hidden by code above so the indent should be set somewhere else */
+.find-in-page .fip-input input[type=search]::-webkit-textfield-decoration-container {
+    -webkit-margin-end: 4.5em;
+}
+
+/* Make input field big and flat */
+.find-in-page .fip-input,
+.find-in-page .fip-input input[type=search] {
+    border-radius: 0;
+    background: none;
+    box-shadow: none;
+    height: 100%;
+    border: none;
+}
+.find-in-page .fip-input input[type=search]::-webkit-search-cancel-button {
+    display: none;
+}
+
+/* Center counter */
+.find-in-page .fip-input .fip-results {
+    display: flex !important;
+    align-items: center;
+    height: 100%;
+    right: 1em;
+    top: 0;
+}
+
+/* Buttons design */
+.find-in-page .toolbar.icons button {
+    border-radius: var(--radiusRounded);
+    background: transparent !important;
+    border: none;
+}
+
+.find-in-page .fip-next svg,
+.find-in-page .fip-previous svg {
+    transform: rotate(90deg);
+}
+
+/* Separator between input field and buttons */
+.find-in-page .fip-controls::before {
+    border-left: 1px solid var(--colorFgAlpha);
+    height: calc(var(--baseHeight) * 0.6);
+    margin-right: .5em;
+    content: '';
+}
+
+
+/* Miscellaneous stuff
+  ========================================
+*/
+/* Scrollbar for internal pages */
+#browser ::-webkit-scrollbar {
+    background-color: transparent !important;
+    width: 12px !important;
+}
+
+#browser ::-webkit-scrollbar-track {background-color: transparent !important}
+
+#browser ::-webkit-scrollbar-thumb {
+    background-color: var(--colorFgAlpha) !important;
+    border: 0 !important;
+    border-radius: 1px;
+}
+
+#browser ::-webkit-scrollbar-thumb:hover,
+#browser ::-webkit-scrollbar-thumb:active {
+    background-color: var(--colorHighlightBgAlpha) !important;
+    border: 1px solid var(--colorHighlightBg) !important;
+}
+
+#browser ::-webkit-scrollbar-button {display: none !important}
+
+/* Slider */
+input[type=range] {background-color: var(--colorBgDarker)}
+
+input[type=range]::-webkit-slider-thumb, input[type=range]::-webkit-slider-thumb:active, input[type=range]::-webkit-slider-thumb:focus {border-width: 2px !important}
+
+/* Adjusts the size of the side panel in the Settings page */
+.vivaldi-settings .settings-sidebar .settings-navigation {min-width: 250px !important}
+
+
+/* Hiding stuff
+  ========================================
+*/
+
+.color-behind-tabs-on .addressfield:focus-within,
+.color-behind-tabs-on .searchfield:focus-within,
+.addressfield:focus-within,
+.searchfield:focus-within,
+.toolbar.icons input[type=search] {
+    box-shadow: none !important;
+}
+
+.vivaldi-tree .tree-row.folder .item-count,
+.history .item-count, #history-panel .item-count,
+.favicon, .win #tabs-container .favicon,
+.win #tabs-container .tab.pinned:not(.active) .favicon,
+button.fip-previous,
+button.fip-next,
+button.fip-close,
+#panel_switch svg polygon,
+input::-webkit-search-cancel-button {
+    display: none;
+}
+
+#fip-input-text::-webkit-search-cancel-button {appearance: none !important}

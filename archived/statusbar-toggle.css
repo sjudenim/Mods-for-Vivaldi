@@ -1,0 +1,155 @@
+/* Toggle button
+  ========================================
+*/
+#toolsorder {
+    position: absolute;
+    right: calc(50vw - 22.5vw - 43px ); 
+}
+
+#tools svg path {d: path('M19 11.512L18.438 11 13 15.971 7.563 11 7 11.512 13 17z')}
+
+#tools {
+    opacity: .3;
+    width: 42px !important;
+    height: 38px;
+    margin-top: 0 !important;
+}
+
+#tools:hover,
+.button-toolbar-small:hover,
+#tools.active:hover {
+    background-color: var(--colorAccentBgFadedMore) !important;
+    fill: var(--colorAccentFg) !important;
+    opacity: .7;
+}
+
+#tools.active {
+    background-color: var(--colorBgDark) !important;
+    fill: var(--colorHighlightBg);
+    opacity: 1;
+}
+
+
+/* Statusbar
+  ========================================
+*/
+#droptool {
+    position: absolute;
+    z-index: 1;
+    right: 0;
+}
+
+#footer {
+    --baseHeight: 3.25em;
+    background-color: var(--colorBgDark) !important;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
+    top: 2px;
+    padding: 0 4px;
+    height: var(--baseHeight) !important;
+    border-radius: 4px;
+}
+
+#footer button {
+    margin: auto;
+    height: var(--baseHeight) !important
+}
+
+#footer .zoom-control {
+    border-left: 1px solid var(--colorFgAlpha) !important;
+    border-right: 1px solid var(--colorFgAlpha) !important;
+    height: calc(var(--baseHeight) * 0.6);
+    margin-top: calc(var(--baseHeight) / 5);
+}
+
+#footer .zoom-control > span input[type=button] {border: none}
+
+
+/* Drop down menu
+  ========================================
+*/
+.callout {
+    bottom: unset;
+    margin-top: 10px;
+    background-color: var(--colorAccentBg);
+}
+
+.callout::before, .callout::after {display: none}
+
+.button-toolbar-small.popup-active:before, .button-toolbar-small.popup-active:after {rotate: 0deg !important}
+
+.button-toolbar-small.popup-active:before, .button-toolbar-small.popup-active:after {
+    content: "";
+    position: absolute;
+    top: 27px;
+    left: 15px;
+    margin-left: -10px;
+    border: 10px solid hsla(0, 0%, 0%, 0);
+    border-bottom-color: var(--colorBgLight);
+    pointer-events: none;
+    z-index: 1;
+    animation: dropfade 100ms cubic-bezier(0.2, 0.9, 0.6, 1);
+    rotate: 180deg;
+}
+
+
+
+/* Info toggle
+  ========================================
+*/
+
+#toggle-links svg path {d: path('M4.53 13.649a5.388 5.388 0 0 0-1.526 3.958 5.417 5.417 0 0 0 1.808 3.847l.066.06a5.746 5.746 0 0 0 4.082 1.482 5.721 5.721 0 0 0 3.962-1.752l3.229-3.361a.499.499 0 0 0-.027-.722l-2.164-1.958-1.781 1.854.602.545-1.806 1.88c-1.141 1.188-3.057 1.251-4.281.145l-.065-.06a2.878 2.878 0 0 1-.15-4.154l1.807-1.879.602.546 1.782-1.855-2.166-1.961a.539.539 0 0 0-.745.025l-3.229 3.36zm5.249-5.46a.498.498 0 0 0 .027.721l2.166 1.959 1.85-1.925-.603-.545 1.805-1.878c1.142-1.188 3.06-1.251 4.282-.145l.066.06a2.876 2.876 0 0 1 .146 4.154l-1.804 1.878-.604-.545-1.85 1.926 2.167 1.96a.536.536 0 0 0 .743-.023l3.297-3.432a5.398 5.398 0 0 0-.283-7.807l-.066-.06a5.753 5.753 0 0 0-4.078-1.483 5.73 5.73 0 0 0-3.966 1.754L9.779 8.189zm-.704 7.105a1.196 1.196 0 0 0 .062 1.726c.509.46 1.305.434 1.779-.06l.538-.56 1.781-1.854 1.303-1.357 1.85-1.925.538-.559a1.196 1.196 0 0 0-.063-1.727 1.286 1.286 0 0 0-1.779.061l-.537.559-1.851 1.927-1.303 1.356-1.78 1.853-.538.56z')}
+
+#toggle-links {opacity: .6}
+
+#toggle-links:hover,
+#toggle-links.active {opacity: .9}
+
+#status_info {display: none}
+
+#footer #status_info {margin-top: 9px}
+
+#footer #status_info span {color: var(--colorHighlightBg)}
+
+#footer.on #status_info.visible {
+    display: flex;
+    max-width: auto;
+}
+
+
+/* Statusbar order
+  ========================================
+*/
+
+#divID {order: -1}
+
+#footer .statusbar-center {order: 1}
+
+#footer .statusbar-left {order: 2}
+
+#footer .statusbar-right {order: 3}
+
+.extensions-wrapper {order: 5}
+
+
+/* Extension toggle and wrapper
+  ========================================
+*/
+#ext-toggle:hover,
+#ext-toggle.active:hover {
+    background-color: var(--colorAccentBgFadedMore) !important;
+    fill: var(--colorAccentFg);
+    opacity: 1;
+    margin-right: 10px
+
+}
+
+#ext-toggle.active {
+    background-color: var(--colorAccentBg) !important;
+    fill: var(--colorHighlightBg);
+}
+
+.extensions-wrapper {overflow: visible !important}
+
+.toolbar-addressbar .button-toolbar.browserAction-button {width: 28px !important}
+
+.toolbar .button-group:not(.button-dropdown) > button:last-of-type, .toolbar .button-dropdown:not(.button-dropdown) > button:last-of-type {border-radius: 0 !important}

@@ -1,0 +1,19 @@
+.paneltogglefooter {
+    width: 42px !important;
+    opacity: .2;
+    position: absolute;
+    right: 140px;
+    padding-top: 1px !important;
+}
+
+.paneltogglefooter:hover, .paneltogglefooter svg:hover {
+    background-color: var(--colorAccentBgFadedMore) !important;
+    fill: var(--colorAccentFg) !important;
+    opacity: .8;
+}
+
+.paneltogglefooter.active {
+    background-color: var(--colorBgDark) !important;
+    fill: var(--colorHighlightBg);
+    opacity: 1;
+}
