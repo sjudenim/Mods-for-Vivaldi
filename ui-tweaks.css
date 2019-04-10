@@ -4,6 +4,9 @@
     color: white;
 }
 
+/* Font smoothing for Windows OS */
+* {text-shadow: 0 0 1px var(--colorAccentFgAlpha) !important}
+
 /* Quick commands */
 .quick-command-container {box-shadow: 0 0 10px 0 rgba(0,0,0,.6) !important}
 
@@ -395,9 +398,7 @@ h1, h2, h3, h4, h5, h6,
     width: 12px !important;
 }
 
-#browser ::-webkit-scrollbar-track {
-    background-color: transparent !important;
-}
+#browser ::-webkit-scrollbar-track {background-color: transparent !important}
 
 #browser ::-webkit-scrollbar-thumb {
     background-color: var(--colorFgAlpha) !important;
@@ -435,7 +436,6 @@ input[type=range]::-webkit-slider-thumb, input[type=range]::-webkit-slider-thumb
 }
 
 .vivaldi-tree .tree-row.folder .item-count,
-.vivaldi-tree .tree-row.trash .item-count,
 .history .item-count, #history-panel .item-count,
 .favicon, .win #tabs-container .favicon,
 .win #tabs-container .tab.pinned:not(.active) .favicon,
