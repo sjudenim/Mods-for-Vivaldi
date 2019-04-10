@@ -87,6 +87,7 @@
             #zeig.status-info.visible {
                 display: inline-block;
             }
+            #statusContainer > div > div.toolbar.toolbar-mainbar.toolbar-extensions.toolbar-large > div.button-narrow.button-toolbar svg path {d: path('M12 6v2h2V6zm0 6v2h2v-2zm0 6v2h2v-2z')}
         `;
         document.getElementsByTagName('head')[0].appendChild(style);
     };
