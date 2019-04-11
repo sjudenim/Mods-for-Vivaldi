@@ -5,6 +5,6 @@ setTimeout(function wait() {
 		statusBar.appendChild(extWrapper);
 	}
 	else {
-		setTimeout(wait, 300);
+		setTimeout(wait, 600);
 	}
-}, 300);
+}, 600);
