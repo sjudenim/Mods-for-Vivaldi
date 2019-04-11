@@ -74,7 +74,10 @@
 /* Toolbar buttons
   ========================================
 */
-button {border-color: transparent !important}
+button {
+    box-shadow: none !important;
+    border-color: transparent !important; 
+}
 
 .toolbar.toolbar-noflex {left: 46px}
 
@@ -112,50 +115,6 @@ button {border-color: transparent !important}
 .toolbar .button-toolbar.reload:hover {
     background-color: transparent !important;
     fill: var(--colorHighlightBg) !important
-}
-
-
-/* Window control button group
-  ========================================
-*/
-#browser.win .window-buttongroup {
-	top: 0;
-	right: 0;
-	z-index: 999;
-}
-
-#browser.win .window-buttongroup {right: 0 !important}
-
-#browser.win .window-buttongroup button {
-    height: 36px !important;
-    width: 46px !important;
-    opacity: .7;
-}
-
-#browser.win .window-buttongroup button:hover {
-    background-color: var(--colorAccentBgFadedMore) !important;
-    fill: var(--colorAccentFg) !important;
-}
-
-#browser.win .window-buttongroup button.window-minimize>svg path {d: path('M0 5h10v1H0z')}
-
-#browser.win .window-buttongroup button.window-maximize>svg path,
-#browser.win .window-buttongroup button.window-restore>svg path {d: path('M9 1v8H1V1h8m1-1H0v10h10V0z')}
-
-.maximized#browser.win .window-buttongroup button.window-close, .fullscreen#browser.win .window-buttongroup button.window-close {padding-right: 0 !important}
-
-#browser.win .window-buttongroup button.window-close svg path {d: path('M.71611758 0L0 .71414475 4.2868415 4.9990135.00197275 9.2838828l.71414483.7141446L5.0009863 5.7131583 9.2858555 10 10 9.2838828 5.715131 4.9990135 10 .71414475 9.2858555 0 5.0009863 4.2848688z')}
-
-#browser.win .window-buttongroup button.window-close, #browser.win:not(.win10) .window-buttongroup .window-close {
-    background-color: transparent !important;
-    fill: var(--colorFg) !important;
-    margin-right: -2px !important;
-    opacity: 1 !important
-}
-
-#browser.win .window-buttongroup button.window-close:hover, #browser.win:not(.win10) .window-buttongroup .window-close:hover {
-    background-color: var(--colorHighlightBg) !important;
-    fill: white !important
 }
 
 
