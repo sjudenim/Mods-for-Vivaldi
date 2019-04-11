@@ -40,7 +40,7 @@
 /* Replaces the new tab and trash icons */
 #tabs-container .newtab svg path {d: path('M15 9a1 1 0 0 1-1 1h-4v4a1 1 0 0 1-2 0v-4H4a1 1 0 0 1 0-2h4V4a1 1 0 0 1 2 0v4h4a1 1 0 0 1 1 1z')}
 
-.button-tabbar.toggle-trash svg path {d: path('m2 7c-1.105 0-2 0.895-2 2s0.895 2 2 2 2-0.895 2-2-0.895-2-2-2zm14 0c-1.105 0-2 0.895-2 2s0.895 2 2 2 2-0.895 2-2-0.895-2-2-2zm-7 0c-1.105 0-2 0.895-2 2s0.895 2 2 2 2-0.895 2-2-0.895-2-2-2z')}
+#tabs-container > div.toolbar.toolbar-tabbar.toolbar-noflex.sync-and-trash-container svg path {d: path('m2 7c-1.105 0-2 0.895-2 2s0.895 2 2 2 2-0.895 2-2-0.895-2-2-2zm14 0c-1.105 0-2 0.895-2 2s0.895 2 2 2 2-0.895 2-2-0.895-2-2-2zm-7 0c-1.105 0-2 0.895-2 2s0.895 2 2 2 2-0.895 2-2-0.895-2-2-2z')}
 
 #tabs-container .newtab:hover, #tabs-container .toggle-trash:hover {fill: var(--colorHighlightBg) !important}
 
@@ -192,36 +192,27 @@ input[type=button], input[type=submit] {background-image: none !important}
 /* Side panel
   ========================================
 */
-h1, h2, h3, h4, h5, h6,
-#panels .webpanel-stack .webpanel .webpanel-header h1 {
-    margin-bottom: 10px !important;
-    font-size: 1.2em;
-    font-weight: 500 !important;
-    text-align: center;
-}
+h1, h2, h3, h4, h5, h6, #panels .webpanel-stack .webpanel .webpanel-header h1 {display: none}
+
+.panel > header {background-color: var(--colorBgIntense) !important}
 
 .panel-group, #panels-container.overlay .panel-group {
-    background-color: var(--colorBgDarker) !important;
+    background-color: var(--colorBg) !important;
     opacity: .98;
 }
 
 #panels-container.overlay:not(.switcher) {width: 0 !important}
 
-#switch, #panel_switch:hover, #panel_switch.off, .panel > header {
-    background-color: var(--colorBgDarker) !important;
+#switch {
+    background-color: var(--colorBg) !important;
     box-shadow: none !important
 }
 
-#switch button {
-    opacity: .8;
-    height: 36px;
-}
-
 #switch button:hover, #switch button.active {
-    background-color: var(--colorBgDarker);
+    background-color: var(--colorBgIntense) !important;
     fill: var(--colorHighlightBg) !important;
     border: 0 !important;
-    opacity: .7;
+
 }
 
 #switch .addwebpanel-wrapper > button.downloads.in-progress div.progress, #switch > button.downloads.in-progress div.progress {
@@ -246,8 +237,6 @@ h1, h2, h3, h4, h5, h6,
 }
 
 /* Notes */
-.notes-cardwrapper {background-color: var(--colorBgDarker) !important}
-
 .notes svg path {
     d: path('M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z');
     transform: scale(.85,.85) translate(5px,5px);
@@ -388,6 +377,49 @@ h1, h2, h3, h4, h5, h6,
     content: '';
 }
 
+/* Window control button group
+  ========================================
+*/
+#browser.win .window-buttongroup {
+	top: 0;
+	right: 0;
+	z-index: 999;
+}
+
+#browser.win .window-buttongroup {right: 0 !important}
+
+#browser.win .window-buttongroup button {
+    height: 36px !important;
+    width: 46px !important;
+    opacity: .7;
+}
+
+#browser.win .window-buttongroup button:hover {
+    background-color: var(--colorAccentBgFadedMore) !important;
+    fill: var(--colorAccentFg) !important;
+}
+
+#browser.win .window-buttongroup button.window-minimize>svg path {d: path('M0 5h10v1H0z')}
+
+#browser.win .window-buttongroup button.window-maximize>svg path,
+#browser.win .window-buttongroup button.window-restore>svg path {d: path('M9 1v8H1V1h8m1-1H0v10h10V0z')}
+
+.maximized#browser.win .window-buttongroup button.window-close, .fullscreen#browser.win .window-buttongroup button.window-close {padding-right: 0 !important}
+
+#browser.win .window-buttongroup button.window-close svg path {d: path('M.71611758 0L0 .71414475 4.2868415 4.9990135.00197275 9.2838828l.71414483.7141446L5.0009863 5.7131583 9.2858555 10 10 9.2838828 5.715131 4.9990135 10 .71414475 9.2858555 0 5.0009863 4.2848688z')}
+
+#browser.win .window-buttongroup button.window-close, #browser.win:not(.win10) .window-buttongroup .window-close {
+    background-color: transparent !important;
+    fill: var(--colorFg) !important;
+    margin-right: -2px !important;
+    opacity: 1 !important
+}
+
+#browser.win .window-buttongroup button.window-close:hover, #browser.win:not(.win10) .window-buttongroup .window-close:hover {
+    background-color: var(--colorHighlightBg) !important;
+    fill: white !important
+}
+
 
 /* Miscellaneous stuff
   ========================================
@@ -395,10 +427,14 @@ h1, h2, h3, h4, h5, h6,
 /* Scrollbar for internal pages */
 #browser ::-webkit-scrollbar {
     background-color: transparent !important;
+    border: 0 !important;
     width: 12px !important;
 }
 
-#browser ::-webkit-scrollbar-track {background-color: transparent !important}
+#browser ::-webkit-scrollbar-track {
+    background-color: transparent !important;
+    border: 0 !important
+}
 
 #browser ::-webkit-scrollbar-thumb {
     background-color: var(--colorFgAlpha) !important;
@@ -442,7 +478,6 @@ input[type=range]::-webkit-slider-thumb, input[type=range]::-webkit-slider-thumb
 button.fip-previous,
 button.fip-next,
 button.fip-close,
-#panel_switch svg polygon,
 input::-webkit-search-cancel-button {
     display: none;
 }
