@@ -4,6 +4,6 @@ setTimeout(function wait() {
     if (reload != null) {
         adrField.appendChild(reload);
     } else {
-        setTimeout(wait, 100);
+        setTimeout(wait, 300);
     }
-}, 100);
+}, 300);
