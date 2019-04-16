@@ -4,6 +4,6 @@ setTimeout(function wait() {
     if (menu != null) {
         adrBar.insertBefore(menu, adrBar.firstChild);
     } else {
-        setTimeout(wait, 100);
+        setTimeout(wait, 300);
     }
-}, 100);
+}, 300);
