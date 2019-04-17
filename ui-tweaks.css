@@ -1,579 +1,577 @@
 /* Text selection */
 ::selection {
-    background-color: var(--colorHighlightBg) !important;
-    color: white
-  }
-  
-  /* Font smoothing for Windows OS */
-  * {
-    text-shadow: 0 0 1px var(--colorAccentFgAlpha) !important
-  }
-  
-  /* Quick commands */
-  .quick-command-container {
-    box-shadow: 0 0 10px 0 rgba(0, 0, 0, .6) !important
-  }
-  
-  /* Tabs
-    ----------------------------
-  */
-  #tabs-container .newtab svg path {
-    d: path('M18.501 12h-4.252c-.151 0-.248-.099-.248-.251V7.5c0-.298-.197-.5-.5-.5H12.5c-.3 0-.5.203-.5.5v4.249c0 .153-.098.251-.25.251H7.5c-.297 0-.5.2-.5.5v.998c0 .306.203.503.5.503h4.249c.152 0 .251.094.251.248v4.252c0 .297.2.499.5.499h1.001c.303 0 .5-.202.5-.499v-4.252c0-.154.097-.248.248-.248h4.252c.297 0 .499-.197.499-.503V12.5c0-.3-.202-.5-.499-.5z')
-  }
-  
-  #tabs-container > div.toolbar.toolbar-tabbar.toolbar-noflex.sync-and-trash-container svg path {
-    d: path('M6 11.25A1.75 1.75 0 0 0 4.25 13 1.75 1.75 0 0 0 6 14.75 1.75 1.75 0 0 0 7.75 13 1.75 1.75 0 0 0 6 11.25zm7 0A1.75 1.75 0 0 0 11.25 13 1.75 1.75 0 0 0 13 14.75 1.75 1.75 0 0 0 14.75 13 1.75 1.75 0 0 0 13 11.25zm7 0A1.75 1.75 0 0 0 18.25 13 1.75 1.75 0 0 0 20 14.75 1.75 1.75 0 0 0 21.75 13 1.75 1.75 0 0 0 20 11.25z')
-  }
-  
-  #tabs-container .newtab:hover,
-  #tabs-container > div.toolbar.toolbar-tabbar.toolbar-noflex.sync-and-trash-container > div:hover {
-    background-color: transparent !important
-  }
-  
-  .tabs-top:not(.mac).color-behind-tabs-on #tabs-container,
-  .tabs-top.mac.hasfocus.color-behind-tabs-on #tabs-container {
-    background-image: none !important
-  }
-  
-  .tab-position .tab .tab-header {
-    margin-right: 3px
-  }
-  
-  #tabs-container .tab .tab-audio,
-  .close {
-    background-color: var(--colorBgAlpha) !important
-  }
-  
-  .win #tabs-container .tab-audio,
-  .win #tabs-container .tab.pinned:not(.active) .tab-audio {
-    left: 4px !important
-  }
-  
-  .tab-position .tab.unread {
-    font-style: italic
-  }
-  
-  .tab-position .tab .progress-indicator,
-  .tab-group-indicator .tab-indicator.active,
-  .tab-group-indicator .tab-indicator:hover:not(.active) {
-    background-color: var(--colorHighlightBg) !important;
-    height: 1px !important
-  }
-  
-  .tab-group-indicator .tab-indicator {
-    background-color: var(--colorHighlightBgAlpha) !important
-  }
-  
-  .tabs-at-edge.stacks-on .tab-strip .tab .tab-group-indicator .tab-indicator.active {
-    height: 6px !important
-  }
-  
-  #tabs-container {
-    border: 0 !important
-  }
-  
-  #tabs-container .newtab:hover,
-  #tabs-container .toggle-trash:hover {
-    fill: var(--colorHighlightBg) !important
-  }
-  
-  /* Puts bottom tabs under the address bar */
-  #tabs-container.no-thumbs.bottom,
-  #tabs-container.view-thumbs.bottom {
-    order: -1;
-    padding-bottom: 0
-  }
-  
-  .color-behind-tabs-on .bookmark-bar,
-  .color-behind-tabs-on .bookmark-bar button,
-  .bookmark-bar .observer {
-    background-color: var(--colorBg) !important
-  }
-  
-  .color-behind-tabs-on .bookmark-bar button:hover {
-    background-color: var(--colorBgLighter) !important
-  }
-  
-  .bookmark-bar {
-    order: -2
-  }
-  
-  .toolbar.toolbar-addressbar {
-    order: -3;
-    height: 34px
-  }
-  
-  .stacks-on.tabs-bottom .tab-strip .tab-group-indicator {
-    bottom: 28px
-  }
-  
-  .stacks-on.tabs-bottom .tab-strip .tab-group-indicator .tab-indicator.active {
-    padding-top: 2px
-  }
-  
-  /* Addressfield
-    ----------------------------
-  */
-  .addressfield form input.url {
-    padding-bottom: 3px !important
-  }
-  
-  .addressfield .addressfield-siteinfo.certified .siteinfo-symbol,
-  .addressfield .addressfield-siteinfo.secure,
-  .addressfield .addressfield-siteinfo.certified {
-    fill: #389a2a !important;
-    background-color: transparent !important
-  }
-  
-  .addressfield .addressfield-siteinfo.insecure {
-    background-color: transparent !important;
-    fill: #f30 !important
-  }
-  
-  .siteinfo-text {
-    display: none
-  }
-  
-  .siteinfo-symbol:hover+.siteinfo-text {
-    display: block
-  }
-  
-  .drop_down:hover,
-  .drop_down[data-selected],
-  #mail_panel section ul li.selected {
-    background-color: var(--colorHighlightBg) !important
-  }
-  
-  .address-top .toolbar-addressbar:after,
-  .address-top .toolbar-mailbar:after {
-    background-color: var(--colorBgDark) !important
-  }
-  
-  
-  button.button-addressfield:hover {
-    background-color: transparent !important;
-    border-color: transparent !important
-  }
-  
-  .addressfield button.button-addressfield.input-dropdown:hover svg,
-  .button-addressfield.reader-mode:hover svg,
-  .button-addressfield.bookmark:hover svg .bookmark-outline {
-    fill: var(--colorHighlightBgDark) !important
-  }
-  
-  .button-addressfield.bookmark.bookmarked svg .bookmark-outline {
-    fill: var(--colorHighlightBgDark)
-  }
-  
-  .button-addressfield.bookmark svg .bookmark-animated-fill {
-    fill: var(--colorHighlightBgAlpha)
-  }
-  
-  .addressfield .pageload:not(.unstarted).progress-done {
-    opacity: 0 !important;
-    border: none !important
-  }
-  
-  
-  /* Pageloading indicator
-    ----------------------------
-  */
-  .addressfield .pageload .pageload-indicator::-webkit-progress-value {
-    background-color: transparent !important
-  }
-  
-  /* show pageload bar */
-  .addressfield .pageload.progressing .pageload-indicator {
-    position: fixed;
-    z-index: 99 !important;
-    left: 0;
-    top: 0;
-    height: 1px;
-    width: 100vw;
-    background: transparent;
-    opacity: 1 !important
-  }
-  
-  /* pageload bar colors */
-  .addressfield .pageload:not(.unstarted).progressing .pageload-indicator::-webkit-progress-value {
-    background-size: 100vw;
-    background-position: 0% 0%;
-    background-color: transparent;
-    background-image: linear-gradient(to right, var(--colorHighlightBgAlpha), var(--colorBorderHighlight), var(--colorHighlightBg));
-    transition: 0.4s steps(5) 0s !important
-  }
-  
-  .addressfield .pageload:not(.unstarted).progressing .pageload-indicator[value='0']::-webkit-progress-value {
-    background-position: 0% 0% !important;
-  }
-  
-  .addressfield .pageload:not(.unstarted).progressing .pageload-indicator[value^='1']:not([value='1']):not([value='100'])::-webkit-progress-value {
-    background-position: 0% 10% !important;
-  }
-  
-  .addressfield .pageload:not(.unstarted).progressing .pageload-indicator[value^='2']:not([value='2'])::-webkit-progress-value {
-    background-position: 0% 20% !important;
-  }
-  
-  .addressfield .pageload:not(.unstarted).progressing .pageload-indicator[value^='3']:not([value='3'])::-webkit-progress-value {
-    background-position: 0% 30% !important;
-  }
-  
-  .addressfield .pageload:not(.unstarted).progressing .pageload-indicator[value^='4']:not([value='4'])::-webkit-progress-value {
-    background-position: 0% 40% !important;
-  }
-  
-  .addressfield .pageload:not(.unstarted).progressing .pageload-indicator[value^='5']:not([value='5'])::-webkit-progress-value {
-    background-position: 0% 50% !important;
-  }
-  
-  .addressfield .pageload:not(.unstarted).progressing .pageload-indicator[value^='6']:not([value='6'])::-webkit-progress-value {
-    background-position: 0% 60% !important;
-  }
-  
-  .addressfield .pageload:not(.unstarted).progressing .pageload-indicator[value^='7']:not([value='7'])::-webkit-progress-value {
-    background-position: 0% 70% !important;
-  }
-  
-  .addressfield .pageload:not(.unstarted).progressing .pageload-indicator[value^='8']:not([value='8'])::-webkit-progress-value {
-    background-position: 0% 80% !important;
-  }
-  
-  .addressfield .pageload:not(.unstarted).progressing .pageload-indicator[value^='9']:not([value='9'])::-webkit-progress-value {
-    background-position: 0% 90% !important;
-  }
-  
-  .addressfield .pageload:not(.unstarted).progressing .pageload-indicator[value='100']::-webkit-progress-value {
-    background-position: 0% 100% !important;
-  }
-  
-  /* Toolbars
-    ----------------------------
-  */
-  .toolbar .button-toolbar {
-    background-color: transparent !important
-  }
-  
-  ._default-focus {
-    outline: transparent !important;
-    outline-offset: 0 !important
-  }
-  
-  .urlSearch .favicon {
-    display: inline !important
-  }
-  
-  .toolbar.icons button,
-  .toolbar.text button {
-    background-image: none !important;
-    background-color: var(--colorBgDark) !important;
-    border-color: var(--colorBg) !important;
-    height: 29px !important;
-    margin-top: -1px !important
-  }
-  
-  .toolbar.icons button:hover,
-  .toolbar.text button:hover {
-    background-image: none !important;
-    background-color: var(--colorHighlightBg) !important;
-    height: 28px !important;
-    margin-top: -1px !important
-  }
-  
-  .sortselector {
-    font-weight: 500 !important;
-    background-color: var(--colorBg) !important;
-    border-color: var(--colorBgDark) !important;
-    border-bottom: 0 !important;
-    padding-top: 1px !important
-  }
-  
-  #browser .sortselector .sortselector-dropdown,
-  .sortselector .sortselector-button {
-    background-color: var(--colorBg) !important
-  }
-  
-  input[type=button],
-  input[type=submit] {
-    background-image: none !important
-  }
-  
-  /* Won't show horizontal menu and window buttons when no ui */
-  #browser.minimal-ui:not(.tabs-top) .topmenu,
-  #browser.minimal-ui:not(.tabs-top) .window-buttongroup {
-    display: none !important
-  }
-  
-  /* Side panel
-    ----------------------------
-  */
-  h1, h2, h3, h4, h5, h6,
-  #panels .webpanel-stack .webpanel .webpanel-header h1 {
-    display: none
-  }
-  
-  .panel>header {
-    background-color: var(--colorBgIntense) !important
-  }
-  
-  .panel-group,
-  #panels-container.overlay .panel-group {
-    background-color: var(--colorBg) !important;
-    opacity: .98
-  }
-  
-  #panels-container.overlay:not(.switcher) {
-    width: 0 !important
-  }
-  
-  #switch {
-    background-color: var(--colorBg) !important;
-    box-shadow: none !important;
-    border: 0 !important
-  }
-  
-  #switch button:hover {
-    background-color: var(--colorAccentBgFadedMore) !important;
-    fill: var(--colorAccentFg);
-    opacity: .8;
-  }
-  
-  #switch button.active {
-    background-color: var(--colorBgIntense) !important;
-    fill: var(--colorHighlightBg);
-  }
-  
-  #switch .addwebpanel-wrapper>button.downloads.in-progress div.progress,
-  #switch>button.downloads.in-progress div.progress {
-    background-color: var(--colorHighlightBg);
-    border: 1px solid var(--colorHighlightBg)
-  }
-  
-  #switch button.webviewbtn img {
-    background: transparent !important;
-    filter: grayscale(100%) contrast(60%) invert(100%)
-  }
-  
-  #switch button.webviewbtn.active img {
-    background: none;
-    filter: grayscale(10%) contrast(60%) invert(10%)
-  }
-  
-  /* Hides webpanel suggestions */
-  .webpanel-suggestions {
-    display: none
-  }
-  
-  /* Notes
-    ----------------------------
-  */
-  .notes svg path {
-    d: path('M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z');
-    transform: scale(.85, .85) translate(5px, 5px)
-  }
-  
-  #notes-panel .notes-editor:hover .add-attachments-wrapper button:hover,
-  #notes-panel .notes-editor .add-attachments-wrapper label:hover {
-    background-color: var(--colorAccentBgFadedMore) !important
-  }
-  
-  #notes-panel .notes-editor .add-attachments-wrapper button.active {
-    background-color: var(--colorHighlightBg) !important
-  }
-  
-  #notes-panel .notes-editor .note.md {
-    padding: 8px !important;
-    margin: 0 !important
-  }
-  
-  #panels button.fullwidth.alternate:after {
-    background-image: linear-gradient(var(--colorBgDark), var(--colorBgDark)) !important;
-    border: 0;
-    border-top: 1px solid var(--colorBorder)
-  }
-  
-  /* Bookmarks and History
-    ----------------------------
-  */
-  .manager .manager-content,
-  .manager .manager-content .toolbar-wrapper,
-  .manager .navigation,
-  .vivaldi-tree {
-    background-color: var(--colorBgAlphaHeavy) !important;
-    opacity: .9 !important;
-    backdrop-filter: blur(10px)
-  }
-  
-  .vivaldi-tree div>div:nth-child(even),
-  .manager .manager-treeview div>div:nth-child(even),
-  .startpage .history .manager-content .history-tree div>div:nth-child(even) {
-    background-color: var(--colorBgAlpha)
-  }
-  
-  .manager .manager-editor {
-    border: none !important
-  }
-  
-  .panel#downloads .download-item .file,
-  .panel#downloads .download-item .file .size {
-    background-color: transparent
-  }
-  
-  .addbookmark-cardwrapper,
-  .downloaddialog-cardwrapper,
-  .notes-cardwrapper {
-    margin: 0 !important
-  }
-  
-  .win .vivaldi-tree .tree-item[data-lead] {
-    outline: 1px solid var(--colorHighlightBgAlpha) !important
-  }
-  
-  .vivaldi-tree .tree-row label>img,
-  .vivaldi-tree .tree-row label .tree-row-image {
-    border-radius: 50%;
-    filter: grayscale(0.6)
-  }
-  
-  .vivaldi-tree .tree-row svg {
-    fill: var(--colorFgAlpha);
-    stroke: var(--colorFgFaded)
-  }
-  
-  /* Window control button group
-    ----------------------------
-  */
-  #browser.win .window-buttongroup {
-    top: 0;
-    right: 0;
-    z-index: 999
-  }
-  
-  #browser.win .window-buttongroup {
-    right: 0 !important
-  }
-  
-  #browser.win .window-buttongroup button {
-    height: 34px !important;
-    width: 44px !important;
-    opacity: .7
-  }
-  
-  #browser.win .window-buttongroup button:hover {
-    background-color: var(--colorAccentBgFadedMore) !important;
-    fill: var(--colorAccentFg) !important
-  }
-  
-  #browser.win .window-buttongroup button.window-minimize>svg path {
-    d: path('M0 5h10v1H0z')
-  }
-  
-  #browser.win .window-buttongroup button.window-maximize>svg path,
-  #browser.win .window-buttongroup button.window-restore>svg path {
-    d: path('M9 1v8H1V1h8m1-1H0v10h10V0z')
-  }
-  
-  .maximized#browser.win .window-buttongroup button.window-close,
-  .fullscreen#browser.win .window-buttongroup button.window-close {
-    padding-right: 0 !important
-  }
-  
-  #browser.win .window-buttongroup button.window-close svg path {
-    d: path('M.71611758 0L0 .71414475 4.2868415 4.9990135.00197275 9.2838828l.71414483.7141446L5.0009863 5.7131583 9.2858555 10 10 9.2838828 5.715131 4.9990135 10 .71414475 9.2858555 0 5.0009863 4.2848688z')
-  }
-  
-  #browser.win .window-buttongroup button.window-close,
-  #browser.win:not(.win10) .window-buttongroup .window-close {
-    background-color: transparent !important;
-    fill: var(--colorFg) !important;
-    margin-right: -2px !important;
-    opacity: 1 !important
-  }
-  
-  #browser.win .window-buttongroup button.window-close:hover,
-  #browser.win:not(.win10) .window-buttongroup .window-close:hover {
-    background-color: var(--colorHighlightBg) !important;
-    fill: white !important
-  }
-  
-  /* Miscellaneous stuff
-    ----------------------------
-  */
-  /* Scrollbar for internal pages */
-  #browser ::-webkit-scrollbar {
-    background-color: transparent !important;
-    border: 0 !important;
-    width: 12px !important
-  }
-  
-  #browser ::-webkit-scrollbar-track {
-    background-color: transparent !important;
-    border: 0 !important
-  }
-  
-  #browser ::-webkit-scrollbar-thumb {
-    background-color: var(--colorFgAlpha) !important;
-    border: 0 !important;
-    border-radius: 1px
-  }
-  
-  #browser ::-webkit-scrollbar-thumb:hover,
-  #browser ::-webkit-scrollbar-thumb:active {
-    background-color: var(--colorHighlightBgAlpha) !important;
-    border: 1px solid var(--colorHighlightBg) !important
-  }
-  
-  #browser ::-webkit-scrollbar-button {
-    display: none !important
-  }
-  
-  /* Slider */
-  input[type=range] {
-    background-color: var(--colorBgDarker)
-  }
-  
-  input[type=range]::-webkit-slider-thumb,
-  input[type=range]::-webkit-slider-thumb:active,
-  input[type=range]::-webkit-slider-thumb:focus {
-    border-width: 2px !important
-  }
-  
-  /* Adjusts the size of the side panel in the Settings page */
-  .vivaldi-settings .settings-sidebar .settings-navigation {
-    min-width: 250px !important
-  }
+  background-color: var(--colorHighlightBg) !important;
+  color: white
+}
 
-  /* This will adjust the header for the "Settings in a Tab" pop up window */
+/* Font smoothing for Windows OS */
+* {
+  text-shadow: 0 0 1px var(--colorAccentFgAlpha) !important
+}
+
+/* Quick commands */
+.quick-command-container {
+  box-shadow: 0 0 10px 0 rgba(0, 0, 0, .6) !important
+}
+
+/* Tabs
+  ----------------------------
+*/
+#tabs-container .newtab svg path {
+  d: path('M18.501 12h-4.252c-.151 0-.248-.099-.248-.251V7.5c0-.298-.197-.5-.5-.5H12.5c-.3 0-.5.203-.5.5v4.249c0 .153-.098.251-.25.251H7.5c-.297 0-.5.2-.5.5v.998c0 .306.203.503.5.503h4.249c.152 0 .251.094.251.248v4.252c0 .297.2.499.5.499h1.001c.303 0 .5-.202.5-.499v-4.252c0-.154.097-.248.248-.248h4.252c.297 0 .499-.197.499-.503V12.5c0-.3-.202-.5-.499-.5z')
+}
+
+#tabs-container > div.toolbar.toolbar-tabbar.toolbar-noflex.sync-and-trash-container svg path {
+  d: path('M6 11.25A1.75 1.75 0 0 0 4.25 13 1.75 1.75 0 0 0 6 14.75 1.75 1.75 0 0 0 7.75 13 1.75 1.75 0 0 0 6 11.25zm7 0A1.75 1.75 0 0 0 11.25 13 1.75 1.75 0 0 0 13 14.75 1.75 1.75 0 0 0 14.75 13 1.75 1.75 0 0 0 13 11.25zm7 0A1.75 1.75 0 0 0 18.25 13 1.75 1.75 0 0 0 20 14.75 1.75 1.75 0 0 0 21.75 13 1.75 1.75 0 0 0 20 11.25z')
+}
+
+#tabs-container .newtab:hover,
+#tabs-container > div.toolbar.toolbar-tabbar.toolbar-noflex.sync-and-trash-container > div:hover {
+  background-color: transparent !important
+}
+
+.tabs-top:not(.mac).color-behind-tabs-on #tabs-container,
+.tabs-top.mac.hasfocus.color-behind-tabs-on #tabs-container {
+  background-image: none !important
+}
+
+.tab-position .tab .tab-header {
+  margin-right: 3px
+}
+
+#tabs-container .tab .tab-audio,
+.close {
+  background-color: var(--colorBgAlpha) !important
+}
+
+.win #tabs-container .tab-audio,
+.win #tabs-container .tab.pinned:not(.active) .tab-audio {
+  left: 4px !important
+}
+
+.tab-position .tab.unread {
+  font-style: italic
+}
+
+.tab-position .tab .progress-indicator,
+.tab-group-indicator .tab-indicator.active,
+.tab-group-indicator .tab-indicator:hover:not(.active) {
+  background-color: var(--colorHighlightBg) !important;
+  height: 1px !important
+}
+
+.tab-group-indicator .tab-indicator {
+  background-color: var(--colorHighlightBgAlpha) !important
+}
+
+.tabs-at-edge.stacks-on .tab-strip .tab .tab-group-indicator .tab-indicator.active {
+  height: 6px !important
+}
+
+#tabs-container {
+  border: 0 !important
+}
+
+#tabs-container .newtab:hover,
+#tabs-container .toggle-trash:hover {
+  fill: var(--colorHighlightBg) !important
+}
+
+/* Puts bottom tabs under the address bar */
+#tabs-container.no-thumbs.bottom,
+#tabs-container.view-thumbs.bottom {
+  order: -1;
+  padding-bottom: 0
+}
+
+.color-behind-tabs-on .bookmark-bar,
+.color-behind-tabs-on .bookmark-bar button,
+.bookmark-bar .observer {
+  background-color: var(--colorBg) !important
+}
+
+.color-behind-tabs-on .bookmark-bar button:hover {
+  background-color: var(--colorBgLighter) !important
+}
+
+.bookmark-bar {
+  order: -2
+}
+
+.toolbar.toolbar-addressbar {
+  order: -3;
+  height: 34px
+}
+
+.stacks-on.tabs-bottom .tab-strip .tab-group-indicator {
+  bottom: 28px
+}
+
+.stacks-on.tabs-bottom .tab-strip .tab-group-indicator .tab-indicator.active {
+  padding-top: 2px
+}
+
+/* Addressfield
+  ----------------------------
+*/
+.addressfield form input.url {
+  padding-bottom: 3px !important
+}
+
+.addressfield .addressfield-siteinfo.certified .siteinfo-symbol,
+.addressfield .addressfield-siteinfo.secure,
+.addressfield .addressfield-siteinfo.certified {
+  fill: #389a2a !important;
+  background-color: transparent !important
+}
+
+.addressfield .addressfield-siteinfo.insecure {
+  background-color: transparent !important;
+  fill: #f30 !important
+}
+
+.siteinfo-text {
+  display: none
+}
+
+.siteinfo-symbol:hover+.siteinfo-text {
+  display: block
+}
+
+.drop_down:hover,
+.drop_down[data-selected],
+#mail_panel section ul li.selected {
+  background-color: var(--colorHighlightBg) !important
+}
+
+.address-top .toolbar-addressbar:after,
+.address-top .toolbar-mailbar:after {
+  background-color: var(--colorBgDark) !important
+}
+
+
+button.button-addressfield:hover {
+  background-color: transparent !important;
+  border-color: transparent !important
+}
+
+.addressfield button.button-addressfield.input-dropdown:hover svg,
+.button-addressfield.reader-mode:hover svg,
+.button-addressfield.bookmark:hover svg .bookmark-outline {
+  fill: var(--colorHighlightBgDark) !important
+}
+
+.button-addressfield.bookmark.bookmarked svg .bookmark-outline {
+  fill: var(--colorHighlightBgDark)
+}
+
+.button-addressfield.bookmark svg .bookmark-animated-fill {
+  fill: var(--colorHighlightBgAlpha)
+}
+
+.addressfield .pageload:not(.unstarted).progress-done {
+  opacity: 0 !important;
+  border: none !important
+}
+
+
+/* Pageloading indicator
+  ----------------------------
+*/
+.addressfield .pageload .pageload-indicator::-webkit-progress-value {
+  background-color: transparent !important
+}
+
+/* show pageload bar */
+.addressfield .pageload.progressing .pageload-indicator {
+  position: fixed;
+  z-index: 99 !important;
+  left: 0;
+  top: 0;
+  height: 1px;
+  width: 100vw;
+  background: transparent;
+  opacity: 1 !important
+}
+
+/* pageload bar colors */
+.addressfield .pageload:not(.unstarted).progressing .pageload-indicator::-webkit-progress-value {
+  background-size: 100vw;
+  background-position: 0% 0%;
+  background-color: transparent;
+  background-image: linear-gradient(to right, var(--colorHighlightBgAlpha), var(--colorBorderHighlight), var(--colorHighlightBg));
+  transition: 0.4s steps(5) 0s !important
+}
+
+.addressfield .pageload:not(.unstarted).progressing .pageload-indicator[value='0']::-webkit-progress-value {
+  background-position: 0% 0% !important;
+}
+
+.addressfield .pageload:not(.unstarted).progressing .pageload-indicator[value^='1']:not([value='1']):not([value='100'])::-webkit-progress-value {
+  background-position: 0% 10% !important;
+}
+
+.addressfield .pageload:not(.unstarted).progressing .pageload-indicator[value^='2']:not([value='2'])::-webkit-progress-value {
+  background-position: 0% 20% !important;
+}
+
+.addressfield .pageload:not(.unstarted).progressing .pageload-indicator[value^='3']:not([value='3'])::-webkit-progress-value {
+  background-position: 0% 30% !important;
+}
+
+.addressfield .pageload:not(.unstarted).progressing .pageload-indicator[value^='4']:not([value='4'])::-webkit-progress-value {
+  background-position: 0% 40% !important;
+}
+
+.addressfield .pageload:not(.unstarted).progressing .pageload-indicator[value^='5']:not([value='5'])::-webkit-progress-value {
+  background-position: 0% 50% !important;
+}
+
+.addressfield .pageload:not(.unstarted).progressing .pageload-indicator[value^='6']:not([value='6'])::-webkit-progress-value {
+  background-position: 0% 60% !important;
+}
+
+.addressfield .pageload:not(.unstarted).progressing .pageload-indicator[value^='7']:not([value='7'])::-webkit-progress-value {
+  background-position: 0% 70% !important;
+}
+
+.addressfield .pageload:not(.unstarted).progressing .pageload-indicator[value^='8']:not([value='8'])::-webkit-progress-value {
+  background-position: 0% 80% !important;
+}
+
+.addressfield .pageload:not(.unstarted).progressing .pageload-indicator[value^='9']:not([value='9'])::-webkit-progress-value {
+  background-position: 0% 90% !important;
+}
+
+.addressfield .pageload:not(.unstarted).progressing .pageload-indicator[value='100']::-webkit-progress-value {
+  background-position: 0% 100% !important;
+}
+
+/* Toolbars
+  ----------------------------
+*/
+.toolbar .button-toolbar {
+  background-color: transparent !important
+}
+
+._default-focus {
+  outline: transparent !important;
+  outline-offset: 0 !important
+}
+
+.urlSearch .favicon {
+  display: inline !important
+}
+
+.toolbar.icons button,
+.toolbar.text button {
+  background-image: none !important;
+  background-color: var(--colorBgDark) !important;
+  border-color: var(--colorBg) !important;
+  height: 29px !important;
+  margin-top: -1px !important
+}
+
+.toolbar.icons button:hover,
+.toolbar.text button:hover {
+  background-image: none !important;
+  background-color: var(--colorHighlightBg) !important;
+  height: 28px !important;
+  margin-top: -1px !important
+}
+
+.sortselector {
+  font-weight: 500 !important;
+  background-color: var(--colorBg) !important;
+  border-color: var(--colorBgDark) !important;
+  border-bottom: 0 !important;
+  padding-top: 1px !important
+}
+
+#browser .sortselector .sortselector-dropdown,
+.sortselector .sortselector-button {
+  background-color: var(--colorBg) !important
+}
+
+input[type=button],
+input[type=submit] {
+  background-image: none !important
+}
+
+/* Won't show horizontal menu and window buttons when no ui */
+#browser.minimal-ui:not(.tabs-top) .topmenu,
+#browser.minimal-ui:not(.tabs-top) .window-buttongroup {
+  display: none !important
+}
+
+/* Side panel
+  ----------------------------
+*/
+.panel>header {
+  background-color: var(--colorBgIntense) !important
+}
+
+.panel-group,
+#panels-container.overlay .panel-group {
+  background-color: var(--colorBg) !important;
+  opacity: .98
+}
+
+#panels-container.overlay:not(.switcher) {
+  width: 0 !important
+}
+
+#switch {
+  background-color: var(--colorBg) !important;
+  box-shadow: none !important;
+  border: 0 !important
+}
+
+#switch button:hover {
+  background-color: var(--colorAccentBgFadedMore) !important;
+  fill: var(--colorAccentFg);
+  opacity: .8;
+}
+
+#switch button.active {
+  background-color: var(--colorBgIntense) !important;
+  fill: var(--colorHighlightBg);
+}
+
+#switch .addwebpanel-wrapper>button.downloads.in-progress div.progress,
+#switch>button.downloads.in-progress div.progress {
+  background-color: var(--colorHighlightBg);
+  border: 1px solid var(--colorHighlightBg)
+}
+
+#switch button.webviewbtn img {
+  background: transparent !important;
+  filter: grayscale(100%) contrast(60%) invert(100%)
+}
+
+#switch button.webviewbtn.active img {
+  background: none;
+  filter: grayscale(10%) contrast(60%) invert(10%)
+}
+
+/* Hides webpanel suggestions */
+.webpanel-suggestions {
+  display: none
+}
+
+/* Notes
+  ----------------------------
+*/
+.notes svg path {
+  d: path('M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z');
+  transform: scale(.85, .85) translate(5px, 5px)
+}
+
+#notes-panel .notes-editor:hover .add-attachments-wrapper button:hover,
+#notes-panel .notes-editor .add-attachments-wrapper label:hover {
+  background-color: var(--colorAccentBgFadedMore) !important
+}
+
+#notes-panel .notes-editor .add-attachments-wrapper button.active {
+  background-color: var(--colorHighlightBg) !important
+}
+
+#notes-panel .notes-editor .note.md {
+  padding: 8px !important;
+  margin: 0 !important
+}
+
+#panels button.fullwidth.alternate:after {
+  background-image: linear-gradient(var(--colorBgDark), var(--colorBgDark)) !important;
+  border: 0;
+  border-top: 1px solid var(--colorBorder)
+}
+
+/* Bookmarks and History
+  ----------------------------
+*/
+.manager .manager-content,
+.manager .manager-content .toolbar-wrapper,
+.manager .navigation,
+.vivaldi-tree {
+  background-color: var(--colorBgIntense) !important;
+  opacity: .8;
+  backdrop-filter: blur(10px)
+}
+
+.vivaldi-tree {opacity: 1}
+
+.vivaldi-tree div>div:nth-child(even),
+.manager .manager-treeview div>div:nth-child(even),
+.startpage .history .manager-content .history-tree div>div:nth-child(even) {
+  background-color: var(--colorBgAlpha)
+}
+
+.manager .manager-editor {
+  border: none !important
+}
+
+.panel#downloads .download-item .file,
+.panel#downloads .download-item .file .size {
+  background-color: transparent
+}
+
+.addbookmark-cardwrapper,
+.downloaddialog-cardwrapper,
+.notes-cardwrapper {
+  margin: 0 !important
+}
+
+.win .vivaldi-tree .tree-item[data-lead] {
+  outline: 1px solid var(--colorHighlightBgAlpha) !important
+}
+
+.vivaldi-tree .tree-row label>img,
+.vivaldi-tree .tree-row label .tree-row-image {
+  border-radius: 50%;
+  filter: grayscale(0.6)
+}
+
+.vivaldi-tree .tree-row svg {
+  fill: var(--colorFgAlpha);
+  stroke: var(--colorFgFaded)
+}
+
+/* Window control button group
+  ----------------------------
+*/
+#browser.win .window-buttongroup {
+  top: 0;
+  right: 0;
+  z-index: 999
+}
+
+#browser.win .window-buttongroup {
+  right: 0 !important
+}
+
+#browser.win .window-buttongroup button {
+  height: 34px !important;
+  width: 44px !important;
+  opacity: .7
+}
+
+#browser.win .window-buttongroup button:hover {
+  background-color: var(--colorAccentBgFadedMore) !important;
+  fill: var(--colorAccentFg) !important
+}
+
+#browser.win .window-buttongroup button.window-minimize>svg path {
+  d: path('M0 5h10v1H0z')
+}
+
+#browser.win .window-buttongroup button.window-maximize>svg path,
+#browser.win .window-buttongroup button.window-restore>svg path {
+  d: path('M9 1v8H1V1h8m1-1H0v10h10V0z')
+}
+
+.maximized#browser.win .window-buttongroup button.window-close,
+.fullscreen#browser.win .window-buttongroup button.window-close {
+  padding-right: 0 !important
+}
+
+#browser.win .window-buttongroup button.window-close svg path {
+  d: path('M.71611758 0L0 .71414475 4.2868415 4.9990135.00197275 9.2838828l.71414483.7141446L5.0009863 5.7131583 9.2858555 10 10 9.2838828 5.715131 4.9990135 10 .71414475 9.2858555 0 5.0009863 4.2848688z')
+}
+
+#browser.win .window-buttongroup button.window-close,
+#browser.win:not(.win10) .window-buttongroup .window-close {
+  background-color: transparent !important;
+  fill: var(--colorFg) !important;
+  margin-right: -2px !important;
+  opacity: 1 !important
+}
+
+#browser.win .window-buttongroup button.window-close:hover,
+#browser.win:not(.win10) .window-buttongroup .window-close:hover {
+  background-color: var(--colorHighlightBg) !important;
+  fill: white !important
+}
+
+/* Miscellaneous stuff
+  ----------------------------
+*/
+/* Scrollbar for internal pages */
+#browser ::-webkit-scrollbar {
+  background-color: transparent !important;
+  border: 0 !important;
+  width: 12px !important
+}
+
+#browser ::-webkit-scrollbar-track {
+  background-color: transparent !important;
+  border: 0 !important
+}
+
+#browser ::-webkit-scrollbar-thumb {
+  background-color: var(--colorFgAlpha) !important;
+  border: 0 !important;
+  border-radius: 1px
+}
+
+#browser ::-webkit-scrollbar-thumb:hover,
+#browser ::-webkit-scrollbar-thumb:active {
+  background-color: var(--colorHighlightBgAlpha) !important;
+  border: 1px solid var(--colorHighlightBg) !important
+}
+
+#browser ::-webkit-scrollbar-button {
+  display: none !important
+}
+
+/* Slider */
+input[type=range] {
+  background-color: var(--colorBgDarker)
+}
+
+input[type=range]::-webkit-slider-thumb,
+input[type=range]::-webkit-slider-thumb:active,
+input[type=range]::-webkit-slider-thumb:focus {
+  border-width: 2px !important
+}
+
+/* Adjusts the size of the side panel in the Settings page */
+.vivaldi-settings .settings-sidebar .settings-navigation {
+  min-width: 250px !important
+}
+
+/* This will adjust the header for the "Settings in a Tab" pop up window */
 .popup .vivaldi-settings .settings-header {
   background-color: transparent !important;
   left: 150px !important;
   right: 150px !important
 }
-    
-  /* Hiding stuff
-    ----------------------------
-  */
-  .color-behind-tabs-on .addressfield:focus-within,
-  .color-behind-tabs-on .searchfield:focus-within,
-  .addressfield:focus-within,
-  .searchfield:focus-within,
-  .toolbar.icons input[type=search] {
-    box-shadow: none !important
-  }
-  
-  .vivaldi-tree .tree-row.folder .item-count,
-  .history .item-count,
-  #history-panel .item-count,
-  .favicon,
-  .win #tabs-container .favicon,
-  .win #tabs-container .tab.pinned:not(.active) .favicon,
-  button.fip-previous,
-  button.fip-next,
-  button.fip-close,
-  input::-webkit-search-cancel-button {
-    display: none
-  }
-  
-  #fip-input-text::-webkit-search-cancel-button {
-    appearance: none !important
-  }
+
+
+/* Hiding stuff
+  ----------------------------
+*/
+.color-behind-tabs-on .addressfield:focus-within,
+.color-behind-tabs-on .searchfield:focus-within,
+.addressfield:focus-within,
+.searchfield:focus-within,
+.toolbar.icons input[type=search] {
+  box-shadow: none !important
+}
+
+.vivaldi-tree .tree-row.folder .item-count,
+.history .item-count,
+#history-panel .item-count,
+.favicon,
+.win #tabs-container .favicon,
+.win #tabs-container .tab.pinned:not(.active) .favicon,
+button.fip-previous,
+button.fip-next,
+button.fip-close,
+input::-webkit-search-cancel-button {
+  display: none
+}
+
+#fip-input-text::-webkit-search-cancel-button {
+  appearance: none !important
+}
