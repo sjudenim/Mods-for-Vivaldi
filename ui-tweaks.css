@@ -53,6 +53,10 @@
   font-style: italic
 }
 
+.tab-position .tab.tab.tab:not(.active) {
+  color: var(--colorFgFaded) !important;
+}
+
 .tab-position .tab .progress-indicator,
 .tab-group-indicator .tab-indicator.active,
 .tab-group-indicator .tab-indicator:hover:not(.active) {
@@ -304,11 +308,65 @@ input[type=submit] {
   display: none !important
 }
 
+
+/* Window control button group
+  ----------------------------
+*/
+#browser.win .window-buttongroup {
+  top: 0;
+  right: 0;
+  z-index: 999
+}
+
+#browser.win .window-buttongroup button {
+  height: 34px !important;
+  width: 44px !important;
+  opacity: .7
+}
+
+#browser.win .window-buttongroup button:hover {
+  background-color: var(--colorAccentBgFadedMore) !important;
+  fill: var(--colorAccentFg) !important
+}
+
+#browser.win .window-buttongroup button.window-minimize>svg path {
+  d: path('M0 5h10v1H0z')
+}
+
+#browser.win .window-buttongroup button.window-maximize>svg path,
+#browser.win .window-buttongroup button.window-restore>svg path {
+  d: path('M9 1v8H1V1h8m1-1H0v10h10V0z')
+}
+
+.maximized#browser.win .window-buttongroup button.window-close,
+.fullscreen#browser.win .window-buttongroup button.window-close {
+  padding-right: 0 !important
+}
+
+#browser.win .window-buttongroup button.window-close svg path {
+  d: path('M.71611758 0L0 .71414475 4.2868415 4.9990135.00197275 9.2838828l.71414483.7141446L5.0009863 5.7131583 9.2858555 10 10 9.2838828 5.715131 4.9990135 10 .71414475 9.2858555 0 5.0009863 4.2848688z')
+}
+
+#browser.win .window-buttongroup button.window-close,
+#browser.win:not(.win10) .window-buttongroup .window-close {
+  background-color: transparent !important;
+  fill: var(--colorFg) !important;
+  margin-right: -2px !important;
+  opacity: 1 !important
+}
+
+#browser.win .window-buttongroup button.window-close:hover,
+#browser.win:not(.win10) .window-buttongroup .window-close:hover {
+  background-color: var(--colorHighlightBg) !important;
+  fill: white !important
+}
+
+
 /* Side panel
   ----------------------------
 */
 .panel>header {
-  background-color: var(--colorBgIntense) !important
+  background-color: var(--colorBgDarker) !important
 }
 
 .panel-group,
@@ -334,7 +392,7 @@ input[type=submit] {
 }
 
 #switch button.active {
-  background-color: var(--colorBgIntense) !important;
+  background-color: var(--colorBgDarker) !important;
   fill: var(--colorHighlightBg);
 }
 
@@ -382,19 +440,17 @@ input[type=submit] {
 }
 
 #panels button.fullwidth.alternate:after {
-  background-image: linear-gradient(var(--colorBgDark), var(--colorBgDark)) !important;
+  background-image: none !important;
   border: 0;
-  border-top: 1px solid var(--colorBorder)
 }
 
 /* Bookmarks and History
   ----------------------------
 */
 .manager .manager-content,
-.manager .manager-content .toolbar-wrapper,
-.manager .navigation,
-.vivaldi-tree {
-  background-color: var(--colorBgIntense) !important;
+.vivaldi-tree,
+.manager > .toolbar {
+  background-color: var(--colorBgDarker) !important;
   opacity: .8;
   backdrop-filter: blur(10px)
 }
@@ -404,7 +460,7 @@ input[type=submit] {
 .vivaldi-tree div>div:nth-child(even),
 .manager .manager-treeview div>div:nth-child(even),
 .startpage .history .manager-content .history-tree div>div:nth-child(even) {
-  background-color: var(--colorBgAlpha)
+  background-color: var(--colorBgDark)
 }
 
 .manager .manager-editor {
@@ -437,61 +493,6 @@ input[type=submit] {
   stroke: var(--colorFgFaded)
 }
 
-/* Window control button group
-  ----------------------------
-*/
-#browser.win .window-buttongroup {
-  top: 0;
-  right: 0;
-  z-index: 999
-}
-
-#browser.win .window-buttongroup {
-  right: 0 !important
-}
-
-#browser.win .window-buttongroup button {
-  height: 34px !important;
-  width: 44px !important;
-  opacity: .7
-}
-
-#browser.win .window-buttongroup button:hover {
-  background-color: var(--colorAccentBgFadedMore) !important;
-  fill: var(--colorAccentFg) !important
-}
-
-#browser.win .window-buttongroup button.window-minimize>svg path {
-  d: path('M0 5h10v1H0z')
-}
-
-#browser.win .window-buttongroup button.window-maximize>svg path,
-#browser.win .window-buttongroup button.window-restore>svg path {
-  d: path('M9 1v8H1V1h8m1-1H0v10h10V0z')
-}
-
-.maximized#browser.win .window-buttongroup button.window-close,
-.fullscreen#browser.win .window-buttongroup button.window-close {
-  padding-right: 0 !important
-}
-
-#browser.win .window-buttongroup button.window-close svg path {
-  d: path('M.71611758 0L0 .71414475 4.2868415 4.9990135.00197275 9.2838828l.71414483.7141446L5.0009863 5.7131583 9.2858555 10 10 9.2838828 5.715131 4.9990135 10 .71414475 9.2858555 0 5.0009863 4.2848688z')
-}
-
-#browser.win .window-buttongroup button.window-close,
-#browser.win:not(.win10) .window-buttongroup .window-close {
-  background-color: transparent !important;
-  fill: var(--colorFg) !important;
-  margin-right: -2px !important;
-  opacity: 1 !important
-}
-
-#browser.win .window-buttongroup button.window-close:hover,
-#browser.win:not(.win10) .window-buttongroup .window-close:hover {
-  background-color: var(--colorHighlightBg) !important;
-  fill: white !important
-}
 
 /* Miscellaneous stuff
   ----------------------------
