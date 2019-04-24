@@ -14,7 +14,7 @@ function menuStyle() {
     #browser .vivaldi span.burger-icon {
         height: 34px !important;
         width: 44px !important;
-        padding: 9px 2px 0 4px !important;
+        padding: 6px 2px 0 4px !important;
         fill: var(--colorFg) !important;
         opacity: 1 !important
     }
@@ -41,7 +41,7 @@ function menuStyle() {
 setTimeout(function wait() {
     const adrBar = document.querySelector('.toolbar.toolbar-addressbar');
     const menu = document.querySelector('.vivaldi');
-    if (menu != null) {
+    if (menu) {
         adrBar.insertBefore(menu, adrBar.firstChild);
         menuStyle();
     } else {
