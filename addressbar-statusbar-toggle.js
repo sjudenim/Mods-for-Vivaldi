@@ -36,7 +36,7 @@
         }
         #statusToggle {
             position: absolute;
-            right: calc(50vw - 22.5vw - 34px);
+            right: calc(50vw + 22.5vw + 1px);
             margin-top: -17px;
             opacity: .4;
         }
@@ -44,27 +44,25 @@
         #statusToggle.active:hover {
             background-color: var(--colorAccentBgFadedMore);
             fill: var(--colorAccentFg);
-            opacity: .8;
+            opacity: .7;
         }
         #statusToggle.active {
-            background-color: var(--colorBgDark) !important;
-            fill: var(--colorHighlightBg);
-            opacity: 1;
+            opacity: 1
         }
         #statusContainer {
             position: absolute;
             z-index: 1;
-            max-width: 100vw;
-            right: calc(50vw - 22.5vw - 34px);
-            top: calc(var(--toolbarHeight) + 4px);
-            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
+            left: calc(50vw - 22.5vw);
+        }
+        #statusContainer > div > div.button-toolbar:hover, #statusInfoToggle:hover, #statusInfoToggle.zeig button svg {
+            fill: var(--colorHighlightBg); 
         }
         .toolbar-statusbar {
-            background-color: var(--colorBgDark) !important;
+            background-color: var(--colorBgDarker) !important;
             padding: 0 4px;
-            height: 34px !important;
-            border-radius: 3px;
+            height: 30px !important;
             border: none;
+            border-radius: var(--radius);
         }
         .toolbar-statusbar .button-popup.button-popup-above {
             bottom: unset;
@@ -75,9 +73,6 @@
             top: -20px;
             bottom: unset;
             transform: rotate(180deg)
-        }
-        #statusInfoToggle.zeig button svg {
-            fill: var(--colorHighlightBg);
         }
         .status-info {
             display: none;
@@ -112,7 +107,7 @@
         btn.id = 'statusButton';
         btn.classList.add('button-toolbar');
         btn.setAttribute('title', 'Toggle status bar');
-        btn.innerHTML = '<button id="statusToggle" tabindex="-1"><svg width="26" height="26" viewBox="0 0 26 26" xmlns="http://www.w3.org/2000/svg"><path d="M19 11.512L18.438 11 13 15.971 7.563 11 7 11.512 13 17z"></path></button>';
+        btn.innerHTML = '<button id="statusToggle" tabindex="-1"><svg width="26" height="26" viewBox="0 0 26 26" xmlns="http://www.w3.org/2000/svg"><path d="M12 6v2h2V6zm0 6v2h2v-2zm0 6v2h2v-2z"></path></button>';
         adr.insertBefore(btn, document.querySelector('.toolbar-extensions'));
         const cont = document.createElement('div');
         cont.id = 'statusContainer';
