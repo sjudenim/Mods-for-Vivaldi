@@ -10,19 +10,21 @@
             height: 34px !important;
             width: 36px !important;
         }
+        .button-toolbar.panel-toggle:hover svg path {d: path('M16.5 18.5v-9l-7 4.5z') !important
+        }
+        .button-toolbar.panel-toggle.active:hover svg path {d: path('M9.5 9.5v9l7-4.5z') !important
+        }
         #main > div.toolbar.toolbar-addressbar.toolbar-mainbar.toolbar-large > div.button-toolbar.panel-toggle.paneltoggle > button:hover,
         #main > div.toolbar.toolbar-addressbar.toolbar-mainbar.toolbar-large > div.button-toolbar.panel-toggle.paneltoggle > button.active:hover {
             background: var(--colorAccentBgFadedMore) !important;
             fill: var(--colorAccentFg);
-            opacity: .8;
+            opacity: .7 !important;
         }
         .button-toolbar.panel-toggle.active {
             background-color: var(--colorBgDarker) !important;
             fill: var(--colorHighlightBg);
-            opacity: 1;
+            opacity: 1 !important;
         }
-        .button-toolbar.panel-toggle:hover svg path {d: path('M16.5 18.5v-9l-7 4.5z') !important}
-        .button-toolbar.panel-toggle.active:hover svg path {d: path('M9.5 9.5v9l7-4.5z') !important}
     `;
         document.getElementsByTagName('head')[0].appendChild(style);
     };
