@@ -365,7 +365,7 @@ input[type=submit] {
 /* Side panel
   ----------------------------
 */
-.panel>header {
+.panel>header, .panel section, #notes-panel .notes-editor .note.md {
   background-color: var(--colorBgDarker) !important
 }
 
