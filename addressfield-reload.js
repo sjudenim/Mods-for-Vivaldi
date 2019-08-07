@@ -5,7 +5,7 @@ function reloadStyle() {
     .toolbar .button-toolbar.reload {
         order: 8;
         fill: var(--colorFgFaded) !important;
-        margin-top: -4px
+        margin-top: -3px
     }
       
       .toolbar .button-toolbar.reload svg {
@@ -21,7 +21,7 @@ function reloadStyle() {
 setTimeout(function wait() {
     const adrField = document.querySelector('.addressfield');
     const reload = document.querySelector('.button-toolbar.reload');
-    if (reload != null) {
+    if (reload) {
         adrField.appendChild(reload);
         reloadStyle();
     } else {
