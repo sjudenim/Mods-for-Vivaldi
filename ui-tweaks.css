@@ -9,25 +9,32 @@
   text-shadow: 0 0 1px var(--colorAccentFgAlpha) !important
 }
 
-/* Quick commands */
+/* Quick commands shadow */
 .quick-command-container {
   box-shadow: 0 0 10px 0 rgba(0, 0, 0, .6) !important
 }
+
 
 /* Tabs
   ----------------------------
 */
 #tabs-container .newtab svg path {
-  d: path('M18.501 12h-4.252c-.151 0-.248-.099-.248-.251V7.5c0-.298-.197-.5-.5-.5H12.5c-.3 0-.5.203-.5.5v4.249c0 .153-.098.251-.25.251H7.5c-.297 0-.5.2-.5.5v.998c0 .306.203.503.5.503h4.249c.152 0 .251.094.251.248v4.252c0 .297.2.499.5.499h1.001c.303 0 .5-.202.5-.499v-4.252c0-.154.097-.248.248-.248h4.252c.297 0 .499-.197.499-.503V12.5c0-.3-.202-.5-.499-.5z')
+  d: path('M18.501 12h-4.252c-.151 0-.248-.099-.248-.251V7.5c0-.298-.197-.5-.5-.5H12.5c-.3 0-.5.203-.5.5v4.249c0 .153-.098.251-.25.251H7.5c-.297 0-.5.2-.5.5v.998c0 .306.203.503.5.503h4.249c.152 0 .251.094.251.248v4.252c0 .297.2.499.5.499h1.001c.303 0 .5-.202.5-.499v-4.252c0-.154.097-.248.248-.248h4.252c.297 0 .499-.197.499-.503V12.5c0-.3-.202-.5-.499-.5z');
 }
 
-#tabs-container > div.toolbar.toolbar-tabbar.toolbar-noflex.sync-and-trash-container svg path {
-  d: path('M6 11.25A1.75 1.75 0 0 0 4.25 13 1.75 1.75 0 0 0 6 14.75 1.75 1.75 0 0 0 7.75 13 1.75 1.75 0 0 0 6 11.25zm7 0A1.75 1.75 0 0 0 11.25 13 1.75 1.75 0 0 0 13 14.75 1.75 1.75 0 0 0 14.75 13 1.75 1.75 0 0 0 13 11.25zm7 0A1.75 1.75 0 0 0 18.25 13 1.75 1.75 0 0 0 20 14.75 1.75 1.75 0 0 0 21.75 13 1.75 1.75 0 0 0 20 11.25z')
+#tabs-container>div.toolbar.toolbar-tabbar.toolbar-noflex.sync-and-trash-container svg path {
+  d: path('M6 11.25A1.75 1.75 0 0 0 4.25 13 1.75 1.75 0 0 0 6 14.75 1.75 1.75 0 0 0 7.75 13 1.75 1.75 0 0 0 6 11.25zm7 0A1.75 1.75 0 0 0 11.25 13 1.75 1.75 0 0 0 13 14.75 1.75 1.75 0 0 0 14.75 13 1.75 1.75 0 0 0 13 11.25zm7 0A1.75 1.75 0 0 0 18.25 13 1.75 1.75 0 0 0 20 14.75 1.75 1.75 0 0 0 21.75 13 1.75 1.75 0 0 0 20 11.25z');
+}
+
+#tabs-container .newtab,
+#tabs-container>div.toolbar.toolbar-tabbar.toolbar-noflex.sync-and-trash-container>div {
+  fill: var(--colorFg)
 }
 
 #tabs-container .newtab:hover,
-#tabs-container > div.toolbar.toolbar-tabbar.toolbar-noflex.sync-and-trash-container > div:hover {
-  background-color: transparent !important
+#tabs-container>div.toolbar.toolbar-tabbar.toolbar-noflex.sync-and-trash-container>div:hover {
+  background-color: transparent !important;
+  fill: var(--colorHighlightBg);
 }
 
 .tabs-top:not(.mac).color-behind-tabs-on #tabs-container,
@@ -39,14 +46,12 @@
   margin-right: 3px
 }
 
-#tabs-container .tab .tab-audio,
 .close {
-  background-color: var(--colorBgAlpha) !important
+  background-color: transparent !important;
 }
 
-.win #tabs-container .tab-audio,
-.win #tabs-container .tab.pinned:not(.active) .tab-audio {
-  left: 4px !important
+.close:hover {
+  fill: var(--colorHighlightBg) !important;
 }
 
 .tab-position .tab.unread {
@@ -66,10 +71,6 @@
 
 .tab-group-indicator .tab-indicator {
   background-color: var(--colorHighlightBgAlpha) !important
-}
-
-.tabs-at-edge.stacks-on .tab-strip .tab .tab-group-indicator .tab-indicator.active {
-  height: 6px !important
 }
 
 #tabs-container {
@@ -122,16 +123,21 @@
   padding-bottom: 3px !important
 }
 
-.addressfield .addressfield-siteinfo.certified .siteinfo-symbol,
-.addressfield .addressfield-siteinfo.secure,
-.addressfield .addressfield-siteinfo.certified {
-  fill: #389a2a !important;
-  background-color: transparent !important
+.SiteInfoButton.secure, .SiteInfoButton.certified {
+  background-color: transparent;
+  fill: var(--colorFg) !important;
 }
 
-.addressfield .addressfield-siteinfo.insecure {
-  background-color: transparent !important;
-  fill: #f30 !important
+.SiteInfoButton.secure:hover, .SiteInfoButton.certified:hover {
+  background-color: transparent;
+  fill: hsl(113, 57%, 38%) !important;
+}
+
+.SiteInfoButton.insecure,
+.SiteInfoButton.insecure:hover,
+.SiteInfoButton.insecure:active {
+  background-color: transparent;
+  fill: hsl(12, 100%, 50%) !important
 }
 
 .siteinfo-text {
@@ -147,12 +153,6 @@
 #mail_panel section ul li.selected {
   background-color: var(--colorHighlightBg) !important
 }
-
-.address-top .toolbar-addressbar:after,
-.address-top .toolbar-mailbar:after {
-  background-color: var(--colorBgDark) !important
-}
-
 
 button.button-addressfield:hover {
   background-color: transparent !important;
@@ -176,6 +176,30 @@ button.button-addressfield:hover {
 .addressfield .pageload:not(.unstarted).progress-done {
   opacity: 0 !important;
   border: none !important
+}
+
+/* Bookmark icon */
+path.bookmark-outline,
+clipPath#addBookmarkPath path {
+  d: path('M14.051 3.176a4.026 4.026 0 0 0-5.687 0L8 3.54l-.363-.364a4.026 4.026 0 0 0-5.687 0C.414 4.711.405 7.146 1.927 8.838c1.389 1.543 5.485 4.878 5.659 5.019.118.097.26.143.401.143h.014a.605.605 0 0 0 .415-.143c.173-.141 4.27-3.476 5.658-5.019 1.522-1.692 1.511-4.127-.023-5.662zm-.924 4.81C12.044 9.19 9.068 11.671 8 12.552c-1.069-.881-4.044-3.362-5.127-4.565C1.811 6.807 1.8 5.125 2.85 4.076c.536-.535 1.24-.804 1.943-.804s1.407.268 1.943.804l.8.8a.612.612 0 0 0 .342.172.635.635 0 0 0 .585-.172l.801-.801a2.752 2.752 0 0 1 3.886 0c1.048 1.05 1.038 2.732-.023 3.911z')
+}
+
+button:not(.button-on) path.bookmark-outline {
+  fill: var(--colorFg)
+}
+
+button.button-on path.bookmark-outline {
+  fill: var(--colorHighlightBg)
+}
+
+.add-bookmark-shadow,
+.bookmark-animated-fill {
+  display: none
+}
+
+#main>div.toolbar.toolbar-addressbar.toolbar-mainbar.toolbar-large>div.addressfield>div.toolbar.toolbar-small.toolbar-insideinput>div.button-toolbar.cjvgsbzxr000i3n670rebhqf3>button>svg>g>path.bookmark-animated-fill,
+#main>div.toolbar.toolbar-addressbar.toolbar-mainbar.toolbar-large>div.addressfield>div.toolbar.toolbar-small.toolbar-insideinput>div.button-toolbar.cjvgsbzxr000i3n670rebhqf3>button>svg>g>path.bookmark-outline {
+  display: none
 }
 
 
@@ -272,7 +296,7 @@ button.button-addressfield:hover {
   background-image: none !important;
   background-color: var(--colorBgDark) !important;
   border-color: var(--colorBg) !important;
-  height: 29px !important;
+  height: 28px !important;
   margin-top: -1px !important
 }
 
@@ -320,12 +344,12 @@ input[type=submit] {
 
 #browser.win .window-buttongroup button {
   height: 34px !important;
-  width: 44px !important;
+  width: 40px !important;
   opacity: .7
 }
 
 #browser.win .window-buttongroup button:hover {
-  background-color: var(--colorAccentBgFadedMore) !important;
+  background-color: var(--colorBgDark) !important;
   fill: var(--colorAccentFg) !important
 }
 
@@ -350,7 +374,7 @@ input[type=submit] {
 #browser.win .window-buttongroup button.window-close,
 #browser.win:not(.win10) .window-buttongroup .window-close {
   background-color: transparent !important;
-  fill: var(--colorFg) !important;
+  fill: var(--colorFgIntenser) !important;
   margin-right: -2px !important;
   opacity: 1 !important
 }
@@ -365,7 +389,9 @@ input[type=submit] {
 /* Side panel
   ----------------------------
 */
-.panel>header, .panel section, #notes-panel .notes-editor .note.md {
+.panel>header,
+.panel section,
+#notes-panel .notes-editor .note.md {
   background-color: var(--colorBgDarker) !important
 }
 
@@ -379,10 +405,14 @@ input[type=submit] {
   width: 0 !important
 }
 
+.panel-group .panel-collapse-guard {
+  background-color: var(--colorBgDarker);
+  padding: 0 5px
+}
+
 #switch {
   background-color: var(--colorBg) !important;
   box-shadow: none !important;
-  border: 0 !important
 }
 
 #switch button:hover {
@@ -391,7 +421,7 @@ input[type=submit] {
   opacity: .8;
 }
 
-#switch button.active {
+#switch .addwebpanel-wrapper > button.active, #switch > button.active {
   background-color: var(--colorBgDarker) !important;
   fill: var(--colorHighlightBg);
 }
@@ -412,6 +442,10 @@ input[type=submit] {
   filter: grayscale(10%) contrast(60%) invert(10%)
 }
 
+#panels-container:after {
+  background-color: var(--colorBgLightIntense) !important;
+}
+
 /* Hides webpanel suggestions */
 .webpanel-suggestions {
   display: none
@@ -421,8 +455,7 @@ input[type=submit] {
   ----------------------------
 */
 .notes svg path {
-  d: path('M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z');
-  transform: scale(.85, .85) translate(5px, 5px)
+  d: path('M5.5 17.044V20h3.167l9.167-8.634-3.166-2.956L5.5 17.044zm14.75-7.933c.334-.311.334-.778 0-1.089l-1.917-1.789a.846.846 0 0 0-1.167 0l-1.5 1.4 3.167 2.956 1.417-1.478z');
 }
 
 #notes-panel .notes-editor:hover .add-attachments-wrapper button:hover,
@@ -449,13 +482,15 @@ input[type=submit] {
 */
 .manager .manager-content,
 .vivaldi-tree,
-.manager > .toolbar {
+.manager>.toolbar {
   background-color: var(--colorBgDarker) !important;
   opacity: .8;
   backdrop-filter: blur(10px)
 }
 
-.vivaldi-tree {opacity: 1}
+.vivaldi-tree {
+  opacity: 1
+}
 
 .vivaldi-tree div>div:nth-child(even),
 .manager .manager-treeview div>div:nth-child(even),
@@ -482,21 +517,26 @@ input[type=submit] {
   outline: 1px solid var(--colorHighlightBgAlpha) !important
 }
 
-.vivaldi-tree .tree-row label>img,
-.vivaldi-tree .tree-row label .tree-row-image {
-  border-radius: 50%;
-  filter: grayscale(0.6)
-}
-
 .vivaldi-tree .tree-row svg {
   fill: var(--colorFgAlpha);
   stroke: var(--colorFgFaded)
 }
 
+.panel-group .panel.panel-bookmarks label svg {
+  margin-left: 0 !important
+  }
+
 
 /* Miscellaneous stuff
   ----------------------------
 */
+/* Rounds fav icons in lists */
+.vivaldi-tree .tree-row label>img,
+.vivaldi-tree .tree-row label .tree-row-image {
+  border-radius: 50% !important;
+  filter: grayscale(.2)
+}
+
 /* Scrollbar for internal pages */
 #browser ::-webkit-scrollbar {
   background-color: transparent !important;
@@ -548,31 +588,50 @@ input[type=range]::-webkit-slider-thumb:focus {
   right: 150px !important
 }
 
+.colorpicker .colorpicker-plot .colorpicker-plot-reticle {
+  position: relative !important;
+  z-index: 1 !important;
+  top: -10px !important;
+  left: -5px !important;
+  height: 10px !important;
+  width: 10px !important;
+  padding: 0 !important;
+  border-radius: 50% !important;
+  border: 1px solid hsl(0, 0%, 0%) !important;
+  box-shadow: 0 0 0 1px #fff !important;
+  background-color: hsla(0, 0%, 0%, 0) !important;
+}
+
 
 /* Hiding stuff
   ----------------------------
 */
-.color-behind-tabs-on .addressfield:focus-within,
-.color-behind-tabs-on .searchfield:focus-within,
-.addressfield:focus-within,
-.searchfield:focus-within,
+.color-behind-tabs-on .addressfield:focus-within, .color-behind-tabs-on .searchfield:focus-within,
+.addressfield:focus-within, .searchfield:focus-within,
 .toolbar.icons input[type=search] {
   box-shadow: none !important
 }
 
-.vivaldi-tree .tree-row.folder .item-count,
-.history .item-count,
-#history-panel .item-count,
-.favicon,
-.win #tabs-container .favicon,
-.win #tabs-container .tab.pinned:not(.active) .favicon,
-button.fip-previous,
-button.fip-next,
-button.fip-close,
+.vivaldi-tree .tree-row.folder .item-count, .history .item-count, #history-panel .item-count,
+button.fip-previous, button.fip-next, button.fip-close,
 input::-webkit-search-cancel-button {
   display: none
 }
 
 #fip-input-text::-webkit-search-cancel-button {
   appearance: none !important
+}
+
+.cb-image svg .bookmark-shadow, .thumbnail-image svg .bookmark-shadow {
+  fill: transparent !important
+}
+
+/* Hides background colours */
+[title=Default], [title=Blue], [title="Pro"] {
+	display:none !important;
+}
+
+/* Hides wallpapers in settings */
+[title=Vivaldi], [title=Human], [title="Hot Pink"], [title=Subtle], [title=Dark], [title=Blueprint], [title=Beach], [title=Light], [title=Sunset], [title="Starry Night"], [title="Pink Cloud"], [title=Jellyfish], [title="Purple Lake"], [title=Wave] {
+	display:none;
 }
