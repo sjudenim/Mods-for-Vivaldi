@@ -1,14 +1,14 @@
-(function() {
+(function () {
 
-    function toggleStyle() {
+    function panelToggleStyle() {
         const style = document.createElement('style');
         style.type = 'text/css';
         style.innerHTML = `
         .button-toolbar.panel-toggle {
             position: absolute;
-            right: 132px;
-            height: 34px !important;
-            width: 36px !important;
+            top: 0;
+            right: 120px;
+            transform: none !important;
         }
         .button-toolbar.panel-toggle:hover svg path {d: path('M16.5 18.5v-9l-7 4.5z') !important
         }
@@ -16,7 +16,6 @@
         }
         #main > div.toolbar.toolbar-addressbar.toolbar-mainbar.toolbar-large > div.button-toolbar.panel-toggle.paneltoggle > button:hover,
         #main > div.toolbar.toolbar-addressbar.toolbar-mainbar.toolbar-large > div.button-toolbar.panel-toggle.paneltoggle > button.active:hover {
-            background: var(--colorAccentBgFadedMore) !important;
             fill: var(--colorAccentFg);
             opacity: .7 !important;
         }
@@ -24,6 +23,7 @@
             background-color: var(--colorBgDarker) !important;
             fill: var(--colorHighlightBg);
             opacity: 1 !important;
+            
         }
     `;
         document.getElementsByTagName('head')[0].appendChild(style);
@@ -45,7 +45,7 @@
 
             if (panel.classList.contains('switcher')) {
                 panelpath.style = paneltogbtn;
-                toggleStyle();
+                panelToggleStyle();
             }
 
             paneltog.addEventListener('click', function() {
