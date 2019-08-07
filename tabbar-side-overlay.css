@@ -19,43 +19,44 @@
   width: 8px
 }
 
-#tabs-container.left::after {margin-left: 100%}
+#tabs-container.left::after {
+  margin-left: 100%
+}
 
-#tabs-container.right::before {margin-left: -8px}
+#tabs-container.right::before {
+  margin-left: -8px
+}
 
 #tabs-container.left:not(:hover) {
   transform: translateX(-100%);
   transition: transform .5s .6s !important
 }
 
-#tabs-container.right {right: 0}
+#tabs-container.right {
+  right: 0
+}
 
 #tabs-container.right:not(:hover) {
   transform: translateX(100%);
   transition: transform .5s .6s !important
 }
 
-#tabs-container.top {padding-right: 230px !important}
-
-/* Tab container buttons */
-#tabs-container.left .newtab,
-#tabs-container.right .newtab,
-#tabs-container.left .sync-and-trash-container,
-#tabs-container.right .sync-and-trash-container {
-  margin: 0 auto !important
+#tabs-container.top {
+  padding-right: 230px !important
 }
+
 
 /* Miscellaneous stuff
   ----------------------------
 */
 /* Desaturates inactive tabs to make the active one pop more. Meant for use with tab thumbnails */
 .tab-strip .tab:not(.active) {
-  filter: grayscale(100%) brightness(40%);
+  filter: grayscale(90%) brightness(60%);
   background-color: var(--colorBgDark) !important;
 }
 
 .tab-strip .tab:not(.active):hover {
-  filter: grayscale(0%) brightness(100%)
+  filter: grayscale(50%) brightness(80%)
 }
 
 .tab-strip .tab.active {
