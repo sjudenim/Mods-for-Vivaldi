@@ -9,10 +9,10 @@
   text-shadow: 0 0 1px var(--colorAccentFgAlpha) !important
 }
 
-/* Quick commands shadow */
-.quick-command-container {
-  box-shadow: 0 0 10px 0 rgba(0, 0, 0, .6) !important
-}
+/* Quick command container */
+.quick-command-container {box-shadow: 0 0 10px 0 rgba(0, 0, 0, .6) !important}
+
+#modal-bg > div {border-radius: 3px !important}
 
 /* Tabs
   ----------------------------
@@ -36,8 +36,7 @@
   fill: var(--colorHighlightBg);
 }
 
-.tabs-top:not(.mac).color-behind-tabs-on #tabs-container,
-.tabs-top.mac.hasfocus.color-behind-tabs-on #tabs-container {
+.tabs-top:not(.mac).color-behind-tabs-on #tabs-container, .tabs-top.mac.hasfocus.color-behind-tabs-on #tabs-container {
   background-image: none !important
 }
 
@@ -76,14 +75,12 @@
   border: 0 !important
 }
 
-#tabs-container .newtab:hover,
-#tabs-container .toggle-trash:hover {
+#tabs-container .newtab:hover, #tabs-container .toggle-trash:hover {
   fill: var(--colorHighlightBg) !important
 }
 
 /* Puts bottom tabs under the address bar */
-#tabs-container.no-thumbs.bottom,
-#tabs-container.view-thumbs.bottom {
+#tabs-container.no-thumbs.bottom, #tabs-container.view-thumbs.bottom {
   order: -1;
   padding-bottom: 0
 }
@@ -98,9 +95,7 @@
   background-color: var(--colorBgLighter) !important
 }
 
-.bookmark-bar {
-  order: -2
-}
+.bookmark-bar {order: -2}
 
 .toolbar.toolbar-addressbar {
   order: -3;
@@ -132,24 +127,16 @@
   fill: hsl(113, 57%, 38%) !important;
 }
 
-.SiteInfoButton.insecure,
-.SiteInfoButton.insecure:hover,
-.SiteInfoButton.insecure:active {
+.SiteInfoButton.insecure, .SiteInfoButton.insecure:hover, .SiteInfoButton.insecure:active {
   background-color: transparent;
   fill: hsl(12, 100%, 50%) !important
 }
 
-.siteinfo-text {
-  display: none
-}
+.siteinfo-text {display: none}
 
-.siteinfo-symbol:hover+.siteinfo-text {
-  display: block
-}
+.siteinfo-symbol:hover+.siteinfo-text {display: block}
 
-.drop_down:hover,
-.drop_down[data-selected],
-#mail_panel section ul li.selected {
+.drop_down:hover, .drop_down[data-selected], #mail_panel section ul li.selected {
   background-color: var(--colorHighlightBg) !important
 }
 
@@ -178,8 +165,7 @@ button.button-addressfield:hover {
 }
 
 /* Bookmark icon */
-path.bookmark-outline,
-clipPath#addBookmarkPath path {
+path.bookmark-outline, clipPath#addBookmarkPath path {
   d: path('M14.051 3.176a4.026 4.026 0 0 0-5.687 0L8 3.54l-.363-.364a4.026 4.026 0 0 0-5.687 0C.414 4.711.405 7.146 1.927 8.838c1.389 1.543 5.485 4.878 5.659 5.019.118.097.26.143.401.143h.014a.605.605 0 0 0 .415-.143c.173-.141 4.27-3.476 5.658-5.019 1.522-1.692 1.511-4.127-.023-5.662zm-.924 4.81C12.044 9.19 9.068 11.671 8 12.552c-1.069-.881-4.044-3.362-5.127-4.565C1.811 6.807 1.8 5.125 2.85 4.076c.536-.535 1.24-.804 1.943-.804s1.407.268 1.943.804l.8.8a.612.612 0 0 0 .342.172.635.635 0 0 0 .585-.172l.801-.801a2.752 2.752 0 0 1 3.886 0c1.048 1.05 1.038 2.732-.023 3.911z')
 }
 
@@ -191,10 +177,7 @@ button.button-on path.bookmark-outline {
   fill: var(--colorHighlightBg)
 }
 
-.add-bookmark-shadow,
-.bookmark-animated-fill {
-  display: none
-}
+.add-bookmark-shadow, .bookmark-animated-fill {display: none}
 
 #main>div.toolbar.toolbar-addressbar.toolbar-mainbar.toolbar-large>div.addressfield>div.toolbar.toolbar-small.toolbar-insideinput>div.button-toolbar.cjvgsbzxr000i3n670rebhqf3>button>svg>g>path.bookmark-animated-fill,
 #main>div.toolbar.toolbar-addressbar.toolbar-mainbar.toolbar-large>div.addressfield>div.toolbar.toolbar-small.toolbar-insideinput>div.button-toolbar.cjvgsbzxr000i3n670rebhqf3>button>svg>g>path.bookmark-outline {
@@ -211,7 +194,7 @@ button.button-on path.bookmark-outline {
 /* show pageload bar */
 .addressfield .pageload.progressing .pageload-indicator {
   position: fixed;
-  z-index: 99 !important;
+  z-index: 999 !important;
   left: 0;
   top: 0;
   height: 1px;
@@ -280,6 +263,10 @@ button.button-on path.bookmark-outline {
   background-color: transparent !important
 }
 
+.toolbar-default .button-toolbar > button {
+  background-image: linear-gradient(var(--colorBg), var(--colorBgDark)) !important
+}
+
 ._default-focus {
   outline: transparent !important;
   outline-offset: 0 !important
@@ -289,8 +276,7 @@ button.button-on path.bookmark-outline {
   display: inline !important
 }
 
-.toolbar.icons button,
-.toolbar.text button {
+.toolbar.icons button, .toolbar.text button {
   background-image: none !important;
   background-color: var(--colorBgDark) !important;
   border-color: var(--colorBg) !important;
@@ -298,8 +284,7 @@ button.button-on path.bookmark-outline {
   margin-top: -1px !important
 }
 
-.toolbar.icons button:hover,
-.toolbar.text button:hover {
+.toolbar.icons button:hover, .toolbar.text button:hover {
   background-image: none !important;
   background-color: var(--colorHighlightBg) !important;
   height: 28px !important;
@@ -314,21 +299,14 @@ button.button-on path.bookmark-outline {
   padding-top: 1px !important
 }
 
-#browser .sortselector .sortselector-dropdown,
-.sortselector .sortselector-button {
+#browser .sortselector .sortselector-dropdown, .sortselector .sortselector-button {
   background-color: var(--colorBg) !important
 }
 
-input[type=button],
-input[type=submit] {
-  background-image: none !important
-}
+input[type=button], input[type=submit] {background-image: none !important}
 
 /* Won't show horizontal menu and window buttons when no ui */
-#browser.minimal-ui:not(.tabs-top) .topmenu,
-#browser.minimal-ui:not(.tabs-top) .window-buttongroup {
-  display: none !important
-}
+#browser.minimal-ui:not(.tabs-top) .topmenu, #browser.minimal-ui:not(.tabs-top) .window-buttongroup {display: none !important}
 
 /* Window button group
   ----------------------------
@@ -373,15 +351,18 @@ input[type=submit] {
 /* Side panel
   ----------------------------
 */
-.panel>header,
-.panel section,
-#notes-panel .notes-editor .note.md {
-  background-color: var(--colorBgDarker) !important
+.panel > header {
+  background-color: var(--colorBg) !important
 }
 
-.panel-group,
-#panels-container.overlay .panel-group {
-  background-color: var(--colorBg) !important;
+.panel > header h1 {
+  text-align: center;
+  margin: -2px 0 2px 0;
+  font-size: 14px;
+  color: var(--colorFgFaded) !important
+}
+
+.panel section, .panel-group, #panels-container.overlay .panel-group {
   opacity: .98
 }
 
@@ -390,24 +371,43 @@ input[type=submit] {
 }
 
 .panel-group .panel-collapse-guard {
-  background-color: var(--colorBgDarker);
-  padding: 0 5px
+  background-color: var(--colorBgDark);
+  padding: 0 2px 0 0
+}
+
+.addbookmark-cardwrapper, .downloaddialog-cardwrapper, .panel#downloads .download-editor, .notes-cardwrapper {
+  background-color: var(--colorBg) !important;
+  margin: 0 !important
 }
 
 #switch {
   background-color: var(--colorBg) !important;
   box-shadow: none !important;
+  opacity: .98;
 }
 
-#switch button:hover {
+#switch button:hover, #switch > button.active:hover, #switch .addwebpanel-wrapper > button.active:hover {
   background-color: var(--colorAccentBgFadedMore) !important;
-  fill: var(--colorAccentFg);
+  fill: var(--colorHighlightBg);
   opacity: .8;
 }
 
-#switch .addwebpanel-wrapper > button.active, #switch > button.active {
-  background-color: var(--colorBgDarker) !important;
+#switch > button.active, #switch .addwebpanel-wrapper > button.active {
+  background-color: var(--colorBg) !important;
   fill: var(--colorHighlightBg);
+}
+
+#switch > button.active:before, #switch .addwebpanel-wrapper > button.active:before {
+  position: absolute;
+  content: '';
+  border-color: hsla(0, 0%, 0%, 0) hsla(0, 0%, 0%, 0) hsla(0, 0%, 0%, 0) var(--colorBgDark);
+  border-style: solid;
+  border-width: 6px;
+  bottom: 10px;
+  left: 0;
+  height: 0;
+  width: 0;
+  z-index: 2;
 }
 
 #switch .addwebpanel-wrapper>button.downloads.in-progress div.progress,
@@ -431,19 +431,14 @@ input[type=submit] {
 }
 
 /* Hides webpanel suggestions */
-.webpanel-suggestions {
-  display: none
-}
+.webpanel-suggestions {display: none}
 
 /* Notes
   ----------------------------
 */
-.notes svg path {
-  d: path('M5.5 17.044V20h3.167l9.167-8.634-3.166-2.956L5.5 17.044zm14.75-7.933c.334-.311.334-.778 0-1.089l-1.917-1.789a.846.846 0 0 0-1.167 0l-1.5 1.4 3.167 2.956 1.417-1.478z');
-}
+.notes svg path {d: path('M5.5 17.044V20h3.167l9.167-8.634-3.166-2.956L5.5 17.044zm14.75-7.933c.334-.311.334-.778 0-1.089l-1.917-1.789a.846.846 0 0 0-1.167 0l-1.5 1.4 3.167 2.956 1.417-1.478z')}
 
-#notes-panel .notes-editor:hover .add-attachments-wrapper button:hover,
-#notes-panel .notes-editor .add-attachments-wrapper label:hover {
+#notes-panel .notes-editor .add-attachments-wrapper button:hover, #notes-panel .notes-editor .add-attachments-wrapper label:hover {
   background-color: var(--colorAccentBgFadedMore) !important
 }
 
@@ -461,25 +456,23 @@ input[type=submit] {
   border: 0;
 }
 
+#notes-panel .notes-editor .note.md {
+  background-color: var(--colorBgDark)
+}
+
 /* Bookmarks and History
   ----------------------------
 */
-.manager .manager-content,
-.vivaldi-tree,
-.manager>.toolbar {
-  background-color: var(--colorBgDarker) !important;
-  opacity: .8;
+.manager .manager-content, .vivaldi-tree, .manager>.toolbar, .startpage .history .more-info {
+  background-color: var(--colorBgDark) !important;
+  opacity: .98;
   backdrop-filter: blur(10px)
-}
-
-.vivaldi-tree {
-  opacity: 1
 }
 
 .vivaldi-tree div>div:nth-child(even),
 .manager .manager-treeview div>div:nth-child(even),
 .startpage .history .manager-content .history-tree div>div:nth-child(even) {
-  background-color: var(--colorBgDark)
+  background-color: var(--colorBg)
 }
 
 .manager .manager-editor {
@@ -491,19 +484,14 @@ input[type=submit] {
   background-color: transparent
 }
 
-.addbookmark-cardwrapper,
-.downloaddialog-cardwrapper,
-.notes-cardwrapper {
-  margin: 0 !important
-}
 
 .win .vivaldi-tree .tree-item[data-lead] {
   outline: 1px solid var(--colorHighlightBgAlpha) !important
 }
 
 .vivaldi-tree .tree-row svg {
-  fill: var(--colorFgAlpha);
-  stroke: var(--colorFgFaded)
+  fill: var(--colorFg);
+  stroke: var(--colorFg)
 }
 
 .panel-group .panel.panel-bookmarks label svg {
@@ -514,8 +502,7 @@ input[type=submit] {
   ----------------------------
 */
 /* Rounds fav icons in lists */
-.vivaldi-tree .tree-row label>img,
-.vivaldi-tree .tree-row label .tree-row-image {
+.vivaldi-tree .tree-row label>img, .vivaldi-tree .tree-row label .tree-row-image {
   border-radius: 50% !important;
   filter: grayscale(.2)
 }
@@ -553,23 +540,14 @@ input[type=range] {
   background-color: var(--colorBgDarker)
 }
 
-input[type=range]::-webkit-slider-thumb,
-input[type=range]::-webkit-slider-thumb:active,
-input[type=range]::-webkit-slider-thumb:focus {
+input[type=range]::-webkit-slider-thumb, input[type=range]::-webkit-slider-thumb:active, input[type=range]::-webkit-slider-thumb:focus {
   border-width: 2px !important
 }
 
-/* Adjusts the size of the side panel in the Settings page */
-.vivaldi-settings .settings-sidebar .settings-navigation {
-  min-width: 250px !important
-}
-
-/* This will adjust the header for the "Settings in a Tab" pop up window */
-.popup .vivaldi-settings .settings-header {
-  background-color: transparent !important;
-  left: 150px !important;
-  right: 150px !important
-}
+/* Settings panel
+  ----------------------------
+*/
+.vivaldi-settings .settings-sidebar .settings-navigation {min-width: 200px !important}
 
 .colorpicker .colorpicker-plot .colorpicker-plot-reticle {
   position: relative !important;
@@ -585,6 +563,10 @@ input[type=range]::-webkit-slider-thumb:focus {
   background-color: hsla(0, 0%, 0%, 0) !important;
 }
 
+.info {
+  font-size: 12px !important;
+  color: var(--colorFgFaded) !important;
+}
 
 /* Hiding stuff
   ----------------------------
