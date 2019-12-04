@@ -3,7 +3,6 @@ setTimeout(function wait() {
     const windowButtons = document.querySelector('.window-buttongroup');
     if (windowButtons) {
         adrBar.appendChild(windowButtons);
-        windowButtonStyle();
     } else {
         setTimeout(wait, 300);
     }
