@@ -352,7 +352,7 @@ input[type=button], input[type=submit] {background-image: none !important}
   ----------------------------
 */
 .panel > header {
-  background-color: var(--colorBg) !important
+  background-color: var(--colorBgDark) !important
 }
 
 .panel > header h1 {
