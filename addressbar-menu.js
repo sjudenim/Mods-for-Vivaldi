@@ -22,7 +22,6 @@ function menuStyle() {
         background-color: var(--colorHighlightBg) !important;
         fill: white !important
     }
-      
     #browser .vivaldi:hover span svg {
         transform: scale(1) !important
     }
