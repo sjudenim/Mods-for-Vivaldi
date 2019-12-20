@@ -7,8 +7,7 @@ function reloadStyle() {
         fill: var(--colorFgFaded) !important;
         margin-top: -3px
     }
-      
-      .toolbar .button-toolbar.reload svg {
+    .toolbar .button-toolbar.reload svg {
         flex: 0 0 20px !important;
         width: 20px !important;
         height: 20px !important
