@@ -2,7 +2,7 @@
   background-color: var(--colorBgDark) !important
 }
 
-/* Navigation bar
+/* Animate Navigation bar
 .startpage .startpage-navigation {
   position: absolute;
   z-index: 1;
@@ -15,7 +15,6 @@
   width: 100%;
   transition: .3s ease-out .5s !important
 }
-
 .startpage .startpage-navigation::after {
   content: '';
   display: block;
@@ -25,40 +24,34 @@
   height: 10px;
   width: 100%
 }
-
 .startpage .startpage-navigation:hover {
   top: 0;
   transition: .3s ease-out .3s !important
 }
-
 .button-startpage.active,
 .button-startpage:active {
   background-color: transparent !important;
   border: 0 !important
 }
-
 .startpage .button-startpage {
   top: 2px
 }
-
 .startpage .button-startpage:hover,
 button.button-startpage:hover svg {
   color: var(--colorHighlightBg);
   fill: var(--colorHighlightBg)
 }
-
 .startpage .startpage-navigation .startpage-navigation-group,
 .startpage-navigation-group .editable-title-container {
   border: none !important
 }
-
 .startpage .startpage-navigation:not(:hover) .button-startpage:not(.active) {
   display: none
-}*/
+}
 
-.startpage .startpage-navigation {display: none}
-
-
+/* Hide Navigation bar */
+ .startpage .startpage-navigation {display: none}
+ 
 /* Speed Dial content
   ----------------------------
 */
@@ -83,8 +76,7 @@ button.button-startpage.up svg {
   display: none
 }
 
-button.button-startpage:after,
-.startpage .startpage-folder-navigation button:after {
+button.button-startpage:after, .startpage .startpage-folder-navigation button:after {
   content: '';
   display: block;
   position: initial;
@@ -104,13 +96,8 @@ button.button-startpage:after,
 /* Speed Dial tiles
   ----------------------------
 */
-.sdwrapper .dial-columns {
-  position: absolute !important;
-  margin-left: -8px !important
-}
-
-.dials .dial .thumbnail {
-  height: 95% !important
+.speeddial .dial {
+  height: 16.5em !important
 }
 
 .dials .dial .thumbnail-image {
@@ -123,11 +110,15 @@ button.button-startpage:after,
   border-radius: 0 !important
 }
 
-.thumbnail-image,
-.dials .dial.empty .thumbnail-image,
-.speeddial .draggable.dial {
+.thumbnail-image, .dials .dial.empty .thumbnail-image, .speeddial .draggable.dial {
   background-color: transparent !important;
   background-image: none
+}
+
+/* Dial folders */
+.startpage .startpage-folder-navigation {
+  height: 0 !important;
+  margin: 0 !important;
 }
 
 .dials .dial.folder .folder-flap {
@@ -139,8 +130,7 @@ button.button-startpage:after,
   width: 100% !important
 }
 
-.cb-image svg .folder-tab-color,
-.thumbnail-image svg .folder-tab-color {
+.cb-image svg .folder-tab-color, .thumbnail-image svg .folder-tab-color {
   fill: var(--colorFgFaded) !important
 }
 
@@ -151,11 +141,11 @@ button.button-startpage:after,
 
 .dials .dial:not(.folder) .button-title {
   display: initial !important;
-  background-color: var(--colorBgDarker) !important;
+  background-color: var(--colorBgDark) !important;
   opacity: .95;
   width: 100vw !important;
   height: 23px;
-  margin-top: -42px;
+  margin-top: -56px;
   border-radius: 0;
   font-size: .98em;
   color: var(--colorFg)
@@ -163,7 +153,7 @@ button.button-startpage:after,
 
 .dials .dial:not(.folder):hover .button-title {
   transform: scale(1.028, 1);
-  margin-top: -36px;
+  margin-top: -48px;
   color: var(--colorFgIntense)
 }
 
@@ -171,9 +161,8 @@ button.button-startpage:after,
   margin-top: 0 !important
 }
 
-.dials .dial .editable-title-container>input,
-.dials .dial .editable-title-container>input:active {
-  margin-top: -21px;
+.dials .dial .editable-title-container>input, .dials .dial .editable-title-container>input:active {
+  margin-top: -32px;
   padding-top: 2px;
   width: 12.5 !important;
   font-size: .85em;
