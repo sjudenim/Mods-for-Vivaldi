@@ -1,0 +1,349 @@
+/*
+ * Mask for the address bar
+ * Written by Tam710562
+ * Thanks to sjudenim and LonM for bug fixes and new ideas
+ */
+
+ .addressfield-mask {
+  cursor: text;
+  padding: 0;
+  padding-left: 6px;
+  width: 100%;
+  height: 22px;
+  line-height: normal;
+  background-color: transparent;
+  border: 0;
+  box-shadow: none;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  right: 0px;
+  bottom: 0px;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  z-index: -1;
+}
+
+.addressfield-mask:empty:before {
+  content: attr(placeholder);
+  opacity: 0.45;
+}
+
+.addressfield-mask div,
+.addressfield-mask div:after,
+.addressfield-mask div:before {
+  display: inline-flex;
+  position: relative;
+  white-space: pre;
+  height: 100%;
+  align-items: center;
+}
+
+input.vivaldi-addressfield {
+  opacity: 0;
+}
+
+.addressfield .UrlField:not(:focus-within) {
+  position: relative;
+}
+
+#browser:not(.isblurred) .addressfield > .UrlBar-UrlFieldWrapper:hover .addressfield-mask,
+#browser:not(.isblurred) .addressfield > .UrlBar-UrlFieldWrapper input.vivaldi-addressfield:focus + .addressfield-mask,
+#browser:not(.isblurred) .addressfield > .UrlBar-UrlFieldWrapper input.vivaldi-addressfield:first-child:nth-last-child(3) + .addressfield-mask {
+  display: none;
+}
+
+#browser:not(.isblurred) .addressfield > .UrlBar-UrlFieldWrapper:hover input.vivaldi-addressfield,
+#browser:not(.isblurred) .addressfield > .UrlBar-UrlFieldWrapper input.vivaldi-addressfield:focus,
+#browser:not(.isblurred) .addressfield > .UrlBar-UrlFieldWrapper input.vivaldi-addressfield:first-child:nth-last-child(3) {
+  opacity: 1;
+}
+
+/* Theme 1 */
+.theme-1.addressfield-mask .protocol-sub,
+.theme-1.addressfield-mask .protocol,
+.theme-1.addressfield-mask .protocol:after,
+.theme-1.addressfield-mask .host .host-sub,
+.theme-1.addressfield-mask .post,
+.theme-1.addressfield-mask .path-full {
+  /* color: var(--colorFgFadedMore); */
+  /* color: graytext; */
+  color: var(--colorFg);
+  opacity: 0.7;
+}
+
+.theme-1.addressfield-mask .host {
+  color: var(--colorFg);
+}
+
+.addressfield > .secure + .UrlBar-UrlFieldWrapper .theme-1.addressfield-mask .protocol,
+.addressfield > .certified + .UrlBar-UrlFieldWrapper .theme-1.addressfield-mask .protocol {
+  color: #46c235;
+  opacity: 1;
+}
+
+.theme-1.addressfield-mask .protocol[data-protocol="vivaldi"] {
+  color: var(--colorHighlightBg);
+  opacity: 1;
+}
+
+.theme-1.addressfield-mask .protocol-sub:after {
+  content: ':';
+}
+
+.theme-1.addressfield-mask .protocol:after {
+  content: '://';
+}
+
+.theme-1.addressfield-mask .host .host-sub:after {
+  content: '.';
+}
+
+.theme-1.addressfield-mask .search-engine .search-nickname:after {
+  content: ' ';
+}
+
+.theme-1.addressfield-mask .post:before {
+  content: ':';
+}
+
+.theme-1.addressfield-mask .path:before,
+.theme-1.addressfield-mask .path .path-item:not(:first-child):before {
+  content: '/';
+}
+
+.theme-1.addressfield-mask .search:before {
+  content: '?';
+}
+
+.theme-1.addressfield-mask .search .search-item:not(:first-child):before {
+  content: '&';
+}
+
+.theme-1.addressfield-mask .search .search-item .search-value:before {
+  content: '=';
+}
+
+.theme-1.addressfield-mask .hash:before {
+  content: '#';
+}
+
+.private .theme-1.addressfield-mask .protocol-sub,
+.private .theme-1.addressfield-mask .protocol,
+.private .theme-1.addressfield-mask .protocol:after,
+.private .theme-1.addressfield-mask .host .host-sub,
+.private .theme-1.addressfield-mask .post,
+.private .theme-1.addressfield-mask .path-full,
+.private .theme-1.addressfield-mask .host {
+  color: var(--colorBgIntense);
+}
+
+.private .theme-1.addressfield-mask .protocol[data-protocol="vivaldi"] {
+  color: var(--colorHighlightBg);
+}
+
+/* Theme 2 */
+.theme-2.addressfield-mask .path-full > div:not(:empty):before {
+  content: '';
+  height: 12px;
+  position: absolute;
+  left: -6px;
+  top: 50%;
+  margin-top: -6px;
+  border-left: 1px solid var(--colorFg);
+}
+
+.theme-2.addressfield-mask .path-full > div:not(:empty) {
+  margin-left: 6px;
+}
+
+.theme-2.addressfield-mask .protocol-sub,
+.theme-2.addressfield-mask .protocol,
+.theme-2.addressfield-mask .host,
+.theme-2.addressfield-mask .search-engine .search-nickname,
+.theme-2.addressfield-mask .search-engine .search-query:not(:empty),
+.theme-2.addressfield-mask .search-engine.default:before,
+.theme-2.addressfield-mask .post:not(:empty),
+.theme-2.addressfield-mask .path-item:not(:empty),
+.theme-2.addressfield-mask .hash {
+  background-color: var(--colorFg);
+  color: var(--colorBgIntense);
+  margin-right: 5px;
+  padding-left: 3px;
+  padding-right: 3px;
+  border-radius: var(--radiusRoundedLess);
+}
+
+.theme-2.addressfield-mask .search .search-item {
+  margin-right: 5px;
+}
+
+.addressfield > .secure + .UrlBar-UrlFieldWrapper .theme-2.addressfield-mask .protocol,
+.addressfield > .certified + .UrlBar-UrlFieldWrapper .theme-2.addressfield-mask .protocol {
+  color: #46c235;
+  background-color: rgba(85, 204, 68, 0.2);
+}
+
+.theme-2.addressfield-mask .host,
+.theme-2.addressfield-mask .search-engine .search-nickname,
+.theme-2.addressfield-mask .search-engine.default:before {
+  background-color: var(--colorAccentBg);
+  color: var(--colorAccentFg);
+  font-weight: 700;
+}
+
+.theme-2.addressfield-mask .host .host-sub {
+  opacity: 0.7;
+}
+
+.theme-2.addressfield-mask .host .host-sub:after {
+  content: '.';
+}
+
+.theme-2.addressfield-mask .host .host-extension,
+.theme-2.addressfield-mask .search-engine .search-nickname {
+  text-indent: -9999px; 
+}
+
+.theme-2.addressfield-mask .host .host-extension:after {
+  text-indent: 0;
+  content: attr(data-host-extension-name);
+}
+
+.theme-2.addressfield-mask .search-engine .search-nickname:after {
+  text-indent: 0;
+  content: attr(data-search-name);
+}
+
+.theme-2.addressfield-mask .search-engine.default:before {
+  content: attr(data-search-name-default);
+}
+
+.theme-2.addressfield-mask .search .search-item .search-key {
+  background-color: var(--colorAccentBgDarker);
+  color: var(--colorAccentFg);
+  padding-left: 3px;
+  padding-right: 3px;
+  border-top-left-radius: var(--radiusRoundedLess);
+  border-bottom-left-radius: var(--radiusRoundedLess);
+}
+
+.theme-2.addressfield-mask .search .search-item .search-key:last-child {
+  border-top-right-radius: var(--radiusRoundedLess);
+  border-bottom-right-radius: var(--radiusRoundedLess);
+}
+
+.theme-2.addressfield-mask .search .search-item .search-value {
+  background-color: var(--colorFg);
+  color: var(--colorBgIntense);
+  padding-left: 3px;
+  padding-right: 3px;
+  border-top-right-radius: var(--radiusRoundedLess);
+  border-bottom-right-radius: var(--radiusRoundedLess);
+}
+
+.theme-2.addressfield-mask .search .search-item .search-value:first-child {
+  border-top-left-radius: var(--radiusRoundedLess);
+  border-bottom-left-radius: var(--radiusRoundedLess);
+}
+
+.private .theme-2.addressfield-mask .path-full > div:not(:empty):before {
+  background-color: var(--colorBgIntense);
+}
+
+.private .theme-2.addressfield-mask .protocol-sub,
+.private .theme-2.addressfield-mask .protocol,
+.private .theme-2.addressfield-mask .search-engine .search-nickname,
+.private .theme-2.addressfield-mask .search-engine .search-query:not(:empty),
+.private .theme-2.addressfield-mask .post:not(:empty),
+.private .theme-2.addressfield-mask .path-item:not(:empty),
+.private .theme-2.addressfield-mask .hash,
+.private .theme-2.addressfield-mask .search .search-item .search-value {
+  background-color: var(--colorBgIntense);
+  color: var(--colorFgIntense);
+}
+
+/* Theme 3 */
+.theme-3.addressfield-mask {
+  justify-content: center;
+}
+
+.theme-3.addressfield-mask .protocol-sub,
+.theme-3.addressfield-mask .protocol,
+.theme-3.addressfield-mask .host .host-sub,
+.theme-3.addressfield-mask .search-engine .search-nickname,
+.theme-3.addressfield-mask .post {
+  opacity: 0.7;
+  color: var(--colorFg);
+  opacity: .7;
+  font-weight: initial
+}
+
+.theme-3.addressfield-mask .host {
+  color: var(--colorFg);
+  font-weight: bold
+}
+
+.theme-3.addressfield-mask .protocol:not([data-protocol="file"]):not([data-protocol="vivaldi"]):not([data-protocol="chrome"]):not([data-protocol="chrome-extension"]),
+.theme-3.addressfield-mask .path-full {
+  display: none;
+}
+
+.theme-3.addressfield-mask .host .host-extension,
+.theme-3.addressfield-mask .search-engine .search-nickname {
+  text-indent: -9999px;
+  
+}
+
+.theme-3.addressfield-mask .host .host-extension:after {
+  text-indent: 0;
+  content: attr(data-host-extension-name);
+}
+
+.theme-3.addressfield-mask .search-engine .search-nickname:after {
+  text-indent: 0;
+  content: attr(data-search-name);
+  margin-right: 5px;
+}
+
+.theme-3.addressfield-mask .protocol-sub:after {
+  content: ':';
+}
+
+.theme-3.addressfield-mask .protocol:not([data-protocol="file"]):after {
+  content: '://';
+}
+
+.theme-3.addressfield-mask .host .host-sub:after {
+  content: '.';
+}
+
+.theme-3.addressfield-mask .post:before {
+  content: ':';
+}
+
+.theme-3.addressfield-mask .path:before,
+.theme-3.addressfield-mask .path .path-item:not(:first-child):before {
+  content: '/';
+}
+
+.theme-3.addressfield-mask .search:before {
+  content: '?';
+}
+
+.theme-3.addressfield-mask .search .search-item:not(:first-child):before {
+  content: '&';
+}
+
+.theme-3.addressfield-mask .search .search-item .search-value:before {
+  content: '=';
+}
+
+.theme-3.addressfield-mask .hash:before {
+  content: '#';
+}
+
+input.theme-3.url {
+  text-align: center;
+}
