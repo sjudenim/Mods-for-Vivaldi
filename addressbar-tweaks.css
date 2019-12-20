@@ -1,16 +1,15 @@
 /* Removes titlebar */
-#header {
-  min-height: 0;
-  z-index: auto
+#header {min-height: 0}
+
+.win.normal .toolbar-mainbar {left: auto !important}
+
+.toolbar.toolbar-droptarget.toolbar-mainbar.toolbar-noflex.toolbar-large {
+  position: absolute;
+  padding-left: 40px;
 }
 
-.toolbar-addressbar {padding: 0 120px}
-
-/* Removes line under Addressbar */
-.address-top .toolbar-addressbar:after,
-.address-top .toolbar-mainbar:after {
-  display: none
-}
+/* Line under Addressbar */
+.address-top .toolbar-addressbar:after, .address-top .toolbar-mainbar:after {display: none}
 
 /* Addressfield
   ----------------------------
@@ -24,7 +23,8 @@
   height: 22px !important;
   margin: auto !important;
   background-color: transparent !important;
-  border-radius: 0 !important
+  border-radius: 0 !important;
+  z-index: 99;
 }
 
 .color-behind-tabs-on .addressfield {
@@ -37,9 +37,7 @@
   text-align: center;
 }
 
-.addressfield .pageload .pageload-ticker {
-  display: none
-}
+.addressfield .pageload .pageload-ticker {display: none}
 
 .toolbar-insideinput.toolbar-insideinput.toolbar-insideinput>.button-toolbar button:hover :not(:active):not(:focus):not(.button-pressed),
 .toolbar-insideinput.toolbar-insideinput.toolbar-insideinput>.toolbar-group>.button-toolbar button:hover :not(:active):not(:focus):not(.button-pressed),
@@ -56,28 +54,13 @@ button {
   border-color: transparent !important
 }
 
-.toolbar.toolbar-droptarget.toolbar-mainbar.toolbar-noflex.toolbar-large {
-  background-color: var(--colorBg);
-  position: absolute;
-  top: -34px;
-  left: 40px;
-  transition: .3s ease-out .5s !important
+.toolbar-mainbar > .button-toolbar > button:hover {
+  background-color: var(--colorAccentBgFadedMore) !important;
+  fill: var(--colorAccentFg) !important;
+  opacity: .7;
 }
 
-.toolbar.toolbar-droptarget.toolbar-mainbar.toolbar-noflex.toolbar-large::before {
-  content: '';
-  display: block;
-  position: absolute;
-  margin-top: 20px;
-  height: 5px;
-  width: 100%
-}
-
-.toolbar.toolbar-droptarget.toolbar-mainbar.toolbar-noflex.toolbar-large:hover {
-  top: 0;
-  transition: .3s ease-out .3s !important
-}
-
+/* Dropdown menu */
 .toolbar-large .button-popup.button-popup-below {
   top: 45px;
 }
@@ -85,23 +68,37 @@ button {
 /* Extensions
   ----------------------------
 */
-.toolbar-mainbar > .button-toolbar.button-narrow > button svg path {d: path('M12 6v2h2V6zm0 6v2h2v-2zm0 6v2h2v-2z')}
+.button-toolbar[title="Toggle extensions"] > button {width: 34px}
 
-.toolbar-mainbar > .button-toolbar.button-narrow > button svg {opacity: .2}
+#main > div.toolbar.toolbar-addressbar.toolbar-mainbar.toolbar-large > div.toolbar.toolbar-mainbar.toolbar-extensions.toolbar-large > div > button > svg path {d: path('M10.513 8L10 8.469 14.973 13 10 17.531l.513.469L16 13z')}
 
-.toolbar-mainbar > .button-toolbar.button-narrow > button:hover svg {opacity: .7}
+#main > div.toolbar.toolbar-addressbar.toolbar-mainbar.toolbar-large > div.toolbar.toolbar-mainbar.toolbar-extensions.toolbar-large > div > button > svg {opacity: .9}
+
+#main > div.toolbar.toolbar-addressbar.toolbar-mainbar.toolbar-large > div.toolbar.toolbar-mainbar.toolbar-extensions.toolbar-large > div > button:hover svg {opacity: .9}
+
+#main > div.toolbar.toolbar-addressbar.toolbar-mainbar.toolbar-large > div.toolbar.toolbar-mainbar.toolbar-extensions.toolbar-large > div:nth-child(5) > button > svg {
+  fill: var(--colorHighlightBg);
+  opacity: 1
+}
+
+#main > div.toolbar.toolbar-addressbar.toolbar-mainbar.toolbar-large > div.toolbar.toolbar-mainbar.toolbar-extensions.toolbar-large > div:nth-child(5) > button:hover > svg {
+  background-color: var(--colorAccentBgFadedMore) !important;
+  fill: var(--colorAccentFg) !important;
+  opacity: .7;
+}
 
 .toolbar.toolbar-mainbar.toolbar-extensions.toolbar-large {
   position: absolute;
-  left: calc(50vw + 22.5vw);
+  left: calc(50vw + 22.5vw - 1px);
   direction: rtl
 }
 
-.toolbar-extensions .button-toolbar>button>img {
+.toolbar-extensions .button-toolbar > button > img {
   filter: grayscale(100%) contrast(100%) opacity(80%);
 }
 
-.toolbar-extensions .button-toolbar>button:hover>img {
+.toolbar-extensions .button-toolbar > button:hover > img {
+  background-color: var(--colorAccentBgFadedMore) !important;
   filter: grayscale(0%) contrast(100%) opacity(100%);
 }
 
