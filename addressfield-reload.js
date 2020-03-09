@@ -3,14 +3,14 @@ function reloadStyle() {
     style.type = 'text/css';
     style.innerHTML = `
     .toolbar .button-toolbar.reload {
-        order: 8;
+        order: 1;
         fill: var(--colorFgFaded) !important;
-        margin-top: -3px
+        margin-top: -1px
     }
     .toolbar .button-toolbar.reload svg {
-        flex: 0 0 20px !important;
-        width: 20px !important;
-        height: 20px !important
+        flex: 0 0 21px !important;
+        width: 21px !important;
+        height: 21px !important
     }
       
     `;
@@ -18,7 +18,7 @@ function reloadStyle() {
 };
 
 setTimeout(function wait() {
-    const adrField = document.querySelector('.addressfield');
+    const adrField = document.querySelector('.toolbar-small.toolbar-insideinput');
     const reload = document.querySelector('.button-toolbar.reload');
     if (reload) {
         adrField.appendChild(reload);
