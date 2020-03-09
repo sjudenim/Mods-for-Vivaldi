@@ -1,8 +1,6 @@
 /* Removes titlebar */
 #header {min-height: 0}
 
-.win.normal .toolbar-mainbar {left: auto !important}
-
 .toolbar.toolbar-droptarget.toolbar-mainbar.toolbar-noflex.toolbar-large {
   position: absolute;
   padding-left: 40px;
@@ -18,7 +16,7 @@
   border: 0 !important;
   outline: 0 !important;
   outline-offset: 0 !important;
-  padding: 0 0 0 5px !important;
+  padding: 0 5px !important;
   max-width: 45vw;
   height: 22px !important;
   margin: auto !important;
@@ -46,6 +44,8 @@
   fill: var(--colorHighlightBg) !important
 }
 
+.button-toolbar > button[title="Show typed history"] {display: none}
+
 /* Toolbar buttons
   ----------------------------
 */
@@ -70,18 +70,18 @@ button {
 */
 .button-toolbar[title="Toggle extensions"] > button {width: 34px}
 
-#main > div.toolbar.toolbar-addressbar.toolbar-mainbar.toolbar-large > div.toolbar.toolbar-mainbar.toolbar-extensions.toolbar-large > div > button > svg path {d: path('M10.513 8L10 8.469 14.973 13 10 17.531l.513.469L16 13z')}
+#main > div.toolbar.toolbar-addressbar.toolbar-mainbar.toolbar-large > div.toolbar.toolbar-mainbar.toolbar-extensions.toolbar-large > div > button > span > svg > path {d: path('M10.513 8L10 8.469 14.973 13 10 17.531l.513.469L16 13z')}
 
-#main > div.toolbar.toolbar-addressbar.toolbar-mainbar.toolbar-large > div.toolbar.toolbar-mainbar.toolbar-extensions.toolbar-large > div > button > svg {opacity: .9}
+.toolbar.toolbar-mainbar.toolbar-extensions.toolbar-large > div > button > svg {opacity: .9}
 
-#main > div.toolbar.toolbar-addressbar.toolbar-mainbar.toolbar-large > div.toolbar.toolbar-mainbar.toolbar-extensions.toolbar-large > div > button:hover svg {opacity: .9}
+.toolbar.toolbar-mainbar.toolbar-extensions.toolbar-large > div > button:hover svg {opacity: .9}
 
-#main > div.toolbar.toolbar-addressbar.toolbar-mainbar.toolbar-large > div.toolbar.toolbar-mainbar.toolbar-extensions.toolbar-large > div:nth-child(5) > button > svg {
+#main > div.toolbar.toolbar-addressbar.toolbar-mainbar.toolbar-large > div.toolbar.toolbar-mainbar.toolbar-extensions.toolbar-large > div:nth-child(5) > button > span > svg {
   fill: var(--colorHighlightBg);
   opacity: 1
 }
 
-#main > div.toolbar.toolbar-addressbar.toolbar-mainbar.toolbar-large > div.toolbar.toolbar-mainbar.toolbar-extensions.toolbar-large > div:nth-child(5) > button:hover > svg {
+.toolbar.toolbar-mainbar.toolbar-extensions.toolbar-large > div:nth-child(5) > button:hover > svg {
   background-color: var(--colorAccentBgFadedMore) !important;
   fill: var(--colorAccentFg) !important;
   opacity: .7;
