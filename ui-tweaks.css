@@ -600,3 +600,6 @@ input::-webkit-search-cancel-button {
 [title=Vivaldi], [title=Human], [title="Hot Pink"], [title=Subtle], [title=Dark], [title=Blueprint], [title=Beach], [title=Light], [title=Sunset], [title="Starry Night"], [title="Pink Cloud"], [title=Jellyfish], [title="Purple Lake"], [title=Wave] {
 	display:none;
 }
+
+/* Hides dropdown arrow for history in the address field */
+.button-toolbar > button[title="Show typed history"], .button-toolbar > button[title="Enter an address to activate typed history"] {display: none !important}
