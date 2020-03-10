@@ -1,0 +1,74 @@
+.zoom-parent {
+  display: inline-block;
+  position: relative;
+}
+
+.zoom-panel {
+  width: 0;
+  height: 24px;
+  position: absolute;
+  z-index: 1;
+  bottom: -11.5px;
+  right: 0;
+  padding-top: 2px;
+  overflow-x: hidden;
+  overflow-y: hidden;
+  transition: 0.5s !important;
+  background: var(--colorBgDark);
+  opacity: .5;
+}
+
+.expanded-nav-c {
+  border-radius: 4px;
+  width: 100px !important;
+  padding-left: 5px;
+  opacity: 1;
+}
+
+.expanded-left-c {margin-right: 100px !important}
+
+.page-zoom-controls-c, .button-toolbar-c {display: inline-block}
+
+#zoomBtn.active {fill: var(--colorHighlightBg)}
+
+.button-toolbar-c > button {
+  height: 22px;
+  color: inherit;
+  align-items: center;
+  justify-content: center;
+}
+
+.button-toolbar-c > button svg {
+  margin-top: -1px;
+  height: 18px;
+  width: 18px;
+}
+
+.button-toolbar-c > button:hover {
+  background-color: transparent;
+  fill: var(--colorHighlightBg)
+}
+
+.button-textonly-c {
+  width: 100% !important;
+  padding-right: 8px !important;
+  padding-left: 8px !important;
+}
+
+.zoom-percent-c {
+  align-self: center;
+  text-align: center;
+  width: 40px;
+  display: inline-block;
+}
+
+.zoom-hover-target {transition: 0.5s !important}
+
+.reset-zoom-c {
+  display: inline-block;
+  position: absolute;
+  margin-left: 20px;
+  margin-top: -2px;
+  z-index: 5;
+  opacity: 0;
+}
