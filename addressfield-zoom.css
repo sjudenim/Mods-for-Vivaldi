@@ -4,17 +4,17 @@
 }
 
 .zoom-panel {
+  background: var(--colorBgDark);
+  position: absolute;
   width: 0;
   height: 24px;
-  position: absolute;
-  z-index: 1;
   bottom: -11.5px;
   right: 0;
   padding-top: 2px;
   overflow-x: hidden;
   overflow-y: hidden;
   transition: 0.5s !important;
-  background: var(--colorBgDark);
+  z-index: 1;
   opacity: .5;
 }
 
@@ -28,6 +28,8 @@
 .expanded-left-c {margin-right: 100px !important}
 
 .page-zoom-controls-c, .button-toolbar-c {display: inline-block}
+
+#zoomBtn.active {fill: var(--colorHighlightBg)}
 
 .button-toolbar-c > button {
   height: 22px;
