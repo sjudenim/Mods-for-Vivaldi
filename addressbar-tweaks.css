@@ -12,6 +12,7 @@
 /* Addressfield
   ----------------------------
 */
+/* Edge style
 .addressfield {
   border: 0 !important;
   outline: 0 !important;
@@ -30,6 +31,20 @@
   border-right: 1px solid var(--colorFgAlpha) !important
 }
 
+/* Chrome style */
+.addressfield {
+  border: 0 !important;
+  outline: 0 !important;
+  outline-offset: 0 !important;
+  padding: 3px 5px !important;
+  max-width: 45vw;
+  height: 28px !important;
+  margin: auto !important;
+  background-color: var(--colorBgDarker);
+  border-radius: 25px !important;
+  z-index: 99;
+}
+
 .addressfield form input.url {
   margin-top: 1px;
   text-align: center;
@@ -43,8 +58,6 @@
   background-color: transparent !important;
   fill: var(--colorHighlightBg) !important
 }
-
-.button-toolbar > button[title="Show typed history"] {display: none}
 
 /* Toolbar buttons
   ----------------------------
@@ -68,29 +81,30 @@ button {
 /* Extensions
   ----------------------------
 */
+.toolbar-extensions {
+  position: absolute;
+  left: calc(50vw + 22.5vw) !important;
+  right: unset !important;
+  direction: rtl
+}
+
 .button-toolbar[title="Toggle extensions"] > button {width: 34px}
 
-#main > div.toolbar.toolbar-addressbar.toolbar-mainbar.toolbar-large > div.toolbar.toolbar-mainbar.toolbar-extensions.toolbar-large > div > button > span > svg > path {d: path('M10.513 8L10 8.469 14.973 13 10 17.531l.513.469L16 13z')}
+.toolbar-extensions > div > button > span > svg > path {d: path('M10.513 8L10 8.469 14.973 13 10 17.531l.513.469L16 13z')}
 
-.toolbar.toolbar-mainbar.toolbar-extensions.toolbar-large > div > button > svg {opacity: .9}
+.toolbar-extensions > div > button > svg {opacity: .9}
 
-.toolbar.toolbar-mainbar.toolbar-extensions.toolbar-large > div > button:hover svg {opacity: .9}
+.toolbar-extensions > div > button:hover svg {opacity: 1}
 
-#main > div.toolbar.toolbar-addressbar.toolbar-mainbar.toolbar-large > div.toolbar.toolbar-mainbar.toolbar-extensions.toolbar-large > div:nth-child(5) > button > span > svg {
+.toolbar-extensions > div:nth-child(5) > button > span > svg {
   fill: var(--colorHighlightBg);
   opacity: 1
 }
 
-.toolbar.toolbar-mainbar.toolbar-extensions.toolbar-large > div:nth-child(5) > button:hover > svg {
+.toolbar-extensions > div:nth-child(5) > button:hover > svg {
   background-color: var(--colorAccentBgFadedMore) !important;
   fill: var(--colorAccentFg) !important;
-  opacity: .7;
-}
-
-.toolbar.toolbar-mainbar.toolbar-extensions.toolbar-large {
-  position: absolute;
-  left: calc(50vw + 22.5vw - 1px);
-  direction: rtl
+  opacity: 1 !important;
 }
 
 .toolbar-extensions .button-toolbar > button > img {
