@@ -30,6 +30,7 @@
   border-left: 1px solid var(--colorFgAlpha) !important;
   border-right: 1px solid var(--colorFgAlpha) !important
 }
+/* End style */
 
 /* Chrome style */
 .addressfield {
@@ -44,6 +45,7 @@
   border-radius: 25px !important;
   z-index: 99;
 }
+/* End style */
 
 .addressfield form input.url {
   margin-top: 1px;
