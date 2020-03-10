@@ -19,7 +19,7 @@
 }
 
 .expanded-nav-c {
-  border-radius: 4px;
+  border-radius: var(--radiusHalf);
   width: 100px !important;
   padding-left: 5px;
   opacity: 1;
@@ -28,8 +28,6 @@
 .expanded-left-c {margin-right: 100px !important}
 
 .page-zoom-controls-c, .button-toolbar-c {display: inline-block}
-
-#zoomBtn.active {fill: var(--colorHighlightBg)}
 
 .button-toolbar-c > button {
   height: 22px;
