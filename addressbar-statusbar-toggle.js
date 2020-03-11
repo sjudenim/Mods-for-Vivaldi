@@ -74,7 +74,6 @@
             height: fit-content;
         }
         .button-popup h2 {
-            background-color: var(--colorBgDark);
             text-align: center
         }
         .button-popup-wrapper {
