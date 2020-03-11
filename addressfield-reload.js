@@ -11,9 +11,9 @@ function reloadStyle() {
         width: 22px !important;
         height: 22px !important;
     }
-    .toolbar .button-toolbar > button[title="Reload current page"] svg path {d: path('M15.247 5.994l.003-4.82-1.92 1.918-.21-.219A7.204 7.204 0 007.997.75C4.004.75.75 4.005.75 8c0 3.997 3.254 7.25 7.247 7.25 3.996 0 7.247-3.253 7.247-7.25H13.84a5.847 5.847 0 01-5.843 5.845A5.849 5.849 0 012.154 8a5.849 5.849 0 015.843-5.843c1.561 0 3.027.605 4.132 1.709l.21.216-1.909 1.913 4.817-.001z')}
+    .toolbar .button-toolbar > button[title="Reload current page"] svg path {d: path('M14.997 6.063L15 1.409l-1.854 1.852-.203-.211A6.953 6.953 0 007.997 1C4.142 1 1 4.143 1 8c0 3.859 3.142 7 6.997 7 3.858 0 6.997-3.141 6.997-7h-1.355a5.647 5.647 0 01-5.642 5.645A5.648 5.648 0 012.355 8a5.647 5.647 0 015.642-5.641 5.6 5.6 0 013.989 1.65l.203.208-1.844 1.847 4.652-.001z')}
 
-    .toolbar .button-toolbar > button[title="Stop"] svg path {d: path('M14.5 2.507L13.493 1.5 8 6.993 2.507 1.5 1.5 2.507 6.993 8 1.5 13.493 2.507 14.5 8 9.007l5.493 5.493 1.007-1.01L9.01 8z')}
+    .toolbar .button-toolbar > button[title="Stop"] svg path {d: path('M14 2.929L13.07 2 8 7.071 2.929 2 2 2.929 7.071 8 2 13.07l.929.93L8 8.93 13.07 14l.93-.932L8.932 8z')}
     
     `;
     document.getElementsByTagName('head')[0].appendChild(style);
