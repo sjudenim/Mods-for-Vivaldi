@@ -4,16 +4,14 @@ function reloadStyle() {
     style.innerHTML = `
     .toolbar .button-toolbar.reload {
         order: 1;
-        fill: var(--colorFgFaded) !important;
         margin-top: 3px
     }
     .toolbar .button-toolbar.reload svg {
         flex: 0 0 22px !important;
         width: 22px !important;
         height: 22px !important;
-        opacity: .7
     }
-    .toolbar .button-toolbar.reload svg path {d: path('M15.497 5.925L15.5.938l-1.986 1.985-.217-.227A7.455 7.455 0 007.997.5C3.866.5.5 3.867.5 8c0 4.135 3.366 7.5 7.497 7.5 4.134 0 7.497-3.365 7.497-7.5h-1.453a6.048 6.048 0 01-6.044 6.047A6.051 6.051 0 011.952 8a6.05 6.05 0 016.045-6.044 6 6 0 014.274 1.768l.217.224-1.975 1.978h4.984z')}
+    .toolbar .button-toolbar.reload svg path {d: path('M15.247 5.994l.003-4.82-1.92 1.918-.21-.219A7.204 7.204 0 007.997.75C4.004.75.75 4.005.75 8c0 3.997 3.254 7.25 7.247 7.25 3.996 0 7.247-3.253 7.247-7.25H13.84a5.847 5.847 0 01-5.843 5.845A5.849 5.849 0 012.154 8a5.849 5.849 0 015.843-5.843c1.561 0 3.027.605 4.132 1.709l.21.216-1.909 1.913 4.817-.001z')}
 
     `;
     document.getElementsByTagName('head')[0].appendChild(style);
