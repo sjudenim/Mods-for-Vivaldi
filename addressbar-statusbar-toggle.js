@@ -23,8 +23,9 @@
         #statusToggle {
             position: absolute;
             right: calc(50vw + 22.5vw - 1px);
-            margin-top: -17px;
+            margin-top: 17px;
             opacity: .9;
+            z-index: 999
         }
         #statusToggle:hover {
             background-color: var(--colorAccentBgFadedMore);
@@ -47,9 +48,11 @@
         .toolbar-statusbar {
             border: none;
             background-color: transparent !important;
+            margin-top: 5px;
             padding: 0 4px;
-            height: 34px !important;
-            border-radius: 4px;
+        }
+        .page-zoom-controls {
+            margin-top: 1px;
         }
         .button-popup.button-popup-above:after {
             border-top-color: var(--colorBgDark);
@@ -59,14 +62,16 @@
             top: 32px;
             border-radius: 3px;
         }
-        .button-popup:before, .toolbar-statusbar .button-popup:after {
-            top: -10px;
-            bottom: unset;
+        .toolbar-statusbar .button-popup:before {
+            bottom: 0;
             transform: rotate(180deg)
         }
         .button-popup-arrow--light--above:after {
             border-top-color: var(--colorBgDark);
             border-top: 10px solid var(--colorBgDark);
+        }
+        .button-popup .button-popup-wrapper {
+            height: fit-content;
         }
         .button-popup h2 {
             background-color: var(--colorBgDark);
@@ -75,7 +80,7 @@
         .button-popup-wrapper {
             background-color: var(--colorBgDark);
         }
-        .status-info {
+        .StatusInfo-Content {
             display: none;
         }
     `;
