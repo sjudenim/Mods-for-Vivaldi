@@ -120,14 +120,19 @@
 .SiteInfoButton.secure, .SiteInfoButton.certified {
   background-color: transparent;
   fill: var(--colorFg) !important;
+  opacity: .9;
+}
+
+.SiteInfoButton.secure svg path, .SiteInfoButton.certified svg path {
+  d: path('M8 1C5.671 1 3.777 2.657 3.777 4.693V7.24H2.533c-.296 0-.533.209-.533.467V9h12V7.707c0-.258-.24-.467-.533-.467h-1.242V4.693C12.225 2.657 10.326 1 8 1zm0 .934c1.74 0 3.156 1.236 3.156 2.76V7.24h-6.31V4.693c0-1.522 1.415-2.76 3.154-2.76zM2 10v2h12v-2zm0 3v1.469c0 .293.237.531.533.531H13.47a.533.533 0 00.531-.531V13z')
 }
 
 .SiteInfoButton.secure:hover, .SiteInfoButton.certified:hover {
   background-color: transparent;
-  fill: hsl(113, 57%, 38%) !important;
+  fill: hsl(120, 60%, 47%) !important;
 }
 
-.SiteInfoButton.insecure, .SiteInfoButton.insecure:hover, .SiteInfoButton.insecure:active {
+.SiteInfoButton.warning {
   background-color: transparent;
   fill: hsl(12, 100%, 50%) !important
 }
