@@ -28,7 +28,7 @@
             z-index: 999
         }
         #statusToggle:hover {
-            background-color: var(--colorAccentBgFadedMore);
+            background-color: var(--colorAccentBgFadedMore) !important;
             fill: var(--colorAccentFg);
         }
         #statusButton.active {
@@ -64,7 +64,11 @@
         }
         .toolbar-statusbar .button-popup:before {
             bottom: 0;
-            transform: rotate(180deg)
+            transform: rotate(180deg) translateX(calc(10px - var(--popupLeftOffset)))
+        }
+        .button-popup-arrow--light:before {
+            border-top-color: var(--colorBg);
+            border-bottom-color: var(--colorBg);
         }
         .button-popup-arrow--light--above:after {
             border-top-color: var(--colorBgDark);
