@@ -1,3 +1,11 @@
+/*
+* Vivaldi Addressfield zoom
+* Written by nomadic and sjudenim
+* GNU General Public License v3.0
+* 
+*  Creates zoom controls in the addressfield
+*/
+
 .zoom-parent {
   display: inline-block;
   position: relative;
