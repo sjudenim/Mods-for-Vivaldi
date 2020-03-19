@@ -1,3 +1,13 @@
+/*
+* Vivaldi Status-bar mod
+* Written by leutage and sjudenim
+* GNU General Public License v3.0
+* 
+* This mod moves the status bar and makes it a part of the adress bar. It's positioning is based on a centered addressfield 
+* Centered addressfield can be found here, https://github.com/sjudenim/Mods-for-Vivaldi/blob/master/addressbar-tweaks.css
+* 
+*/
+
 (function () {
 
     function statusToggle() {
@@ -86,6 +96,7 @@
         .StatusInfo-Content {
             display: none;
         }
+        .button-toolbar > button > span + .button-title, .button-toolbar > button.button-textonly {padding-top: 2px}
     `;
         document.getElementsByTagName('head')[0].appendChild(style);
     };
