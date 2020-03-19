@@ -1,3 +1,10 @@
+/*
+* Vivaldi Addressbar Mods
+* Written by sjudenim
+* GNU General Public License v3.0
+* 
+*/
+
 /* Removes titlebar */
 #header {min-height: 0}
 
@@ -9,10 +16,11 @@
 /* Line under Addressbar */
 .address-top .toolbar-addressbar:after, .address-top .toolbar-mainbar:after {display: none}
 
+
 /* Addressfield
   ----------------------------
 */
-/* Edge style
+/* Edge style */
 .addressfield {
   border: 0 !important;
   outline: 0 !important;
@@ -32,7 +40,7 @@
 }
 /* End style */
 
-/* Chrome style */
+/* Chrome style
 .addressfield {
   border: 0 !important;
   outline: 0 !important;
@@ -61,6 +69,7 @@
   fill: var(--colorHighlightBg) !important
 }
 
+
 /* Toolbar buttons
   ----------------------------
 */
@@ -76,9 +85,8 @@ button {
 }
 
 /* Dropdown menu */
-.toolbar-large .button-popup.button-popup-below {
-  top: 45px;
-}
+.toolbar-large .button-popup.button-popup-below {top: 45px}
+
 
 /* Extensions
   ----------------------------
@@ -109,14 +117,13 @@ button {
   opacity: 1 !important;
 }
 
-.toolbar-extensions .button-toolbar > button > img {
-  filter: grayscale(100%) contrast(100%) opacity(80%);
-}
+.toolbar-extensions .button-toolbar > button > img {filter: grayscale(100%) contrast(100%) opacity(80%)}
 
 .toolbar-extensions .button-toolbar > button:hover > img {
   background-color: var(--colorAccentBgFadedMore) !important;
   filter: grayscale(0%) contrast(100%) opacity(100%);
 }
+
 
 /* Miscellaneous stuff
   ----------------------------
