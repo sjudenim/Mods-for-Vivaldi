@@ -1,3 +1,12 @@
+/*
+* Vivaldi Side Panel toggle
+* Written by sjudenim
+* GNU General Public License v3.0
+* 
+* Moves the side panel toggle from the status bar and postions it before the windows button group
+* Replaces the icon and turns the panel overlay into a (large) drop down menu
+*/
+
 (function () {
 
     function panelToggleStyle() {
