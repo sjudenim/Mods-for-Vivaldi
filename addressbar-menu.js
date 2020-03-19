@@ -1,3 +1,11 @@
+/*
+* Vivaldi Menu button
+* Written by sjudenim
+* GNU General Public License v3.0
+* 
+*  Moves the menu button to the beginning of the addressbar
+*/
+
 function menuStyle() {
     const style = document.createElement('style');
     style.type = 'text/css';
