@@ -1,3 +1,11 @@
+/*
+* Vivaldi Ui tweaks
+* Written by sjudenim
+* GNU General Public License v3.0
+* 
+*  General ui changes that include: recolouring, re-positioning, font adjustments, (some) icon replacements
+*/
+
 /* Text selection */
 ::selection {
   background-color: var(--colorHighlightBg) !important;
@@ -11,6 +19,7 @@
 .quick-command-container {box-shadow: 0 0 10px 0 rgba(0, 0, 0, .6) !important}
 
 #modal-bg > div {border-radius: 3px !important}
+
 
 /* Tabs
   ----------------------------
@@ -78,6 +87,7 @@
 
 .stacks-on.tabs-bottom .tab-strip .tab-group-indicator .tab-indicator.active {padding-top: 2px}
 
+
 /* Addressfield
   ----------------------------
 */
@@ -96,15 +106,14 @@
   d: path('M8 1C4.131 1 1 4.131 1 8s3.131 7 7 7 7-3.131 7-7-3.131-7-7-7zm0 1.094A5.903 5.903 0 0113.906 8 5.902 5.902 0 018 13.906 5.904 5.904 0 012.094 8 5.904 5.904 0 018 2.094zm3.035 2.908c-.12 0-.239.054-.33.164L6.99 9.645 5.297 7.602a.414.414 0 00-.66 0 .644.644 0 000 .794l2.021 2.44a.43.43 0 00.33.164c.12 0 .24-.054.332-.164l4.043-4.875a.647.647 0 000-.795.422.422 0 00-.328-.164z')
 }
 
-.SiteInfoButton.secure:hover, .SiteInfoButton.certified:hover {
+.SiteInfoButton.warning {transform: rotate(180deg)}
+
+.SiteInfoButton.secure:hover, .SiteInfoButton.certified:hover, .SiteInfoButton.warning {
   background-color: transparent;
-  fill: hsl(120, 60%, 47%) !important;
+  fill: var(--colorHighlightBg) !important;
 }
 
-.SiteInfoButton.warning {
-  background-color: transparent;
-  fill: hsl(12, 100%, 50%) !important
-}
+.addressfield > div:nth-child(1) svg path.active {fill: var(--colorHighlightBgAlpha)}
 
 .drop_down:hover, .drop_down[data-selected], #mail_panel section ul li.selected {background-color: var(--colorHighlightBg) !important}
 
@@ -143,6 +152,7 @@ button.button-on path.bookmark-outline {fill: var(--colorHighlightBg)}
 #main>div.toolbar.toolbar-addressbar.toolbar-mainbar.toolbar-large>div.addressfield>div.toolbar.toolbar-small.toolbar-insideinput>div.button-toolbar.cjvgsbzxr000i3n670rebhqf3>button>svg>g>path.bookmark-outline {
   display: none
 }
+
 
 /* Pageloading indicator
   ----------------------------
@@ -192,6 +202,7 @@ button.button-on path.bookmark-outline {fill: var(--colorHighlightBg)}
 
 .addressfield .pageload:not(.unstarted).progressing .pageload-indicator[value='100']::-webkit-progress-value {background-position: 0% 100% !important}
 
+
 /* Toolbars
   ----------------------------
 */
@@ -236,6 +247,7 @@ input[type=button], input[type=submit] {background-image: none !important}
 /* Won't show horizontal menu and window buttons when no ui */
 #browser.minimal-ui:not(.tabs-top) .topmenu, #browser.minimal-ui:not(.tabs-top) .window-buttongroup {display: none !important}
 
+
 /* Window button group
   ----------------------------
 */
@@ -274,9 +286,12 @@ input[type=button], input[type=submit] {background-image: none !important}
   fill: white !important
 }
 
+
 /* Side panel
   ----------------------------
 */
+#switch > button.preferences.panelbtn svg path {d: path('M12.121 5.5c-.216 0-.4.157-.435.37l-.19 1.165a5.949 5.949 0 00-1.648.688l-.944-.674a.442.442 0 00-.566.047L7.096 8.338a.445.445 0 00-.047.566l.674.944a5.966 5.966 0 00-.69 1.648l-1.166.19a.442.442 0 00-.367.435v1.758c0 .213.157.4.37.432l1.165.191a5.96 5.96 0 00.688 1.654l-.672.938a.449.449 0 00.047.57l1.242 1.24a.449.449 0 00.564.051l.944-.674a6.15 6.15 0 001.648.688l.19 1.164a.44.44 0 00.435.367h1.758c.212 0 .4-.153.432-.367l.191-1.164a6.114 6.114 0 001.654-.688l.938.674c.176.117.41.102.57-.05l1.24-1.24a.457.457 0 00.051-.571l-.674-.938a6.16 6.16 0 00.688-1.654l1.164-.191a.433.433 0 00.367-.432V12.12a.44.44 0 00-.367-.435l-1.164-.19a6.104 6.104 0 00-.688-1.648l.674-.944a.45.45 0 00-.05-.566l-1.24-1.242a.45.45 0 00-.571-.047l-.938.674a5.977 5.977 0 00-1.654-.69l-.191-1.166a.438.438 0 00-.432-.367zM13 8.166A4.84 4.84 0 0117.834 13 4.841 4.841 0 0113 17.834 4.84 4.84 0 018.166 13 4.84 4.84 0 0113 8.166zm0 2.334a2.503 2.503 0 00-2.5 2.5c0 1.379 1.122 2.5 2.5 2.5 1.379 0 2.5-1.121 2.5-2.5 0-1.378-1.121-2.5-2.5-2.5')}
+
 .panel > header {background-color: var(--colorBgDark) !important}
 
 .panel > header h1 {
@@ -351,10 +366,21 @@ input[type=button], input[type=submit] {background-image: none !important}
 /* Hides webpanel suggestions */
 .webpanel-suggestions {display: none}
 
+
 /* Notes
   ----------------------------
 */
 .notes svg path {d: path('M5.5 17.044V20h3.167l9.167-8.634-3.166-2.956L5.5 17.044zm14.75-7.933c.334-.311.334-.778 0-1.089l-1.917-1.789a.846.846 0 0 0-1.167 0l-1.5 1.4 3.167 2.956 1.417-1.478z')}
+
+#notes-panel .notes-editor {background-color: var(--colorBg) !important}
+
+.NotesEditor {padding: 0 10px !important}
+
+.cardview .NotesEditor-Editor, .NotesEditor .MarkdownRender {
+  background-color: var(--colorBgDark) !important;
+  margin: 0 !important;
+  padding: 6px 12px;
+}
 
 #notes-panel .notes-editor .add-attachments-wrapper button:hover, #notes-panel .notes-editor .add-attachments-wrapper label:hover {background-color: var(--colorAccentBgFadedMore) !important}
 
@@ -372,6 +398,7 @@ input[type=button], input[type=submit] {background-image: none !important}
 
 #notes-panel .notes-editor .note.md {background-color: var(--colorBgDark)}
 
+
 /* Bookmarks and History
   ----------------------------
 */
@@ -381,6 +408,7 @@ input[type=button], input[type=submit] {background-image: none !important}
   backdrop-filter: blur(10px)
 }
 
+/* Creates alternating row colors */
 .vivaldi-tree div>div:nth-child(even), .manager .manager-treeview div>div:nth-child(even), .startpage .history .manager-content .history-tree div>div:nth-child(even) {background-color: var(--colorBg)}
 
 .manager .manager-editor {border: none !important}
@@ -396,6 +424,7 @@ input[type=button], input[type=submit] {background-image: none !important}
 }
 
 .panel-group .panel.panel-bookmarks label svg {margin-left: 0 !important  }
+
 
 /* Miscellaneous stuff
   ----------------------------
@@ -435,6 +464,7 @@ input[type=range] {background-color: var(--colorBgDarker)}
 
 input[type=range]::-webkit-slider-thumb, input[type=range]::-webkit-slider-thumb:active, input[type=range]::-webkit-slider-thumb:focus {border-width: 2px !important}
 
+
 /* Settings panel
   ----------------------------
 */
@@ -458,6 +488,7 @@ input[type=range]::-webkit-slider-thumb, input[type=range]::-webkit-slider-thumb
   font-size: 12px !important;
   color: var(--colorFgFaded) !important;
 }
+
 
 /* Hiding stuff
   ----------------------------
