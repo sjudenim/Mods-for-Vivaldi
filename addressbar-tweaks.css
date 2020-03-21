@@ -1,3 +1,10 @@
+/*	
+* Vivaldi Addressbar Mods	
+* Written by sjudenim	
+* GNU General Public License v3.0	
+* 	
+*/	
+
 /* Removes titlebar */
 #header { min-height: 0; }
 
