@@ -1,12 +1,5 @@
-/*
-* Vivaldi Addressbar Mods
-* Written by sjudenim
-* GNU General Public License v3.0
-* 
-*/
-
 /* Removes titlebar */
-#header {min-height: 0}
+#header { min-height: 0; }
 
 .toolbar.toolbar-droptarget.toolbar-mainbar.toolbar-noflex.toolbar-large {
   position: absolute;
@@ -14,7 +7,7 @@
 }
 
 /* Line under Addressbar */
-.address-top .toolbar-addressbar:after, .address-top .toolbar-mainbar:after {display: none}
+.address-top .toolbar-addressbar:after, .address-top .toolbar-mainbar:after { display: none; }
 
 
 /* Addressfield
@@ -60,7 +53,7 @@
   text-align: center;
 }
 
-.addressfield .pageload .pageload-ticker {display: none}
+.addressfield .pageload .pageload-ticker { display: none; }
 
 .toolbar-insideinput.toolbar-insideinput.toolbar-insideinput>.button-toolbar button:hover :not(:active):not(:focus):not(.button-pressed),
 .toolbar-insideinput.toolbar-insideinput.toolbar-insideinput>.toolbar-group>.button-toolbar button:hover :not(:active):not(:focus):not(.button-pressed),
@@ -81,11 +74,10 @@ button {
 .toolbar-mainbar > .button-toolbar > button:hover {
   background-color: var(--colorAccentBgFadedMore) !important;
   fill: var(--colorAccentFg) !important;
-  opacity: .7;
 }
 
 /* Dropdown menu */
-.toolbar-large .button-popup.button-popup-below {top: 45px}
+.toolbar-large .button-popup.button-popup-below { top: 45px; }
 
 
 /* Extensions
@@ -98,13 +90,13 @@ button {
   direction: rtl
 }
 
-.button-toolbar[title="Toggle extensions"] > button {width: 34px}
+.button-toolbar[title="Toggle extensions"] > button { width: 34px; }
 
-.toolbar-extensions > div > button > span > svg > path {d: path('M10.513 8L10 8.469 14.973 13 10 17.531l.513.469L16 13z')}
+.toolbar-extensions > div > button > span > svg > path { d: path('M10.513 8L10 8.469 14.973 13 10 17.531l.513.469L16 13z') }
 
-.toolbar-extensions > div > button > svg {opacity: .9}
+.toolbar-extensions > div > button > svg { opacity: .9; }
 
-.toolbar-extensions > div > button:hover svg {opacity: 1}
+.toolbar-extensions > div > button:hover svg { opacity: 1; }
 
 .toolbar-extensions > div:nth-child(5) > button > span > svg {
   fill: var(--colorHighlightBg);
@@ -117,7 +109,7 @@ button {
   opacity: 1 !important;
 }
 
-.toolbar-extensions .button-toolbar > button > img {filter: grayscale(100%) contrast(100%) opacity(80%)}
+.toolbar-extensions .button-toolbar > button > img { filter: grayscale(100%) contrast(100%) opacity(80%); }
 
 .toolbar-extensions .button-toolbar > button:hover > img {
   background-color: var(--colorAccentBgFadedMore) !important;
