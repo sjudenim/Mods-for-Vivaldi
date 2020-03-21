@@ -44,9 +44,7 @@ input.vivaldi-addressfield {
   opacity: 0;
 }
 
-.addressfield .UrlField:not(:focus-within) {
-  position: relative;
-}
+.addressfield .UrlField:not(:focus-within) { position: relative; }
 
 #browser:not(.isblurred) .addressfield > .UrlBar-UrlFieldWrapper:hover .addressfield-mask,
 #browser:not(.isblurred) .addressfield > .UrlBar-UrlFieldWrapper input.vivaldi-addressfield:focus + .addressfield-mask,
@@ -73,9 +71,7 @@ input.vivaldi-addressfield {
   opacity: 0.7;
 }
 
-.theme-1.addressfield-mask .host {
-  color: var(--colorFg);
-}
+.theme-1.addressfield-mask .host { color: var(--colorFg); }
 
 .addressfield > .secure + .UrlBar-UrlFieldWrapper .theme-1.addressfield-mask .protocol,
 .addressfield > .certified + .UrlBar-UrlFieldWrapper .theme-1.addressfield-mask .protocol {
@@ -88,46 +84,25 @@ input.vivaldi-addressfield {
   opacity: 1;
 }
 
-.theme-1.addressfield-mask .protocol-sub:after {
-  content: ':';
-}
+.theme-1.addressfield-mask .protocol-sub:after { content: ':'; }
 
-.theme-1.addressfield-mask .protocol:after {
-  content: '://';
-}
+.theme-1.addressfield-mask .protocol:after { content: '://'; }
 
-.theme-1.addressfield-mask .host .host-sub:after {
-  content: '.';
-}
+.theme-1.addressfield-mask .host .host-sub:after { content: '.'; }
 
-.theme-1.addressfield-mask .search-engine .search-nickname:after {
-  content: ' ';
-}
+.theme-1.addressfield-mask .search-engine .search-nickname:after { content: ' '; }
 
-.theme-1.addressfield-mask .post:before {
-  content: ':';
-}
+.theme-1.addressfield-mask .post:before { content: ':'; }
 
-.theme-1.addressfield-mask .path:before,
-.theme-1.addressfield-mask .path .path-item:not(:first-child):before {
-  content: '/';
-}
+.theme-1.addressfield-mask .path:before, .theme-1.addressfield-mask .path .path-item:not(:first-child):before { content: '/'; }
 
-.theme-1.addressfield-mask .search:before {
-  content: '?';
-}
+.theme-1.addressfield-mask .search:before { content: '?'; }
 
-.theme-1.addressfield-mask .search .search-item:not(:first-child):before {
-  content: '&';
-}
+.theme-1.addressfield-mask .search .search-item:not(:first-child):before { content: '&'; }
 
-.theme-1.addressfield-mask .search .search-item .search-value:before {
-  content: '=';
-}
+.theme-1.addressfield-mask .search .search-item .search-value:before { content: '='; }
 
-.theme-1.addressfield-mask .hash:before {
-  content: '#';
-}
+.theme-1.addressfield-mask .hash:before { content: '#'; }
 
 .private .theme-1.addressfield-mask .protocol-sub,
 .private .theme-1.addressfield-mask .protocol,
@@ -139,9 +114,7 @@ input.vivaldi-addressfield {
   color: var(--colorBgIntense);
 }
 
-.private .theme-1.addressfield-mask .protocol[data-protocol="vivaldi"] {
-  color: var(--colorHighlightBg);
-}
+.private .theme-1.addressfield-mask .protocol[data-protocol="vivaldi"] { color: var(--colorHighlightBg); }
 
 /* Theme 2 */
 .theme-2.addressfield-mask .path-full > div:not(:empty):before {
@@ -154,9 +127,7 @@ input.vivaldi-addressfield {
   border-left: 1px solid var(--colorFg);
 }
 
-.theme-2.addressfield-mask .path-full > div:not(:empty) {
-  margin-left: 6px;
-}
+.theme-2.addressfield-mask .path-full > div:not(:empty) { margin-left: 6px; }
 
 .theme-2.addressfield-mask .protocol-sub,
 .theme-2.addressfield-mask .protocol,
@@ -175,9 +146,7 @@ input.vivaldi-addressfield {
   border-radius: var(--radiusRoundedLess);
 }
 
-.theme-2.addressfield-mask .search .search-item {
-  margin-right: 5px;
-}
+.theme-2.addressfield-mask .search .search-item { margin-right: 5px; }
 
 .addressfield > .secure + .UrlBar-UrlFieldWrapper .theme-2.addressfield-mask .protocol,
 .addressfield > .certified + .UrlBar-UrlFieldWrapper .theme-2.addressfield-mask .protocol {
@@ -193,18 +162,11 @@ input.vivaldi-addressfield {
   font-weight: 700;
 }
 
-.theme-2.addressfield-mask .host .host-sub {
-  opacity: 0.7;
-}
+.theme-2.addressfield-mask .host .host-sub { opacity: 0.7; }
 
-.theme-2.addressfield-mask .host .host-sub:after {
-  content: '.';
-}
+.theme-2.addressfield-mask .host .host-sub:after { content: '.'; }
 
-.theme-2.addressfield-mask .host .host-extension,
-.theme-2.addressfield-mask .search-engine .search-nickname {
-  text-indent: -9999px; 
-}
+.theme-2.addressfield-mask .host .host-extension, .theme-2.addressfield-mask .search-engine .search-nickname { text-indent: -9999px; }
 
 .theme-2.addressfield-mask .host .host-extension:after {
   text-indent: 0;
@@ -216,9 +178,7 @@ input.vivaldi-addressfield {
   content: attr(data-search-name);
 }
 
-.theme-2.addressfield-mask .search-engine.default:before {
-  content: attr(data-search-name-default);
-}
+.theme-2.addressfield-mask .search-engine.default:before { content: attr(data-search-name-default); }
 
 .theme-2.addressfield-mask .search .search-item .search-key {
   background-color: var(--colorAccentBgDarker);
@@ -248,9 +208,7 @@ input.vivaldi-addressfield {
   border-bottom-left-radius: var(--radiusRoundedLess);
 }
 
-.private .theme-2.addressfield-mask .path-full > div:not(:empty):before {
-  background-color: var(--colorBgIntense);
-}
+.private .theme-2.addressfield-mask .path-full > div:not(:empty):before { background-color: var(--colorBgIntense); }
 
 .private .theme-2.addressfield-mask .protocol-sub,
 .private .theme-2.addressfield-mask .protocol,
@@ -265,9 +223,7 @@ input.vivaldi-addressfield {
 }
 
 /* Theme 3 */
-.theme-3.addressfield-mask {
-  justify-content: center;
-}
+.theme-3.addressfield-mask { justify-content: center; }
 
 .theme-3.addressfield-mask .protocol-sub,
 .theme-3.addressfield-mask .protocol,
@@ -290,11 +246,7 @@ input.vivaldi-addressfield {
   display: none;
 }
 
-.theme-3.addressfield-mask .host .host-extension,
-.theme-3.addressfield-mask .search-engine .search-nickname {
-  text-indent: -9999px;
-  
-}
+.theme-3.addressfield-mask .host .host-extension, .theme-3.addressfield-mask .search-engine .search-nickname { text-indent: -9999px; }
 
 .theme-3.addressfield-mask .host .host-extension:after {
   text-indent: 0;
@@ -307,43 +259,22 @@ input.vivaldi-addressfield {
   margin-right: 5px;
 }
 
-.theme-3.addressfield-mask .protocol-sub:after {
-  content: ':';
-}
+.theme-3.addressfield-mask .protocol-sub:after { content: ':'; }
 
-.theme-3.addressfield-mask .protocol:not([data-protocol="file"]):after {
-  content: '://';
-}
+.theme-3.addressfield-mask .protocol:not([data-protocol="file"]):after { content: '://'; }
 
-.theme-3.addressfield-mask .host .host-sub:after {
-  content: '.';
-}
+.theme-3.addressfield-mask .host .host-sub:after { content: '.'; }
 
-.theme-3.addressfield-mask .post:before {
-  content: ':';
-}
+.theme-3.addressfield-mask .post:before { content: ':'; }
 
-.theme-3.addressfield-mask .path:before,
-.theme-3.addressfield-mask .path .path-item:not(:first-child):before {
-  content: '/';
-}
+.theme-3.addressfield-mask .path:before, .theme-3.addressfield-mask .path .path-item:not(:first-child):before { content: '/'; }
 
-.theme-3.addressfield-mask .search:before {
-  content: '?';
-}
+.theme-3.addressfield-mask .search:before { content: '?'; }
 
-.theme-3.addressfield-mask .search .search-item:not(:first-child):before {
-  content: '&';
-}
+.theme-3.addressfield-mask .search .search-item:not(:first-child):before { content: '&'; }
 
-.theme-3.addressfield-mask .search .search-item .search-value:before {
-  content: '=';
-}
+.theme-3.addressfield-mask .search .search-item .search-value:before { content: '='; }
 
-.theme-3.addressfield-mask .hash:before {
-  content: '#';
-}
+.theme-3.addressfield-mask .hash:before { content: '#'; }
 
-input.theme-3.url {
-  text-align: center;
-}
+input.theme-3.url { text-align: center; }
