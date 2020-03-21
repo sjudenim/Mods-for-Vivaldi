@@ -33,9 +33,9 @@
   opacity: 1;
 }
 
-.expanded-left-c {margin-right: 100px !important}
+.expanded-left-c { margin-right: 100px !important; }
 
-.page-zoom-controls-c, .button-toolbar-c {display: inline-block}
+.page-zoom-controls-c, .button-toolbar-c { display: inline-block; }
 
 .button-toolbar-c > button {
   height: 22px;
@@ -68,7 +68,7 @@
   display: inline-block;
 }
 
-.zoom-hover-target {transition: 0.5s !important}
+.zoom-hover-target { transition: 0.5s !important; }
 
 .reset-zoom-c {
   display: inline-block;
