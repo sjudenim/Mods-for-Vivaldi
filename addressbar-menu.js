@@ -6,45 +6,57 @@
 *  Moves the menu button to the beginning of the addressbar
 */
 
-function menuStyle() {
-    const style = document.createElement('style');
-    style.type = 'text/css';
-    style.innerHTML = `
-	.vivaldi {
-        top: 0;
-        left: 0;
-        height: 34px !important;
-        width: 40px !important;
-        fill: var(--colorFg) !important;
-        opacity: 1 !important;
-        z-index: 9999
-    }
-    #browser .vivaldi span.burger-icon svg path {
-        d: path('M0 2.2000004v1h18v-1zm0 6v1h18v-1zM0 14.2v1h18v-1z')
-    }
-    #browser .vivaldi span.burger-icon {
-        padding: 3px 2px 0 3px !important
-    }
-    #browser .vivaldi:hover,
-    #browser .vivaldi:active {
-        background-color: var(--colorHighlightBg) !important;
-        fill: white !important
-    }
-    #browser .vivaldi:hover span svg {
-        transform: scale(1) !important
-    }
-      
-    `;
-    document.getElementsByTagName('head')[0].appendChild(style);
-};
+(function () {
 
-setTimeout(function wait() {
-    const adrBar = document.querySelector('.toolbar.toolbar-addressbar');
-    const menu = document.querySelector('.vivaldi');
-    if (menu) {
-        adrBar.insertBefore(menu, adrBar.firstChild);
-        menuStyle();
-    } else {
-        setTimeout(wait, 300);
+    function style() {
+        const style = document.createElement('style');
+        style.type = 'text/css';
+        style.id = 'menuBtn';
+        style.innerHTML = `
+        .vivaldi, #browser .vivaldi span.burger-icon {
+           position: relative;
+           height: 34px !important;
+           width: 44px !important;
+        }
+        #browser .vivaldi span.burger-icon svg path {
+            d: path('M5 7.5v.846h16V7.5H5zm0 5.077v.846h16v-.846H5zm0 5.077v.846h16v-.846H5z')
+        }
+        #browser .vivaldi span.burger-icon svg {
+            margin-left: -5px;
+            margin-top: -5px;
+        }
+        #browser .vivaldi:hover,
+        #browser .vivaldi:active {
+            background-color: var(--colorHighlightBg) !important;
+            fill: white !important;
+        }
+        #browser .vivaldi:hover span svg {
+            transform: scale(1) !important
+        }
+        .color-behind-tabs-on .vivaldi span.vivaldi-v, .color-behind-tabs-on .vivaldi span.burger-icon { opacity: initial !important; }
+     `;
+        document.getElementsByTagName('head')[0].appendChild(style);
+    };
+    
+    function menuBtn() {
+        style();
+        var btn = document.querySelector(".vivaldi");
+        btn.setAttribute('tabindex', '-1');
+        var bar = document.querySelector(".toolbar-addressbar .toolbar.toolbar-droptarget.toolbar-mainbar.toolbar-noflex.toolbar-large");
+        var div = document.createElement('div');
+        div.classList.add('button-toolbar');
+        bar.insertBefore(div, bar.firstChild);
+        div.appendChild(btn);
     }
-}, 300);
+    
+    setTimeout(function wait() {
+        const browser = document.getElementById('browser');
+        if (browser) {
+              menuBtn();
+        }
+        else {
+             setTimeout(wait, 300);
+        }
+    });
+    
+    })();
