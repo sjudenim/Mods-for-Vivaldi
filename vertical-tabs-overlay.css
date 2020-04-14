@@ -48,11 +48,6 @@
   ----------------------------
 */
 /* Desaturates inactive tabs to make the active one pop more. Meant for use with tab thumbnails */
-.tab-strip .tab:not(.active) {
-  filter: grayscale(100%) brightness(50%);
-  background-color: var(--colorBgDark) !important;
-}
+.tab-strip .tab:not(.active) { filter: grayscale(100%) brightness(50%); }
 
 .tab-strip .tab:not(.active):hover { filter: grayscale(50%) brightness(80%); }
-
-.tab-strip .tab.active { background-color: var(--colorBg) !important; }
