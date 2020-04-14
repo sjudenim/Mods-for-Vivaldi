@@ -241,6 +241,8 @@ input.vivaldi-addressfield {
   font-weight: bold
 }
 
+.theme-3.addressfield-mask .protocol[data-protocol="vivaldi"] { color: var(--colorHighlightBg); }
+
 .theme-3.addressfield-mask .protocol:not([data-protocol="file"]):not([data-protocol="vivaldi"]):not([data-protocol="chrome"]):not([data-protocol="chrome-extension"]),
 .theme-3.addressfield-mask .path-full {
   display: none;
