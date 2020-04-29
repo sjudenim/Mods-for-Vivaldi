@@ -105,11 +105,6 @@ button.button-startpage:after, .startpage .startpage-folder-navigation button:af
 
 .dials .dial:not(.folder) .thumbnail-image { border-radius: 0 !important; }
 
-.thumbnail-image, .dials .dial.empty .thumbnail-image, .speeddial .draggable.dial {
-  background-color: transparent !important;
-  background-image: none
-}
-
 .dials .dial:focus-within > .thumbnail-image:after { box-shadow: none !important; }
 
 /* Dial folders */
@@ -133,6 +128,7 @@ button.button-startpage:after, .startpage .startpage-folder-navigation button:af
 .dials .dial:not(.folder) .button-title {
   display: initial !important;
   background-color: var(--colorBgDark) !important;
+  backdrop-filter: blur(5px);
   opacity: .95;
   width: 100vw !important;
   height: 23px;
