@@ -8,14 +8,12 @@
 /* Removes titlebar */
 #header { min-height: 0; }
 
-.toolbar.toolbar-droptarget.toolbar-mainbar.toolbar-noflex.toolbar-large {
-  position: absolute;
-  padding-left: 40px;
-}
+.toolbar.toolbar-droptarget.toolbar-mainbar.toolbar-noflex.toolbar-large { position: absolute; }
 
 /* Line under Addressbar */
 .address-top .toolbar-addressbar:after, .address-top .toolbar-mainbar:after { display: none; }
 
+.toolbar.toolbar-addressbar { height: 34px; }
 
 /* Addressfield
   ----------------------------
@@ -32,11 +30,8 @@
   background-color: transparent !important;
   border-radius: 0 !important;
   z-index: 99;
-}
-
-.color-behind-tabs-on .addressfield {
   border-left: 1px solid var(--colorFgAlpha) !important;
-  border-right: 1px solid var(--colorFgAlpha) !important
+  border-right: 1px solid var(--colorFgAlpha) !important;
 }
 /* End style */
 
@@ -105,15 +100,9 @@ button {
 
 .toolbar-extensions > div > button:hover svg { opacity: 1; }
 
-.toolbar-extensions > div:nth-child(5) > button > span > svg {
+.toolbar-extensions > div:nth-child(4) > button > span > svg {
   fill: var(--colorHighlightBg);
   opacity: 1
-}
-
-.toolbar-extensions > div:nth-child(5) > button:hover > svg {
-  background-color: var(--colorAccentBgFadedMore) !important;
-  fill: var(--colorAccentFg) !important;
-  opacity: 1 !important;
 }
 
 .toolbar-extensions .button-toolbar > button > img { filter: grayscale(100%) contrast(100%) opacity(80%); }
