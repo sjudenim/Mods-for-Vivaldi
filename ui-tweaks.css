@@ -15,11 +15,6 @@
 /* Font smoothing for Windows OS */
 * { text-shadow: 0 0 1px var(--colorAccentFgAlpha) !important; }
 
-/* Quick command container */
-.quick-command-container { box-shadow: 0 0 10px 0 rgba(0, 0, 0, .6) !important; }
-
-#modal-bg > div { border-radius: 3px !important; }
-
 
 /* Tabs
   ----------------------------
@@ -63,27 +58,6 @@
 #tabs-container { border: 0 !important; }
 
 #tabs-container .newtab:hover, #tabs-container .toggle-trash:hover { fill: var(--colorHighlightBg) !important; }
-
-/* Puts bottom tabs under the address bar */
-#tabs-container.no-thumbs.bottom, #tabs-container.view-thumbs.bottom {
-  order: -1;
-  padding-bottom: 0
-}
-
-.color-behind-tabs-on .bookmark-bar, .color-behind-tabs-on .bookmark-bar button, .bookmark-bar .observer { background-color: var(--colorBg) !important; }
-
-.color-behind-tabs-on .bookmark-bar button:hover { background-color: var(--colorBgLighter) !important; }
-
-.bookmark-bar { order: -2; }
-
-.toolbar.toolbar-addressbar {
-  order: -3;
-  height: 34px
-}
-
-.stacks-on.tabs-bottom .tab-strip .tab-group-indicator { bottom: 28px; }
-
-.stacks-on.tabs-bottom .tab-strip .tab-group-indicator .tab-indicator.active { padding-top: 2px; }
 
 
 /* Addressfield
@@ -146,6 +120,12 @@ button.button-on path.bookmark-outline { fill: var(--colorHighlightBg); }
 
 #main>div.toolbar.toolbar-addressbar.toolbar-mainbar.toolbar-large>div.addressfield>div.toolbar.toolbar-small.toolbar-insideinput>div.button-toolbar.cjvgsbzxr000i3n670rebhqf3>button>svg>g>path.bookmark-animated-fill,
 #main>div.toolbar.toolbar-addressbar.toolbar-mainbar.toolbar-large>div.addressfield>div.toolbar.toolbar-small.toolbar-insideinput>div.button-toolbar.cjvgsbzxr000i3n670rebhqf3>button>svg>g>path.bookmark-outline { display: none; }
+
+/* Omnibox dropdown */
+.OmniDropdown {
+  border-radius: 0 0 var(--radius) var(--radius);
+  opacity: .98;
+}
 
 
 /* Pageloading indicator
@@ -378,7 +358,10 @@ input[type=button], input[type=submit] { background-image: none !important; }
 */
 #notes-panel .notes-editor { background-color: var(--colorBg) !important; }
 
-.NotesEditor { padding: 0 !important; }
+.NotesEditor {
+  padding: 0 !important;
+  max-width: -webkit-fill-available;
+}
 
 #notes-panel > div > div > div.toolbar.toolbar-default.toolbar-wrap.no-top-padding { padding: 0 5px !important; }
 
@@ -470,6 +453,15 @@ input[type=button], input[type=submit] { background-image: none !important; }
 /* Miscellaneous stuff
   ----------------------------
 */
+/* Popup containers (Quick command, Delete data */
+.quick-command-container { box-shadow: 0 0 10px 0 rgba(0, 0, 0, .6) !important; }
+
+#modal-bg > div {
+  border-radius: var(--radius) !important;
+  opacity: .98;
+  backdrop-filter: blur(15px);
+}
+
 /* Rounds fav icons in lists */
 .vivaldi-tree .tree-row label>img, .vivaldi-tree .tree-row label .tree-row-image {
   border-radius: 50% !important;
@@ -504,9 +496,6 @@ input[type=button], input[type=submit] { background-image: none !important; }
 input[type=range] { background-color: var(--colorBgDarker); }
 
 input[type=range]::-webkit-slider-thumb, input[type=range]::-webkit-slider-thumb:active, input[type=range]::-webkit-slider-thumb:focus { border-width: 2px !important; }
-
-/* Status bar clock */
-.ClockButton > button .button-title, .ClockPopup-Header .info  { font-variant: all-petite-caps; }
 
 
 /* Hiding stuff
