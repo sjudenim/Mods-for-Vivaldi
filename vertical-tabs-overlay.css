@@ -10,10 +10,9 @@
 #tabs-container.left, #tabs-container.right {
   position: absolute;
   background-color: var(--colorBgDarker) !important;
-  opacity: .98;
   z-index: 1;
   height: 100%;
-  transition: transform .5s .4s !important
+  transition: transform .3s .4s !important
 }
 
 #tabs-container.left::after, #tabs-container.right::before {
@@ -31,14 +30,14 @@
 
 #tabs-container.left:not(:hover) {
   transform: translateX(-100%);
-  transition: transform .5s .6s !important
+  transition: transform .5s .7s !important
 }
 
 #tabs-container.right { right: 0; }
 
 #tabs-container.right:not(:hover) {
   transform: translateX(100%);
-  transition: transform .5s .6s !important
+  transition: transform .5s .7s !important
 }
 
 #tabs-container.top { padding-right: 230px !important; }
@@ -51,3 +50,5 @@
 .tab-strip .tab:not(.active) { filter: grayscale(100%) brightness(50%); }
 
 .tab-strip .tab:not(.active):hover { filter: grayscale(50%) brightness(80%); }
+
+.ContentBlocker { max-width: 1000px}
