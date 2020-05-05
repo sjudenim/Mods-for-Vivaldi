@@ -5,9 +5,13 @@
 * 
 */
 
+/* Theme based background colour (overwrites colour in the settings panel) */
 .startpage { background-color: var(--colorBgDark) !important; }
 
-/* Animate Navigation bar
+/* Adds a theme based gradient overlay */
+.startpage .startpage-content { background-image: linear-gradient(to bottom right, var(--colorFgAlpha), var(--colorHighlightBgAlpha)) !important; }
+
+/* Animated Navigation bar
 .startpage .startpage-navigation {
   position: absolute;
   z-index: 1;
@@ -50,9 +54,6 @@ button.button-startpage:hover svg {
 }
 .startpage .startpage-navigation:not(:hover) .button-startpage:not(.active) { display: none; }
 
-/* Hide Navigation bar */
- .startpage .startpage-navigation { display: none; }
- 
 
 /* Speed Dial content
   ----------------------------
@@ -95,8 +96,6 @@ button.button-startpage:after, .startpage .startpage-folder-navigation button:af
 /* Speed Dial tiles
   ----------------------------
 */
-.speeddial .dial { height: 16.5em !important; }
-
 .dials .dial .thumbnail-image {
   background-color: var(--colorBgAlphaHeavy) !important;
   border-radius: 4px 4px 0 0;
