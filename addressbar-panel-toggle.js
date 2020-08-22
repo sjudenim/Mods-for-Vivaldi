@@ -13,56 +13,16 @@
         const style = document.createElement('style');
         style.type = 'text/css';
         style.innerHTML = `
-        .button-toolbar.panel-toggle {
-            position: absolute;
-            top: 0;
-            right: 132px;
-            width: 44px;
-            transform: none !important;
-            z-index: 88;
-        }
-        #main > div.toolbar.toolbar-addressbar.toolbar-mainbar.toolbar-large > div.button-toolbar.panel-toggle.paneltoggle > button:hover,
-        #main > div.toolbar.toolbar-addressbar.toolbar-mainbar.toolbar-large > div.button-toolbar.panel-toggle.paneltoggle > button.active:hover {
-            background-color: var(--colorAccentBgFadedMore) !important;
-            fill: var(--colorAccentFg);
-        }
-        .button-toolbar.panel-toggle.active {
-            fill: var(--colorHighlightBg);
-            opacity: 1 !important;
-        }
-        /* Turns the overlay into a dropdown menu */
-        .button-toolbar.panel-toggle.active:before {
-            content: '';
-            border-color: hsla(0, 0%, 0%, 0) hsla(0, 0%, 0%, 0) var(--colorBgDark) hsla(0, 0%, 0%, 0);
-            border-style: solid;
-            border-width: 8px;
-            bottom: -4px;
-            height: 0;
-            right: 14px;
-            position: absolute;
-            width: 0;
-            z-index: 2;
-            opacity: .98;
-        }
-        div#main.right #panels-container.overlay {
-            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25) !important;
-            height: 80vh;
-            top: 4px;
-            right: 4px !important;
-        }
-        #switch {
-            border-radius: 0 3px 3px 0;
-        }
-        .right#panels-container.overlay .panel-group {
-            border-radius: 3px 0 0 3px;
-            backdrop-filter: blur(5px);
-        }
+        .button-toolbar.panel-toggle { position: absolute; top: 0; right: 132px; width: 40px; transform: none !important; z-index: 88; }
+        #main > div.toolbar.toolbar-addressbar.toolbar-mainbar.toolbar-large > div.button-toolbar.panel-toggle.paneltoggle > button:hover, #main > div.toolbar.toolbar-addressbar.toolbar-mainbar.toolbar-large > div.button-toolbar.panel-toggle.paneltoggle > button.active:hover { background-color: var(--colorAccentBgFadedMore) !important; fill: var(--colorAccentFg); }
+        .button-toolbar.panel-toggle.active { background-color: var(--colorBgDark) !important; fill: var(--colorHighlightBg); opacity: 1 !important; }
+        #panels-container.overlay .panel-group { backdrop-filter: blur(5px); }
     `;
         document.getElementsByTagName('head')[0].appendChild(style);
     };
 
     let checkExist = setInterval(function() {
-        let addressBar = document.querySelector(".toolbar-addressbar.toolbar");
+        let addressBar = document.querySelector(".UrlBar");
         if (addressBar) {
             let panel = document.getElementById('panels-container');
             let paneltog = document.querySelector(".button-toolbar.panel-toggle");
