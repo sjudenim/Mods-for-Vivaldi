@@ -27,76 +27,24 @@
         style.type = 'text/css';
         style.id = 'statusDropdown';
         style.innerHTML = `
-        #browser.address-off #statusButton {
-            display: none;
-        }
-        #statusToggle {
-            position: absolute;
-            right: calc(50vw + 22.5vw - 1px);
-            margin-top: 17px;
-            opacity: .9;
-            z-index: 999
-        }
-        #statusToggle:hover {
-            background-color: var(--colorAccentBgFadedMore) !important;
-            fill: var(--colorAccentFg);
-        }
-        #statusButton.active {
-            fill: var(--colorHighlightBg);
-            opacity: 1 !important;
-        }
-        #statusContainer {
-            position: absolute;
-            z-index: 1;
-            right: calc(50vw + 22.5vw + 30px);
-            top: 0;
-        }
-        .toolbar-statusbar .button-toolbar > button:hover, .toolbar-statusbar .button-toolbar > button.button-pressed {
-            background-color: transparent !important;
-            fill: var(--colorHighlightBg); 
-        }
-        .toolbar-statusbar {
-            border: none;
-            background-color: transparent !important;
-            margin-top: 5px;
-            padding: 0 4px;
-        }
-        .page-zoom-controls {
-            margin-top: 1px;
-        }
-        .button-popup.button-popup-above:after {
-            border-top-color: var(--colorBgDark);
-        }
-        .button-popup {
-            bottom: unset;
-            top: 32px;
-            border-radius: 3px;
-        }
-        .toolbar-statusbar .button-popup:before {
-            bottom: 0;
-            transform: rotate(180deg) translateX(calc(10px - var(--popupLeftOffset)))
-        }
-        .button-popup-arrow--light:before {
-            border-top-color: var(--colorBg);
-            border-bottom-color: var(--colorBg);
-        }
-        .button-popup-arrow--light--above:after {
-            border-top-color: var(--colorBgDark);
-            border-top: 10px solid var(--colorBgDark);
-        }
-        .button-popup .button-popup-wrapper {
-            height: fit-content;
-        }
-        .button-popup h2 {
-            text-align: center
-        }
-        .button-popup-wrapper {
-            background-color: var(--colorBgDark);
-        }
-        .StatusInfo-Content {
-            display: none;
-        }
-        .button-toolbar > button > span + .button-title, .button-toolbar > button.button-textonly {padding-top: 2px}
+        #browser.address-off #statusButton { display: none; }
+        #statusToggle { position: absolute; right: calc(50vw + 22.5vw); margin-top: 34px; opacity: .9; z-index: 999; }
+        #statusToggle:hover { background-color: var(--colorAccentBgFadedMore) !important; fill: var(--colorAccentFg); }
+        #statusButton.active { fill: var(--colorHighlightBg); opacity: 1 !important; }
+        #statusContainer { position: absolute; z-index: 1; right: calc(50vw + 22.5vw + 30px); top: 0; }
+        .toolbar-statusbar .button-toolbar > button:hover, .toolbar-statusbar .button-toolbar > button.button-pressed { background-color: transparent !important; fill: var(--colorHighlightBg); }
+        .toolbar-statusbar { border: none; box-shadow: none !important; background-color: transparent !important; margin-top: 5px; padding: 0 4px; }
+        .button-popup.button-popup-above:after { border-top-color: var(--colorBgDark); }
+        .button-popup { bottom: unset !important; top: 32px; border-radius: 3px; }
+        .button-popup-arrow--above:before { bottom: unset !important; }
+        .toolbar-statusbar .button-popup:before { top: -10px; transform: rotate(180deg) translateX(calc(10px - var(--popupLeftOffset))); }
+        .button-popup-arrow--light:before { border-top-color: var(--colorBg); border-bottom-color: var(--colorBg); }
+        .button-popup-arrow--light--above:after { border-top-color: var(--colorBgDark); border-top: 10px solid var(--colorBgDark); }
+        .button-popup .button-popup-wrapper { height: fit-content; }
+        .button-popup h2 { text-align: center }
+        .button-popup-wrapper { background-color: var(--colorBgDark); }
+        .StatusInfo-Content { display: none; }
+        .button-toolbar > button > span + .button-title, .button-toolbar > button.button-textonly { padding-top: 2px }
     `;
         document.getElementsByTagName('head')[0].appendChild(style);
     };
@@ -105,7 +53,7 @@
         if (!document.getElementById('statusDropdown')) {
             statusStyle();
         }
-        const adr = document.querySelector('.toolbar-addressbar');
+        const adr = document.querySelector('.UrlBar');
         const btn = document.createElement('div');
         btn.id = 'statusButton';
         btn.classList.add('button-toolbar');
