@@ -76,7 +76,7 @@ function zoomControl() {
         `;
 
         // inserts the button to the left of the bookmark icon
-        let addressBar = document.querySelector(".addressfield > .toolbar");
+        let addressBar = document.querySelector(".toolbar.toolbar-small.toolbar-insideinput");
         let bookmarkBtn = addressBar.querySelector(".create-bookmark");
         addressBar.insertBefore(zoomBtn, bookmarkBtn);
 
