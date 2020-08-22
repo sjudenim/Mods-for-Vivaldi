@@ -8,18 +8,27 @@
 /* Removes titlebar */
 #header { min-height: 0; }
 
-.toolbar.toolbar-droptarget.toolbar-mainbar.toolbar-noflex.toolbar-large { position: absolute; }
+.UrlBar.toolbar.toolbar-mainbar.toolbar-large {
+position: absolute;
+height: 34px;
+width: 100%;
+}
 
 /* Line under Addressbar */
-.address-top .toolbar-addressbar:after, .address-top .toolbar-mainbar:after { display: none; }
+.UrlBar.toolbar.toolbar-mainbar.toolbar-large:after, .toolbar-mainbar:after { display: none; }
 
-.toolbar.toolbar-addressbar { height: 34px; }
+/* Webpage container needs to be moved to accomodate single bar */
+#webview-container {
+  top: 34px;
+  height: calc(100% - 34px);
+}
+
 
 /* Addressfield
   ----------------------------
 */
 /* Edge style */
-.addressfield {
+.UrlBar-AddressField {
   border: 0 !important;
   outline: 0 !important;
   outline-offset: 0 !important;
@@ -27,6 +36,7 @@
   max-width: 45vw;
   height: 22px !important;
   margin: auto !important;
+  left: -22px;
   background-color: transparent !important;
   border-radius: 0 !important;
   z-index: 99;
@@ -54,8 +64,6 @@
   margin-top: 1px;
   text-align: center;
 }
-
-.addressfield .pageload .pageload-ticker { display: none; }
 
 .toolbar-insideinput.toolbar-insideinput.toolbar-insideinput>.button-toolbar button:hover :not(:active):not(:focus):not(.button-pressed),
 .toolbar-insideinput.toolbar-insideinput.toolbar-insideinput>.toolbar-group>.button-toolbar button:hover :not(:active):not(:focus):not(.button-pressed),
@@ -110,15 +118,4 @@ button {
 .toolbar-extensions .button-toolbar > button:hover > img {
   background-color: var(--colorAccentBgFadedMore) !important;
   filter: grayscale(0%) contrast(100%) opacity(100%);
-}
-
-
-/* Miscellaneous stuff
-  ----------------------------
-*/
-/* If using tabs on top, this will remove the space vacated by the menu button */
-#tabs-container.top {
-  margin-top: -4px !important;
-  padding-left: 0 !important;
-  margin-right: -95px !important
 }
