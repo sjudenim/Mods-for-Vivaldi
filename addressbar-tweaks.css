@@ -9,19 +9,12 @@
 #header { min-height: 0; }
 
 .UrlBar.toolbar.toolbar-mainbar.toolbar-large {
-position: absolute;
 height: 34px;
 width: 100%;
 }
 
 /* Line under Addressbar */
 .UrlBar.toolbar.toolbar-mainbar.toolbar-large:after, .toolbar-mainbar:after { display: none; }
-
-/* Webpage container needs to be moved to accomodate single bar */
-#webview-container {
-  top: 34px;
-  height: calc(100% - 34px);
-}
 
 
 /* Addressfield
