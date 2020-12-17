@@ -1,9 +1,10 @@
 /*
-* Vivaldi Ui tweaks
+* Vivaldi Ui tweaks (updated for browser version 3.5)
 * Written by sjudenim
 * GNU General Public License v3.0
 * 
 *  General ui changes that include: recolouring, re-positioning, font adjustments, (some) icon replacements
+*
 */
 
 /* Text selection */
@@ -13,7 +14,7 @@
 }
 
 /* Font smoothing for Windows OS */
-* { text-shadow: 0 0 1px var(--colorAccentFgAlpha) !important; }
+* { text-shadow: 0 0 .8px var(--colorAccentFgAlpha) !important; }
 
 
 /* Window button group
@@ -25,15 +26,16 @@
   z-index: 999
 }
 
-#browser.win .window-buttongroup button {
+#browser.win .window-buttongroup button, #browser.win .window-buttongroup button.window-close {
   height: 34px !important;
   width: 44px !important;
-  opacity: .7
+  fill: var(--colorFg) !important;
+  transition: .5s !important;
 }
 
 #browser.win .window-buttongroup button:hover {
-  background-color: var(--colorAccentBgFadedMore) !important;
-  fill: var(--colorAccentFg) !important
+  background-color: var(--colorHighlightBgAlpha) !important;
+  fill: var(--colorAccentFg) !important;
 }
 
 #browser.win .window-buttongroup button.window-minimize>svg path { d: path('M0 5h10v1H0z'); }
@@ -42,41 +44,36 @@
 
 .maximized#browser.win .window-buttongroup button.window-close, .fullscreen#browser.win .window-buttongroup button.window-close { padding-right: 0 !important; }
 
-#browser.win .window-buttongroup button.window-close svg path { d: path('M.71611758 0L0 .71414475 4.2868415 4.9990135.00197275 9.2838828l.71414483.7141446L5.0009863 5.7131583 9.2858555 10 10 9.2838828 5.715131 4.9990135 10 .71414475 9.2858555 0 5.0009863 4.2848688z'); }
-
-#browser.win .window-buttongroup button.window-close, #browser.win:not(.win10) .window-buttongroup .window-close {
-  background-color: transparent !important;
-  fill: var(--colorFgIntenser) !important;
-  margin-right: -2px !important;
-  opacity: 1 !important
-}
-#browser.win .window-buttongroup button.window-close:hover, #browser.win:not(.win10) .window-buttongroup .window-close:hover {
-  background-color: var(--colorHighlightBg) !important;
-  fill: white !important
-}
-
 
 /* Tabs
   ----------------------------
 */
-#tabs-container .newtab svg path {
-  d: path('M18.501 12h-4.252c-.151 0-.248-.099-.248-.251V7.5c0-.298-.197-.5-.5-.5H12.5c-.3 0-.5.203-.5.5v4.249c0 .153-.098.251-.25.251H7.5c-.297 0-.5.2-.5.5v.998c0 .306.203.503.5.503h4.249c.152 0 .251.094.251.248v4.252c0 .297.2.499.5.499h1.001c.303 0 .5-.202.5-.499v-4.252c0-.154.097-.248.248-.248h4.252c.297 0 .499-.197.499-.503V12.5c0-.3-.202-.5-.499-.5z');
-}
+#tabs-container .newtab svg path { d: path('M19.417 12.417h-5.834V6.583a.583.583 0 10-1.166 0v5.833H6.583a.584.584 0 000 1.167h5.833v5.834a.585.585 0 001.168 0v-5.834h5.833a.584.584 0 000-1.166z'); }
 
-#tabs-container>div.toolbar.toolbar-tabbar.toolbar-noflex.sync-and-trash-container svg path {
-  d: path('M6 11.25A1.75 1.75 0 0 0 4.25 13 1.75 1.75 0 0 0 6 14.75 1.75 1.75 0 0 0 7.75 13 1.75 1.75 0 0 0 6 11.25zm7 0A1.75 1.75 0 0 0 11.25 13 1.75 1.75 0 0 0 13 14.75 1.75 1.75 0 0 0 14.75 13 1.75 1.75 0 0 0 13 11.25zm7 0A1.75 1.75 0 0 0 18.25 13 1.75 1.75 0 0 0 20 14.75 1.75 1.75 0 0 0 21.75 13 1.75 1.75 0 0 0 20 11.25z');
-}
+.toolbar-tabbar > .button-toolbar.toggle-trash svg path { d: path('M6 11.25A1.75 1.75 0 0 0 4.25 13 1.75 1.75 0 0 0 6 14.75 1.75 1.75 0 0 0 7.75 13 1.75 1.75 0 0 0 6 11.25zm7 0A1.75 1.75 0 0 0 11.25 13 1.75 1.75 0 0 0 13 14.75 1.75 1.75 0 0 0 14.75 13 1.75 1.75 0 0 0 13 11.25zm7 0A1.75 1.75 0 0 0 18.25 13 1.75 1.75 0 0 0 20 14.75 1.75 1.75 0 0 0 21.75 13 1.75 1.75 0 0 0 20 11.25z'); }
 
-#tabs-container .newtab, #tabs-container>div.toolbar.toolbar-tabbar.toolbar-noflex.sync-and-trash-container>div { fill: var(--colorFg); }
+#tabs-container .newtab, #tabs-container .toggle-trash { fill: var(--colorFg); }
 
-#tabs-container .newtab:hover, #tabs-container>div.toolbar.toolbar-tabbar.toolbar-noflex.sync-and-trash-container>div:hover {
-  background-color: transparent !important;
-  fill: var(--colorHighlightBg);
-}
+#tabs-container .newtab:hover, #tabs-container .toggle-trash:hover { fill: var(--colorHighlightBg); }
 
 .tabs-top:not(.mac).color-behind-tabs-on #tabs-container, .tabs-top.mac.hasfocus.color-behind-tabs-on #tabs-container { background-image: none !important; }
 
 .tab-position .tab .tab-header { margin-right: 3px; }
+
+.tab-position .tab .close svg path { d: path('M.71611758 0L0 .71414475 4.2868415 4.9990135.00197275 9.2838828l.71414483.7141446L5.0009863 5.7131583 9.2858555 10 10 9.2838828 5.715131 4.9990135 10 .71414475 9.2858555 0 5.0009863 4.2848688z'); }
+
+.tab-position .tab .close svg {
+  margin: auto;
+  color: var(--colorFg);
+}
+
+.tab-position .tab .close {
+  display: flex;
+  background: none;
+  margin-top: 5px;
+}
+
+#browser:not(.alt-tabs) #tabs-container .close { margin-right: 0 !important; }
 
 .close { background-color: transparent !important; }
 
@@ -97,25 +94,23 @@
 
 #tabs-container { border: 0 !important; }
 
-#tabs-container .newtab:hover, #tabs-container .toggle-trash:hover { fill: var(--colorHighlightBg) !important; }
-
 
 /* Addressfield
   ----------------------------
 */
-.UrlField {
-  font-weight: 700;
-  justify-content: center;
+/* URL */
+.UrlFragment-Wrapper, .UrlFragment--Lowlight:first-of-type { color: var(--colorFgFaded); }
+
+/* URL Base-domain  */
+.UrlFragment-HostFragment-Basedomain, .UrlFragment-HostFragment-TLD {
+  color: var(--colorFgIntense) !important;
+	font-weight: bold;
 }
 
- .UrlField .UrlBar-UrlField {
-  text-align: center;
-  font-weight: 400;
-}
-
-.UrlFragment-Wrapper--ShouldHighlight {
-  --HighlightColor: var(--colorFg) !important;
-  --LowlightColor: var(--colorFgFaded) !important;
+/* URL Sub-domain */
+.UrlFragment-HostFragment-Subdomain {
+  color: var(--colorHighlightBg) !important;
+  font-weight: bold;
 }
 
 .UrlField .pageload:not(.unstarted).progress-done {
@@ -139,7 +134,7 @@ button.button-addressfield:hover {
 .button-addressfield.bookmark svg .bookmark-animated-fill { fill: var(--colorHighlightBgAlpha); }
 
 /* Content Blocking badge */
-.toolbar.toolbar-addressbar.toolbar-mainbar.toolbar-large > div.addressfield .ads, .toolbar.toolbar-addressbar.toolbar-mainbar.toolbar-large > div.addressfield .blocking, .toolbar.toolbar-addressbar.toolbar-mainbar.toolbar-large > div.addressfield .trackers { fill: var(--colorHighlightBg) !important; }
+.toolbar.toolbar-addressbar.toolbar-mainbar.toolbar-large>div.addressfield .ads, .toolbar.toolbar-addressbar.toolbar-mainbar.toolbar-large>div.addressfield .blocking, .toolbar.toolbar-addressbar.toolbar-mainbar.toolbar-large>div.addressfield .trackers { fill: var(--colorHighlightBg) !important; }
 
 /* Site Info icon */
 .SiteInfoButton.secure, .SiteInfoButton.certified {
@@ -151,9 +146,7 @@ button.button-addressfield:hover {
 
 .siteinfo-symbol:hover+.siteinfo-text { display: block; }
 
-.SiteInfoButton.secure svg path, .SiteInfoButton.certified svg path {
-  d: path('M8 1C4.131 1 1 4.131 1 8s3.131 7 7 7 7-3.131 7-7-3.131-7-7-7zm0 1.094A5.903 5.903 0 0113.906 8 5.902 5.902 0 018 13.906 5.904 5.904 0 012.094 8 5.904 5.904 0 018 2.094zm3.035 2.908c-.12 0-.239.054-.33.164L6.99 9.645 5.297 7.602a.414.414 0 00-.66 0 .644.644 0 000 .794l2.021 2.44a.43.43 0 00.33.164c.12 0 .24-.054.332-.164l4.043-4.875a.647.647 0 000-.795.422.422 0 00-.328-.164z')
-}
+.SiteInfoButton.secure svg path, .SiteInfoButton.certified svg path { d: path('M8 1C4.131 1 1 4.131 1 8s3.131 7 7 7 7-3.131 7-7-3.131-7-7-7zm0 1.094A5.903 5.903 0 0113.906 8 5.902 5.902 0 018 13.906 5.904 5.904 0 012.094 8 5.904 5.904 0 018 2.094zm3.035 2.908c-.12 0-.239.054-.33.164L6.99 9.645 5.297 7.602a.414.414 0 00-.66 0 .644.644 0 000 .794l2.021 2.44a.43.43 0 00.33.164c.12 0 .24-.054.332-.164l4.043-4.875a.647.647 0 000-.795.422.422 0 00-.328-.164z'); }
 
 .SiteInfoButton.warning { transform: rotate(180deg); }
 
@@ -163,9 +156,7 @@ button.button-addressfield:hover {
 }
 
 /* Bookmark icon */
-path.bookmark-outline, clipPath#addBookmarkPath path {
-  d: path('M14.051 3.176a4.026 4.026 0 0 0-5.687 0L8 3.54l-.363-.364a4.026 4.026 0 0 0-5.687 0C.414 4.711.405 7.146 1.927 8.838c1.389 1.543 5.485 4.878 5.659 5.019.118.097.26.143.401.143h.014a.605.605 0 0 0 .415-.143c.173-.141 4.27-3.476 5.658-5.019 1.522-1.692 1.511-4.127-.023-5.662zm-.924 4.81C12.044 9.19 9.068 11.671 8 12.552c-1.069-.881-4.044-3.362-5.127-4.565C1.811 6.807 1.8 5.125 2.85 4.076c.536-.535 1.24-.804 1.943-.804s1.407.268 1.943.804l.8.8a.612.612 0 0 0 .342.172.635.635 0 0 0 .585-.172l.801-.801a2.752 2.752 0 0 1 3.886 0c1.048 1.05 1.038 2.732-.023 3.911z')
-}
+path.bookmark-outline, clipPath#addBookmarkPath path { d: path('M14.051 3.176a4.026 4.026 0 0 0-5.687 0L8 3.54l-.363-.364a4.026 4.026 0 0 0-5.687 0C.414 4.711.405 7.146 1.927 8.838c1.389 1.543 5.485 4.878 5.659 5.019.118.097.26.143.401.143h.014a.605.605 0 0 0 .415-.143c.173-.141 4.27-3.476 5.658-5.019 1.522-1.692 1.511-4.127-.023-5.662zm-.924 4.81C12.044 9.19 9.068 11.671 8 12.552c-1.069-.881-4.044-3.362-5.127-4.565C1.811 6.807 1.8 5.125 2.85 4.076c.536-.535 1.24-.804 1.943-.804s1.407.268 1.943.804l.8.8a.612.612 0 0 0 .342.172.635.635 0 0 0 .585-.172l.801-.801a2.752 2.752 0 0 1 3.886 0c1.048 1.05 1.038 2.732-.023 3.911z'); }
 
 button:not(.button-on) path.bookmark-outline { fill: var(--colorFg); }
 
@@ -173,12 +164,28 @@ button.button-on path.bookmark-outline { fill: var(--colorHighlightBg); }
 
 .add-bookmark-shadow, .bookmark-animated-fill { display: none; }
 
-#main>div.toolbar.toolbar-addressbar.toolbar-mainbar.toolbar-large>div.addressfield>div.toolbar.toolbar-small.toolbar-insideinput>div.button-toolbar.cjvgsbzxr000i3n670rebhqf3>button>svg>g>path.bookmark-animated-fill,
-#main>div.toolbar.toolbar-addressbar.toolbar-mainbar.toolbar-large>div.addressfield>div.toolbar.toolbar-small.toolbar-insideinput>div.button-toolbar.cjvgsbzxr000i3n670rebhqf3>button>svg>g>path.bookmark-outline { display: none; }
+#main>div.toolbar.toolbar-addressbar.toolbar-mainbar.toolbar-large>div.addressfield>div.toolbar.toolbar-small.toolbar-insideinput>div.button-toolbar.cjvgsbzxr000i3n670rebhqf3>button>svg>g>path.bookmark-animated-fill, #main>div.toolbar.toolbar-addressbar.toolbar-mainbar.toolbar-large>div.addressfield>div.toolbar.toolbar-small.toolbar-insideinput>div.button-toolbar.cjvgsbzxr000i3n670rebhqf3>button>svg>g>path.bookmark-outline { display: none; }
+
+/* Qr code icon */
+.create-qr-code button svg { fill: unset !important; }
+
+/* Add bookmark dropdown */
+.dialog-add-bookmark { border: 1px solid var(--colorBgIntense); }
+
+.button-popup footer {
+  background-color: var(--colorBgIntense) !important;
+  border-top: 0 !important;
+}
+
+.create-bookmark > .button-popup .thumbnail-image {
+  height: unset !important;
+  max-height: unset !important;
+}
 
 /* Omnibox dropdown */
 .OmniDropdown {
   border-radius: 0 0 var(--radius) var(--radius);
+  backdrop-filter: blur(10px);
   opacity: .98;
 }
 
@@ -204,7 +211,7 @@ button.button-on path.bookmark-outline { fill: var(--colorHighlightBg); }
 
 /* pageload bar colors */
 .UrlBar-AddressField .pageload:not(.unstarted).progressing .pageload-indicator::-webkit-progress-value {
-  background-size: 100vw;
+  background-size: 100%;
   background-position: 0% 0%;
   background-color: transparent;
   background-image: linear-gradient(to right, var(--colorHighlightBgAlpha), var(--colorBorderHighlight), var(--colorHighlightBg));
@@ -234,20 +241,43 @@ button.button-on path.bookmark-outline { fill: var(--colorHighlightBg); }
 .UrlBar-AddressField .pageload:not(.unstarted).progressing .pageload-indicator[value='100']::-webkit-progress-value { background-position: 0% 100% !important; }
 
 
-/* Toolbars
+/* Toolbar and buttons
   ----------------------------
 */
-.toolbar-default .button-toolbar > button { background-image: linear-gradient(var(--colorBgLight), var(--colorBg)) !important; }
+button {
+  box-shadow: none !important;
+  border-color: transparent !important
+}
 
-.toolbar-default .button-toolbar > button.button-pressed { background-image: linear-gradient(var(--colorHighlightBg), var(--colorHighlightBgDark)) !important; }
+.toolbar-mainbar>.button-toolbar>button {
+  fill: var(--colorFg);
+  transition: .5s !important;
+}
 
-.toolbar-default .button-toolbar > button.button-pressed:active { background-image: linear-gradient(var(--colorBgDark), var(--colorBgDark)) !important; }
+.toolbar-mainbar>.button-toolbar>button:hover {
+  background-color: var(--colorHighlightBgAlpha) !important;
+  fill: var(--colorAccentFg) !important;
+}
 
-.toolbar-default .button-toolbar > button:hover { background-color: var(--colorBgDark) !important; fill: var(--colorHighlightBg) !important; }
+.toolbar-default .button-toolbar > button {
+  background-image: unset!important;
+  background-color: var(--colorBgLighter);
+}
 
-.toolbar-default .button-toolbar > button.button-pressed {
-  fill: var(--colorHighlightFg) !important;
+.toolbar-default .button-toolbar { border: 1px solid transparent !important; }
+
+.toolbar-default .button-toolbar>button.button-pressed { background-image: linear-gradient(var(--colorHighlightBg), var(--colorHighlightBgDark)) !important; }
+
+.toolbar-default .button-toolbar>button.button-pressed:active { background-image: linear-gradient(var(--colorBgDark), var(--colorBgDark)) !important; }
+
+.toolbar-default .button-toolbar>button:hover {
+  background-color: var(--colorHighlightBgAlpha) !important;
+  fill: var(--colorAccentFg) !important;
+}
+
+.toolbar-default .button-toolbar>button.button-pressed {
   color: var(--colorHighlightFg);
+  fill: var(--colorHighlightFg) !important;
 }
 
 ._default-focus {
@@ -255,7 +285,7 @@ button.button-on path.bookmark-outline { fill: var(--colorHighlightBg); }
   outline-offset: 0 !important
 }
 
-.urlSearch .favicon { display: inline !important }
+.urlSearch .favicon { display: inline !important; }
 
 .toolbar.icons button, .toolbar.text button {
   background-image: none !important;
@@ -287,53 +317,31 @@ input[type=button], input[type=submit] { background-image: none !important; }
 /* Won't show horizontal menu and window buttons when no ui */
 #browser.minimal-ui:not(.tabs-top) .topmenu, #browser.minimal-ui:not(.tabs-top) .window-buttongroup { display: none !important; }
 
+/* Resizes and repositions the dropdown menu arrow */
+.button-popup-centered:before {
+  border-width: 8px;
+  top: -16px !important;
+}
+
 
 /* Side panel
   ----------------------------
 */
-#panels-container:after { background-color: var(--colorBgLightIntense) !important; }
-
-#switch > button.preferences.panelbtn svg path { d: path('M12.121 5.5c-.216 0-.4.157-.435.37l-.19 1.165a5.949 5.949 0 00-1.648.688l-.944-.674a.442.442 0 00-.566.047L7.096 8.338a.445.445 0 00-.047.566l.674.944a5.966 5.966 0 00-.69 1.648l-1.166.19a.442.442 0 00-.367.435v1.758c0 .213.157.4.37.432l1.165.191a5.96 5.96 0 00.688 1.654l-.672.938a.449.449 0 00.047.57l1.242 1.24a.449.449 0 00.564.051l.944-.674a6.15 6.15 0 001.648.688l.19 1.164a.44.44 0 00.435.367h1.758c.212 0 .4-.153.432-.367l.191-1.164a6.114 6.114 0 001.654-.688l.938.674c.176.117.41.102.57-.05l1.24-1.24a.457.457 0 00.051-.571l-.674-.938a6.16 6.16 0 00.688-1.654l1.164-.191a.433.433 0 00.367-.432V12.12a.44.44 0 00-.367-.435l-1.164-.19a6.104 6.104 0 00-.688-1.648l.674-.944a.45.45 0 00-.05-.566l-1.24-1.242a.45.45 0 00-.571-.047l-.938.674a5.977 5.977 0 00-1.654-.69l-.191-1.166a.438.438 0 00-.432-.367zM13 8.166A4.84 4.84 0 0117.834 13 4.841 4.841 0 0113 17.834 4.84 4.84 0 018.166 13 4.84 4.84 0 0113 8.166zm0 2.334a2.503 2.503 0 00-2.5 2.5c0 1.379 1.122 2.5 2.5 2.5 1.379 0 2.5-1.121 2.5-2.5 0-1.378-1.121-2.5-2.5-2.5'); }
-
-.panel > header { background-color: var(--colorBgDark) !important; }
-
-.panel > header h1 {
-  text-align: center;
-  margin: -2px 0 2px 0;
-  font-size: 14px;
-  color: var(--colorFgFaded) !important
-}
-
-.panel section, .panel-group, #panels-container.overlay .panel-group { opacity: .99; }
-
-#panels-container.overlay:not(.switcher) { width: 0 !important; }
-
-.panel-group .panel-collapse-guard {
-  background-color: var(--colorBgDark);
-  padding: 0 2px 0 0
-}
-
-.addbookmark-cardwrapper, .downloaddialog-cardwrapper, .panel#downloads .download-editor, .notes-cardwrapper {
-  background-color: var(--colorBg) !important;
-  margin: 0 !important
-}
-
 #switch {
   background-color: var(--colorBg) !important;
   box-shadow: none !important;
-  opacity: .99;
+  backdrop-filter: blur(10px);
+  opacity: .98;
 }
 
-#switch button:hover, #switch > button.active:hover, #switch .addwebpanel-wrapper > button.active:hover {
-  background-color: var(--colorAccentBgFadedMore) !important;
-  fill: var(--colorHighlightBg);
-  opacity: .8;
+#switch button {transition: .5s !important; }
+
+#switch button:hover {
+  background-color: var(--colorHighlightBgAlpha) !important;
+  fill: var(--colorAccentFg);
 }
 
-#switch > button.active, #switch .addwebpanel-wrapper > button.active {
-  background-color: var(--colorBgDark) !important;
-  fill: var(--colorHighlightBg);
-}
+#switch>button.active, #switch .addwebpanel-wrapper>button.active { fill: var(--colorHighlightBg); }
 
 #switch .addwebpanel-wrapper>button.downloads.in-progress div.progress, #switch>button.downloads.in-progress div.progress {
   background-color: var(--colorHighlightBg);
@@ -350,31 +358,54 @@ input[type=button], input[type=submit] { background-image: none !important; }
   filter: grayscale(10%) contrast(60%) invert(10%)
 }
 
+/* Download progress button */
 #switch button.downloads.in-progress div.progress div.loaded { background-color: var(--colorHighlightBg); }
 
 #switch>button.downloads.in-progress div.progress {
   background-color: var(--colorFg);
-  border: 1px solid var(--colorHighlightBg)
+  border: 1px solid var(--colorHighlightBg);
+  border-radius: 0 !important;
 }
 
 /* Replace side bar icons */
-.notes svg path { d: path('M5.5 17.044V20h3.167l9.167-8.634-3.166-2.956L5.5 17.044zm14.75-7.933c.334-.311.334-.778 0-1.089l-1.917-1.789a.846.846 0 0 0-1.167 0l-1.5 1.4 3.167 2.956 1.417-1.478z')}
+.notes svg path { d: path('M5.5 17.044V20h3.167l9.167-8.634-3.166-2.956L5.5 17.044zm14.75-7.933c.334-.311.334-.778 0-1.089l-1.917-1.789a.846.846 0 0 0-1.167 0l-1.5 1.4 3.167 2.956 1.417-1.478z'); }
+
+#switch>button.preferences.panelbtn svg path { d: path('M12.121 5.5c-.216 0-.4.157-.435.37l-.19 1.165a5.949 5.949 0 00-1.648.688l-.944-.674a.442.442 0 00-.566.047L7.096 8.338a.445.445 0 00-.047.566l.674.944a5.966 5.966 0 00-.69 1.648l-1.166.19a.442.442 0 00-.367.435v1.758c0 .213.157.4.37.432l1.165.191a5.96 5.96 0 00.688 1.654l-.672.938a.449.449 0 00.047.57l1.242 1.24a.449.449 0 00.564.051l.944-.674a6.15 6.15 0 001.648.688l.19 1.164a.44.44 0 00.435.367h1.758c.212 0 .4-.153.432-.367l.191-1.164a6.114 6.114 0 001.654-.688l.938.674c.176.117.41.102.57-.05l1.24-1.24a.457.457 0 00.051-.571l-.674-.938a6.16 6.16 0 00.688-1.654l1.164-.191a.433.433 0 00.367-.432V12.12a.44.44 0 00-.367-.435l-1.164-.19a6.104 6.104 0 00-.688-1.648l.674-.944a.45.45 0 00-.05-.566l-1.24-1.242a.45.45 0 00-.571-.047l-.938.674a5.977 5.977 0 00-1.654-.69l-.191-1.166a.438.438 0 00-.432-.367zM13 8.166A4.84 4.84 0 0117.834 13 4.841 4.841 0 0113 17.834 4.84 4.84 0 018.166 13 4.84 4.84 0 0113 8.166zm0 2.334a2.503 2.503 0 00-2.5 2.5c0 1.379 1.122 2.5 2.5 2.5 1.379 0 2.5-1.121 2.5-2.5 0-1.378-1.121-2.5-2.5-2.5'); }
 
 /* Hides webpanel suggestions */
 .webpanel-suggestions { display: none; }
+
+/* Panel tweaks */
+.right #panels-container.overlay { backdrop-filter: blur(10px); box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25) !important; }
+
+#panels-container:after { background-color: var(--colorBgLightIntense) !important; }
+
+#panels-container.overlay .panel-group { border: 2px solid var(--colorBgLightIntense); }
+
+.panel > header { background-color: var(--colorBg); }
+
+.panel>header h1 {
+  margin-bottom: 5px !important;
+  margin-top: -5px;
+  font-weight: 600 !important;
+  font-size: 14px !important;
+  text-align: center;
+}
+
+.panel section, .panel-group, #panels-container.overlay .panel-group {
+  backdrop-filter: blur(10px);
+  opacity: .98;
+}
+
+.panel-group .panel-collapse-guard { padding: 0 2px 0 0; }
 
 
 /* Notes
   ----------------------------
 */
-#notes-panel .notes-editor { background-color: var(--colorBg) !important; }
+.NotesEditor { max-width: -webkit-fill-available; }
 
-.NotesEditor {
-  padding: 0 !important;
-  max-width: -webkit-fill-available;
-}
-
-#notes-panel > div > div > div.toolbar.toolbar-default.toolbar-wrap.no-top-padding { padding: 0 5px !important; }
+#notes-panel>div>div>div.toolbar.toolbar-default.toolbar-wrap.no-top-padding { padding: 0 5px !important; }
 
 .cardview .NotesEditor-Editor, .NotesEditor .MarkdownRender {
   background-color: var(--colorBgDark) !important;
@@ -399,23 +430,47 @@ input[type=button], input[type=submit] { background-image: none !important; }
 #notes-panel .notes-editor .note.md { background-color: var(--colorBgDark); }
 
 
+/* Bookmarks, History, Notes & Calendar
+  ----------------------------
+*/
+.manager, .vivaldi-tree {
+  opacity: .9;
+  backdrop-filter: blur(5px)
+}
+
+/* Creates alternating row colors */
+.vivaldi-tree div>div:nth-child(even), .manager .manager-treeview div>div:nth-child(even), .startpage .history .manager-content .history-tree div>div:nth-child(even) { background-color: var(--colorBg); }
+
+.manager .manager-editor { border: none !important; }
+
+.panel#downloads .download-item .file, .panel#downloads .download-item .file .size { background-color: transparent; }
+
+.win .vivaldi-tree .tree-item[data-lead] { outline: 1px solid var(--colorHighlightBgAlpha) !important; }
+
+.vivaldi-tree .tree-row svg {
+  fill: var(--colorFg);
+  stroke: var(--colorFg)
+}
+
+.panel-group .panel.panel-bookmarks label svg { margin-left: 0 !important; }
+
+.notes-cardwrapper, .addbookmark-cardwrapper, .panel#downloads .download-editor, #notes-panel .notes-editor { background-color: var(--colorBg) !important; }  
+
+
 /* Notes Editor Manager
   ----------------------------
 */
-.NotesManager-Toolbar, .NotesManager-Buttons { background-color: var(--colorBgDark) !important; }
+.NotesManager-Tree > .toolbar {
+  margin: unset !important;
+  padding: 6px;
+  background-color: var(--colorBgLightIntense);
+}
 
 .NotesManager-Buttons { border-bottom: 1px solid var(--colorBgDarker); }
 
 .NotesManager-RenderMarkdownButton { display: none !important; }
 
-.NotesManager-Tree > .toolbar-default {
-  background-color: var(--colorBgDark);
-  padding-left: 5%;
-  margin-left: 0 !important;
-  height: 40px;
-}
-
-.NotesManager-Tree { border-right: 1px solid var(--colorBgDarker); }
+.MarkdownRender p, .MarkdownRender ul, .MarkdownRender ol, .MarkdownRender dl, .MarkdownRender table, .MarkdownRender pre, .MarkdownRender blockquote, body[contenteditable="plaintext-only"] { line-height: 1.4em; }
 
 .NotesManager-Footer {
   position: absolute;
@@ -435,37 +490,29 @@ input[type=button], input[type=submit] { background-image: none !important; }
 }
 
 
-/* Bookmarks and History
-  ----------------------------
+/* Calendar
+------------------------------
 */
-.manager .manager-content, .vivaldi-tree, .manager>.toolbar, .startpage .history .more-info {
-  background-color: var(--colorBgDark) !important;
-  opacity: .98;
-  backdrop-filter: blur(10px)
+.calendar-multiweek-date.current .day {
+  background-color: var(--colorHighlightBg) !important;
+  font-size: 1.1em;
+  font-weight: 500 !important;
 }
 
-/* Creates alternating row colors */
-.vivaldi-tree div>div:nth-child(even), .manager .manager-treeview div>div:nth-child(even), .startpage .history .manager-content .history-tree div>div:nth-child(even) { background-color: var(--colorBg); }
+.calendar-event .cal-event-header .cal-event-time, .calendar-event .cal-event-header .cal-event-title {
+  font-weight: 400 !important;
+  font-size: 1.15em;
+} 
 
-.manager .manager-editor {border: none !important}
-
-.panel#downloads .download-item .file, .panel#downloads .download-item .file .size { background-color: transparent; }
-
-
-.win .vivaldi-tree .tree-item[data-lead] { outline: 1px solid var(--colorHighlightBgAlpha) !important; }
-
-.vivaldi-tree .tree-row svg {
-  fill: var(--colorFg);
-  stroke: var(--colorFg)
-}
-
-.panel-group .panel.panel-bookmarks label svg { margin-left: 0 !important; }
+.calendar-event .cal-event-header .cal-event-title { margin-left: 10px; }
 
 
 /* Settings panel
   ----------------------------
 */
 .vivaldi-settings .settings-sidebar .settings-navigation { min-width: 200px !important; }
+
+.ContentBlocker { max-width: 1000px; }
 
 .colorpicker .colorpicker-plot .colorpicker-plot-reticle {
   position: relative !important;
@@ -486,6 +533,9 @@ input[type=button], input[type=submit] { background-image: none !important; }
   color: var(--colorFgFaded) !important;
 }
 
+/* Removes schedule timeline size limit */
+.theme-schedule-timeline { max-width: unset !important; }
+
 
 /* Miscellaneous stuff
   ----------------------------
@@ -493,20 +543,21 @@ input[type=button], input[type=submit] { background-image: none !important; }
 /* Popup containers (Quick command, Delete data */
 .quick-command-container { box-shadow: 0 0 10px 0 rgba(0, 0, 0, .6) !important; }
 
-#modal-bg > div {
+#modal-bg>div {
   border-radius: var(--radius) !important;
-  opacity: .98;
   backdrop-filter: blur(2px);
 }
 
-.quick-command-container, .quick-command-container .quick-commands > div {
+.quick-command-container, .quick-command-container .quick-commands>div {
   min-width: 45vw;
   cursor: auto;
 }
 
-.quick-command-container .quick-commands > div > div { max-width: 100% !important; }
+.quick-command-container .quick-commands>div>div { max-width: 100% !important; }
 
 .quick-command-container .quick-command { cursor: pointer; }
+
+#modal-bg.slide { top: 1vh !important; }
 
 /* Rounds fav icons in lists */
 .vivaldi-tree .tree-row label>img, .vivaldi-tree .tree-row label .tree-row-image {
@@ -514,29 +565,31 @@ input[type=button], input[type=submit] { background-image: none !important; }
   filter: grayscale(.2)
 }
 
+/* New tab link marker */
+a[target="_blank"]:hover { outline: dotted 1.5px !important; } 
+
 /* Scrollbar for internal pages */
-#browser ::-webkit-scrollbar {
+::-webkit-scrollbar {
   background-color: transparent !important;
   border: 0 !important;
   width: 16px !important;
   padding: 0 2px
 }
 
-#browser ::-webkit-scrollbar-track {
+::-webkit-scrollbar-track {
   background-color: transparent !important;
   border: 0 !important;
-
 }
 
-#browser ::-webkit-scrollbar-thumb {
+::-webkit-scrollbar-thumb {
   background-color: var(--colorFgAlpha) !important;
   border: 6px solid transparent !important;
   border-radius: 8px;
- }
+}
 
-#browser ::-webkit-scrollbar-thumb:hover, #browser ::-webkit-scrollbar-thumb:active { background-color: var(--colorHighlightBg) !important; }
+::-webkit-scrollbar-thumb:hover, ::-webkit-scrollbar-thumb:active { background-color: var(--colorHighlightBg) !important; }
 
-#browser ::-webkit-scrollbar-button { display: none !important; }
+::-webkit-scrollbar-button { display: none !important; }
 
 /* Slider */
 input[type=range] { background-color: var(--colorBgDarker); }
@@ -547,29 +600,56 @@ input[type=range]::-webkit-slider-thumb, input[type=range]::-webkit-slider-thumb
 /* Hiding stuff
   ----------------------------
 */
-.color-behind-tabs-on .addressfield:focus-within, .color-behind-tabs-on .searchfield:focus-within,
-.UrlBar-AddressField:focus-within, .searchfield:focus-within,
+.color-behind-tabs-on .addressfield:focus-within,
+.color-behind-tabs-on .searchfield:focus-within,
+.UrlBar-AddressField:focus-within,
+.searchfield:focus-within,
 .toolbar.icons input[type=search] {
   box-shadow: none !important
 }
 
-.vivaldi-tree .tree-row.folder .item-count, .history .item-count, #history-panel .item-count,
-button.fip-previous, button.fip-next, button.fip-close,
+.vivaldi-tree .tree-row.folder .item-count,
+.history .item-count,
+#history-panel .item-count,
+button.fip-previous,
+button.fip-next,
+button.fip-close,
 input::-webkit-search-cancel-button {
   display: none
 }
 
 #fip-input-text::-webkit-search-cancel-button { appearance: none !important; }
 
-.cb-image svg .bookmark-shadow, .thumbnail-image svg .bookmark-shadow { fill: transparent !important; }
+.cb-image svg .bookmark-shadow,
+.thumbnail-image svg .bookmark-shadow {
+  fill: transparent !important;
+}
 
-/* Hides background colours */
-[title=Default], [title=Blue], [title="Pink"], [title="Yellow"] { display:none !important; }
+/* Hides background colours
+[title=Default],
+[title=Blue],
+[title="Pink"],
+[title="Yellow"] {
+  display: none !important;
+}
 
-/* Hides wallpapers in settings */
-[title=Vivaldi], [title=Human], [title="Hot Pink"], [title=Subtle], [title=Dark], [title=Blueprint], [title=Beach], [title=Light], [title=Sunset], [title="Starry Night"], [title="Pink Cloud"], [title=Jellyfish], [title="Purple Lake"], [title=Wave] {
-	display:none;
+/* Hides wallpapers in settings
+[title=Vivaldi],
+[title=Human],
+[title="Hot Pink"],
+[title=Subtle],
+[title=Dark],
+[title=Blueprint],
+[title=Beach],
+[title=Light],
+[title=Sunset],
+[title="Starry Night"],
+[title="Pink Cloud"],
+[title=Jellyfish],
+[title="Purple Lake"],
+[title=Wave] {
+  display: none;
 }
 
 /* Hides dropdown arrow for history in the address field */
-.button-toolbar > button[title="Show typed history"], .button-toolbar > button[title="Enter an address to activate typed history"] { display: none !important; }
+.button-toolbar>button[title="Show typed history"], .button-toolbar>button[title="Enter an address to activate typed history"] { display: none !important; }
