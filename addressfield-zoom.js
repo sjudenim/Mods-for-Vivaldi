@@ -1,9 +1,9 @@
-(function() {
+(function () {
   // ============================================================================================================
   // Gives Zoom Interface in the Address Bar
-  //    - written by nomadic and sjudenim
+  //    - made by nomadic on the Vivaldi Forums
   // ============================================================================================================
-function zoomControl() {
+  function zoomControl() {
     // CONFIGURATION: ---------------------------------------------------------------
     //  - in Vivaldi's settings you can set the default page zoom, this
     //    will follow that if RESET_ZOOM_LEVEL is set to 100
@@ -21,7 +21,7 @@ function zoomControl() {
     const MODE = 1;
     // ---------------------
     // Option for modes 1 and 2:
-    const FADE_OUT_TIME = 2; // 3 seconds  -> can be set to any positive half second increment (ex. 0, 0.5, 1, 1.5 ...)
+    const FADE_OUT_TIME = 3; // 3 seconds  -> can be set to any positive half second increment (ex. 0, 0.5, 1, 1.5 ...)
     // Option for mode 2:
     const IS_AUTO_OPENED_ON_ADDRESSBAR = false;
     // ------------------------------------------------------------------------------
@@ -48,7 +48,7 @@ function zoomControl() {
                 <div class="button-toolbar-c" title="Zoom Out">
                   <button tabindex="-1" id="zoom-out-c">
                     <span>
-                      <svg viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
+                    <svg viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
                         <path d="M4 8C4 8.55228 4.44772 9 5 9H11C11.5523 9 12 8.55228 12 8C12 7.44772 11.5523 7 11 7H5C4.44772 7 4 7.44772 4 8Z"></path>
                       </svg>
                     </span>
@@ -81,30 +81,22 @@ function zoomControl() {
         addressBar.insertBefore(zoomBtn, bookmarkBtn);
 
         // listener for the magnifying glass button to expand or collapse the control panel
-        document
-          .getElementById("zoom-panel-btn")
-          .addEventListener("click", function() {
-            let nav = document.getElementsByClassName("zoom-panel")[0];
-            let elementToTheLeft =
-              nav.parentElement.parentElement.previousElementSibling;
-            elementToTheLeft.style.transition = "0.5s";
-            navToggle(nav, elementToTheLeft);
-          });
+        document.getElementById("zoom-panel-btn").addEventListener("click", function () {
+          let nav = document.getElementsByClassName("zoom-panel")[0];
+          // Update 3: Needed to add another .parentElement
+          let elementToTheLeft = nav.parentElement.parentElement.parentElement.previousElementSibling;
+          elementToTheLeft.style.transition = "0.5s";
+          navToggle(nav, elementToTheLeft);
+        });
 
         // listener for the zoom in button in the zoom control panel
-        document
-          .getElementById("zoom-in-c")
-          .addEventListener("click", incrementPercent);
+        document.getElementById("zoom-in-c").addEventListener("click", incrementPercent);
 
         // listener for the zoom out button in the zoom control panel
-        document
-          .getElementById("zoom-out-c")
-          .addEventListener("click", decrementPercent);
+        document.getElementById("zoom-out-c").addEventListener("click", decrementPercent);
 
         // listener for the zoom reset button in the zoom control panel
-        document
-          .getElementById("zoom-reset-c")
-          .addEventListener("click", resetZoom);
+        document.getElementById("zoom-reset-c").addEventListener("click", resetZoom);
 
         // starts esentially a hover listener that modes 1 and 2 need
         if (MODE === 1 || MODE === 2) {
@@ -168,7 +160,7 @@ function zoomControl() {
 
     // Zooms in the page by the specified increment
     function incrementPercent() {
-      chrome.tabs.getZoom(function(zoomLevel) {
+      chrome.tabs.getZoom(function (zoomLevel) {
         let newZoomLevel = zoomLevel + ZOOM_INCREMENT_AMOUNT / 100;
 
         // Max zoom that Vivaldi allows is 500 %
@@ -180,7 +172,7 @@ function zoomControl() {
 
     // Zooms out the page by the specified increment
     function decrementPercent() {
-      chrome.tabs.getZoom(function(zoomLevel) {
+      chrome.tabs.getZoom(function (zoomLevel) {
         let newZoomLevel = zoomLevel - ZOOM_INCREMENT_AMOUNT / 100;
 
         // Min zoom that Vivaldi allows is 20 %
@@ -202,8 +194,7 @@ function zoomControl() {
     // Tracks if you are hovering over the zoom controls
     function zoomPanelHoverTracker() {
       let zoomPanel = document.getElementsByClassName("zoom-panel")[0];
-      let elementToTheLeft =
-        zoomPanel.parentElement.parentElement.previousElementSibling;
+      let elementToTheLeft = zoomPanel.parentElement.parentElement.previousElementSibling;
       let isHovered = false;
       let intervalID = null;
       let count = 0;
@@ -211,9 +202,7 @@ function zoomControl() {
       // selects which element must be hovered to trigger action
       let hoverElement;
       if (MODE === 2 && IS_AUTO_OPENED_ON_ADDRESSBAR) {
-        let addressBar = document.querySelector(
-          ".toolbar-addressbar.toolbar-mainbar"
-        );
+        let addressBar = document.querySelector(".UrlBar-AddressField");
         hoverElement = addressBar;
       } else {
         let zoomBtnAndPanel = document.querySelector(".zoom-hover-target");
@@ -221,7 +210,7 @@ function zoomControl() {
       }
 
       // when the element is hovered, reset the interval counter and opens the controls if needed
-      hoverElement.onmouseover = function() {
+      hoverElement.onmouseover = function () {
         count = 0;
         isHovered = true;
         if (MODE !== 1) {
@@ -230,14 +219,14 @@ function zoomControl() {
       };
 
       // when the element loses hover, closes the controls if enough time has passed
-      hoverElement.onmouseout = function() {
+      hoverElement.onmouseout = function () {
         // removes any previous counters (needed for if hover is lost and regained multiple times)
         if (intervalID) {
           clearInterval(intervalID);
         }
         isHovered = false;
         // start a counter to see how long it has been since the element was last hovered
-        intervalID = setInterval(function() {
+        intervalID = setInterval(function () {
           // only increment the counter as long as hover isn't regained
           if (isHovered === false) {
             count++;
@@ -254,9 +243,9 @@ function zoomControl() {
     // CHANGE: Added in Update #1
     // updates zoom percentage on tab change
     function tabChangeUpdateZoomWrapper() {
-      chrome.tabs.getZoom(function(zoomLevel) {
+      chrome.tabs.getZoom(function (zoomLevel) {
         let zoomInfo = {
-          newZoomFactor: zoomLevel
+          newZoomFactor: zoomLevel,
         };
         updateZoomIcon(zoomInfo);
       });
