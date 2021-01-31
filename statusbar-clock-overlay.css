@@ -1,0 +1,66 @@
+/*
+* Statusbar Clock Overlay
+* Written by sjudenim and dude99
+* GNU General Public License v3.0
+* 
+* Turns the statusbar clock into an overlay that expands the statusbar on hover 
+*/
+
+.toolbar-statusbar .button-toolbar > button:hover, .toolbar-statusbar .button-toolbar > button.button-pressed { background-color: transparent !important; fill: var(--colorHighlightBg); }
+
+/* Clock overlay
+  ----------------------------
+*/
+.toolbar-statusbar {
+  position: fixed;
+  background-color: var(--colorAccentBg);
+  box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.2) !important;
+  color: var(--colorAccentFg);
+  opacity: .9;
+  font-size: 1em;
+  font-weight: 500;
+  border-radius: 2px;
+  border: none;
+  bottom: 2px;
+  right: 8px;
+  width: auto;
+}
+
+.toolbar-statusbar>div:not(.ClockButton) {
+  max-width: 140px;
+  transition: max-width .3s ease-out 0s, visibility .2s 0s !important;
+}
+
+.toolbar-statusbar:not(:focus-within):not(:hover)>div:not(.ClockButton) {
+  visibility: hidden;
+  max-width: 0;
+  transition: max-width .3s ease-out 0s, visibility .2s 0s !important;
+}
+
+.toolbar-statusbar .button-toolbar { align-self: auto; }
+
+/* Popup menu */
+.button-popup-above { bottom: calc(var(--buttonHeight) + var(--verticalMargin, 0px) + (10px/2)) !important; }
+
+/* Status info overlay */
+.StatusInfo {
+  visibility: hidden;
+  position: fixed;
+  left: 8px;
+  bottom: 2px;
+  max-width: 50%;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.StatusInfo--Visible .StatusInfo-Content {
+  visibility: visible;
+  background-color: var(--colorAccentBg);
+  backdrop-filter: blur(10px);
+  opacity: .9;
+  padding: 4px 7px;
+  border-radius: 2px;
+}
+
+/* Hide Status info
+.StatusInfo { display: none; }
