@@ -1,5 +1,5 @@
 /*	
-* Vivaldi Addressbar Mods	
+* Vivaldi Addressbar Mods	(Updated for browser version 3.6)
 * Written by sjudenim	
 * GNU General Public License v3.0	
 * 	
@@ -8,18 +8,21 @@
 /* Removes titlebar */
 #header { min-height: 0; }
 
-.UrlBar.toolbar.toolbar-mainbar.toolbar-large {
-height: 34px;
-width: 100%;
-}
+.address-top .toolbar-mainbar { height: 34px; }
 
 /* Line under Addressbar */
-.UrlBar.toolbar.toolbar-mainbar.toolbar-large:after, .toolbar-mainbar:after { display: none; }
+.address-top .toolbar-mainbar:after { display: none; }
 
+/*.toolbar.toolbar-mainbar.toolbar-mailbar { padding-right: 180px}
+*/
 
 /* Addressfield
   ----------------------------
 */
+.UrlField { justify-content: center; }
+
+.UrlField .UrlBar-UrlField { text-align: center; }
+
 /* Edge style */
 .UrlBar-AddressField {
   border: 0 !important;
@@ -36,10 +39,11 @@ width: 100%;
   border-left: 1px solid var(--colorFgAlpha) !important;
   border-right: 1px solid var(--colorFgAlpha) !important;
 }
+
 /* End style */
 
 /* Chrome style
-.addressfield {
+.UrlBar-AddressField {
   border: 0 !important;
   outline: 0 !important;
   outline-offset: 0 !important;
@@ -47,7 +51,7 @@ width: 100%;
   max-width: 45vw;
   height: 28px !important;
   margin: auto !important;
-  background-color: var(--colorBgDarker);
+  background-color: var(--colorAccentBgDark);
   border-radius: 25px !important;
   z-index: 99;
 }
@@ -58,57 +62,38 @@ width: 100%;
   text-align: center;
 }
 
-.toolbar-insideinput.toolbar-insideinput.toolbar-insideinput>.button-toolbar button:hover :not(:active):not(:focus):not(.button-pressed),
-.toolbar-insideinput.toolbar-insideinput.toolbar-insideinput>.toolbar-group>.button-toolbar button:hover :not(:active):not(:focus):not(.button-pressed),
-.toolbar .button-toolbar.reload:hover {
+.toolbar-insideinput.toolbar-insideinput.toolbar-insideinput>.button-toolbar button:hover :not(:active):not(:focus):not(.button-pressed), .toolbar-insideinput.toolbar-insideinput.toolbar-insideinput>.toolbar-group>.button-toolbar button:hover :not(:active):not(:focus):not(.button-pressed), .toolbar .button-toolbar.reload:hover {
   background-color: transparent !important;
   fill: var(--colorHighlightBg) !important
 }
-
-
-/* Toolbar buttons
-  ----------------------------
-*/
-button {
-  box-shadow: none !important;
-  border-color: transparent !important
-}
-
-.toolbar-mainbar > .button-toolbar > button:hover {
-  background-color: var(--colorAccentBgFadedMore) !important;
-  fill: var(--colorAccentFg) !important;
-}
-
-/* Dropdown menu */
-.toolbar-large .button-popup.button-popup-below { top: 45px; }
 
 
 /* Extensions
   ----------------------------
 */
 .toolbar-extensions {
+  background-color: transparent !important;
   position: absolute;
-  left: calc(50vw + 22.5vw) !important;
+  left: calc(50vw + 22.5vw + 2px) !important;
   right: unset !important;
-  direction: rtl
+  direction: rtl;
 }
 
-.button-toolbar[title="Toggle extensions"] > button { width: 34px; }
+.toolbar-extensions>div>button>span>svg>path { d: path('M10.513 8L10 8.469 14.973 13 10 17.531l.513.469L16 13z'); }
 
-.toolbar-extensions > div > button > span > svg > path { d: path('M10.513 8L10 8.469 14.973 13 10 17.531l.513.469L16 13z') }
+.toolbar-extensions>div:nth-child(4)>button>span>svg { fill: var(--colorHighlightBg); }
 
-.toolbar-extensions > div > button > svg { opacity: .9; }
+.ExtensionIcon>button { min-width: 30px !important; }
 
-.toolbar-extensions > div > button:hover svg { opacity: 1; }
+.toolbar-extensions .button-toolbar>button>img { filter: grayscale(60%) contrast(100%) opacity(80%); }
 
-.toolbar-extensions > div:nth-child(4) > button > span > svg {
-  fill: var(--colorHighlightBg);
-  opacity: 1
+.toolbar-extensions .button-toolbar>button:hover>img { filter: grayscale(0%) contrast(100%) opacity(100%); }
+
+/* Callout arrows */
+.extension-popup:before, .extension-popup.top:after {
+  right: 9px !important;
+  border: 8px solid transparent !important;
+  top: -17px !important;
 }
 
-.toolbar-extensions .button-toolbar > button > img { filter: grayscale(100%) contrast(100%) opacity(80%); }
-
-.toolbar-extensions .button-toolbar > button:hover > img {
-  background-color: var(--colorAccentBgFadedMore) !important;
-  filter: grayscale(0%) contrast(100%) opacity(100%);
-}
+.extension-popup.top:after { border-bottom-color: var(--colorBorder) !important; }
