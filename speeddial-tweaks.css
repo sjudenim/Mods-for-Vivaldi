@@ -1,5 +1,5 @@
 /*
-* Vivaldi Speed-dial mods
+* Vivaldi Speed-dial mods (updated for browser version 3.6)
 * Written by sjudenim
 * GNU General Public License v3.0
 * 
@@ -9,51 +9,17 @@
 .startpage { background-color: var(--colorBgDark) !important; }
 
 /* Adds a theme based gradient overlay */
-.startpage .startpage-content { background-image: linear-gradient(to bottom right, var(--colorFgAlpha), var(--colorHighlightBgAlpha)) !important; }
+.startpage .startpage-content { background: linear-gradient(to bottom right, var(--colorFgAlpha), var(--colorHighlightBgAlpha)) !important; }
 
-
-/* Navigation bar
-  ----------------------------
-*/
-.startpage .startpage-navigation {
-  background-color: transparent !important;
-  background-image: linear-gradient(to bottom right, var(--colorFgAlpha), var(--colorHighlightBgAlpha));
-  border-bottom: 1px solid var(--colorHighlightBgAlpha);
-  box-shadow: none !important;
-  backdrop-filter: blur(5px);
-  color: hsla(0, 0%, 100%, .8);
-  font-size: 1.1em;
-  font-weight: 500;
-  min-height: 32px;
-  padding: 5px 20px 0;
+/* Remove gap from the top of the speed dial items */
+.speeddial {
+  margin-top: 18vh;
+  padding-top: 2px;
 }
-
-button.button-startpage svg { display: none; }
-
-.startpage .button-startpage:not(.active):after  {
-  content: '';
-  display: block;
-  position: initial;
-  margin: auto;
-  margin-top: 3px;
-  height: 1px;
-  width: 0;
-  background: transparent;
-  transition: width .7s ease, background-color .7s ease !important
-}
-
-.startpage .button-startpage:not(.active):hover:after {
-  width: 100%;
-  background: white
-}
-
-.button-startpage.active { color: var(--colorHighlightBg) !important; }
-
-.startpage .startpage-navigation .startpage-navigation-group, .startpage-navigation-group .editable-title-container { border: none !important }
 
 /* Sub-folder title and button */
 .startpage .startpage-folder-navigation button {
-  background-color: transparent !important;
+  background-color: unset !important;
   font-size: 3rem;
   font-weight: lighter !important;
   text-shadow: 0 0 10px black !important;
@@ -83,16 +49,17 @@ button.button-startpage:after, .startpage .startpage-folder-navigation button:af
   background: white
 }
 
-/* Speed Dial geometry */
-.speeddial { margin-top: 16vh !important; }
-
+/* Tile geometry 
 .dials .dial {
   width: 15vw !important;
   height: 11.5vw !important;
 }
 
 /* Speed Dial folders and thumbnails */
-.thumbnail-image { background-color: var(--colorBgAlphaHeavy) !important; }
+.thumbnail-image {
+  background-color: var(--colorBgAlphaHeavier) !important;
+  backdrop-filter: blur(2px);  
+}
 
 .dials .dial .thumbnail-image {
   background-image: linear-gradient(to bottom right, var(--colorFgAlpha), var(--colorHighlightBgAlpha));
@@ -143,3 +110,50 @@ button.button-startpage:after, .startpage .startpage-folder-navigation button:af
   padding-top: 2px;
   border-radius: 0 !important;
 }
+
+/* Navigation bar */
+
+.startpage .startpage-navigation {
+  background-color: transparent !important;
+  background-image: linear-gradient(to bottom right, var(--colorFgAlpha), var(--colorHighlightBgAlpha));
+  border-bottom: 1px solid var(--colorHighlightBgAlpha);
+  box-shadow: none !important;
+  backdrop-filter: blur(5px);
+  color: hsla(0, 0%, 100%, .8);
+  font-size: 1.1em;
+  font-weight: 500;
+  min-height: 32px;
+  padding: 5px 20px 0;
+}
+
+button.button-startpage svg { display: none; }
+
+/* Format buttons for Startpage Nav Bar */ 
+.startpage .startpage-navigation .button-startpage,
+.startpage .startpage-folder-navigation .button-startpage {
+  border-bottom-width: unset;
+  margin: 0 10px !important;
+  transition: 0.1s;
+}
+
+.startpage .button-startpage:not(.active):after  {
+  content: '';
+  display: block;
+  position: initial;
+  margin: auto;
+  margin-top: 3px;
+  height: 1px;
+  width: 0;
+  background: transparent;
+  transition: width .7s ease, background-color .7s ease !important
+}
+
+.startpage .button-startpage:not(.active):hover:after {
+  width: 100%;
+  background: white
+}
+
+.button-startpage.active { color: var(--colorHighlightBg) !important; }
+
+/* Removes border between speed dial folders and internal pages */
+.startpage .startpage-navigation .startpage-navigation-group:last-of-type { border: unset; }
