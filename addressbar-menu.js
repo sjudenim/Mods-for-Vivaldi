@@ -1,47 +1,60 @@
-/*
-* Vivaldi Menu button
-* Written by sjudenim
-* GNU General Public License v3.0
-* 
-*  Moves the menu button to the beginning of the addressbar
-*/
-
+//
+//  Vivaldi Menu button (updated for browser version 3.6)
+//  Written by nomadic and sjudenim
+//  GNU General Public License v3.0
+//
+//  Moves the menu button to the beginning of the address/mail toolbar 
+//
 (function () {
+  
+    function moveMenuButton() {
 
-    function style() {
+      function style() {
         const style = document.createElement('style');
-        style.type = 'text/css';
-        style.id = 'menuBtn';
         style.innerHTML = `
-        .vivaldi, #browser .vivaldi span.burger-icon { position: relative; height: 34px !important; width: 40px; }
-        #browser .vivaldi span.burger-icon svg path { d: path('M5 7.5v.846h16V7.5H5zm0 5.077v.846h16v-.846H5zm0 5.077v.846h16v-.846H5z'); }
-        #browser .vivaldi span.burger-icon svg { margin-left: -5px; margin-top: -5px; }
-        #browser .vivaldi:hover, #browser .vivaldi:active { background-color: var(--colorHighlightBg) !important; fill: white !important; }
-        #browser .vivaldi:hover span svg { transform: scale(1) !important }
-        .color-behind-tabs-on .vivaldi span.vivaldi-v, .color-behind-tabs-on .vivaldi span.burger-icon { opacity: initial !important; }
+        .vivaldi svg { flex: 0 0 26px; height: 26px; }
+        /* If using tabs on top, this will remove the space vacated by the menu button */
+        #tabs-container.top { margin-top: -4px !important; padding-left: 0 !important; margin-right: -95px !important }
      `;
         document.getElementsByTagName('head')[0].appendChild(style);
-    };
-    
-    function menuBtn() {
-        style();
-        var btn = document.querySelector(".vivaldi");
-        btn.setAttribute('tabindex', '-1');
-        var bar = document.querySelector(".UrlBar");
-        var div = document.createElement('div');
-        div.classList.add('button-toolbar');
-        bar.insertBefore(div, bar.firstChild);
-        div.appendChild(btn);
+      };
+
+      function menu(menuButton) {
+        let toolBar =
+          document.querySelector(".toolbar-mainbar.UrlBar") || document.querySelector(".toolbar-mainbar.toolbar-mailbar");
+  
+        // make sure the buttons are not already added
+        if (toolBar.querySelector(".vivaldi")) return;
+  
+        toolBar.insertBefore(menuButton, toolBar.firstChild);
+      }
+  
+      // save the window button group for later usage.
+      const menuButton = document.querySelector(".vivaldi");
+  
+      let main = document.getElementById("main");
+      let observer = new MutationObserver(function (mutations) {
+        mutations.forEach(function (mutation) {
+          // only re-add on new nodes added. The list addedNodes will only have a length attribute when it contains added nodes
+          if (mutation.addedNodes.length) {
+            menu(menuButton);
+            style();
+          }
+        });
+      });
+      // only need to check childList for added nodes
+      observer.observe(main, {
+        childList: true
+      });
+  
+      menu(menuButton);
     }
-    
-    setTimeout(function wait() {
-        const browser = document.getElementById('browser');
-        if (browser) {
-              menuBtn();
-        }
-        else {
-             setTimeout(wait, 300);
-        }
-    });
-    
-    })();
+  
+    let intervalID = setInterval(() => {
+      const browser = document.getElementById("browser");
+      if (browser) {
+        clearInterval(intervalID);
+        moveMenuButton();
+      }
+    }, 300);
+})();
