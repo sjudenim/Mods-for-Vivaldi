@@ -1,5 +1,5 @@
 //
-//  Vivaldi Menu button (updated for browser version 3.6)
+//  Vivaldi Menu Button (updated for browser version 3.6)
 //  Written by nomadic and sjudenim
 //  GNU General Public License v3.0
 //
@@ -29,7 +29,7 @@
         toolBar.insertBefore(menuButton, toolBar.firstChild);
       }
   
-      // save the window button group for later usage.
+      // save the menu button for later usage.
       const menuButton = document.querySelector(".vivaldi");
   
       let main = document.getElementById("main");
