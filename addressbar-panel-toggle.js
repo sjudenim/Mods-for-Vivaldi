@@ -3,7 +3,7 @@
 //  Written by nomadic and sjudenim
 //  GNU General Public License v3.0
 //
-//  Moves the panel toggle button to the end of the addressbar and replaces the icon (positioned to sit in front of the window button group)
+//  Moves the panel toggle button to the end of the addressbar (is positioned to sit in front of the window button group)
 //
 (function () {
 
