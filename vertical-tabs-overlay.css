@@ -5,7 +5,6 @@
 * 
 * Makes the vertical tabs an overlay that is hidden when not in use
 */
-
 /* Tab overlay & animation */
 #tabs-tabbar-container.left, #tabs-tabbar-container.right {
   position: absolute;
