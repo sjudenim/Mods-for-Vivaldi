@@ -71,6 +71,14 @@
 .maximized#browser.win .window-buttongroup button.window-close, .fullscreen#browser.win .window-buttongroup button.window-close { padding-right: 0 !important; }
 
 
+/* Panel toggle button
+  ----------------------------
+*/
+.button-toolbar.panel-clickoutside-ignore svg path { d: path('M19 10.513L18.438 10 13 14.973 7.563 10 7 10.513 13 16z'); }
+
+.button-toolbar > button[title*="Hide Panel"], .button-toolbar[title*="Hide Panel"] > button { fill: var(--colorHighlightBg) !important; }
+
+
 /* Toolbars and buttons
   ----------------------------
 */
