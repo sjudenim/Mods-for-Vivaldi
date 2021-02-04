@@ -36,6 +36,7 @@
   border-left: 1px solid var(--colorFgAlpha) !important;
   border-right: 1px solid var(--colorFgAlpha) !important;
 }
+
 /* End style */
 
 /* Chrome style
@@ -67,10 +68,11 @@
 /* Extensions
   ----------------------------
 */
+/* Moves them to the left side of the urlfield */
 .toolbar-extensions {
   background-color: unset !important;
   position: absolute;
-  right: calc(50vw + 22.5vw - 6px);
+  right: calc(50vw + 22.5vw - 2px);
 }
 
 .toolbar-extensions>div>button>span>svg>path { d: path('M15.486 18l.514-.469L11.026 13 16 8.469 15.486 8 10 13z'); }
