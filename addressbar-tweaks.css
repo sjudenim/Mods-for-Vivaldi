@@ -4,7 +4,6 @@
 * GNU General Public License v3.0	
 * 	
 */	
-
 /* Removes titlebar */
 #header { min-height: 0; }
 
@@ -13,8 +12,6 @@
 /* Line under Addressbar */
 .address-top .toolbar-mainbar:after { display: none; }
 
-/*.toolbar.toolbar-mainbar.toolbar-mailbar { padding-right: 180px}
-*/
 
 /* Addressfield
   ----------------------------
@@ -39,7 +36,6 @@
   border-left: 1px solid var(--colorFgAlpha) !important;
   border-right: 1px solid var(--colorFgAlpha) !important;
 }
-
 /* End style */
 
 /* Chrome style
@@ -64,7 +60,7 @@
 
 .toolbar-insideinput.toolbar-insideinput.toolbar-insideinput>.button-toolbar button:hover :not(:active):not(:focus):not(.button-pressed), .toolbar-insideinput.toolbar-insideinput.toolbar-insideinput>.toolbar-group>.button-toolbar button:hover :not(:active):not(:focus):not(.button-pressed), .toolbar .button-toolbar.reload:hover {
   background-color: transparent !important;
-  fill: var(--colorHighlightBg) !important
+  fill: var(--colorHighlightBg) !important;
 }
 
 
@@ -72,14 +68,12 @@
   ----------------------------
 */
 .toolbar-extensions {
-  background-color: transparent !important;
+  background-color: unset !important;
   position: absolute;
-  left: calc(50vw + 22.5vw + 2px) !important;
-  right: unset !important;
-  direction: rtl;
+  right: calc(50vw + 22.5vw - 6px);
 }
 
-.toolbar-extensions>div>button>span>svg>path { d: path('M10.513 8L10 8.469 14.973 13 10 17.531l.513.469L16 13z'); }
+.toolbar-extensions>div>button>span>svg>path { d: path('M15.486 18l.514-.469L11.026 13 16 8.469 15.486 8 10 13z'); }
 
 .toolbar-extensions>div:nth-child(4)>button>span>svg { fill: var(--colorHighlightBg); }
 
