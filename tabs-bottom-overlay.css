@@ -1,0 +1,76 @@
+/*	
+* Vivaldi Bottom Tabs overlay with animation (updated for browser version 3.6)
+* Written by sjudenim	
+* GNU General Public License v3.0	
+*
+* Places tabs under the addressbar	
+*/
+
+#tabs-tabbar-container.bottom {
+    order: -1;
+    border-top: none;
+    padding-bottom: 0px !important;
+  }
+  
+  /* bookmarks bar above tabs */
+  .bookmark-bar { order: -2; }
+  
+  .toolbar.UrlBar { order: -3; }
+  
+  /* Tab overlay & animation */
+  #tabs-tabbar-container.bottom {
+    position: absolute;
+    background-color: var(--colorBgAlphaHeavy) !important;
+    backdrop-filter: blur(5px);
+    top: 34px;
+    height: 150px !important;
+    width: 100% !important;
+    padding: 2px 0 !important;
+    z-index: 1;
+    transition: transform .3s .4s !important
+  }
+  
+  #tabs-tabbar-container.bottom::after {
+    content: '';
+    display: block;
+    position: absolute;
+    bottom: -15px;
+    background-color: transparent;
+    height: 15px;
+    width: 100%
+  }
+  
+  #tabs-tabbar-container.bottom:not(:hover) {
+      transform: translateY(-100%);
+      transition: transform .5s .7s !important
+    }
+  
+  /* Centering the tabs */
+  .tab-strip {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+  }
+  
+  .tab-position {
+    position: relative !important;
+    min-width: 200px !important;
+    left: auto !important;
+    top: auto !important;
+    transform: none;}
+  
+  .tab-position .tab .thumbnail-image { margin-bottom: 1px; }
+  
+  /* Positions the tab buttons */
+  #tabs-tabbar-container .newtab {
+    position: relative !important;
+    left: 5px !important;
+    top: 45% !important;
+    fill: var(--colorFgIntense) !important;
+  }
+  
+  #tabs-tabbar-container .toggle-trash {
+    position: relative !important;
+    left: auto !important;
+    bottom: auto !important;
+  }
