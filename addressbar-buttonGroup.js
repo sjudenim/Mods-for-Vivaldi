@@ -5,6 +5,7 @@
 //
 //  Moves the window button group (minimize, restore, close) to the end of address/mail toolbar
 //
+
 (function () {
 
   function moveButtonsGroup() {
