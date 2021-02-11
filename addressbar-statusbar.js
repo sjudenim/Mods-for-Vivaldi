@@ -7,6 +7,7 @@
 //  Centered addressfield can be found here, https://github.com/sjudenim/Mods-for-Vivaldi/blob/master/addressbar-tweaks.css
 // 
 //
+
 (function () {
 
     function statusToggle() {
