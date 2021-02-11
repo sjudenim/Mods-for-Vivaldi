@@ -5,6 +5,7 @@
 //
 //  Moves the reload button to the end of the addressfield and replaces the icon
 //
+
 (function () {
     function moveReloadButton() {
       function style() {
