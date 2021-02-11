@@ -5,6 +5,7 @@
 //
 //  Moves the menu button to the beginning of the address/mail toolbar 
 //
+
 (function () {
   
     function moveMenuButton() {
