@@ -4,6 +4,7 @@
 * GNU General Public License v3.0
 * 
 */
+
 /* Theme based background colour (overwrites colour in the settings panel) */
 .startpage { background-color: var(--colorBgDark) !important; }
 
