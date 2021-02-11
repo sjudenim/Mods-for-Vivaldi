@@ -5,6 +5,7 @@
 //
 //  Moves the panel toggle button to the end of the addressbar (is positioned to sit in front of the window button group)
 //
+
 (function () {
 
     function movePanelButton() {
