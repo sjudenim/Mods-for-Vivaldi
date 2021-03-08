@@ -29,14 +29,14 @@
 
 .vivaldi svg { flex: 0 0 26px; height: 26px; }
 
+.vivaldi:hover { background-color: var(--colorHighlightBgAlpha) !important; }
+
 #browser .vivaldi span.burger-icon svg path { d: path('M5 7.5v.846h16V7.5H5zm0 5.077v.846h16v-.846H5zm0 5.077v.846h16v-.846H5z'); }
 
 #browser .vivaldi span.burger-icon svg {
   margin-left: -6px;
   margin-top: -5px;
 }
-
-#browser .vivaldi:hover, #browser .vivaldi:active { fill: var(--colorAccentFg) !important; }
 
 #browser .vivaldi:hover span svg { transform: scale(1) !important }
 
@@ -46,11 +46,7 @@
 /* Window buttons group
   ----------------------------
 */
-#browser.win .window-buttongroup {
-  top: 0;
-  right: 0;
-  z-index: 999
-}
+#browser.win .window-buttongroup { right: -4px !important; }
 
 #browser.win .window-buttongroup button, #browser.win .window-buttongroup button.window-close {
   height: 34px !important;
@@ -366,6 +362,8 @@ button.button-on path.bookmark-outline { fill: var(--colorHighlightBg); }
   border-radius: 0 !important;
 }
 
+.tabs-left .tab-position .tab.active, .tabs-right .tab-position .tab.active { box-shadow: inset 0 0 3px var(--colorHighlightBg); }
+
 
 /* Side panel
   ----------------------------
@@ -377,7 +375,10 @@ button.button-on path.bookmark-outline { fill: var(--colorHighlightBg); }
   opacity: .98;
 }
 
-#switch button {transition: .5s !important; }
+#switch button {
+  margin-bottom: 5px;
+  transition: .5s !important;
+}
 
 #switch button:hover {
   background-color: var(--colorHighlightBgAlpha) !important;
@@ -401,19 +402,74 @@ button.button-on path.bookmark-outline { fill: var(--colorHighlightBg); }
   filter: grayscale(10%) contrast(60%) invert(10%)
 }
 
-/* Download progress button */
+/* Panel group seperators */
+#switch > button:nth-child(2)::after, #switch > button:nth-child(4)::after, #switch > button:nth-child(6)::after, #switch > button:nth-child(8)::after {
+  content: '';
+  display: block;
+  position: initial;
+  background-color: var(--colorFg);
+  margin: auto;
+  margin-top: 3px;
+  width: 50%;
+  height: 1px;
+  border-radius: 2px;
+  opacity: .5;
+}
+
+/* Download titles */
+.panel#downloads .DownloadItem-FileName, .panel#downloads .DownloadItem-FileSize { background-color: transparent; }
+
+/* Replace side bar icons */ 
+#switch button.bookmarks svg path {
+  d: path("M17.038 4.5H8.961C8.432 4.5 8 4.979 8 5.57v15.291a.66.66 0 00.295.56.538.538 0 00.282.079.555.555 0 00.304-.092l4.121-2.838 4.12 2.813c.18.124.403.124.581.009a.64.64 0 00.297-.555V5.57c0-.591-.434-1.07-.962-1.07zm-.193 15.188l-3.544-2.415a.513.513 0 00-.604.002l-3.542 2.431V5.783h7.69v13.905z");
+}
+
+#switch button.history svg path {
+  d: path("M13,5.384A7.616,7.616,0,1,1,5.384,13,7.625,7.625,0,0,1,13,5.384m0-1A8.616,8.616,0,1,0,21.616,13,8.616,8.616,0,0,0,13,4.384Z");
+}
+
+#switch button.tabs svg path {
+  d: path("M20.31,3.69H9.02a2.006,2.006,0,0,0-2,2V7.02H5.69a2.006,2.006,0,0,0-2,2V20.31a2,2,0,0,0,2,2H16.98a2,2,0,0,0,2-2V18.98h1.33a2,2,0,0,0,2-2V5.69A2,2,0,0,0,20.31,3.69ZM17.98,20.31a1,1,0,0,1-1,1H5.69a1,1,0,0,1-1-1V9.02a1,1,0,0,1,1-1H16.98a1,1,0,0,1,1,1Zm3.33-3.33a1,1,0,0,1-1,1H18.98V9.02a2.006,2.006,0,0,0-2-2H8.02V5.69a1,1,0,0,1,1-1H20.31a1,1,0,0,1,1,1Z");
+}
+
+#switch button.downloads svg path[d="M11 6C11 5.44772 11.4477 5 12 5H14C14.5523 5 15 5.44772 15 6V10H19L13 16L7 10H11V6Z"] {
+  d: path("M18.4,10.551l-4.742,4.606a.1.1,0,0,1-.162-.068V5.6h-1v9.486a.1.1,0,0,1-.162.068L7.6,10.551l-.7.718,6.034,5.861a.1.1,0,0,0,.133,0L19.1,11.268Z");
+}
+
+#panels .downloads svg path[d="M6 20C6 19.4477 6.44772 19 7 19H19C19.5523 19 20 19.4477 20 20C20 20.5523 19.5523 21 19 21H7C6.44772 21 6 20.5523 6 20Z"] {
+  d: path("M20,20.4H6v-1H20Z");
+}
+
+#switch button.notes svg path {
+  d: path("M7.102 5C5.94 5.001 5 5.993 5 7.219V18.78c.001 1.224.94 2.217 2.102 2.219h11.796c1.16-.002 2.101-.994 2.102-2.219v-3.94c0-.244-.188-.445-.42-.445a.434.434 0 00-.422.444v3.94c0 .733-.563 1.33-1.26 1.331H7.102c-.696 0-1.26-.598-1.26-1.332V7.22c0-.735.564-1.331 1.26-1.332h3.732c.232 0 .42-.199.42-.444a.431.431 0 00-.42-.443H7.102zM18.8 5a.66.66 0 00-.467.2l-1.201 1.2 2.535 2.534 1.133-1.266a.645.645 0 000-.936L19.268 5.2A.658.658 0 0018.8 5zm-2.467 2.064L9 14.464V17h2.533l7.334-7.4-2.533-2.536z");
+}
+
+#switch button.calendar svg path {
+  d: path("M18.938 6.25H17.5V5.5a.5.5 0 00-1 0v.75h-7V5.5a.5.5 0 00-1 0v.75H7.063A2.065 2.065 0 005 8.313v10.625C5 20.075 5.925 21 7.063 21h11.875A2.064 2.064 0 0021 18.938V8.313a2.065 2.065 0 00-2.062-2.063zM20 18.938c0 .586-.476 1.062-1.062 1.062H7.063A1.063 1.063 0 016 18.938v-8.281c0-.087.07-.157.156-.157h13.688c.086 0 .156.07.156.156v8.282z");
+}
+
+#switch button.mail svg path {
+  d: path("M7.354 7C6.054 7 5 7.79 5 8.766v8.468C5 18.21 6.054 19 7.354 19h11.292c1.3 0 2.354-.79 2.354-1.764v-8.47C21 7.79 19.945 7 18.646 7H7.354zm0 .705h11.292c.78 0 1.413.476 1.413 1.06v.35l-6.713 5.301a.56.56 0 01-.694 0l-6.71-5.299v-.351c0-.585.633-1.06 1.412-1.06zM5.94 9.697l6.446 5.09A.973.973 0 0013 15a.972.972 0 00.611-.213l6.448-5.09v7.54c0 .584-.633 1.058-1.413 1.058H7.354c-.78 0-1.413-.474-1.413-1.059V9.697z");
+}
+
+#switch button.contacts svg path {
+  d: path("M18.658 15.342a7.995 7.995 0 00-3.042-1.906 4.614 4.614 0 002.009-3.811A4.627 4.627 0 0013 5a4.63 4.63 0 00-4.625 4.625c0 1.581.795 2.977 2.009 3.811a8.046 8.046 0 00-3.042 1.906A7.962 7.962 0 005 21h1.25A6.754 6.754 0 0113 14.25 6.752 6.752 0 0119.75 21H21a7.97 7.97 0 00-2.342-5.658zM13 13a3.376 3.376 0 010-6.75A3.376 3.376 0 0113 13z");
+}
+
+#switch button.addwebpanel path {
+  d: path("M20.5,12.5h-7v-7a.5.5,0,1,0-1,0v7h-7a.5.5,0,1,0,0,1h7v7a.5.5,0,1,0,1,0v-7h7a.5.5,0,1,0,0-1Z");
+}
+
+#switch>button.preferences.panelbtn { display: none; }
+
+/* Download button progress */
 #switch button.downloads.in-progress div.progress div.loaded { background-color: var(--colorHighlightBg); }
 
 #switch>button.downloads.in-progress div.progress {
-  background-color: var(--colorFg);
+  background-color: var(--colorBg);
   border: 1px solid var(--colorHighlightBg);
   border-radius: 0 !important;
 }
-
-/* Replace side bar icons */
-.notes svg path { d: path('M5.5 17.044V20h3.167l9.167-8.634-3.166-2.956L5.5 17.044zm14.75-7.933c.334-.311.334-.778 0-1.089l-1.917-1.789a.846.846 0 0 0-1.167 0l-1.5 1.4 3.167 2.956 1.417-1.478z'); }
-
-#switch>button.preferences.panelbtn svg path { d: path('M12.121 5.5c-.216 0-.4.157-.435.37l-.19 1.165a5.949 5.949 0 00-1.648.688l-.944-.674a.442.442 0 00-.566.047L7.096 8.338a.445.445 0 00-.047.566l.674.944a5.966 5.966 0 00-.69 1.648l-1.166.19a.442.442 0 00-.367.435v1.758c0 .213.157.4.37.432l1.165.191a5.96 5.96 0 00.688 1.654l-.672.938a.449.449 0 00.047.57l1.242 1.24a.449.449 0 00.564.051l.944-.674a6.15 6.15 0 001.648.688l.19 1.164a.44.44 0 00.435.367h1.758c.212 0 .4-.153.432-.367l.191-1.164a6.114 6.114 0 001.654-.688l.938.674c.176.117.41.102.57-.05l1.24-1.24a.457.457 0 00.051-.571l-.674-.938a6.16 6.16 0 00.688-1.654l1.164-.191a.433.433 0 00.367-.432V12.12a.44.44 0 00-.367-.435l-1.164-.19a6.104 6.104 0 00-.688-1.648l.674-.944a.45.45 0 00-.05-.566l-1.24-1.242a.45.45 0 00-.571-.047l-.938.674a5.977 5.977 0 00-1.654-.69l-.191-1.166a.438.438 0 00-.432-.367zM13 8.166A4.84 4.84 0 0117.834 13 4.841 4.841 0 0113 17.834 4.84 4.84 0 018.166 13 4.84 4.84 0 0113 8.166zm0 2.334a2.503 2.503 0 00-2.5 2.5c0 1.379 1.122 2.5 2.5 2.5 1.379 0 2.5-1.121 2.5-2.5 0-1.378-1.121-2.5-2.5-2.5'); }
 
 /* Hides webpanel suggestions */
 .webpanel-suggestions { display: none; }
@@ -493,8 +549,6 @@ button.button-on path.bookmark-outline { fill: var(--colorHighlightBg); }
 .vivaldi-tree div>div:nth-child(even), .manager .manager-treeview div>div:nth-child(even), .startpage .history .manager-content .history-tree div>div:nth-child(even) { background-color: var(--colorBg); }
 
 .manager .manager-editor { border: none !important; }
-
-.panel#downloads .download-item .file, .panel#downloads .download-item .file .size { background-color: transparent; }
 
 .win .vivaldi-tree .tree-item[data-lead] { outline: 1px solid var(--colorHighlightBgAlpha) !important; }
 
