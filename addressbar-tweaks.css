@@ -1,18 +1,20 @@
 /*	
-* Vivaldi Addressbar Mods (Updated for browser version 3.6)
+* Vivaldi Addressbar Mods (Updated for browser version 4.3)
 * Written by sjudenim	
 * GNU General Public License v3.0	
 * 	
 */
-
 /* Removes titlebar */
 #header { min-height: 0; }
 
+/* Re-sets the titlebar for the settings window */
+.is-settingspage #header, .is-settingspage:not(.fullscreen) .vivaldi-settings .settings-header { height: 34px; }
+
+/* Addressbar height */
 .address-top .toolbar-mainbar { height: 34px; }
 
-/* Line under Addressbar */
+/* Line under addressbar */
 .address-top .toolbar-mainbar:after { display: none; }
-
 
 /* Addressfield
   ----------------------------
@@ -27,17 +29,14 @@
   outline: 0 !important;
   outline-offset: 0 !important;
   padding: 0 5px !important;
-  max-width: 45vw;
+  min-width: 45vw;
   height: 22px !important;
-  margin: auto !important;
-  left: -22px;
   background-color: transparent !important;
   border-radius: 0 !important;
   z-index: 99;
   border-left: 1px solid var(--colorFgAlpha) !important;
   border-right: 1px solid var(--colorFgAlpha) !important;
 }
-
 /* End style */
 
 /* Chrome style
@@ -60,37 +59,33 @@
   text-align: center;
 }
 
-.toolbar-insideinput.toolbar-insideinput.toolbar-insideinput>.button-toolbar button:hover :not(:active):not(:focus):not(.button-pressed), .toolbar-insideinput.toolbar-insideinput.toolbar-insideinput>.toolbar-group>.button-toolbar button:hover :not(:active):not(:focus):not(.button-pressed), .toolbar .button-toolbar.reload:hover {
+.toolbar-insideinput.toolbar-insideinput.toolbar-insideinput > .button-toolbar button:hover :not(:active):not(:focus):not(.button-pressed),
+.toolbar-insideinput.toolbar-insideinput.toolbar-insideinput > .toolbar-group > .button-toolbar button:hover :not(:active):not(:focus):not(.button-pressed),
+.toolbar .button-toolbar.reload:hover {
   background-color: transparent !important;
   fill: var(--colorHighlightBg) !important;
 }
 
-
 /* Extensions
   ----------------------------
 */
-/* Moves them to the left side of the urlfield */
-.toolbar-extensions {
-  background-color: unset !important;
-  position: absolute;
-  right: calc(50vw + 22.5vw - 2px);
-}
+.toolbar-extensions > div > button > span > svg > path { d: path("M15.486 18l.514-.469L11.026 13 16 8.469 15.486 8 10 13z"); }
 
-.toolbar-extensions>div>button>span>svg>path { d: path('M15.486 18l.514-.469L11.026 13 16 8.469 15.486 8 10 13z'); }
+.toolbar-extensions > div:nth-child(4) > button > span > svg { fill: var(--colorHighlightBg); }
 
-.toolbar-extensions>div:nth-child(4)>button>span>svg { fill: var(--colorHighlightBg); }
+.ExtensionIcon > button { min-width: 30px !important; }
 
-.ExtensionIcon>button { min-width: 30px !important; }
+.toolbar-extensions .button-toolbar > button > img { filter: grayscale(60%) contrast(100%) opacity(80%); }
 
-.toolbar-extensions .button-toolbar>button>img { filter: grayscale(60%) contrast(100%) opacity(80%); }
-
-.toolbar-extensions .button-toolbar>button:hover>img { filter: grayscale(0%) contrast(100%) opacity(100%); }
+.toolbar-extensions .button-toolbar > button:hover > img { filter: grayscale(0%) contrast(100%) opacity(100%); }
 
 /* Callout arrows */
-.extension-popup:before, .extension-popup.top:after {
+.extension-popup:before,
+.extension-popup.top:after {
   right: 9px !important;
   border: 8px solid transparent !important;
   top: -17px !important;
 }
 
+.extension-popup.top:after { border-bottom-color: var(--colorBorder) !important; }
 .extension-popup.top:after { border-bottom-color: var(--colorBorder) !important; }
