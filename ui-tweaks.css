@@ -1,6 +1,6 @@
 /*
-* Vivaldi Ui tweaks (updated for browser version 3.6)
-* Written by sjudenim
+* Vivaldi Ui tweaks (updated for browser version 5.7)
+* Written by sudenim
 * GNU General Public License v3.0
 * 
 *  General ui changes that include: recolouring, re-positioning, font adjustments, icon replacements
@@ -10,99 +10,41 @@
 /* Text selection */
 ::selection {
   background-color: var(--colorHighlightBg) !important;
-  color: white
+  color: white;
 }
 
-/* Font smoothing */
-* { text-shadow: 0 0 .8px var(--colorAccentFgAlpha) !important; letter-spacing: .2px; }
-
-
-/* Menu button
-  ----------------------------
-*/
-.vivaldi, #browser .vivaldi span.burger-icon {
-  position: relative;
-  height: 34px !important;
-  width: 44px;
-  z-index: 5;
+/* Fonts */
+* {
+  font-family: "Quicksand" !important;
+  text-shadow: 0 0 .8px var(--colorFgAlpha) !important;
+  letter-spacing: .1px;
 }
 
-.vivaldi svg { flex: 0 0 26px; height: 26px; }
 
-.vivaldi:hover { background-color: var(--colorHighlightBgAlpha) !important; }
-
-#browser .vivaldi span.burger-icon svg path { d: path('M5 7.5v.846h16V7.5H5zm0 5.077v.846h16v-.846H5zm0 5.077v.846h16v-.846H5z'); }
-
-#browser .vivaldi span.burger-icon svg {
-  margin-left: -6px;
-  margin-top: -5px;
-}
-
-#browser .vivaldi:hover span svg { transform: scale(1) !important }
-
-.color-behind-tabs-on .vivaldi span.vivaldi-v, .color-behind-tabs-on .vivaldi span.burger-icon { opacity: initial !important; }
-
-
-/* Window buttons group
-  ----------------------------
-*/
-#browser.win .window-buttongroup { right: -4px !important; }
-
-#browser.win .window-buttongroup button, #browser.win .window-buttongroup button.window-close {
-  height: 34px !important;
-  width: 44px !important;
-  fill: var(--colorFg) !important;
-  transition: .5s !important;
-}
-
-#browser.win .window-buttongroup button:hover {
-  background-color: var(--colorHighlightBgAlpha) !important;
-  fill: var(--colorAccentFg) !important;
-}
-
-#browser.win .window-buttongroup button.window-minimize>svg path { d: path('M0 5h10v1H0z'); }
-
-#browser.win .window-buttongroup button.window-maximize>svg path, #browser.win .window-buttongroup button.window-restore>svg path { d: path('M9 1v8H1V1h8m1-1H0v10h10V0z'); }
-
-.maximized#browser.win .window-buttongroup button.window-close, .fullscreen#browser.win .window-buttongroup button.window-close { padding-right: 0 !important; }
-
-
-/* Panel toggle button
-  ----------------------------
-*/
-.button-toolbar.panel-clickoutside-ignore svg path { d: path('M19 10.513L18.438 10 13 14.973 7.563 10 7 10.513 13 16z'); }
-
-.button-toolbar > button[title*="Hide Panel"], .button-toolbar[title*="Hide Panel"] > button { fill: var(--colorHighlightBg) !important; }
-
-
-/* Toolbars and buttons
-  ----------------------------
-*/
+/* =====================================
+   Toolbars and Buttons
+  ===================================== */
 button {
   box-shadow: none !important;
   border-color: transparent !important
 }
 
 /* Scale up icons on hover */
-button:hover > svg, button:hover > img, button:hover > span > svg {
+button:hover>svg,
+button:hover>img,
+button:hover>span>svg {
   transform: scale(1.1) !important;
-	transition: .01s ease-in-out !important;
+  transition: .01s ease-in-out !important;
 }
+
+.color-behind-tabs-off .toolbar-mainbar { color: var(--colorFg) !important; }
 
 .toolbar-mainbar>.button-toolbar>button {
   fill: var(--colorFg);
   transition: .5s !important;
 }
 
-.toolbar-mainbar>.button-toolbar>button:hover {
-  background-color: var(--colorHighlightBgAlpha) !important;
-  fill: var(--colorAccentFg) !important;
-}
-
-.toolbar-default .button-toolbar > button {
-  background-image: unset!important;
-  background-color: var(--colorBgLighter);
-}
+.toolbar-default .button-toolbar>button { background-color: var(--colorBgAlpha) !important; }
 
 .toolbar-default .button-toolbar { border: 1px solid transparent !important; }
 
@@ -142,178 +84,96 @@ button:hover > svg, button:hover > img, button:hover > span > svg {
   margin-top: -1px !important
 }
 
-.sortselector {
-  font-weight: 500 !important;
-  background-color: var(--colorBg) !important;
-  border-color: var(--colorBgDarker) !important;
-  border-bottom: 0 !important;
-  padding-top: 1px !important
-}
-
-#browser .sortselector .sortselector-dropdown, .sortselector .sortselector-button { background-color: var(--colorBg) !important; }
-
 input[type=button], input[type=submit] { background-image: none !important; }
 
 /* Won't show horizontal menu and window buttons when no ui */
 #browser.minimal-ui:not(.tabs-top) .topmenu, #browser.minimal-ui:not(.tabs-top) .window-buttongroup { display: none !important; }
 
-/* Resizes and repositions the popup menu callout arrows */
-.button-popup:before, .button-popup-centered:before { border-width: 8px !important; }
+.button-toolbar > button[title="Reload current page"] svg path, .button-toolbar[title="Reload current page"] svg path { d: path('M14.997 6.063L15 1.409l-1.854 1.852-.203-.211A6.953 6.953 0 007.997 1C4.142 1 1 4.143 1 8c0 3.859 3.142 7 6.997 7 3.858 0 6.997-3.141 6.997-7h-1.355a5.647 5.647 0 01-5.642 5.645A5.648 5.648 0 012.355 8a5.647 5.647 0 015.642-5.641 5.6 5.6 0 013.989 1.65l.203.208-1.844 1.847 4.652-.001z') }
 
-.button-popup-centered:before { margin-left: -8px !important; }
-
-.button-popup-above:before { bottom: -16px !important; }
-
-.button-popup-below:before { top: -16px !important; }
+.button-toolbar > button[title="Stop"] svg path, .button-toolbar[title="Stop"] svg path { d: path('M14 2.929L13.07 2 8 7.071 2.929 2 2 2.929 7.071 8 2 13.07l.929.93L8 8.93 13.07 14l.93-.932L8.932 8z') }
 
 
-/* Addressfield
-  ----------------------------
-*/
-/* URL */
-.UrlFragment-Wrapper, .UrlFragment--Lowlight:first-of-type { color: var(--colorFgFaded); }
+/* =====================================
+   Panel Toggle
+  ===================================== */
 
-/* URL Base-domain  */
-.UrlFragment-HostFragment-Basedomain, .UrlFragment-HostFragment-TLD {
-  color: var(--colorFgIntense) !important;
-	font-weight: bold;
-}
+.button-toolbar > button[title*="Hide Panel"] svg path, .button-toolbar > button[title*="Show Panel"] svg path { d: path("M19 10.513L18.438 10 13 14.973 7.563 10 7 10.513 13 16z"); }
 
-/* URL Sub-domain */
-.UrlFragment-HostFragment-Subdomain {
-  color: var(--colorHighlightBg) !important;
-  font-weight: bold;
-}
+.button-toolbar > button[title*="Show Panel"] svg { fill: var(--colorFg) !important; }
 
-.UrlField .pageload:not(.unstarted).progress-done {
-  opacity: 0 !important;
-  border: none !important
-}
+.button-toolbar > button:hover[title*="Hide Panel"], .button-toolbar > button:hover[title*="Show Panel"] { background-color: var(--colorHighlightBg) !important; }
+  
+.button-toolbar > button:hover[title*="Hide Panel"] svg, .button-toolbar > button:hover[title*="Show Panel"] svg { fill: var(--colorAccentFg) !important; }
 
-.addressfield form input.url { padding-bottom: 3px !important; }
+.button-toolbar > button[title*="Hide Panel"] { background-color: var(--colorBgAlphaBlur); }
 
-.drop_down:hover, .drop_down[data-selected], #mail_panel section ul li.selected { background-color: var(--colorHighlightBg) !important; }
-
-button.button-addressfield:hover {
-  background-color: transparent !important;
-  border-color: transparent !important
-}
-
-.addressfield button.button-addressfield.input-dropdown:hover svg, .button-addressfield.reader-mode:hover svg, .button-addressfield.bookmark:hover svg .bookmark-outline { fill: var(--colorHighlightBgDark) !important; }
-
-.button-addressfield.bookmark.bookmarked svg .bookmark-outline { fill: var(--colorHighlightBgDark); }
-
-.button-addressfield.bookmark svg .bookmark-animated-fill { fill: var(--colorHighlightBgAlpha); }
-
-/* Content Blocking badge */
-.toolbar.toolbar-addressbar.toolbar-mainbar.toolbar-large>div.addressfield .ads, .toolbar.toolbar-addressbar.toolbar-mainbar.toolbar-large>div.addressfield .blocking, .toolbar.toolbar-addressbar.toolbar-mainbar.toolbar-large>div.addressfield .trackers { fill: var(--colorHighlightBg) !important; }
-
-/* Site Info icon */
-.SiteInfoButton.secure, .SiteInfoButton.certified {
-  background-color: transparent;
-  fill: var(--colorFg) !important;
-}
-
-.siteinfo-text { display: none; }
-
-.siteinfo-symbol:hover+.siteinfo-text { display: block; }
-
-.SiteInfoButton.secure svg path, .SiteInfoButton.certified svg path { d: path('M8 1C4.131 1 1 4.131 1 8s3.131 7 7 7 7-3.131 7-7-3.131-7-7-7zm0 1.094A5.903 5.903 0 0113.906 8 5.902 5.902 0 018 13.906 5.904 5.904 0 012.094 8 5.904 5.904 0 018 2.094zm3.035 2.908c-.12 0-.239.054-.33.164L6.99 9.645 5.297 7.602a.414.414 0 00-.66 0 .644.644 0 000 .794l2.021 2.44a.43.43 0 00.33.164c.12 0 .24-.054.332-.164l4.043-4.875a.647.647 0 000-.795.422.422 0 00-.328-.164z'); }
-
-.SiteInfoButton.warning { transform: rotate(180deg); }
-
-.SiteInfoButton.secure:hover, .SiteInfoButton.certified:hover, .SiteInfoButton.warning {
-  background-color: transparent;
-  fill: var(--colorHighlightBg) !important;
-}
-
-/* Bookmark icon */
-path.bookmark-outline, clipPath#addBookmarkPath path { d: path('M14.051 3.176a4.026 4.026 0 0 0-5.687 0L8 3.54l-.363-.364a4.026 4.026 0 0 0-5.687 0C.414 4.711.405 7.146 1.927 8.838c1.389 1.543 5.485 4.878 5.659 5.019.118.097.26.143.401.143h.014a.605.605 0 0 0 .415-.143c.173-.141 4.27-3.476 5.658-5.019 1.522-1.692 1.511-4.127-.023-5.662zm-.924 4.81C12.044 9.19 9.068 11.671 8 12.552c-1.069-.881-4.044-3.362-5.127-4.565C1.811 6.807 1.8 5.125 2.85 4.076c.536-.535 1.24-.804 1.943-.804s1.407.268 1.943.804l.8.8a.612.612 0 0 0 .342.172.635.635 0 0 0 .585-.172l.801-.801a2.752 2.752 0 0 1 3.886 0c1.048 1.05 1.038 2.732-.023 3.911z'); }
-
-button:not(.button-on) path.bookmark-outline { fill: var(--colorFg); }
-
-button.button-on path.bookmark-outline { fill: var(--colorHighlightBg); }
-
-.add-bookmark-shadow, .bookmark-animated-fill { display: none; }
-
-#main>div.toolbar.toolbar-addressbar.toolbar-mainbar.toolbar-large>div.addressfield>div.toolbar.toolbar-small.toolbar-insideinput>div.button-toolbar.cjvgsbzxr000i3n670rebhqf3>button>svg>g>path.bookmark-animated-fill, #main>div.toolbar.toolbar-addressbar.toolbar-mainbar.toolbar-large>div.addressfield>div.toolbar.toolbar-small.toolbar-insideinput>div.button-toolbar.cjvgsbzxr000i3n670rebhqf3>button>svg>g>path.bookmark-outline { display: none; }
-
-/* Qr code icon */
-.create-qr-code button svg { fill: unset !important; }
-
-/* Add bookmark dropdown */
-.dialog-add-bookmark { border: 1px solid var(--colorBgIntense); }
-
-.create-bookmark > .button-popup .thumbnail-image {
-  height: unset !important;
-  max-height: unset !important;
-}
-
-/* Omnibox dropdown */
-.OmniDropdown {
-  border-radius: 0 0 var(--radius) var(--radius);
-  backdrop-filter: blur(10px);
-  opacity: .98;
-}
+.button-toolbar > button[title*="Hide Panel"] svg { fill: var(--colorHighlightBg) !important; }
 
 
-/* Pageloading indicator
-  ----------------------------
-*/
-.UrlBar-AddressField .pageload .pageload-indicator::-webkit-progress-value { background-color: transparent !important; }
+/* =====================================
+   Status Bar
+  ===================================== */
 
-.UrlBar-AddressField .pageload .pageload-ticker { display: none; }
-
-/* show pageload bar */
-.UrlBar-AddressField .pageload.progressing .pageload-indicator {
-  position: fixed;
-  z-index: 999 !important;
+/* Turns status bar into a dock */
+  #browser > footer > .toolbar-statusbar {
+  position: absolute;
+  width: fit-content;
+  margin: 0 auto;
+  bottom: 5px;
   left: 0;
-  top: 0;
-  height: 1px;
-  width: 100vw;
-  background: transparent;
-  opacity: 1 !important
+  right: 0;
+  height: fit-content !important; 
+  padding: 5px;
+  background-color: var(--colorAccentBg) !important;
+  opacity: .98;
+  border-radius: 3px;
 }
 
-/* pageload bar colors */
-.UrlBar-AddressField .pageload:not(.unstarted).progressing .pageload-indicator::-webkit-progress-value {
-  background-size: 100%;
-  background-position: 0% 0%;
-  background-color: transparent;
-  background-image: linear-gradient(to right, var(--colorHighlightBgAlpha), var(--colorBorderHighlight), var(--colorHighlightBg));
-  transition: 0.4s steps(5) 0s !important
+.toolbar-statusbar .toolbar-extensions .button-toolbar > button, .toolbar-statusbar > .button-toolbar > button { height: 28px !important; }
+
+.toolbar-statusbar .button-toolbar > button:hover, .toolbar-statusbar .button-toolbar > button.button-pressed {
+  background-color: transparent !important;
+  fill: var(--colorHighlightBg);
+}
+  
+.toolbar-statusbar > .button-toolbar > button { padding-top: 1px !important; }
+  
+.toolbar-statusbar .button-toolbar > button:hover, .toolbar-statusbar .button-toolbar > button.button-pressed {
+  background-color: transparent !important;
+  fill: var(--colorHighlightBg);
+}
+  
+.extension-popup { transform: translateY(-4px) !important; }
+
+.button-popup-above { bottom: 45px !important;}
+
+.button-popup-wrapper { background-color: var(--colorBgDark); }
+  
+.button-toolbar > button > span + .button-title, .button-toolbar > button.button-textonly { padding-top: 2px; }
+
+/* Zoom controls */
+.toolbar-statusbar .page-zoom-controls { margin-top: 2px; }
+
+/* Clock */
+#browser > footer > div > div.button-toolbar.ClockButton.ClockButton { font-size: 1.1em !important; }
+
+.toolbar-medium .button-toolbar > button > .button-badge {
+  position: absolute !important;
+  right: 5% !important;
 }
 
-.UrlBar-AddressField .pageload:not(.unstarted).progressing .pageload-indicator[value='0']::-webkit-progress-value { background-position: 0% 0% !important; }
 
-.UrlBar-AddressField.pageload:not(.unstarted).progressing .pageload-indicator[value^='1']:not([value='1']):not([value='100'])::-webkit-progress-value { background-position: 0% 10% !important; }
+/* =====================================
+   Tabs
+  ===================================== */
+#tabs-tabbar-container .newtab svg path {
+  d: path("M19.417 12.417h-5.834V6.583a.583.583 0 10-1.166 0v5.833H6.583a.584.584 0 000 1.167h5.833v5.834a.585.585 0 001.168 0v-5.834h5.833a.584.584 0 000-1.166z");
+}
 
-.UrlBar-AddressField .pageload:not(.unstarted).progressing .pageload-indicator[value^='2']:not([value='2'])::-webkit-progress-value { background-position: 0% 20% !important; }
-
-.UrlBar-AddressField .pageload:not(.unstarted).progressing .pageload-indicator[value^='3']:not([value='3'])::-webkit-progress-value { background-position: 0% 30% !important; }
-
-.UrlBar-AddressField .pageload:not(.unstarted).progressing .pageload-indicator[value^='4']:not([value='4'])::-webkit-progress-value { background-position: 0% 40% !important; }
-
-.UrlBar-AddressField .pageload:not(.unstarted).progressing .pageload-indicator[value^='5']:not([value='5'])::-webkit-progress-value { background-position: 0% 50% !important; }
-
-.UrlBar-AddressField .pageload:not(.unstarted).progressing .pageload-indicator[value^='6']:not([value='6'])::-webkit-progress-value { background-position: 0% 60% !important; }
-
-.UrlBar-AddressField .pageload:not(.unstarted).progressing .pageload-indicator[value^='7']:not([value='7'])::-webkit-progress-value { background-position: 0% 70% !important; }
-
-.UrlBar-AddressField .pageload:not(.unstarted).progressing .pageload-indicator[value^='8']:not([value='8'])::-webkit-progress-value { background-position: 0% 80% !important; }
-
-.UrlBar-AddressField .pageload:not(.unstarted).progressing .pageload-indicator[value^='9']:not([value='9'])::-webkit-progress-value { background-position: 0% 90% !important; }
-
-.UrlBar-AddressField .pageload:not(.unstarted).progressing .pageload-indicator[value='100']::-webkit-progress-value { background-position: 0% 100% !important; }
-
-
-/* Tabs
-  ----------------------------
-*/
-#tabs-tabbar-container .newtab svg path { d: path('M19.417 12.417h-5.834V6.583a.583.583 0 10-1.166 0v5.833H6.583a.584.584 0 000 1.167h5.833v5.834a.585.585 0 001.168 0v-5.834h5.833a.584.584 0 000-1.166z'); }
-
-.toolbar-tabbar > .button-toolbar.toggle-trash svg path { d: path('M6 11.25A1.75 1.75 0 0 0 4.25 13 1.75 1.75 0 0 0 6 14.75 1.75 1.75 0 0 0 7.75 13 1.75 1.75 0 0 0 6 11.25zm7 0A1.75 1.75 0 0 0 11.25 13 1.75 1.75 0 0 0 13 14.75 1.75 1.75 0 0 0 14.75 13 1.75 1.75 0 0 0 13 11.25zm7 0A1.75 1.75 0 0 0 18.25 13 1.75 1.75 0 0 0 20 14.75 1.75 1.75 0 0 0 21.75 13 1.75 1.75 0 0 0 20 11.25z'); }
+.toolbar-tabbar>.button-toolbar.toggle-trash svg path {
+  d: path('M6 11.25A1.75 1.75 0 0 0 4.25 13 1.75 1.75 0 0 0 6 14.75 1.75 1.75 0 0 0 7.75 13 1.75 1.75 0 0 0 6 11.25zm7 0A1.75 1.75 0 0 0 11.25 13 1.75 1.75 0 0 0 13 14.75 1.75 1.75 0 0 0 14.75 13 1.75 1.75 0 0 0 13 11.25zm7 0A1.75 1.75 0 0 0 18.25 13 1.75 1.75 0 0 0 20 14.75 1.75 1.75 0 0 0 21.75 13 1.75 1.75 0 0 0 20 11.25z');
+}
 
 #tabs-tabbar-container .newtab, #tabs-tabbar-container .toggle-trash { fill: var(--colorFg); }
 
@@ -323,11 +183,8 @@ button.button-on path.bookmark-outline { fill: var(--colorHighlightBg); }
 
 .tab-position .tab .tab-header { margin-right: 3px; }
 
-.tab-position .tab .close svg path { d: path('M.71611758 0L0 .71414475 4.2868415 4.9990135.00197275 9.2838828l.71414483.7141446L5.0009863 5.7131583 9.2858555 10 10 9.2838828 5.715131 4.9990135 10 .71414475 9.2858555 0 5.0009863 4.2848688z'); }
-
-.tab-position .tab .close svg {
-  margin: auto;
-  color: var(--colorFg);
+.tab-position .tab .close svg path {
+  d: path("M.71611758 0L0 .71414475 4.2868415 4.9990135.00197275 9.2838828l.71414483.7141446L5.0009863 5.7131583 9.2858555 10 10 9.2838828 5.715131 4.9990135 10 .71414475 9.2858555 0 5.0009863 4.2848688z");
 }
 
 .tab-position .tab .close {
@@ -344,9 +201,9 @@ button.button-on path.bookmark-outline { fill: var(--colorHighlightBg); }
 
 .tab-position .tab.unread { font-style: italic; }
 
-.tab-position .tab.tab.tab:not(.active) { opacity: .7; }
+.tab-position .tab.tab.tab:not(.active) { filter: grayscale(80%) brightness(50%); }
 
-.tab-position .tab.tab.tab:not(.active):hover { opacity: 1; }
+.tab-position .tab.tab.tab:not(.active):hover { filter: grayscale(0%) brightness(100%); }
 
 .tab-position .tab .progress-indicator, .tab-group-indicator .tab-indicator.active, .tab-group-indicator .tab-indicator:hover:not(.active) {
   background-color: var(--colorHighlightBg) !important;
@@ -355,37 +212,35 @@ button.button-on path.bookmark-outline { fill: var(--colorHighlightBg); }
 
 .tab-group-indicator .tab-indicator { background-color: var(--colorHighlightBgAlpha) !important; }
 
-#tabs-tabbar-container { border: 0 !important; }
-
 .tabs-left .tab-position .tab, .tabs-right .tab-position .tab {
   margin: 0 !important;
   border-radius: 0 !important;
 }
 
-.tabs-left .tab-position .tab.active, .tabs-right .tab-position .tab.active { box-shadow: inset 0 0 3px var(--colorHighlightBg); }
 
-
-/* Side panel
-  ----------------------------
-*/
-#switch {
-  background-color: var(--colorBg) !important;
-  box-shadow: none !important;
-  backdrop-filter: blur(10px);
-  opacity: .98;
-}
-
-#switch button {
-  margin-bottom: 5px;
-  transition: .5s !important;
-}
-
+/* =====================================
+   Side Panel
+  ===================================== */
 #switch button:hover {
   background-color: var(--colorHighlightBgAlpha) !important;
   fill: var(--colorAccentFg);
 }
 
-#switch>button.active, #switch .addwebpanel-wrapper>button.active { fill: var(--colorHighlightBg); }
+#switch>button.active, #switch .addwebpanel-wrapper>button.active {
+  background-color: var(--colorBgAlphaBlur) !important;
+  fill: var(--colorHighlightBg);
+}
+
+.right #switch .addwebpanel-wrapper > button.active, .right #switch > .button-toolbar.active, .right #switch > * > .button-toolbar.active, .right #switch > button.active {
+  box-shadow: unset !important;
+}
+
+#switch .addwebpanel-wrapper > button.active:not(:focus), #switch > .button-toolbar.active:not(:focus), #switch > * > .button-toolbar.active:not(:focus), #switch > button.active:not(:focus) {
+  color: var(--colorHighlightBg);
+}
+#switch .addwebpanel-wrapper > button.active, #switch > .button-toolbar.active, #switch > * > .button-toolbar.active, #switch > button.active {
+  background-color: transparent !important;
+}
 
 #switch .addwebpanel-wrapper>button.downloads.in-progress div.progress, #switch>button.downloads.in-progress div.progress {
   background-color: var(--colorHighlightBg);
@@ -402,189 +257,79 @@ button.button-on path.bookmark-outline { fill: var(--colorHighlightBg); }
   filter: grayscale(10%) contrast(60%) invert(10%)
 }
 
-/* Panel group seperators */
-#switch > button:nth-child(2)::after, #switch > button:nth-child(4)::after, #switch > button:nth-child(6)::after, #switch > button:nth-child(8)::after {
+#panels .SlideBar--FullWidth.alternate:after {
+  display: flex;
+  bottom: unset;
   content: '';
-  display: block;
-  position: initial;
-  background-color: var(--colorFg);
-  margin: auto;
-  margin-top: 3px;
-  width: 50%;
+  border: 0 !important;
+  border-top: 1px solid var(--colorBgDarker) !important;
+  background-color: var(--colorBgLighter) !important;
+  border-radius: var(--radius);
   height: 1px;
-  border-radius: 2px;
-  opacity: .5;
-}
-
-/* Download titles */
-.panel#downloads .DownloadItem-FileName, .panel#downloads .DownloadItem-FileSize { background-color: transparent; }
-
-/* Replace side bar icons */ 
-#switch button.bookmarks svg path {
-  d: path("M17.038 4.5H8.961C8.432 4.5 8 4.979 8 5.57v15.291a.66.66 0 00.295.56.538.538 0 00.282.079.555.555 0 00.304-.092l4.121-2.838 4.12 2.813c.18.124.403.124.581.009a.64.64 0 00.297-.555V5.57c0-.591-.434-1.07-.962-1.07zm-.193 15.188l-3.544-2.415a.513.513 0 00-.604.002l-3.542 2.431V5.783h7.69v13.905z");
-}
-
-#switch button.history svg path {
-  d: path("M13,5.384A7.616,7.616,0,1,1,5.384,13,7.625,7.625,0,0,1,13,5.384m0-1A8.616,8.616,0,1,0,21.616,13,8.616,8.616,0,0,0,13,4.384Z");
-}
-
-#switch button.tabs svg path {
-  d: path("M20.31,3.69H9.02a2.006,2.006,0,0,0-2,2V7.02H5.69a2.006,2.006,0,0,0-2,2V20.31a2,2,0,0,0,2,2H16.98a2,2,0,0,0,2-2V18.98h1.33a2,2,0,0,0,2-2V5.69A2,2,0,0,0,20.31,3.69ZM17.98,20.31a1,1,0,0,1-1,1H5.69a1,1,0,0,1-1-1V9.02a1,1,0,0,1,1-1H16.98a1,1,0,0,1,1,1Zm3.33-3.33a1,1,0,0,1-1,1H18.98V9.02a2.006,2.006,0,0,0-2-2H8.02V5.69a1,1,0,0,1,1-1H20.31a1,1,0,0,1,1,1Z");
-}
-
-#switch button.downloads svg path[d="M11 6C11 5.44772 11.4477 5 12 5H14C14.5523 5 15 5.44772 15 6V10H19L13 16L7 10H11V6Z"] {
-  d: path("M18.4,10.551l-4.742,4.606a.1.1,0,0,1-.162-.068V5.6h-1v9.486a.1.1,0,0,1-.162.068L7.6,10.551l-.7.718,6.034,5.861a.1.1,0,0,0,.133,0L19.1,11.268Z");
-}
-
-#panels .downloads svg path[d="M6 20C6 19.4477 6.44772 19 7 19H19C19.5523 19 20 19.4477 20 20C20 20.5523 19.5523 21 19 21H7C6.44772 21 6 20.5523 6 20Z"] {
-  d: path("M20,20.4H6v-1H20Z");
-}
-
-#switch button.notes svg path {
-  d: path("M7.102 5C5.94 5.001 5 5.993 5 7.219V18.78c.001 1.224.94 2.217 2.102 2.219h11.796c1.16-.002 2.101-.994 2.102-2.219v-3.94c0-.244-.188-.445-.42-.445a.434.434 0 00-.422.444v3.94c0 .733-.563 1.33-1.26 1.331H7.102c-.696 0-1.26-.598-1.26-1.332V7.22c0-.735.564-1.331 1.26-1.332h3.732c.232 0 .42-.199.42-.444a.431.431 0 00-.42-.443H7.102zM18.8 5a.66.66 0 00-.467.2l-1.201 1.2 2.535 2.534 1.133-1.266a.645.645 0 000-.936L19.268 5.2A.658.658 0 0018.8 5zm-2.467 2.064L9 14.464V17h2.533l7.334-7.4-2.533-2.536z");
-}
-
-#switch button.calendar svg path {
-  d: path("M18.938 6.25H17.5V5.5a.5.5 0 00-1 0v.75h-7V5.5a.5.5 0 00-1 0v.75H7.063A2.065 2.065 0 005 8.313v10.625C5 20.075 5.925 21 7.063 21h11.875A2.064 2.064 0 0021 18.938V8.313a2.065 2.065 0 00-2.062-2.063zM20 18.938c0 .586-.476 1.062-1.062 1.062H7.063A1.063 1.063 0 016 18.938v-8.281c0-.087.07-.157.156-.157h13.688c.086 0 .156.07.156.156v8.282z");
-}
-
-#switch button.mail svg path {
-  d: path("M7.354 7C6.054 7 5 7.79 5 8.766v8.468C5 18.21 6.054 19 7.354 19h11.292c1.3 0 2.354-.79 2.354-1.764v-8.47C21 7.79 19.945 7 18.646 7H7.354zm0 .705h11.292c.78 0 1.413.476 1.413 1.06v.35l-6.713 5.301a.56.56 0 01-.694 0l-6.71-5.299v-.351c0-.585.633-1.06 1.412-1.06zM5.94 9.697l6.446 5.09A.973.973 0 0013 15a.972.972 0 00.611-.213l6.448-5.09v7.54c0 .584-.633 1.058-1.413 1.058H7.354c-.78 0-1.413-.474-1.413-1.059V9.697z");
-}
-
-#switch button.contacts svg path {
-  d: path("M18.658 15.342a7.995 7.995 0 00-3.042-1.906 4.614 4.614 0 002.009-3.811A4.627 4.627 0 0013 5a4.63 4.63 0 00-4.625 4.625c0 1.581.795 2.977 2.009 3.811a8.046 8.046 0 00-3.042 1.906A7.962 7.962 0 005 21h1.25A6.754 6.754 0 0113 14.25 6.752 6.752 0 0119.75 21H21a7.97 7.97 0 00-2.342-5.658zM13 13a3.376 3.376 0 010-6.75A3.376 3.376 0 0113 13z");
-}
-
-#switch button.addwebpanel path {
-  d: path("M20.5,12.5h-7v-7a.5.5,0,1,0-1,0v7h-7a.5.5,0,1,0,0,1h7v7a.5.5,0,1,0,1,0v-7h7a.5.5,0,1,0,0-1Z");
-}
-
-#switch>button.preferences.panelbtn { display: none; }
-
-/* Download button progress */
-#switch button.downloads.in-progress div.progress div.loaded { background-color: var(--colorHighlightBg); }
-
-#switch>button.downloads.in-progress div.progress {
-  background-color: var(--colorBg);
-  border: 1px solid var(--colorHighlightBg);
-  border-radius: 0 !important;
 }
 
 /* Hides webpanel suggestions */
 .webpanel-suggestions { display: none; }
 
-/* Panel tweaks */
-#panels-container.overlay { backdrop-filter: blur(10px); }
-
-.panel > header {
-  background-color: var(--colorBg);
-  border-bottom: 1px solid var(--colorBgLightIntense);
-}
-
-.sortselector { border-color: var(--colorBgLightIntense) !important; }
-
+/* Panel header */
 .panel>header h1 {
-  margin-bottom: 5px !important;
-  margin-top: -5px;
-  font-weight: 600 !important;
   font-size: 14px !important;
-  text-align: center;
+  font-weight: 600;
+  justify-content: center;
 }
 
-.panel section, .panel-group, #panels-container.overlay .panel-group {
-  backdrop-filter: blur(10px);
-  opacity: .98;
+.transparent { display: none; }
+
+/* Panel icons */
+#switch .button-toolbar > button[title*="History"] svg path {
+  d: path('M9.143 1C5.354 1 2.285 4.134 2.285 8H0l2.964 3.027.054.108L6.096 8H3.808c0-3.011 2.386-5.445 5.335-5.445 2.948 0 5.334 2.435 5.334 5.445s-2.387 5.445-5.334 5.445a5.233 5.233 0 0 1-3.764-1.603l-1.082 1.103C5.539 14.213 7.246 15 9.143 15 12.929 15 16 11.865 16 8c0-3.866-3.071-7-6.857-7zM8.38 4.889v3.889l3.237 1.961.588-1.004L9.523 8.11V4.889H8.38z');
 }
 
-.panel-group .panel-collapse-guard { padding: 0 2px 0 0; }
-
-#panels .SlideBar--FullWidth.alternate:after {
-  background-image: none !important;
-  border: solid var(--colorBgLightIntense) !important;
-  background-color: var(--colorBgDarker);
-  height: 2px !important;
+#switch .button-toolbar > button[title*="Notes"] svg path {
+	d: path('M15.27 3.178c.974.905.974 2.372 0 3.276l-8.345 7.75a1.57 1.57 0 0 1-.697.376l-3.569.901a.523.523 0 0 1-.641-.342.46.46 0 0 1 0-.255l.974-3.313c.07-.243.21-.466.404-.646l8.346-7.749c.972-.902 2.555-.902 3.528.002zm-4.206 2.001-6.929 6.435a.475.475 0 0 0-.135.215l-.733 2.496 2.687-.685a.506.506 0 0 0 .23-.126l6.93-6.433-2.05-1.902zm1.416-1.315-.675.628 2.049 1.903.678-.627a1.28 1.28 0 0 0-.021-1.903 1.534 1.534 0 0 0-2.031-.001z');
 }
 
-
-/* Notes
-  ----------------------------
-*/
-.NotesEditor { max-width: -webkit-fill-available; }
-
-#notes-panel>div>div>div.toolbar.toolbar-default.toolbar-wrap.no-top-padding { padding: 0 5px !important; }
-
-.cardview .NotesEditor-Editor, .NotesEditor .MarkdownRender {
-  background-color: var(--colorBgDark) !important;
-  margin: 0 !important;
-  padding: 6px 15px;
+#switch .button-toolbar > button[title*="Add Web Panel"] svg path {
+  d: path("M12.501 6.5H7.5v-5a.5.5 0 0 0-1 0v4.999h-5a.502.502 0 0 0 0 1.001h4.999v5.001a.502.502 0 0 0 1.002 0V7.5h5a.5.5 0 0 0 0-1z");
 }
 
-.NotesEditor-Metadata { padding: 10px !important; }
+.manager { backdrop-filter: var(--backgroundBlur); }
 
-.NotesEditor-Toolbar button.active { fill: var(--colorHighlightBg) !important; }
+.manager .manager-content, .manager>.toolbar, .internal-page .manager-editor { background-color: var(--colorBgAlphaBlur) !important; }
 
-#notes-panel .notes-editor .note.md {
-  padding: 8px !important;
-  margin: 0 !important
-}
+.tree-row.folder { font-weight: 700; }
 
-#panels button.fullwidth.alternate:after {
-  background-image: none !important;
-  border: 0;
-}
+.sortselector, .NotesManager--Vertical .NotesManager-Tree:not(.NotesManager-Tree--Collapsed) { border-color: var(--colorBgDarker) !important; }
 
-#notes-panel .notes-editor .note.md { background-color: var(--colorBgDark); }
-
-
-/* Managers & tree lists
-  ----------------------------
-*/
-.manager, .vivaldi-tree {
-  opacity: .9;
-  backdrop-filter: blur(5px)
-}
-
-/* Creates alternating row colors */
-.vivaldi-tree div>div:nth-child(even), .manager .manager-treeview div>div:nth-child(even), .startpage .history .manager-content .history-tree div>div:nth-child(even) { background-color: var(--colorBg); }
-
-.manager .manager-editor { border: none !important; }
-
-.win .vivaldi-tree .tree-item[data-lead] { outline: 1px solid var(--colorHighlightBgAlpha) !important; }
-
-.vivaldi-tree .tree-row svg {
-  fill: var(--colorFg);
-  stroke: var(--colorFg)
-}
-
-.panel-group .panel.panel-bookmarks label svg { margin-left: 0 !important; }
-
-.notes-cardwrapper, .addbookmark-cardwrapper, .panel#downloads .download-editor, #notes-panel .notes-editor { background-color: var(--colorBg) !important; }  
-
-/* Tree row spacing */
-:root {
-  --rowHeight: 24px;
-}
-.vivaldi-tree .tree-item .tree-row label, .panel#mail_panel .tree-item {
-  line-height: var(--rowHeight);
-  min-height: var(--rowHeight);
-}
+#panels .webpanel-stack .webpanel .webpanel-header { padding-top: 12px; }
 
 
 /* Notes editor manager
   ----------------------------
 */
-.NotesManager-Tree > .toolbar {
+.NotesManager { opacity: .95; }
+
+.NotesManager-Tree>.toolbar {
+  background-color: var(--colorBg);
   margin: unset !important;
   padding: 6px;
-  background-color: var(--colorBgLightIntense);
 }
 
-.NotesManager-Buttons { border-bottom: 1px solid var(--colorBgDarker); }
+.NotesManager-Buttons {
+  background-color: var(--colorBg);
+  border-bottom: 1px solid var(--colorBgDarker);
+}
 
-.NotesManager-RenderMarkdownButton { display: none !important; }
-
-.MarkdownRender p, .MarkdownRender ul, .MarkdownRender ol, .MarkdownRender dl, .MarkdownRender table, .MarkdownRender pre, .MarkdownRender blockquote, body[contenteditable="plaintext-only"] { line-height: 1.4em; }
+.MarkdownRender p,
+.MarkdownRender ul,
+.MarkdownRender ol,
+.MarkdownRender dl,
+.MarkdownRender table,
+.MarkdownRender pre,
+.MarkdownRender blockquote,
+body[contenteditable="plaintext-only"] {
+  line-height: 1.4em;
+}
 
 .NotesManager-Footer {
   position: absolute;
@@ -600,6 +345,7 @@ button.button-on path.bookmark-outline { fill: var(--colorHighlightBg); }
   background-color: var(--colorHighlightBg);
   color: var(--colorHighlightFg);
   padding: 10px 25px;
+  margin-bottom: 15px;
   border-radius: var(--radius);
 }
 
@@ -607,6 +353,8 @@ button.button-on path.bookmark-outline { fill: var(--colorHighlightBg); }
 /* Calendar
 ------------------------------
 */
+.manager .manager-view { opacity: .95; }
+
 .calendar-multiweek-date.current .day {
   background-color: var(--colorHighlightBg) !important;
   font-size: 1.1em;
@@ -618,14 +366,26 @@ button.button-on path.bookmark-outline { fill: var(--colorHighlightBg); }
 .calendar-event .cal-event-header .cal-event-time, .calendar-event .cal-event-header .cal-event-title {
   font-weight: 400 !important;
   font-size: 1.15em;
-} 
+}
 
 .calendar-event .cal-event-header .cal-event-title { margin-left: 10px; }
 
 
-/* Settings panel
+/* Mail
   ----------------------------
 */
+#mail_view { opacity: .98; }
+
+.mail_entry.mail_entry.unread .subject,
+.mail_entry.mail_entry.unseen .subject {
+  color: var(--colorHighlightBg);
+  font-weight: unset !important;
+}
+
+
+/* =====================================
+   Settings Window
+  ===================================== */
 .vivaldi-settings .settings-sidebar .settings-navigation { min-width: 200px !important; }
 
 .ContentBlocker { max-width: 1000px; }
@@ -654,10 +414,27 @@ button.button-on path.bookmark-outline { fill: var(--colorHighlightBg); }
 /* Removes schedule timeline size limit */
 .theme-schedule-timeline { max-width: unset !important; }
 
+/* Expands themes layout */
+.TabbedView { max-width: unset !important; }
 
-/* Miscellaneous stuff
-  ----------------------------
-*/
+/* Theme timeline indicator */
+.theme-schedule-timeline .theme-schedule-now-indicator { color: var(--colorHighlightBg) !important; }
+
+.theme-schedule-timeline .theme-schedule-now-indicator:after { background-color: var(--colorHighlightBg); }
+
+/* Schedule label */
+.ThemePreview-Label-Meta>span { color: var(--colorHighlightBg); }
+
+.ThemePreview-Label-Meta { opacity: .8 !important; }
+
+
+/* =====================================
+   Miscellaneous stuff
+  ===================================== */
+
+/* Alternating row colours */
+.vivaldi-tree div>div:nth-child(even) { background-color: var(--colorBgAlphaHeavier); }
+
 /* Popup containers (Quick command, Delete data */
 .quick-command-container { box-shadow: 0 0 10px 0 rgba(0, 0, 0, .6) !important; }
 
@@ -675,18 +452,68 @@ button.button-on path.bookmark-outline { fill: var(--colorHighlightBg); }
 
 .quick-command-container .quick-command { cursor: pointer; }
 
-#modal-bg.slide { top: 1vh !important; }
+#modal-bg.slide { top: 1px !important; }
 
 /* Rounds fav icons in lists */
-.vivaldi-tree .tree-row label>img, .vivaldi-tree .tree-row label .tree-row-image {
-  border-radius: 50% !important;
-  filter: grayscale(.2)
-}
+.vivaldi-tree .tree-row label>img, .vivaldi-tree .tree-row label .tree-row-image { border-radius: 50% !important; }
 
 /* New tab link marker */
-a[target="_blank"]:hover { outline: dotted 1.5px !important; } 
+a[target="_blank"]:hover { outline: dotted 1.5px !important; }
 
-/* Scrollbar for internal pages */
+
+/* Check boxes and radio buttons */
+.theme-dark input[type=radio], .theme-dark input[type=checkbox] {background-image: none !important; }
+
+input[type=radio], input[type=checkbox] { background-color: var(--colorBgIntense) !important; }
+
+input[type=checkbox]:before, input[type=checkbox]:after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: var(--colorHighlightBg);
+  transform-origin: 0 0;
+  transition: transform 0ms linear 0ms;
+}
+
+input[type=checkbox]:checked:before {
+  transform: rotate(-45deg) translateY(45%) translateX(-30%) scaleX(0.25) scaleY(0.4);
+  transition-duration: 33.33333333ms;
+}
+
+input[type=checkbox]:checked:after {
+  transform: rotate(225deg) translateY(-30%) translateX(-95%) scaleX(0.25) scaleY(1.2);
+  transition-duration: 100ms;
+  transition-delay: 33.33333333ms;
+}
+
+input[type=radio]:before {
+  content: '';
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  right: 3px;
+  bottom: 3px;
+  transition: transform 50ms linear;
+  border-radius: var(--radiusRound);
+  background-color: var(--colorHighlightBg);
+  transform: scale(0);
+}
+
+input[type=radio]:checked:before {
+  transition-timing-function: cubic-bezier(0, 0, 0.3, 1.5);
+  transition-duration: 100ms;
+  transform: scale(1);
+}
+
+input[type=radio]:checked {
+  box-shadow: none !important;
+  border-width: 1px !important;
+}
+
+/* UI Scrollbars */
 ::-webkit-scrollbar {
   background-color: transparent !important;
   border: 0 !important;
@@ -710,14 +537,37 @@ a[target="_blank"]:hover { outline: dotted 1.5px !important; }
 ::-webkit-scrollbar-button { display: none !important; }
 
 /* Slider */
-input[type=range] { background-color: var(--colorBgDarker); }
+input[type=range] {
+  background-color: var(--colorHighlightBg);
+  height: 1px !important
+}
 
-input[type=range]::-webkit-slider-thumb, input[type=range]::-webkit-slider-thumb:active, input[type=range]::-webkit-slider-thumb:focus { border-width: 2px !important; }
+input[type=range]::-webkit-slider-thumb {
+  width: 12px !important;
+  height: 12px !important;
+  border: 2px solid var(--colorFgIntense) !important;
+}
+
+input[type=range]::-webkit-slider-thumb:hover { border-color: var(--colorHighlightBg) !important; }
+
+input[type=range]::-webkit-slider-thumb:active { background: linear-gradient(var(--colorBg), var(--colorBgDarker)); }
+
+input[type=range].isblurred::-webkit-slider-thumb, input[type=range][disabled]::-webkit-slider-thumb { opacity: 0.7 !important; }
+
+input[type=range]:focus-visible::-webkit-slider-thumb {
+  outline: 2px solid var(--colorHighlightBg);
+  outline-offset: -1px;
+  border-color: var(--colorHighlightBg);
+}
+
+#browser > footer .page-zoom-controls > .button-toolbar > button:not(:disabled) { color: var(--colorHighlightFg); }
+
+#browser > footer .page-zoom-controls > .button-toolbar > button:not(:disabled):hover { color: var(--colorHighlightBg); }
 
 
-/* Hiding stuff
-  ----------------------------
-*/
+/* =====================================
+   Hiding stuff
+  ===================================== */
 .color-behind-tabs-on .addressfield:focus-within,
 .color-behind-tabs-on .searchfield:focus-within,
 .UrlBar-AddressField:focus-within,
@@ -726,6 +576,7 @@ input[type=range]::-webkit-slider-thumb, input[type=range]::-webkit-slider-thumb
   box-shadow: none !important
 }
 
+.UrlBar-AddressField .pageload .pageload-indicator
 .vivaldi-tree .tree-row.folder .item-count,
 .history .item-count,
 #history-panel .item-count,
@@ -739,9 +590,6 @@ input::-webkit-search-cancel-button {
 #fip-input-text::-webkit-search-cancel-button { appearance: none !important; }
 
 .cb-image svg .bookmark-shadow, .thumbnail-image svg .bookmark-shadow { fill: transparent !important; }
-
-/* Hides background colours */
-[title="Colours"] { display: none !important; }
 
 /* Hides dropdown arrow for history in the address field */
 .button-toolbar>button[title="Show typed history"], .button-toolbar>button[title="Enter an address to activate typed history"] { display: none !important; }
