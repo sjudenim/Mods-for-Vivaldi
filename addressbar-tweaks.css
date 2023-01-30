@@ -1,6 +1,6 @@
 /*	
-* Vivaldi Addressbar Mods (Updated for browser version 4.3)
-* Written by sjudenim	
+* Vivaldi Addressbar Mods (updated for browser version 5.7)
+* Written by sudenim	
 * GNU General Public License v3.0	
 * 	
 */
@@ -11,14 +11,94 @@
 .is-settingspage #header, .is-settingspage:not(.fullscreen) .vivaldi-settings .settings-header { height: 34px; }
 
 /* Addressbar height */
-.address-top .toolbar-mainbar { height: 34px; }
+.address-top .toolbar-mainbar {
+  height: 34px;
+  padding: 0 132px 0 44px;
+}
 
 /* Line under addressbar */
-.address-top .toolbar-mainbar:after { display: none; }
+.toolbar-mainbar:before, .toolbar-mainbar .toolbar-extensions:before { display: none; }
 
-/* Addressfield
-  ----------------------------
-*/
+/* Hot fix for UI zoom */
+#browser.win button.vivaldi, #browser .window-buttongroup { scale: unset !important; }
+
+
+/* =====================================
+   Menu Button
+  ===================================== */
+  .vivaldi svg {
+  flex: 0 0 26px !important;
+  height: 26px !important;
+}
+  
+.vivaldi, #browser .vivaldi span.burger-icon, #browser:not(.tabs-top) .vivaldi, .tabs-bottom .vivaldi svg {
+  position: relative;
+  height: 34px !important;
+  width: 44px;
+  z-index: 5;
+}
+  
+.vivaldi span { opacity: unset !important; }
+  
+.tabs-left .vivaldi svg, .tabs-right .vivaldi svg {
+  width: initial !important;
+  height: initial !important;
+}
+  
+.vivaldi:hover { background-color: var(--colorHighlightBg) !important; }
+
+#browser .vivaldi span.burger-icon:hover svg { fill: var(--colorAccentFg) !important; }
+
+#browser .vivaldi span.burger-icon svg path { d: path("M5 7.5v.846h16V7.5H5zm0 5.077v.846h16v-.846H5zm0 5.077v.846h16v-.846H5z"); }
+  
+#browser .vivaldi span.burger-icon svg {
+  margin-left: -6px;
+  margin-top: -5px;
+  fill: var(--colorFg);
+}
+  
+#browser .vivaldi:hover span svg { transform: scale(1) !important; }
+  
+.color-behind-tabs-on .vivaldi span.vivaldi-v, .color-behind-tabs-on .vivaldi span.burger-icon { opacity: initial !important; }
+  
+  /* If using tabs on top, this will remove the space vacated by the menu button */
+#tabs-container.top {
+  margin-top: -4px !important;
+  padding-left: 0 !important;
+}
+  
+.win10 #tabs-container:not(.none).top { padding-right: unset !important; }
+
+
+/* =====================================
+   Window buttons group
+  ===================================== */
+  .window-buttongroup { z-index: 99 !important; }
+  
+  .toolbar-mainbar.toolbar-mailbar { padding-right: 132px; }
+    
+  .toolbar-mainbar > *:last-child:not(.button-toolbar) { margin-right: unset; }
+  
+  #browser.win .window-buttongroup button,
+  #browser.win .window-buttongroup button.window-close {
+    height: 34px !important;
+    width: 44px !important;
+    fill: var(--colorFg) !important;
+    transition: .5s !important;
+  }
+  
+  #browser.win .window-buttongroup button:hover {
+    background-color: var(--colorHighlightBg) !important;
+    fill: var(--colorAccentFg) !important;
+  }
+  
+  #browser.win .window-buttongroup button.window-maximize>svg path, #browser.win .window-buttongroup button.window-restore>svg path { d: path("M9 1v8H1V1h8m1-1H0v10h10V0z"); }
+  
+  .maximized#browser.win .window-buttongroup button.window-close, .fullscreen#browser.win .window-buttongroup button.window-close { padding-right: 0 !important; }
+
+/* =====================================
+   Addressfield
+  ===================================== */
 .UrlField { justify-content: center; }
 
 .UrlField .UrlBar-UrlField { text-align: center; }
@@ -28,35 +108,76 @@
   border: 0 !important;
   outline: 0 !important;
   outline-offset: 0 !important;
-  padding: 0 5px !important;
-  min-width: 45vw;
+  padding: 3px 5px !important;
+  max-width: 60vw;
   height: 22px !important;
   background-color: transparent !important;
   border-radius: 0 !important;
-  z-index: 99;
   border-left: 1px solid var(--colorFgAlpha) !important;
   border-right: 1px solid var(--colorFgAlpha) !important;
 }
 /* End style */
 
-/* Chrome style
+/* Chrome style 
 .UrlBar-AddressField {
   border: 0 !important;
   outline: 0 !important;
   outline-offset: 0 !important;
   padding: 3px 5px !important;
-  max-width: 45vw;
+  max-width: 60vw;
   height: 28px !important;
   margin: auto !important;
   background-color: var(--colorAccentBgDark);
   border-radius: 25px !important;
-  z-index: 99;
 }
 /* End style */
 
 .addressfield form input.url {
   margin-top: 1px;
+  padding-bottom: 3px !important;
   text-align: center;
+}
+
+/* Pageloading indicator
+  ----------------------------
+*/
+.UrlBar-AddressField .pageload .pageload-ticker { display: none; }
+
+.UrlField .pageload:not(.unstarted).progress-done {
+  opacity: 0 !important;
+  border: none !important
+}
+
+/* show pageload bar */
+.UrlBar-AddressField .pageload.progressing .pageload-indicator {
+  position: fixed;
+  z-index: 99 !important;
+  left: 0;
+  top: 0;
+  height: 1px;
+  width: 100vw;
+  background: transparent;
+  opacity: 1 !important;
+}
+
+/* pageload bar colors */
+.UrlBar-AddressField .pageload .pageload-indicator::-webkit-progress-value { background-color: var(--colorHighlightBg) !important; }
+
+.UrlBar-AddressField .pageload .pageload-indicator .theme-dark { opacity: 1 !important; }
+
+/* URL */
+.UrlFragment-Wrapper, .UrlFragment--Lowlight:first-of-type { color: var(--colorFgFaded); }
+
+/* URL Base-domain  */
+.UrlFragment-HostFragment-Basedomain, .UrlFragment-HostFragment-TLD {
+  color: var(--colorFgIntense) !important;
+  font-weight: 600;
+}
+
+/* URL Sub-domain */
+.UrlFragment-HostFragment-Subdomain {
+  color: var(--colorHighlightBg) !important;
+  font-weight: 600;
 }
 
 .toolbar-insideinput.toolbar-insideinput.toolbar-insideinput > .button-toolbar button:hover :not(:active):not(:focus):not(.button-pressed),
@@ -66,26 +187,164 @@
   fill: var(--colorHighlightBg) !important;
 }
 
-/* Extensions
-  ----------------------------
-*/
-.toolbar-extensions > div > button > span > svg > path { d: path("M15.486 18l.514-.469L11.026 13 16 8.469 15.486 8 10 13z"); }
+.drop_down:hover, .drop_down[data-selected], #mail_panel section ul li.selected { background-color: var(--colorHighlightBg) !important; }
 
-.toolbar-extensions > div:nth-child(4) > button > span > svg { fill: var(--colorHighlightBg); }
-
-.ExtensionIcon > button { min-width: 30px !important; }
-
-.toolbar-extensions .button-toolbar > button > img { filter: grayscale(60%) contrast(100%) opacity(80%); }
-
-.toolbar-extensions .button-toolbar > button:hover > img { filter: grayscale(0%) contrast(100%) opacity(100%); }
-
-/* Callout arrows */
-.extension-popup:before,
-.extension-popup.top:after {
-  right: 9px !important;
-  border: 8px solid transparent !important;
-  top: -17px !important;
+button.button-addressfield:hover {
+  background-color: transparent !important;
+  border-color: transparent !important
 }
 
-.extension-popup.top:after { border-bottom-color: var(--colorBorder) !important; }
-.extension-popup.top:after { border-bottom-color: var(--colorBorder) !important; }
+.addressfield button.button-addressfield.input-dropdown:hover svg,
+.button-addressfield.reader-mode:hover svg,
+.button-addressfield.bookmark:hover svg .bookmark-outline { 
+  fill: var(--colorHighlightBgDark) !important;
+}
+
+.button-addressfield.bookmark.bookmarked svg .bookmark-outline { fill: var(--colorHighlightBgDark); }
+
+.button-addressfield.bookmark svg .bookmark-animated-fill { fill: var(--colorHighlightBgAlpha); }
+
+/* Content Blocking badge */
+.toolbar.toolbar-addressbar.toolbar-mainbar.toolbar-large>div.addressfield .ads,
+.toolbar.toolbar-addressbar.toolbar-mainbar.toolbar-large>div.addressfield .blocking,
+.toolbar.toolbar-addressbar.toolbar-mainbar.toolbar-large>div.addressfield .trackers {
+  fill: var(--colorHighlightBg) !important;
+}
+
+/* Site Info icon */
+.siteinfo-text { display: none; }
+
+.siteinfo-symbol:hover+.siteinfo-text { display: block; }
+
+.SiteInfoButton.secure, .SiteInfoButton.certified { fill: var(--colorHighlightBg); }
+
+.SiteInfoButton.warning { fill: var(--colorErrorBg); }
+
+.SiteInfoButton.secure:hover,
+.SiteInfoButton.certified:hover,
+.SiteInfoButton.warning {
+  background-color: transparent;
+  fill: var(--colorHighlightBg) !important;
+  transform: scale(1.1);
+}
+
+.SiteInfoButton.secure svg path, .SiteInfoButton.certified svg path {}
+
+
+/* Internal site icon */
+.SiteInfoButton.internal svg path, .SiteInfoButton.warning svg path {
+  d: path("M10.4 5c-.4-.8 0-1.8 1-2 .7 0 1.5.4 1.6 1.2a1.4 1.4 0 0 1-.2 1l-4 7c-.3.5-.7.8-1.2.8-.6 0-1-.2-1.3-.7L3.8 7.8 2.2 5c-.5-.8 0-2 1-2 .7 0 1 .2 1.4.7l1 2 1 1.4a2 2 0 0 0 1.7 1.5 2.2 2.2 0 0 0 2.3-2V6c0-.3 0-.6-.2-1z");
+}
+
+/* Qr code icon */
+.create-qr-code button svg { fill: unset !important; }
+
+
+.toolbar-insideinput.toolbar-insideinput.toolbar-insideinput > .button-toolbar > button.button-pressed { background-color: unset !important; }
+
+/* Add bookmark icon */
+.BookmarkButton { border: unset !important; }
+
+path.bookmark-outline, clipPath#addBookmarkPath path {
+  d: path("M14.051 3.176a4.026 4.026 0 0 0-5.687 0L8 3.54l-.363-.364a4.026 4.026 0 0 0-5.687 0C.414 4.711.405 7.146 1.927 8.838c1.389 1.543 5.485 4.878 5.659 5.019.118.097.26.143.401.143h.014a.605.605 0 0 0 .415-.143c.173-.141 4.27-3.476 5.658-5.019 1.522-1.692 1.511-4.127-.023-5.662zm-.924 4.81C12.044 9.19 9.068 11.671 8 12.552c-1.069-.881-4.044-3.362-5.127-4.565C1.811 6.807 1.8 5.125 2.85 4.076c.536-.535 1.24-.804 1.943-.804s1.407.268 1.943.804l.8.8a.612.612 0 0 0 .342.172.635.635 0 0 0 .585-.172l.801-.801a2.752 2.752 0 0 1 3.886 0c1.048 1.05 1.038 2.732-.023 3.911z");
+}
+
+button:not(.button-on) path.bookmark-outline { fill: var(--colorFg); }
+
+button.button-on path.bookmark-outline { fill: var(--colorHighlightBg) !important; }
+
+.add-bookmark-shadow, .bookmark-animated-fill { display: none; }
+
+#main>div.toolbar.toolbar-addressbar.toolbar-mainbar.toolbar-large>div.addressfield>div.toolbar.toolbar-small.toolbar-insideinput>div.button-toolbar.cjvgsbzxr000i3n670rebhqf3>button>svg>g>path.bookmark-animated-fill,
+#main>div.toolbar.toolbar-addressbar.toolbar-mainbar.toolbar-large>div.addressfield>div.toolbar.toolbar-small.toolbar-insideinput>div.button-toolbar.cjvgsbzxr000i3n670rebhqf3>button>svg>g>path.bookmark-outline {
+  display: none;
+}
+
+
+/* =====================================
+   Add Bookmark menu
+  ===================================== */
+/* Arrow */
+.button-popup-below:before { top: -11px !important; }
+
+/* Header */
+.DialogHeader { padding: 10px 18px !important; }
+
+/* Hides the header *
+.DialogHeader {
+  height: 0 !important;
+  padding: 0 !important;
+}
+
+/* Location toolbar */
+.BookmarkLocationSelector-Header {
+  font-size: 0 !important;
+  background-color: var(--colorBg);
+}
+
+.BookmarkPopup-LocationSelector { border-radius: none !important; }
+
+.BookmarkInputField:last-of-type { border-bottom: none !important; }
+
+.BookmarkLocationSelector-ToggleButtonGroup-Button:focus, .BookmarkLocationSelector-ToggleButtonGroup-Button--Pressed { background-color: var(--colorHighlightBgAlpha); }
+
+.BookmarkLocationSelector-Header, .BookmarkLocationSelector-ToggleButtonGroup-Button--Pressed { box-shadow: none !important; }
+
+.BookmarkLocationSelector-ToggleButtonGroup-Button--Pressed * { fill: var(--colorHighlightBg) !important; }
+
+.BookmarkLocationSelector-ToggleButtonGroup-Button:hover, .BookmarkLocationSelector-SearchInput-Button:hover { background-color: var(--colorHighlightBg) !important; }
+
+.BookmarkLocationSelector-ToggleButtonGroup-Button:hover *, .BookmarkLocationSelector-SearchInput-Button:hover * { fill: var(--colorAccentFg) !important; }
+
+.BookmarkLocationSelector-SearchInput-Button { border-radius: 0 !important; }
+
+.BookmarkLocationSelector-ToggleButtonGroup-Button { padding: 12px !important; }
+
+/* Bookmarks folder icon */
+.BookmarkLocationSelector-Header>button.BookmarkLocationSelector-ToggleButtonGroup-Button.BookmarkLocationSelector-ToggleButtonGroup-Button:nth-child(1)>svg>g>svg>path {
+  d: path("M13.23 2H6.768A.762.762 0 0 0 6 2.755v10.792a.46.46 0 0 0 .236.398.487.487 0 0 0 .469-.008l3.297-2.006 3.296 1.986a.452.452 0 0 0 .464.005.435.435 0 0 0 .238-.39V2.755A.763.763 0 0 0 13.23 2zm-.154 10.721-2.836-1.703a.447.447 0 0 0-.482 0l-2.834 1.715V2.906h6.15v9.814h.002z")
+}
+
+/* Speed dial folder icon */
+#browser > div.button-popup.button-popup-left.button-popup-below.button-popup-arrow-dark > form > div > div.BookmarkLocationSelector.BookmarkPopup-LocationSelector > div.BookmarkLocationSelector-Header > button:nth-child(2) > svg path {
+  d: path("M6 5.5h2.5V3H6v2.5zM9.75 13h2.5v-2.5h-2.5V13zM6 13h2.5v-2.5H6V13zm0-3.75h2.5v-2.5H6v2.5zm3.75 0h2.5v-2.5h-2.5v2.5zM13.5 3v2.5H16V3h-2.5zM9.75 5.5h2.5V3h-2.5v2.5zm3.75 3.75H16v-2.5h-2.5v2.5zm0 3.75H16v-2.5h-2.5V13z");
+}
+
+/* Bookmarks folder search */
+.BookmarkLocationSelector-SearchInput {
+  position: absolute !important;
+  right: 2px;
+  padding: 0 16px !important;
+  grid-gap: 3px !important;
+}
+
+.BookmarkLocationSelector-SearchInput-Button {
+  width: 46px !important;
+  height: 42px !important;
+}
+
+.BookmarkLocationSelector-SearchInput-Input {
+  border-color: transparent !important;
+  box-shadow: none;
+  background-color: var(--colorBgDark);
+  width: 210px;
+}
+
+.BookmarkLocationSelector { grid-template-rows: [header] 42px [search] 8px [content] auto [footer] auto !important; }
+
+.BookmarkInputField-Title {
+  color: var(--colorHighlightBg);
+  font-weight: 700;
+}
+
+.DialogFooter { border-top: 0 !important; }
+
+.BookmarkPopup-Footer { justify-content: center !important; }
+
+
+/* Omnibox dropdown */
+.OmniDropdown {
+  border-radius: 0 0 var(--radius) var(--radius);
+  background-color: var(--colorBgAlphaBlur);
+  backdrop-filter: var(--backgroundBlur);
+}
