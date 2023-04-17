@@ -1,5 +1,5 @@
 /*
-* Vivaldi Ui tweaks (updated for browser version 5.7)
+* Vivaldi Ui tweaks (updated for browser version 6)
 * Written by sudenim
 * GNU General Public License v3.0
 * 
@@ -89,19 +89,16 @@ input[type=button], input[type=submit] { background-image: none !important; }
 /* Won't show horizontal menu and window buttons when no ui */
 #browser.minimal-ui:not(.tabs-top) .topmenu, #browser.minimal-ui:not(.tabs-top) .window-buttongroup { display: none !important; }
 
-.button-toolbar > button[title="Reload current page"] svg path, .button-toolbar[title="Reload current page"] svg path { d: path('M14.997 6.063L15 1.409l-1.854 1.852-.203-.211A6.953 6.953 0 007.997 1C4.142 1 1 4.143 1 8c0 3.859 3.142 7 6.997 7 3.858 0 6.997-3.141 6.997-7h-1.355a5.647 5.647 0 01-5.642 5.645A5.648 5.648 0 012.355 8a5.647 5.647 0 015.642-5.641 5.6 5.6 0 013.989 1.65l.203.208-1.844 1.847 4.652-.001z') }
+/* Workspaces button tweaks when in the addressbar */
+#browser .workspace-popup .button-icon:not(.override) { width: 0 !important; }
 
-.button-toolbar > button[title="Stop"] svg path, .button-toolbar[title="Stop"] svg path { d: path('M14 2.929L13.07 2 8 7.071 2.929 2 2 2.929 7.071 8 2 13.07l.929.93L8 8.93 13.07 14l.93-.932L8.932 8z') }
+
+.button-toolbar > button > span.button-toolbar-menu-indicator { margin-top: 4px; }
 
 
 /* =====================================
    Panel Toggle
   ===================================== */
-
-.button-toolbar > button[title*="Hide Panel"] svg path, .button-toolbar > button[title*="Show Panel"] svg path { d: path("M19 10.513L18.438 10 13 14.973 7.563 10 7 10.513 13 16z"); }
-
-.button-toolbar > button[title*="Show Panel"] svg { fill: var(--colorFg) !important; }
-
 .button-toolbar > button:hover[title*="Hide Panel"], .button-toolbar > button:hover[title*="Show Panel"] { background-color: var(--colorHighlightBg) !important; }
   
 .button-toolbar > button:hover[title*="Hide Panel"] svg, .button-toolbar > button:hover[title*="Show Panel"] svg { fill: var(--colorAccentFg) !important; }
@@ -124,7 +121,7 @@ input[type=button], input[type=submit] { background-image: none !important; }
   left: 0;
   right: 0;
   height: fit-content !important; 
-  padding: 5px;
+  padding: 2px;
   background-color: var(--colorAccentBg) !important;
   opacity: .98;
   border-radius: 3px;
@@ -155,9 +152,6 @@ input[type=button], input[type=submit] { background-image: none !important; }
 /* Zoom controls */
 .toolbar-statusbar .page-zoom-controls { margin-top: 2px; }
 
-/* Clock */
-#browser > footer > div > div.button-toolbar.ClockButton.ClockButton { font-size: 1.1em !important; }
-
 .toolbar-medium .button-toolbar > button > .button-badge {
   position: absolute !important;
   right: 5% !important;
@@ -167,7 +161,7 @@ input[type=button], input[type=submit] { background-image: none !important; }
 /* =====================================
    Tabs
   ===================================== */
-#tabs-tabbar-container .newtab svg path {
+  #tabs-tabbar-container .newtab svg path {
   d: path("M19.417 12.417h-5.834V6.583a.583.583 0 10-1.166 0v5.833H6.583a.584.584 0 000 1.167h5.833v5.834a.585.585 0 001.168 0v-5.834h5.833a.584.584 0 000-1.166z");
 }
 
@@ -272,26 +266,13 @@ input[type=button], input[type=submit] { background-image: none !important; }
 .webpanel-suggestions { display: none; }
 
 /* Panel header */
-.panel>header h1 {
+.panel > header h1 > span:first-child {
   font-size: 14px !important;
   font-weight: 600;
-  justify-content: center;
+  margin: auto;
 }
 
 .transparent { display: none; }
-
-/* Panel icons */
-#switch .button-toolbar > button[title*="History"] svg path {
-  d: path('M9.143 1C5.354 1 2.285 4.134 2.285 8H0l2.964 3.027.054.108L6.096 8H3.808c0-3.011 2.386-5.445 5.335-5.445 2.948 0 5.334 2.435 5.334 5.445s-2.387 5.445-5.334 5.445a5.233 5.233 0 0 1-3.764-1.603l-1.082 1.103C5.539 14.213 7.246 15 9.143 15 12.929 15 16 11.865 16 8c0-3.866-3.071-7-6.857-7zM8.38 4.889v3.889l3.237 1.961.588-1.004L9.523 8.11V4.889H8.38z');
-}
-
-#switch .button-toolbar > button[title*="Notes"] svg path {
-	d: path('M15.27 3.178c.974.905.974 2.372 0 3.276l-8.345 7.75a1.57 1.57 0 0 1-.697.376l-3.569.901a.523.523 0 0 1-.641-.342.46.46 0 0 1 0-.255l.974-3.313c.07-.243.21-.466.404-.646l8.346-7.749c.972-.902 2.555-.902 3.528.002zm-4.206 2.001-6.929 6.435a.475.475 0 0 0-.135.215l-.733 2.496 2.687-.685a.506.506 0 0 0 .23-.126l6.93-6.433-2.05-1.902zm1.416-1.315-.675.628 2.049 1.903.678-.627a1.28 1.28 0 0 0-.021-1.903 1.534 1.534 0 0 0-2.031-.001z');
-}
-
-#switch .button-toolbar > button[title*="Add Web Panel"] svg path {
-  d: path("M12.501 6.5H7.5v-5a.5.5 0 0 0-1 0v4.999h-5a.502.502 0 0 0 0 1.001h4.999v5.001a.502.502 0 0 0 1.002 0V7.5h5a.5.5 0 0 0 0-1z");
-}
 
 .manager { backdrop-filter: var(--backgroundBlur); }
 
@@ -384,7 +365,7 @@ body[contenteditable="plaintext-only"] {
 
 
 /* =====================================
-   Settings Window
+   Settings panel/window
   ===================================== */
 .vivaldi-settings .settings-sidebar .settings-navigation { min-width: 200px !important; }
 
@@ -410,6 +391,21 @@ body[contenteditable="plaintext-only"] {
 }
 
 .vivaldi-settings .settings-sidebar .button-category { height: 32px; }
+
+.vivaldi-settings .settings-sidebar .settings-navigation:focus-within .tree-row .button-category.category-selected {
+  color: var(--colorHighlightBg);
+  background-color: var(--colorBgLightIntense) !important;
+  border-top: 1px solid var(--colorBorder);
+  border-left: 1px solid var(--colorBorder);
+  border-bottom: 1px solid var(--colorBorder);
+}
+  /* Settings icons */
+.vivaldi-settings .settings-sidebar .button-category svg {
+  stroke: var(--colorHighlightBg) !important;
+  fill: transparent !important;
+}
+
+.vivaldi-settings .settings-sidebar .settings-navigation:focus-within .tree-row .button-category.category-selected svg { stroke: var(--colorHighlightBg) !important; }
 
 /* Removes schedule timeline size limit */
 .theme-schedule-timeline { max-width: unset !important; }
@@ -459,7 +455,6 @@ body[contenteditable="plaintext-only"] {
 
 /* New tab link marker */
 a[target="_blank"]:hover { outline: dotted 1.5px !important; }
-
 
 /* Check boxes and radio buttons */
 .theme-dark input[type=radio], .theme-dark input[type=checkbox] {background-image: none !important; }
@@ -545,7 +540,7 @@ input[type=range] {
 input[type=range]::-webkit-slider-thumb {
   width: 12px !important;
   height: 12px !important;
-  border: 2px solid var(--colorFgIntense) !important;
+  border: 1px solid var(--colorFgIntense) !important;
 }
 
 input[type=range]::-webkit-slider-thumb:hover { border-color: var(--colorHighlightBg) !important; }
