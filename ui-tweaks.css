@@ -431,13 +431,8 @@ body[contenteditable="plaintext-only"] {
 /* Alternating row colours */
 .vivaldi-tree div>div:nth-child(even) { background-color: var(--colorBgAlphaHeavier); }
 
-/* Popup containers (Quick command, Delete data */
+/* Quick command */
 .quick-command-container { box-shadow: 0 0 10px 0 rgba(0, 0, 0, .6) !important; }
-
-#modal-bg>div {
-  border-radius: var(--radius) !important;
-  backdrop-filter: blur(2px);
-}
 
 .quick-command-container, .quick-command-container .quick-commands>div {
   min-width: 40vw;
@@ -447,8 +442,6 @@ body[contenteditable="plaintext-only"] {
 .quick-command-container .quick-commands>div>div { max-width: 100% !important; }
 
 .quick-command-container .quick-command { cursor: pointer; }
-
-#modal-bg.slide { top: 1px !important; }
 
 /* Rounds fav icons in lists */
 .vivaldi-tree .tree-row label>img, .vivaldi-tree .tree-row label .tree-row-image { border-radius: 50% !important; }
