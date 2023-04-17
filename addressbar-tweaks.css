@@ -1,100 +1,86 @@
 /*	
-* Vivaldi Addressbar Mods (updated for browser version 5.7)
+* Vivaldi Addressbar Mods (updated for browser version 6)
 * Written by sudenim	
 * GNU General Public License v3.0	
 * 	
 */
-/* Removes titlebar */
-#header { min-height: 0; }
-
-/* Re-sets the titlebar for the settings window */
-.is-settingspage #header, .is-settingspage:not(.fullscreen) .vivaldi-settings .settings-header { height: 34px; }
-
-/* Addressbar height */
-.address-top .toolbar-mainbar {
-  height: 34px;
-  padding: 0 132px 0 44px;
-}
 
 /* Line under addressbar */
-.toolbar-mainbar:before, .toolbar-mainbar .toolbar-extensions:before { display: none; }
+.color-behind-tabs-off.address-top .mainbar > .toolbar-mainbar, .address-top .mainbar > .toolbar-mainbar { border: none !important ; }
 
-/* Hot fix for UI zoom */
+/* fix for UI zoom */
 #browser.win button.vivaldi, #browser .window-buttongroup { scale: unset !important; }
+
+/* Fix for addressbar size */
+#browser.win.address-top .toolbar:has(.window-buttongroup.on-mainbar) {
+  min-height: unset !important;
+  padding-left: 44px !important;
+  padding-right: calc(46px * 3) !important;
+}
 
 
 /* =====================================
    Menu Button
   ===================================== */
-  .vivaldi svg {
+.disable-titlebar.address-top#browser:not(.tabs-top) .vivaldi {
+  height: 34px !important;
+  width: 44px !important;
+}
+
+.vivaldi svg {
   flex: 0 0 26px !important;
   height: 26px !important;
 }
-  
-.vivaldi, #browser .vivaldi span.burger-icon, #browser:not(.tabs-top) .vivaldi, .tabs-bottom .vivaldi svg {
-  position: relative;
-  height: 34px !important;
-  width: 44px;
-  z-index: 5;
-}
-  
+
 .vivaldi span { opacity: unset !important; }
-  
-.tabs-left .vivaldi svg, .tabs-right .vivaldi svg {
-  width: initial !important;
-  height: initial !important;
-}
-  
+
 .vivaldi:hover { background-color: var(--colorHighlightBg) !important; }
 
 #browser .vivaldi span.burger-icon:hover svg { fill: var(--colorAccentFg) !important; }
 
 #browser .vivaldi span.burger-icon svg path { d: path("M5 7.5v.846h16V7.5H5zm0 5.077v.846h16v-.846H5zm0 5.077v.846h16v-.846H5z"); }
-  
+
 #browser .vivaldi span.burger-icon svg {
   margin-left: -6px;
   margin-top: -5px;
   fill: var(--colorFg);
 }
-  
+
 #browser .vivaldi:hover span svg { transform: scale(1) !important; }
-  
+
 .color-behind-tabs-on .vivaldi span.vivaldi-v, .color-behind-tabs-on .vivaldi span.burger-icon { opacity: initial !important; }
-  
-  /* If using tabs on top, this will remove the space vacated by the menu button */
-#tabs-container.top {
-  margin-top: -4px !important;
-  padding-left: 0 !important;
-}
-  
-.win10 #tabs-container:not(.none).top { padding-right: unset !important; }
 
 
 /* =====================================
    Window buttons group
   ===================================== */
-  .window-buttongroup { z-index: 99 !important; }
-  
-  .toolbar-mainbar.toolbar-mailbar { padding-right: 132px; }
-    
-  .toolbar-mainbar > *:last-child:not(.button-toolbar) { margin-right: unset; }
-  
-  #browser.win .window-buttongroup button,
-  #browser.win .window-buttongroup button.window-close {
-    height: 34px !important;
-    width: 44px !important;
-    fill: var(--colorFg) !important;
-    transition: .5s !important;
-  }
-  
-  #browser.win .window-buttongroup button:hover {
-    background-color: var(--colorHighlightBg) !important;
-    fill: var(--colorAccentFg) !important;
-  }
-  
-  #browser.win .window-buttongroup button.window-maximize>svg path, #browser.win .window-buttongroup button.window-restore>svg path { d: path("M9 1v8H1V1h8m1-1H0v10h10V0z"); }
-  
-  .maximized#browser.win .window-buttongroup button.window-close, .fullscreen#browser.win .window-buttongroup button.window-close { padding-right: 0 !important; }
+.disable-titlebar#browser.win .window-buttongroup { height: 34px !important; }
+
+.toolbar-mainbar>*:last-child:not(.button-toolbar) { margin-right: unset; }
+
+#browser.win .window-buttongroup button, #browser.win .window-buttongroup button.window-close {
+  fill: var(--colorFg) !important;
+  transition: .5s !important;
+}
+
+#browser.win .window-buttongroup button:hover {
+  background-color: var(--colorHighlightBg) !important;
+  fill: var(--colorAccentFg) !important;
+}
+
+#browser.win .window-buttongroup button.window-maximize>svg path, #browser.win .window-buttongroup button.window-restore>svg path { d: path("M9 1v8H1V1h8m1-1H0v10h10V0z"); }
+
+.maximized#browser.win .window-buttongroup button.window-close, .fullscreen#browser.win .window-buttongroup button.window-close { padding-right: 0 !important; }
+
+
+/* =====================================
+   Addressbar
+  ===================================== */
+.address-top .toolbar-mainbar {
+  height: 34px;
+  padding: 4px 0;
+}
+
 
 /* =====================================
    Addressfield
@@ -103,13 +89,27 @@
 
 .UrlField .UrlBar-UrlField { text-align: center; }
 
-/* Edge style */
+.toolbar-spacer-flexible ~ .UrlBar-AddressField { flex-grow: 5 !important; }
+
+/* Default style mod
+.UrlBar-AddressField {
+  border: 0 !important;
+  outline: 0 !important;
+  outline-offset: 0 !important;
+  padding: 5px !important;
+  max-width: 70vw;
+  height: 24px !important;
+  margin: auto !important;
+  background-color: var(--colorAccentFgAlphaHeavy);
+}
+/* End style */
+
+/* Old Edge style
 .UrlBar-AddressField {
   border: 0 !important;
   outline: 0 !important;
   outline-offset: 0 !important;
   padding: 3px 5px !important;
-  max-width: 60vw;
   height: 22px !important;
   background-color: transparent !important;
   border-radius: 0 !important;
@@ -118,16 +118,15 @@
 }
 /* End style */
 
-/* Chrome style 
-.UrlBar-AddressField {
+/* Chromium style */
+.UrlBar-AddressField, .SearchField {
   border: 0 !important;
   outline: 0 !important;
   outline-offset: 0 !important;
-  padding: 3px 5px !important;
-  max-width: 60vw;
-  height: 28px !important;
+  padding: 5px !important;
+  height: 24px !important;
   margin: auto !important;
-  background-color: var(--colorAccentBgDark);
+  background-color: var(--colorAccentFgAlphaHeavy);
   border-radius: 25px !important;
 }
 /* End style */
@@ -138,32 +137,8 @@
   text-align: center;
 }
 
-/* Pageloading indicator
-  ----------------------------
-*/
-.UrlBar-AddressField .pageload .pageload-ticker { display: none; }
-
-.UrlField .pageload:not(.unstarted).progress-done {
-  opacity: 0 !important;
-  border: none !important
-}
-
-/* show pageload bar */
-.UrlBar-AddressField .pageload.progressing .pageload-indicator {
-  position: fixed;
-  z-index: 99 !important;
-  left: 0;
-  top: 0;
-  height: 1px;
-  width: 100vw;
-  background: transparent;
-  opacity: 1 !important;
-}
-
-/* pageload bar colors */
-.UrlBar-AddressField .pageload .pageload-indicator::-webkit-progress-value { background-color: var(--colorHighlightBg) !important; }
-
-.UrlBar-AddressField .pageload .pageload-indicator .theme-dark { opacity: 1 !important; }
+/* Pageload bar */
+.UrlBar-AddressField .pageload.progressing .pageload-indicator { display: none; }
 
 /* URL */
 .UrlFragment-Wrapper, .UrlFragment--Lowlight:first-of-type { color: var(--colorFgFaded); }
@@ -180,14 +155,16 @@
   font-weight: 600;
 }
 
-.toolbar-insideinput.toolbar-insideinput.toolbar-insideinput > .button-toolbar button:hover :not(:active):not(:focus):not(.button-pressed),
-.toolbar-insideinput.toolbar-insideinput.toolbar-insideinput > .toolbar-group > .button-toolbar button:hover :not(:active):not(:focus):not(.button-pressed),
+.toolbar-insideinput.toolbar-insideinput.toolbar-insideinput>.button-toolbar button:hover :not(:active):not(:focus):not(.button-pressed),
+.toolbar-insideinput.toolbar-insideinput.toolbar-insideinput>.toolbar-group>.button-toolbar button:hover :not(:active):not(:focus):not(.button-pressed),
 .toolbar .button-toolbar.reload:hover {
   background-color: transparent !important;
   fill: var(--colorHighlightBg) !important;
 }
 
-.drop_down:hover, .drop_down[data-selected], #mail_panel section ul li.selected { background-color: var(--colorHighlightBg) !important; }
+.drop_down:hover, .drop_down[data-selected], #mail_panel section ul li.selected {
+  background-color: var(--colorHighlightBg) !important;
+}
 
 button.button-addressfield:hover {
   background-color: transparent !important;
@@ -196,13 +173,17 @@ button.button-addressfield:hover {
 
 .addressfield button.button-addressfield.input-dropdown:hover svg,
 .button-addressfield.reader-mode:hover svg,
-.button-addressfield.bookmark:hover svg .bookmark-outline { 
+.button-addressfield.bookmark:hover svg .bookmark-outline {
   fill: var(--colorHighlightBgDark) !important;
 }
 
-.button-addressfield.bookmark.bookmarked svg .bookmark-outline { fill: var(--colorHighlightBgDark); }
+.button-addressfield.bookmark.bookmarked svg .bookmark-outline {
+  fill: var(--colorHighlightBgDark);
+}
 
-.button-addressfield.bookmark svg .bookmark-animated-fill { fill: var(--colorHighlightBgAlpha); }
+.button-addressfield.bookmark svg .bookmark-animated-fill {
+  fill: var(--colorHighlightBgAlpha);
+}
 
 /* Content Blocking badge */
 .toolbar.toolbar-addressbar.toolbar-mainbar.toolbar-large>div.addressfield .ads,
@@ -220,15 +201,14 @@ button.button-addressfield:hover {
 
 .SiteInfoButton.warning { fill: var(--colorErrorBg); }
 
-.SiteInfoButton.secure:hover,
-.SiteInfoButton.certified:hover,
-.SiteInfoButton.warning {
+.SiteInfoButton.secure:hover, .SiteInfoButton.certified:hover, .SiteInfoButton.warning {
   background-color: transparent;
   fill: var(--colorHighlightBg) !important;
   transform: scale(1.1);
 }
 
-.SiteInfoButton.secure svg path, .SiteInfoButton.certified svg path {}
+.SiteInfoButton.secure svg path,
+.SiteInfoButton.certified svg path {}
 
 
 /* Internal site icon */
@@ -240,7 +220,7 @@ button.button-addressfield:hover {
 .create-qr-code button svg { fill: unset !important; }
 
 
-.toolbar-insideinput.toolbar-insideinput.toolbar-insideinput > .button-toolbar > button.button-pressed { background-color: unset !important; }
+.toolbar-insideinput.toolbar-insideinput.toolbar-insideinput>.button-toolbar>button.button-pressed { background-color: unset !important; }
 
 /* Add bookmark icon */
 .BookmarkButton { border: unset !important; }
@@ -270,10 +250,20 @@ button.button-on path.bookmark-outline { fill: var(--colorHighlightBg) !importan
 /* Header */
 .DialogHeader { padding: 10px 18px !important; }
 
-/* Hides the header *
-.DialogHeader {
-  height: 0 !important;
-  padding: 0 !important;
+.address-top .BookmarkPopup > header > h1 { font-size:0; } /* hide "added" text */
+
+.address-top .BookmarkPopup > header > p {
+  font-size: 1.1em;
+  font-weight: 700;
+  text-indent: -24px;
+  clip-path: inset(0 0 0 -7px);
+}
+
+/* Footer */
+.dialog-footer {
+    justify-content: space-between;
+    margin-top: 5px;
+    padding: 7px 8px !important;
 }
 
 /* Location toolbar */
@@ -286,15 +276,23 @@ button.button-on path.bookmark-outline { fill: var(--colorHighlightBg) !importan
 
 .BookmarkInputField:last-of-type { border-bottom: none !important; }
 
-.BookmarkLocationSelector-ToggleButtonGroup-Button:focus, .BookmarkLocationSelector-ToggleButtonGroup-Button--Pressed { background-color: var(--colorHighlightBgAlpha); }
+.BookmarkLocationSelector-ToggleButtonGroup-Button:focus, .BookmarkLocationSelector-ToggleButtonGroup-Button--Pressed {
+  background-color: var(--colorHighlightBgAlpha);
+}
 
-.BookmarkLocationSelector-Header, .BookmarkLocationSelector-ToggleButtonGroup-Button--Pressed { box-shadow: none !important; }
+.BookmarkLocationSelector-Header, .BookmarkLocationSelector-ToggleButtonGroup-Button--Pressed {
+  box-shadow: none !important;
+}
 
 .BookmarkLocationSelector-ToggleButtonGroup-Button--Pressed * { fill: var(--colorHighlightBg) !important; }
 
-.BookmarkLocationSelector-ToggleButtonGroup-Button:hover, .BookmarkLocationSelector-SearchInput-Button:hover { background-color: var(--colorHighlightBg) !important; }
+.BookmarkLocationSelector-ToggleButtonGroup-Button:hover, .BookmarkLocationSelector-SearchInput-Button:hover {
+  background-color: var(--colorHighlightBg) !important;
+}
 
-.BookmarkLocationSelector-ToggleButtonGroup-Button:hover *, .BookmarkLocationSelector-SearchInput-Button:hover * { fill: var(--colorAccentFg) !important; }
+.BookmarkLocationSelector-ToggleButtonGroup-Button:hover *, .BookmarkLocationSelector-SearchInput-Button:hover * {
+  fill: var(--colorAccentFg) !important;
+}
 
 .BookmarkLocationSelector-SearchInput-Button { border-radius: 0 !important; }
 
@@ -306,7 +304,7 @@ button.button-on path.bookmark-outline { fill: var(--colorHighlightBg) !importan
 }
 
 /* Speed dial folder icon */
-#browser > div.button-popup.button-popup-left.button-popup-below.button-popup-arrow-dark > form > div > div.BookmarkLocationSelector.BookmarkPopup-LocationSelector > div.BookmarkLocationSelector-Header > button:nth-child(2) > svg path {
+#browser>div.button-popup.button-popup-left.button-popup-below.button-popup-arrow-dark>form>div>div.BookmarkLocationSelector.BookmarkPopup-LocationSelector>div.BookmarkLocationSelector-Header>button:nth-child(2)>svg path {
   d: path("M6 5.5h2.5V3H6v2.5zM9.75 13h2.5v-2.5h-2.5V13zM6 13h2.5v-2.5H6V13zm0-3.75h2.5v-2.5H6v2.5zm3.75 0h2.5v-2.5h-2.5v2.5zM13.5 3v2.5H16V3h-2.5zM9.75 5.5h2.5V3h-2.5v2.5zm3.75 3.75H16v-2.5h-2.5v2.5zm0 3.75H16v-2.5h-2.5V13z");
 }
 
@@ -336,11 +334,6 @@ button.button-on path.bookmark-outline { fill: var(--colorHighlightBg) !importan
   color: var(--colorHighlightBg);
   font-weight: 700;
 }
-
-.DialogFooter { border-top: 0 !important; }
-
-.BookmarkPopup-Footer { justify-content: center !important; }
-
 
 /* Omnibox dropdown */
 .OmniDropdown {
