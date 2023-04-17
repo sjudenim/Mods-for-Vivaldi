@@ -259,12 +259,10 @@ button.button-on path.bookmark-outline { fill: var(--colorHighlightBg) !importan
   clip-path: inset(0 0 0 -7px);
 }
 
-/* Footer */
-.dialog-footer {
-    justify-content: space-between;
-    margin-top: 5px;
-    padding: 7px 8px !important;
-}
+/* Footer buttons */
+.address-top .button-popup.button-popup-enter-done .BookmarkPopup > footer > input.danger { width: 30%;}
+
+.address-top .BookmarkPopup > footer > input[type="submit"] { width:70%; } /* big DONE button */
 
 /* Location toolbar */
 .BookmarkLocationSelector-Header {
@@ -341,3 +339,15 @@ button.button-on path.bookmark-outline { fill: var(--colorHighlightBg) !importan
   background-color: var(--colorBgAlphaBlur);
   backdrop-filter: var(--backgroundBlur);
 }
+
+/* Delete dialog menu */
+#modal-bg>div {
+  border-radius: var(--radius) !important;
+  backdrop-filter: blur(2px);
+}
+
+#modal-bg.slide { top: 1px !important; }
+
+#modal-bg > div > div > form > footer > input[type=submit]:nth-child(1) { width: 60%; }
+
+#modal-bg > div > div > form > footer > input[type=button]:nth-child(2) { width: 40%; }
