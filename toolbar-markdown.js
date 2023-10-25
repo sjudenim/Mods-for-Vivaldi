@@ -1,12 +1,12 @@
 //
-//  Markdown Editor for Notes
-//  Written by Tam710562 and sjudenim
+//  Markdown Editor for Notes (updated for browser version 6.2)
+//  Written by Tam710562 and sudenim
 //  GNU General Public License v3.0
+// 
+//  Adds a markdwon toolbar to the notes editor
 //
-// Adds a markdwon toolbar to the notes editor
-//
-
 (function () {
+
     const buttons = [
         {
             name: 'Bold',
@@ -30,13 +30,6 @@
             textDefault: 'strikethrough text',
         },
         {
-            name: 'Underline',
-            icon: '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="12" viewBox="0 0 16 16"><path d="M.5.5v2h1.25v6c0 2.758 2.805 5 6.25 5s6.25-2.242 6.25-5v-6h1.25v-2h-5v2h1.25v6c0 1.656-1.682 3.002-3.75 3.002S4.25 10.156 4.25 8.5v-6H5.5v-2h-5zM.5 14v2h15v-2H.5z"></path></svg>',
-            markdown: '++',
-            wrap: true,
-            textDefault: 'underline text',
-        },
-        {
             name: 'Highlight',
             icon: '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="12" viewBox="0 0 544 512"><path d="M0 479.98L99.92 512l35.45-35.45-67.04-67.04L0 479.98zm124.61-240.01a36.592 36.592 0 0 0-10.79 38.1l13.05 42.83-50.93 50.94 96.23 96.23 50.86-50.86 42.74 13.08c13.73 4.2 28.65-.01 38.15-10.78l35.55-41.64-173.34-173.34-41.52 35.44zm403.31-160.7l-63.2-63.2c-20.49-20.49-53.38-21.52-75.12-2.35L190.55 183.68l169.77 169.78L530.27 154.4c19.18-21.74 18.15-54.63-2.35-75.13z"></path></svg>',
             markdown: '==',
@@ -44,25 +37,25 @@
             textDefault: 'highlight text',
         },
         {
-            name: 'Header',
+            name: 'Heading',
             icon: '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="12" viewBox="0 0 512 512"><path d="M496 80V48c0-8.837-7.163-16-16-16H320c-8.837 0-16 7.163-16 16v32c0 8.837 7.163 16 16 16h37.621v128H154.379V96H192c8.837 0 16-7.163 16-16V48c0-8.837-7.163-16-16-16H32c-8.837 0-16 7.163-16 16v32c0 8.837 7.163 16 16 16h37.275v320H32c-8.837 0-16 7.163-16 16v32c0 8.837 7.163 16 16 16h160c8.837 0 16-7.163 16-16v-32c0-8.837-7.163-16-16-16h-37.621V288H357.62v128H320c-8.837 0-16 7.163-16 16v32c0 8.837 7.163 16 16 16h160c8.837 0 16-7.163 16-16v-32c0-8.837-7.163-16-16-16h-37.275V96H480c8.837 0 16-7.163 16-16z"></path></svg>',
             markdown: '# ',
             newline: true,
-            textDefault: 'header text',
+            textDefault: 'heading text',
         },
         {
-            name: 'Header 2',
-            icon: '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="12" viewBox="0 0 16 16"><path d="M.5 1.5v.764h.266c.232 0 .45.015.658.04.209.028.39.086.547.175a.991.991 0 01.375.376c.092.165.138.379.138.645v8.924c0 .288-.044.515-.132.687a.97.97 0 01-.37.397 1.473 1.473 0 01-.546.183c-.21.027-.43.043-.668.043H.5v.766H6.777v-.762h-.185v-.004h-.104a3.884 3.884 0 01-.525-.04c-.183-.03-.34-.091-.475-.182a.968.968 0 01-.316-.397c-.08-.172-.12-.4-.12-.685V8.16h.227c-.126 0-.226.034-.226.074 0 .04.1.073.226.073h5.633c.015 0 .023-.005.037-.006v4.127c0 .286-.039.513-.119.685a.98.98 0 01-.318.397 1.14 1.14 0 01-.473.181 3.754 3.754 0 01-.55.043h-.08v.002h-.186v.764H15.5v-.766h-.268c-.23 0-.45-.014-.658-.04-.21-.026-.39-.08-.547-.165a.914.914 0 01-.373-.369c-.09-.163-.138-.376-.138-.644V3.572c0-.285.043-.512.132-.683a.958.958 0 01.37-.397c.158-.092.338-.152.546-.181.21-.031.431-.045.67-.045h.264V1.5H9.221v.766h.24c.207 0 .397.015.578.045.181.03.34.09.473.181a.956.956 0 01.316.395c.08.172.121.4.121.685v3.532H5.053V3.572c0-.284.038-.511.119-.683a.948.948 0 01.316-.397c.134-.092.293-.153.475-.183a3.7 3.7 0 01.576-.043h.238V1.5h-.185zm10.412 6.66h.037v.006c-.014 0-.022-.006-.037-.006z"></path></svg>',
+            name: 'Heading 2',
+            icon: '<svg xmlns="http://www.w3.org/2000/svg" width="14" height="10" viewBox="0 0 512 512"><path d="M496 80V48c0-8.837-7.163-16-16-16H320c-8.837 0-16 7.163-16 16v32c0 8.837 7.163 16 16 16h37.621v128H154.379V96H192c8.837 0 16-7.163 16-16V48c0-8.837-7.163-16-16-16H32c-8.837 0-16 7.163-16 16v32c0 8.837 7.163 16 16 16h37.275v320H32c-8.837 0-16 7.163-16 16v32c0 8.837 7.163 16 16 16h160c8.837 0 16-7.163 16-16v-32c0-8.837-7.163-16-16-16h-37.621V288H357.62v128H320c-8.837 0-16 7.163-16 16v32c0 8.837 7.163 16 16 16h160c8.837 0 16-7.163 16-16v-32c0-8.837-7.163-16-16-16h-37.275V96H480c8.837 0 16-7.163 16-16z"></path></svg>',
             markdown: '## ',
             newline: true,
-            textDefault: 'header 2 text',
+            textDefault: 'heading 2 text',
         },
         {
-            name: 'Header 3',
-            icon: '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="12" viewBox="0 0 16 16"><path d="M1.5 2.5v.646h.23c.2 0 .392.012.57.034.18.023.34.072.475.148.136.075.245.18.325.318.08.14.119.322.119.547v7.551c0 .244-.038.437-.115.582a.815.815 0 01-.319.334 1.308 1.308 0 01-.474.156 4.59 4.59 0 01-.58.036H1.5v.648H6.967v-.646h-.19v-.002H6.74a3.364 3.364 0 01-.463-.036.97.97 0 01-.4-.154.793.793 0 01-.27-.336c-.069-.144-.101-.338-.101-.58V8.439h4.99v3.309c0 .242-.033.435-.101.58a.821.821 0 01-.272.334.956.956 0 01-.398.154 3.266 3.266 0 01-.463.036h-.04v.002h-.189v.646H14.5v-.648h-.23c-.2 0-.39-.013-.57-.034a1.341 1.341 0 01-.475-.14.774.774 0 01-.325-.313c-.079-.139-.119-.32-.119-.547V4.254c0-.242.038-.435.115-.58a.815.815 0 01.319-.334 1.29 1.29 0 01.474-.156 4.09 4.09 0 01.58-.038h.229V2.5H9.033v.646h.203c.176 0 .339.015.489.04a.958.958 0 01.396.154.786.786 0 01.272.334c.069.145.101.338.101.58v2.885h-4.99V4.254c0-.242.032-.435.101-.58a.793.793 0 01.272-.334.977.977 0 01.4-.156c.156-.025.318-.038.487-.038h.203V2.5h-.19z"></path></svg>',
+            name: 'Heading 3',
+            icon: '<svg xmlns="http://www.w3.org/2000/svg" width="11" height="7" viewBox="0 0 512 512"><path d="M496 80V48c0-8.837-7.163-16-16-16H320c-8.837 0-16 7.163-16 16v32c0 8.837 7.163 16 16 16h37.621v128H154.379V96H192c8.837 0 16-7.163 16-16V48c0-8.837-7.163-16-16-16H32c-8.837 0-16 7.163-16 16v32c0 8.837 7.163 16 16 16h37.275v320H32c-8.837 0-16 7.163-16 16v32c0 8.837 7.163 16 16 16h160c8.837 0 16-7.163 16-16v-32c0-8.837-7.163-16-16-16h-37.621V288H357.62v128H320c-8.837 0-16 7.163-16 16v32c0 8.837 7.163 16 16 16h160c8.837 0 16-7.163 16-16v-32c0-8.837-7.163-16-16-16h-37.275V96H480c8.837 0 16-7.163 16-16z"></path></svg>',
             markdown: '### ',
             newline: true,
-            textDefault: 'header 3 text',
+            textDefault: 'heading 3 text',
         },
         {
             name: 'Blockquote',
@@ -104,6 +97,7 @@
             markdown: ['![', '](image.jpg)'],
             textDefault: 'alt text',
         },
+
         /* Custom buttons */
     ];
 
@@ -171,8 +165,8 @@
     }
 
     function markdownEditor() {
-        const addAttachmentsWrapper = document.querySelector('#notes-panel > div > div > div.toolbar.toolbar-default.toolbar-wrap.no-top-padding:not([data-markdown-editor="true"])');
-        if (addAttachmentsWrapper) {
+        const addAttachmentsWrapper = document.querySelector('.NotesEditor > .toolbar:not([data-markdown-editor="true"])');
+         if (addAttachmentsWrapper) {
             addAttachmentsWrapper.dataset.markdownEditor = true;
             buttons.forEach(function (buttonInfo) {
                 addAttachmentsWrapper.append(createButton(buttonInfo));
@@ -181,12 +175,12 @@
     }
 
     addStyle([
-        '#notes-panel > div > div > div.toolbar.toolbar-default.toolbar-wrap.no-top-padding { flex-flow: row wrap; display: -webkit-box; }',
-        '#notes-panel .notes-editor .notes-custom { width: 28px; height: 28px; margin-right: 0; padding: 5px; border: 1px solid transparent; border-radius: var(--radius); background-color: transparent; }',
-        '#notes-panel .notes-editor .notes-custom:hover { background-color: var(--colorBgDark); }',
-        '#notes-panel .notes-editor .notes-custom svg { width: 16px; height: auto; fill: var(--colorFg); }',
-        '#notes-panel .notes-editor .notes-custom:hover svg { fill: var(--colorHighlightBg); }',
-        '#notes-panel .notes-editor .notes-toggle-md[disabled] ~ .notes-custom { opacity: 0.5; pointer-events: none; }',
+        '.NotesEditor > .toolbar { flex-flow: row wrap; display: -webkit-box; }',
+        '.NotesEditor > .toolbar .notes-custom { width: 28px; height: 28px; margin-right: 1px; padding: 5px; border-radius: var(--radius); background-image: none; background-color: var(--colorBgLighter) }',
+        '.NotesEditor > .toolbar .notes-custom:hover { background-color: var(--colorBgDark); }',
+        '.NotesEditor > .toolbar .notes-custom svg { width: 16px; height: auto; fill: var(--colorFg); }',
+        '.NotesEditor > .toolbar .notes-custom:hover svg { fill: var(--colorHighlightBg); }',
+        '.NotesEditor > .toolbar .notes-toggle-md[disabled] ~ .notes-custom { opacity: 0.5; pointer-events: none; }',
         '.NotesEditor-Toolbar button.active { background-color: var(--colorFgFadedMore); }',
     ].join(''));
     
