@@ -1,5 +1,5 @@
 /*
-* Vivaldi Ui tweaks (updated for browser version 6)
+* Vivaldi Ui tweaks (updated for browser version 6.8)
 * Written by sudenim
 * GNU General Public License v3.0
 * 
@@ -8,10 +8,7 @@
 */
 
 /* Text selection */
-::selection {
-  background-color: var(--colorHighlightBg) !important;
-  color: white;
-}
+::selection { background-color: var(--colorHighlightBg) !important; color: white; }
 
 /* Fonts */
 * {
@@ -20,52 +17,49 @@
   letter-spacing: .1px;
 }
 
+/* Vertical Extensions Drop-Down Menu */
+.extensionIconPopupMenu { --popupWidth: 280px !important; }
+
+.extensionIconPopupMenu > .toolbar {
+  max-height: 50vh;
+  overflow: clip auto;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  align-items: stretch;
+}
+.extensionIconPopupMenu .ExtensionDropdownIcon > button { justify-content: flex-start; padding: 1em; }
+
+.extensionIconPopupMenu .ExtensionDropdownIcon > button::after {
+  content: attr(title);
+  overflow: clip visible;
+  text-overflow: ellipsis;
+}
 
 /* =====================================
    Toolbars and Buttons
   ===================================== */
-button {
-  box-shadow: none !important;
-  border-color: transparent !important
-}
+button { box-shadow: none !important; border-color: transparent !important; }
 
 /* Scale up icons on hover */
-button:hover>svg,
-button:hover>img,
-button:hover>span>svg {
-  transform: scale(1.1) !important;
-  transition: .01s ease-in-out !important;
-}
+button:hover>svg, button:hover>img, button:hover>span>svg { transform: scale(1.1) !important; transition: .01s ease-in-out !important; }
 
 .color-behind-tabs-off .toolbar-mainbar { color: var(--colorFg) !important; }
 
-.toolbar-mainbar>.button-toolbar>button {
-  fill: var(--colorFg);
-  transition: .5s !important;
-}
+.toolbar-mainbar>.button-toolbar>button { fill: var(--colorFg); transition: .5s !important; }
 
-.toolbar-default .button-toolbar>button { background-color: var(--colorBgAlpha) !important; }
+.toolbar-default .button-toolbar>button { background-color: var(--colorBgDarker); background-image: none !important; }
 
-.toolbar-default .button-toolbar { border: 1px solid transparent !important; }
+.toolbar-default .button-toolbar>button:hover { background-color: var(--colorHighlightBg) !important; fill: var(--colorAccentFg) !important; }
 
 .toolbar-default .button-toolbar>button.button-pressed { background-image: linear-gradient(var(--colorHighlightBg), var(--colorHighlightBgDark)) !important; }
 
 .toolbar-default .button-toolbar>button.button-pressed:active { background-image: linear-gradient(var(--colorBgDark), var(--colorBgDark)) !important; }
 
-.toolbar-default .button-toolbar>button:hover {
-  background-color: var(--colorHighlightBgAlpha) !important;
-  fill: var(--colorAccentFg) !important;
-}
+.toolbar-mainbar>.button-toolbar>button:hover { fill: var(--colorHighlightBg) !important; }
 
-.toolbar-default .button-toolbar>button.button-pressed {
-  color: var(--colorHighlightFg);
-  fill: var(--colorHighlightFg) !important;
-}
+.toolbar-default .button-toolbar>button.button-pressed { color: var(--colorHighlightFg); fill: var(--colorHighlightFg) !important; }
 
-._default-focus {
-  outline: transparent !important;
-  outline-offset: 0 !important
-}
+._default-focus { outline: transparent !important; outline-offset: 0 !important }
 
 .urlSearch .favicon { display: inline !important; }
 
@@ -92,55 +86,38 @@ input[type=button], input[type=submit] { background-image: none !important; }
 /* Workspaces button tweaks when in the addressbar */
 #browser .workspace-popup .button-icon:not(.override) { width: 0 !important; }
 
-
 .button-toolbar > button > span.button-toolbar-menu-indicator { margin-top: 4px; }
 
-
-/* =====================================
-   Panel Toggle
-  ===================================== */
-.button-toolbar > button:hover[title*="Hide Panel"], .button-toolbar > button:hover[title*="Show Panel"] { background-color: var(--colorHighlightBg) !important; }
-  
-.button-toolbar > button:hover[title*="Hide Panel"] svg, .button-toolbar > button:hover[title*="Show Panel"] svg { fill: var(--colorAccentFg) !important; }
-
-.button-toolbar > button[title*="Hide Panel"] { background-color: var(--colorBgAlphaBlur); }
-
+/* Panel toggle */
 .button-toolbar > button[title*="Hide Panel"] svg { fill: var(--colorHighlightBg) !important; }
-
 
 /* =====================================
    Status Bar
   ===================================== */
+:not(.tabs-bottom)#browser > footer:after { background-color: var(--colorBgAlphaHeavy) !important; }
 
-/* Turns status bar into a dock */
-  #browser > footer > .toolbar-statusbar {
-  position: absolute;
-  width: fit-content;
-  margin: 0 auto;
-  bottom: 5px;
-  left: 0;
-  right: 0;
-  height: fit-content !important; 
-  padding: 2px;
-  background-color: var(--colorAccentBg) !important;
-  opacity: .98;
-  border-radius: 3px;
-}
+:not(.tabs-bottom)#browser > footer { background: var(--colorBgAlphaBlur) !important; backdrop-filter: var(--backgroundBlur); }
 
 .toolbar-statusbar .toolbar-extensions .button-toolbar > button, .toolbar-statusbar > .button-toolbar > button { height: 28px !important; }
 
 .toolbar-statusbar .button-toolbar > button:hover, .toolbar-statusbar .button-toolbar > button.button-pressed {
   background-color: transparent !important;
-  fill: var(--colorHighlightBg);
+  fill: var(--colorHighlightBg) !important;
 }
   
 .toolbar-statusbar > .button-toolbar > button { padding-top: 1px !important; }
   
 .toolbar-statusbar .button-toolbar > button:hover, .toolbar-statusbar .button-toolbar > button.button-pressed {
   background-color: transparent !important;
-  fill: var(--colorHighlightBg);
+  fill: var(--colorHighlightBg) !important;
 }
-  
+
+#webview-container ~ .StatusInfo .StatusInfo .UrlFragments, #webview-container ~ .StatusInfo .StatusInfo-Content {
+  background-color: var(--colorAccentBg) !important;
+  color: var(--colorFg) !important;
+  border: 1px solid var(--colorAccentBorderDark) !important;
+}
+
 .extension-popup { transform: translateY(-4px) !important; }
 
 .button-popup-above { bottom: 45px !important;}
@@ -149,53 +126,42 @@ input[type=button], input[type=submit] { background-image: none !important; }
   
 .button-toolbar > button > span + .button-title, .button-toolbar > button.button-textonly { padding-top: 2px; }
 
+.toolbar-statusbar .button-toolbar > button > .button-badge{ position: absolute !important; right: -5px !important; }
+
 /* Zoom controls */
 .toolbar-statusbar .page-zoom-controls { margin-top: 2px; }
-
-.toolbar-medium .button-toolbar > button > .button-badge {
-  position: absolute !important;
-  right: 5% !important;
-}
-
 
 /* =====================================
    Tabs
   ===================================== */
-  #tabs-tabbar-container .newtab svg path {
-  d: path("M19.417 12.417h-5.834V6.583a.583.583 0 10-1.166 0v5.833H6.583a.584.584 0 000 1.167h5.833v5.834a.585.585 0 001.168 0v-5.834h5.833a.584.584 0 000-1.166z");
+#tabs-container.left .resize, #tabs-container.right .resize { overflow-x: unset !important; overflow-y: unset !important; }
+
+/* Makes the tab background consistent with the side panel */
+#browser.transparent-tabbar #tabs-tabbar-container { background-color: var(--colorBgAlphaBlur) !important; }
+
+/* Close icon */
+.tab-position .tab .close svg path { d: path("m4.145 3.5-.645.643 3.858 3.856-3.856 3.856.643.643L8 8.642l3.856 3.858.643-.645L8.644 8 12.5 4.143l-.643-.643-3.856 3.856Z"); }
+
+/* New tab icon */ 
+#tabs-tabbar-container .newtab svg path {
+  d: path("M20.48 12.73h-5.21V7.52a.52.52 0 1 0-1.04 0v5.209H9.02a.522.522 0 0 0 0 1.042h5.209v5.208a.522.522 0 0 0 1.042 0v-5.208h5.208a.521.521 0 0 0 0-1.042Z");
 }
 
-.toolbar-tabbar>.button-toolbar.toggle-trash svg path {
-  d: path('M6 11.25A1.75 1.75 0 0 0 4.25 13 1.75 1.75 0 0 0 6 14.75 1.75 1.75 0 0 0 7.75 13 1.75 1.75 0 0 0 6 11.25zm7 0A1.75 1.75 0 0 0 11.25 13 1.75 1.75 0 0 0 13 14.75 1.75 1.75 0 0 0 14.75 13 1.75 1.75 0 0 0 13 11.25zm7 0A1.75 1.75 0 0 0 18.25 13 1.75 1.75 0 0 0 20 14.75 1.75 1.75 0 0 0 21.75 13 1.75 1.75 0 0 0 20 11.25z');
-}
+.color-behind-tabs-off .toolbar-tabbar > .button-toolbar > button, .color-behind-tabs-off .toolbar-tabbar > .toolbar-group > .button-toolbar > button { color: var(--colorAccentFg) !important; }
 
-#tabs-tabbar-container .newtab, #tabs-tabbar-container .toggle-trash { fill: var(--colorFg); }
+/* Closed tabs icon */
+#tabs-container > div > div.toolbar.toolbar-tabbar.sync-and-trash-container.left > div > button > span > svg > line:nth-child(3),
+#tabs-container > div > div.toolbar.toolbar-tabbar.sync-and-trash-container.left > div > button > span > svg > line:nth-child(4) {display: none;}
 
-#tabs-tabbar-container .newtab:hover, #tabs-tabbar-container .toggle-trash:hover { fill: var(--colorHighlightBg); }
+#tabs-tabbar-container .newtab > button:hover,
+#tabs-container > div > div.toolbar.toolbar-tabbar.sync-and-trash-container.left > div > button:hover { color: var(--colorHighlightBg); }
 
 .tabs-top:not(.mac).color-behind-tabs-on #tabs-container, .tabs-top.mac.hasfocus.color-behind-tabs-on #tabs-container { background-image: none !important; }
 
-.tab-position .tab .tab-header { margin-right: 3px; }
+#browser:not(.alt-tabs) #tabs-container .tab:not(.tab-mini) .close { margin-right: 2px !important; }
 
-.tab-position .tab .close svg path {
-  d: path("M.71611758 0L0 .71414475 4.2868415 4.9990135.00197275 9.2838828l.71414483.7141446L5.0009863 5.7131583 9.2858555 10 10 9.2838828 5.715131 4.9990135 10 .71414475 9.2858555 0 5.0009863 4.2848688z");
-}
-
-.tab-position .tab .close {
-  display: flex;
-  background: none;
-  margin-top: 5px;
-}
-
-#browser:not(.alt-tabs) #tabs-tabbar-container .close { margin-right: 0 !important; }
-
-.close { background-color: transparent !important; }
-
-.close:hover { fill: var(--colorHighlightBg) !important; }
-
-.tab-position .tab.unread { font-style: italic; }
-
-.tab-position .tab.tab.tab:not(.active) { filter: grayscale(80%) brightness(50%); }
+/* Recolouring tab thumbnails */
+.tab-position .tab.tab.tab:not(.active) { filter: grayscale(100%) brightness(70%); }
 
 .tab-position .tab.tab.tab:not(.active):hover { filter: grayscale(0%) brightness(100%); }
 
@@ -206,34 +172,106 @@ input[type=button], input[type=submit] { background-image: none !important; }
 
 .tab-group-indicator .tab-indicator { background-color: var(--colorHighlightBgAlpha) !important; }
 
-.tabs-left .tab-position .tab, .tabs-right .tab-position .tab {
-  margin: 0 !important;
-  border-radius: 0 !important;
+.tabs-left .tab-position .tab, .tabs-right .tab-position .tab { margin: 0 !important; border-radius: 0 !important; }
+
+/** Vertical thumbs style **/
+/* No title tab header */
+#app #browser:not(.stacks-substrip) #tabs-container:not(.no-thumbs) .tab-position .tab > .tab-header > .title { visibility: hidden; }
+
+#app #browser:not(.stacks-substrip) #tabs-container:not(.no-thumbs) .tab-position .tab.unread { background-image: none; }
+
+#app #browser:not(.stacks-substrip) #tabs-container:not(.no-thumbs) .tab-position .tab.unread > .thumbnail-image { -webkit-mask-image: none !important; }
+
+#app #browser:not(.stacks-substrip) #tabs-container:not(.no-thumbs) .tab-position .tab.unread > .tab-header::before {
+  content: "";
+  position: absolute;
+  top: 3px;
+  right: 0;
+  width: 8px;
+  height: 8px;
+  border-radius: 100%;
+  background: var(--colorHighlightBg);
+  z-index: 4;
 }
 
+#app #browser:not(.stacks-substrip) #tabs-container:not(.no-thumbs) .tab-position .tab.active { opacity: 1; }
+
+#app #browser:not(.stacks-substrip) #tabs-container:not(.no-thumbs) .tab-position .tab > .tab-header {
+  position: absolute;
+  z-index: 1;
+  width: calc(100% - 1px);
+  height: 100%;
+  align-items: stretch !important;
+}
+
+#app #browser:not(.stacks-substrip) #tabs-container:not(.no-thumbs) .tab-position .tab > .tab-header > .progress-indicator { border-radius: 1px; }
+
+#browser:not(.alt-tabs) #tabs-container .tab:not(.pinned):not(.tab-small).audio-on .favicon, #browser:not(.alt-tabs) #tabs-container .tab:not(.pinned):not(.tab-small).audio-muted .favicon, #browser:not(.alt-tabs) #tabs-container .tab:not(.pinned):not(.tab-small).tab-captured .favicon {
+  transform: unset !important;
+}
+
+.tabs-left .tab-position .tab > .tab-header, .tabs-right .tab-position .tab > .tab-header { margin: 5px -3px !important; }
+
+#app #browser:not(.stacks-substrip) #tabs-container:not(.no-thumbs) .tab-position .tab > .tab-header > .close, #app #browser:not(.stacks-substrip) #tabs-container:not(.no-thumbs) .tab-position .tab > .tab-header > .tab-audio {
+  background-color: var(--colorAccentBg) !important;
+  color: var(--colorAccentFg);
+  border-radius: 25px;
+}
+
+#browser:not(.alt-tabs) #tabs-container .tab:not(.tab-mini) .close, #browser:not(.alt-tabs) #tabs-tabbar-container .close {
+  position: absolute;
+  margin-right: 1px !important;
+  right: 0;
+  padding-left: .5px;
+  padding-bottom: .5px;
+  opacity: .9;
+}
+
+#app #browser:not(.stacks-substrip) #tabs-container:not(.no-thumbs) .tab-position .tab > .tab-header > .close:hover, #app #browser:not(.stacks-substrip) #tabs-container:not(.no-thumbs) .tab-position .tab > .tab-header > .tab-audio:hover {
+  background-color: var(--colorHighlightBg) !important;
+  fill: var(--colorAccentFg) !important;
+}
+
+.audioicon { margin-top: -1.5px; transform: scale(0.48) translateZ(0) !important; }
+
+#app #browser:not(.stacks-substrip) #tabs-container:not(.no-thumbs) .tab-position .tab > .tab-header > .tab-audio {
+  margin-top: 18px;
+  right: 0;
+  width: 18px;
+  height: 18px;
+  padding: 1.5px;
+  opacity: .9;
+}
+
+#app #browser:not(.stacks-substrip) #tabs-container.left:not(.no-thumbs) .tab-position .tab > .thumbnail-image,
+#app #browser:not(.stacks-substrip) #tabs-container.right:not(.no-thumbs) .tab-position .tab > .thumbnail-image {
+  background-color: transparent;
+  border-radius: 0 !important;
+  margin: 0 !important;
+}
+
+#vivaldi-tooltip .tooltip-item .thumbnail-image {	display: none !important; }
 
 /* =====================================
    Side Panel
   ===================================== */
-#switch button:hover {
-  background-color: var(--colorHighlightBgAlpha) !important;
-  fill: var(--colorAccentFg);
-}
+#panels-container.icons, #panels-container.overlay, #panels, #switch, .toolbar-panel, .toolbar-panel .button-toolbar { width: 34px !important; }
 
-#switch>button.active, #switch .addwebpanel-wrapper>button.active {
-  background-color: var(--colorBgAlphaBlur) !important;
-  fill: var(--colorHighlightBg);
-}
+#switch { flex: 0 0 34px !important; max-width: 34px !important; padding-top: 0 !important; }
 
-.right #switch .addwebpanel-wrapper > button.active, .right #switch > .button-toolbar.active, .right #switch > * > .button-toolbar.active, .right #switch > button.active {
-  box-shadow: unset !important;
-}
+#switch button { border-radius: 0 !important; transition: .5s !important; }
 
-#switch .addwebpanel-wrapper > button.active:not(:focus), #switch > .button-toolbar.active:not(:focus), #switch > * > .button-toolbar.active:not(:focus), #switch > button.active:not(:focus) {
+#switch button:hover { background-color: var(--colorHighlightBg) !important; fill: var(--colorAccentFg) !important; }
+
+#switch > .button-toolbar.active:not(:focus), #switch > * > .button-toolbar.active:not(:focus), #switch > button.active:not(:focus), #switch .addwebpanel-wrapper > button.active:not(:focus) {
   color: var(--colorHighlightBg);
+  box-shadow: none !important;
 }
-#switch .addwebpanel-wrapper > button.active, #switch > .button-toolbar.active, #switch > * > .button-toolbar.active, #switch > button.active {
+
+#switch > .button-toolbar.active, #switch > * > .button-toolbar.active, #switch > button.active, #switch .addwebpanel-wrapper > button.active {
   background-color: transparent !important;
+  fill: var(--colorHighlightBg);
+  border-radius: 0 !important;
 }
 
 #switch .addwebpanel-wrapper>button.downloads.in-progress div.progress, #switch>button.downloads.in-progress div.progress {
@@ -241,39 +279,35 @@ input[type=button], input[type=submit] { background-image: none !important; }
   border: 1px solid var(--colorHighlightBg)
 }
 
-#switch button.webviewbtn img {
-  background: transparent !important;
-  filter: grayscale(100%) contrast(60%) invert(100%)
+#switch button.webviewbtn img { background: transparent !important; filter: grayscale(100%) contrast(60%) invert(100%); }
+
+#switch button.webviewbtn.active img { background: none; filter: grayscale(10%) contrast(60%) invert(10%); }
+
+/* Download panel fixes */
+.panel.downloads .panel-pathfield .actionbuttons, .popout.downloads-popout .panel-pathfield .actionbuttons { margin-top: 2px !important; }
+
+.panel .SlideBar--FullWidth.alternate { top: unset !important; }
+
+/* Hides bottom pane */
+.panel.downloads .download-editor { display: none !important; }
+
+/* Download progress bar */
+.button-toolbar div.progress {
+  background-color: var(--colorAccentBg) !important;
+  top: 23px;
+  height: 2px;
+  border: none !important;
+  border-radius: 1px !important;
 }
 
-#switch button.webviewbtn.active img {
-  background: none;
-  filter: grayscale(10%) contrast(60%) invert(10%)
-}
-
-#panels .SlideBar--FullWidth.alternate:after {
-  display: flex;
-  bottom: unset;
-  content: '';
-  border: 0 !important;
-  border-top: 1px solid var(--colorBgDarker) !important;
-  background-color: var(--colorBgLighter) !important;
-  border-radius: var(--radius);
-  height: 1px;
-}
+.button-toolbar div.progress div.loaded { background-color: var(--colorHighlightBg) !important; height: 2px !important; }
 
 /* Hides webpanel suggestions */
 .webpanel-suggestions { display: none; }
 
-/* Panel header */
-.panel > header h1 > span:first-child {
-  font-size: 14px !important;
-  font-weight: 600;
-  margin: auto;
-}
-
 .transparent { display: none; }
 
+/* Manger views*/
 .manager { backdrop-filter: var(--backgroundBlur); }
 
 .manager .manager-content, .manager>.toolbar, .internal-page .manager-editor { background-color: var(--colorBgAlphaBlur) !important; }
@@ -284,57 +318,27 @@ input[type=button], input[type=submit] { background-image: none !important; }
 
 #panels .webpanel-stack .webpanel .webpanel-header { padding-top: 12px; }
 
-
 /* Notes editor manager
   ----------------------------
 */
 .NotesManager { opacity: .95; }
 
-.NotesManager-Tree>.toolbar {
-  background-color: var(--colorBg);
-  margin: unset !important;
-  padding: 6px;
-}
+.NotesManager-Tree>.toolbar { background-color: var(--colorBg); margin: unset !important; padding: 6px; }
 
-.NotesManager-Buttons {
-  background-color: var(--colorBg);
-  border-bottom: 1px solid var(--colorBgDarker);
-}
+.NotesManager-Buttons { background-color: var(--colorBg); border-bottom: 1px solid var(--colorBgDarker); }
 
-.MarkdownRender p,
-.MarkdownRender ul,
-.MarkdownRender ol,
-.MarkdownRender dl,
-.MarkdownRender table,
-.MarkdownRender pre,
-.MarkdownRender blockquote,
-body[contenteditable="plaintext-only"] {
-  line-height: 1.4em;
-}
+.MarkdownRender p, .MarkdownRender ul, .MarkdownRender ol, .MarkdownRender dl, .MarkdownRender table, .MarkdownRender pre, .MarkdownRender blockquote, body[contenteditable="plaintext-only"] { line-height: 1.4em; }
 
-.NotesManager-Footer {
-  position: absolute;
-  grid-area: unset !important;
-  justify-content: center;
-  align-items: center;
-  height: 30px;
-  bottom: 4px;
-  opacity: 1 !important;
-}
+.NotesManager-Footer { justify-content: right; align-items: center; height: 30px; opacity: 1 !important; }
 
-.NotesManager-WordCount {
-  background-color: var(--colorHighlightBg);
-  color: var(--colorHighlightFg);
-  padding: 10px 25px;
-  margin-bottom: 15px;
-  border-radius: var(--radius);
-}
-
+.NotesManager-WordCount { color: var(--colorHighlightBg); }
 
 /* Calendar
 ------------------------------
 */
-.manager .manager-view { opacity: .95; }
+.manager .manager-view { opacity: .95; background-image: var(--backgroundBlur); font-size: 1.1em; }
+
+.calendar.manager > .toolbar h1 { font-weight: 400 !important; font-size: 1.5rem !important; color: var(--colorHighlightBg); }
 
 .calendar-multiweek-date.current .day {
   background-color: var(--colorHighlightBg) !important;
@@ -344,25 +348,16 @@ body[contenteditable="plaintext-only"] {
   border-radius: calc(var(--radius) * 2);
 }
 
-.calendar-event .cal-event-header .cal-event-time, .calendar-event .cal-event-header .cal-event-title {
-  font-weight: 400 !important;
-  font-size: 1.15em;
-}
+.calendar-event .cal-event-header .cal-event-time, .calendar-event .cal-event-header .cal-event-title { font-weight: 400 !important; font-size: 1.15em; }
 
 .calendar-event .cal-event-header .cal-event-title { margin-left: 10px; }
-
 
 /* Mail
   ----------------------------
 */
-#mail_view { opacity: .98; }
+.MailSearchField-Inner { background-color: transparent !important; border: 0 !important; }
 
-.mail_entry.mail_entry.unread .subject,
-.mail_entry.mail_entry.unseen .subject {
-  color: var(--colorHighlightBg);
-  font-weight: unset !important;
-}
-
+.webpageview #mail_view #mail_detail .mail-detail-header .subject { color: var(--colorHighlightBg) !important; }
 
 /* =====================================
    Settings panel/window
@@ -385,10 +380,7 @@ body[contenteditable="plaintext-only"] {
   background-color: hsla(0, 0%, 0%, 0) !important;
 }
 
-.info {
-  font-size: 12px !important;
-  color: var(--colorFgFaded) !important;
-}
+.info { font-size: 12px !important; color: var(--colorFgFaded) !important; }
 
 .vivaldi-settings .settings-sidebar .button-category { height: 32px; }
 
@@ -400,10 +392,7 @@ body[contenteditable="plaintext-only"] {
   border-bottom: 1px solid var(--colorBorder);
 }
   /* Settings icons */
-.vivaldi-settings .settings-sidebar .button-category svg {
-  stroke: var(--colorHighlightBg) !important;
-  fill: transparent !important;
-}
+.vivaldi-settings .settings-sidebar .button-category svg { stroke: var(--colorHighlightBg) !important; fill: transparent !important; }
 
 .vivaldi-settings .settings-sidebar .settings-navigation:focus-within .tree-row .button-category.category-selected svg { stroke: var(--colorHighlightBg) !important; }
 
@@ -423,21 +412,18 @@ body[contenteditable="plaintext-only"] {
 
 .ThemePreview-Label-Meta { opacity: .8 !important; }
 
-
 /* =====================================
    Miscellaneous stuff
   ===================================== */
 
 /* Alternating row colours */
-.vivaldi-tree div>div:nth-child(even) { background-color: var(--colorBgAlphaHeavier); }
+.vivaldi-tree div>div:nth-child(even) { background-color: var(--colorBgAlphaHeavy); }
+.webpageview #mail_view.vertical .mail_entry .from, .webpageview #mail_view.vertical .mail_entry .mail_entry_row.subject_row { background-color: unset; }
 
 /* Quick command */
 .quick-command-container { box-shadow: 0 0 10px 0 rgba(0, 0, 0, .6) !important; }
 
-.quick-command-container, .quick-command-container .quick-commands>div {
-  min-width: 40vw;
-  cursor: auto;
-}
+.quick-command-container, .quick-command-container .quick-commands>div { min-width: 40vw; cursor: auto; }
 
 .quick-command-container .quick-commands>div>div { max-width: 100% !important; }
 
@@ -490,51 +476,25 @@ input[type=radio]:before {
   transform: scale(0);
 }
 
-input[type=radio]:checked:before {
-  transition-timing-function: cubic-bezier(0, 0, 0.3, 1.5);
-  transition-duration: 100ms;
-  transform: scale(1);
-}
+input[type=radio]:checked:before { transition-timing-function: cubic-bezier(0, 0, 0.3, 1.5); transition-duration: 100ms; transform: scale(1); }
 
-input[type=radio]:checked {
-  box-shadow: none !important;
-  border-width: 1px !important;
-}
+input[type=radio]:checked { box-shadow: none !important; border-width: 1px !important; }
 
 /* UI Scrollbars */
-::-webkit-scrollbar {
-  background-color: transparent !important;
-  border: 0 !important;
-  width: 12px !important;
-  padding: 0 2px
-}
+::-webkit-scrollbar { background-color: transparent !important; border: 0 !important; width: 12px !important; padding: 0 2px; }
 
-::-webkit-scrollbar-track {
-  background-color: transparent !important;
-  border: 0 !important;
-}
+::-webkit-scrollbar-track { background-color: transparent !important; border: 0 !important; }
 
-::-webkit-scrollbar-thumb {
-  background-color: var(--colorFgAlpha) !important;
-  border: 4px solid transparent !important;
-  border-radius: 8px;
-}
+::-webkit-scrollbar-thumb { background-color: var(--colorFgAlpha) !important; border: 4px solid transparent !important; border-radius: 8px; }
 
 ::-webkit-scrollbar-thumb:hover, ::-webkit-scrollbar-thumb:active { background-color: var(--colorHighlightBg) !important; }
 
 ::-webkit-scrollbar-button { display: none !important; }
 
 /* Slider */
-input[type=range] {
-  background-color: var(--colorHighlightBg);
-  height: 1px !important
-}
+input[type=range] { background-color: var(--colorHighlightBg); height: 1px !important; }
 
-input[type=range]::-webkit-slider-thumb {
-  width: 12px !important;
-  height: 12px !important;
-  border: 1px solid var(--colorFgIntense) !important;
-}
+input[type=range]::-webkit-slider-thumb { width: 12px !important; height: 12px !important; border: 1px solid var(--colorFgIntense) !important; }
 
 input[type=range]::-webkit-slider-thumb:hover { border-color: var(--colorHighlightBg) !important; }
 
@@ -542,16 +502,11 @@ input[type=range]::-webkit-slider-thumb:active { background: linear-gradient(var
 
 input[type=range].isblurred::-webkit-slider-thumb, input[type=range][disabled]::-webkit-slider-thumb { opacity: 0.7 !important; }
 
-input[type=range]:focus-visible::-webkit-slider-thumb {
-  outline: 2px solid var(--colorHighlightBg);
-  outline-offset: -1px;
-  border-color: var(--colorHighlightBg);
-}
+input[type=range]:focus-visible::-webkit-slider-thumb { outline: 2px solid var(--colorHighlightBg); outline-offset: -1px; border-color: var(--colorHighlightBg); }
 
 #browser > footer .page-zoom-controls > .button-toolbar > button:not(:disabled) { color: var(--colorHighlightFg); }
 
 #browser > footer .page-zoom-controls > .button-toolbar > button:not(:disabled):hover { color: var(--colorHighlightBg); }
-
 
 /* =====================================
    Hiding stuff
@@ -564,15 +519,12 @@ input[type=range]:focus-visible::-webkit-slider-thumb {
   box-shadow: none !important
 }
 
-.UrlBar-AddressField .pageload .pageload-indicator
-.vivaldi-tree .tree-row.folder .item-count,
-.history .item-count,
-#history-panel .item-count,
+.tab-strip .thumbnail-image > svg,
 button.fip-previous,
 button.fip-next,
 button.fip-close,
 input::-webkit-search-cancel-button {
-  display: none
+  display: none !important
 }
 
 #fip-input-text::-webkit-search-cancel-button { appearance: none !important; }
@@ -580,4 +532,4 @@ input::-webkit-search-cancel-button {
 .cb-image svg .bookmark-shadow, .thumbnail-image svg .bookmark-shadow { fill: transparent !important; }
 
 /* Hides dropdown arrow for history in the address field */
-.button-toolbar>button[title="Show typed history"], .button-toolbar>button[title="Enter an address to activate typed history"] { display: none !important; }
+.button-toolbar>button[title="Show typed history"], .button-toolbar>button[title="Enter an address to activate typed history"] { display: none !important; } 
