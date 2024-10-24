@@ -1,10 +1,9 @@
 /*
-* Vivaldi Ui tweaks (updated for browser version 6.8)
+* Vivaldi Ui tweaks (updated for browser version 7.0)
 * Written by sudenim
 * GNU General Public License v3.0
 * 
-*  General ui changes that include: recolouring, re-positioning, font adjustments, icon replacements
-*
+* General ui changes that include: recolouring, re-positioning, font adjustments, icon replacements
 */
 
 /* Text selection */
@@ -35,33 +34,21 @@
   text-overflow: ellipsis;
 }
 
+/* Private badge */
+.UrlBar-PrivateWindowIndicator {
+  font-size: 0 !important;
+  fill: var(--colorHighlightBg);
+  padding: 0 6px !important;
+}
+
+.UrlBar-PrivateWindowIndicator svg { transform: scale(1.3); }
+
 /* =====================================
    Toolbars and Buttons
   ===================================== */
 button { box-shadow: none !important; border-color: transparent !important; }
 
-/* Scale up icons on hover */
-button:hover>svg, button:hover>img, button:hover>span>svg { transform: scale(1.1) !important; transition: .01s ease-in-out !important; }
-
-.color-behind-tabs-off .toolbar-mainbar { color: var(--colorFg) !important; }
-
-.toolbar-mainbar>.button-toolbar>button { fill: var(--colorFg); transition: .5s !important; }
-
-.toolbar-default .button-toolbar>button { background-color: var(--colorBgDarker); background-image: none !important; }
-
-.toolbar-default .button-toolbar>button:hover { background-color: var(--colorHighlightBg) !important; fill: var(--colorAccentFg) !important; }
-
-.toolbar-default .button-toolbar>button.button-pressed { background-image: linear-gradient(var(--colorHighlightBg), var(--colorHighlightBgDark)) !important; }
-
-.toolbar-default .button-toolbar>button.button-pressed:active { background-image: linear-gradient(var(--colorBgDark), var(--colorBgDark)) !important; }
-
-.toolbar-mainbar>.button-toolbar>button:hover { fill: var(--colorHighlightBg) !important; }
-
-.toolbar-default .button-toolbar>button.button-pressed { color: var(--colorHighlightFg); fill: var(--colorHighlightFg) !important; }
-
-._default-focus { outline: transparent !important; outline-offset: 0 !important }
-
-.urlSearch .favicon { display: inline !important; }
+.button-toolbar > button:hover, .button-toolbar > button:active { background-color: transparent !important; color: var(--colorHighlightBg) !important; }
 
 .toolbar.icons button, .toolbar.text button {
   background-image: none !important;
@@ -80,6 +67,33 @@ button:hover>svg, button:hover>img, button:hover>span>svg { transform: scale(1.1
 
 input[type=button], input[type=submit] { background-image: none !important; }
 
+/* Scale up icons on hover */
+button:hover>svg, button:hover>img, button:hover>span>svg { transform: scale(1.15) !important; transition: .01s ease-in-out !important; }
+
+button:hover[title*="Show Closed Tabs"] svg { transform: unset !important; }
+
+.color-behind-tabs-off .toolbar-mainbar { color: var(--colorFg) !important; }
+
+.toolbar-mainbar>.button-toolbar>button { fill: var(--colorFg); transition: .5s !important; }
+
+.toolbar-default .button-toolbar>button { background-color: var(--colorBgDark); background-image: none !important; }
+
+.toolbar-default .button-toolbar>button:hover { background-color: var(--colorHighlightBg) !important; fill: var(--colorAccentFg) !important; color: var(--colorAccentFg) !important; }
+
+.toolbar-default .button-toolbar>button.button-pressed { background-image: linear-gradient(var(--colorHighlightBg), var(--colorHighlightBgDark)) !important; }
+
+.toolbar-default .button-toolbar>button.button-pressed:active { background-image: linear-gradient(var(--colorBgDark), var(--colorBgDark)) !important; }
+
+.toolbar-mainbar>.button-toolbar>button:hover { fill: var(--colorHighlightBg) !important; color: var(--colorAccentFg); }
+
+.toolbar-default .button-toolbar>button.button-pressed { color: var(--colorHighlightFg); fill: var(--colorHighlightFg) !important; }
+
+._default-focus { outline: transparent !important; outline-offset: 0 !important }
+
+.urlSearch .favicon { display: inline !important; }
+
+.toolbar-default .button-toolbar>button.button-pressed { color: var(--colorAccentFg) !important; fill: var(--colorAccentFg) !important; }
+
 /* Won't show horizontal menu and window buttons when no ui */
 #browser.minimal-ui:not(.tabs-top) .topmenu, #browser.minimal-ui:not(.tabs-top) .window-buttongroup { display: none !important; }
 
@@ -96,7 +110,11 @@ input[type=button], input[type=submit] { background-image: none !important; }
   ===================================== */
 :not(.tabs-bottom)#browser > footer:after { background-color: var(--colorBgAlphaHeavy) !important; }
 
-:not(.tabs-bottom)#browser > footer { background: var(--colorBgAlphaBlur) !important; backdrop-filter: var(--backgroundBlur); }
+#browser:not(.tabs-bottom) footer#footer {
+  background: var(--colorBgAlphaBlur) !important;
+  backdrop-filter: var(--backgroundBlur);
+  border-top: 1px solid var(--colorBgAlphaHeavy) !important;
+}
 
 .toolbar-statusbar .toolbar-extensions .button-toolbar > button, .toolbar-statusbar > .button-toolbar > button { height: 28px !important; }
 
@@ -112,10 +130,13 @@ input[type=button], input[type=submit] { background-image: none !important; }
   fill: var(--colorHighlightBg) !important;
 }
 
+#webview-container ~ .StatusInfo { bottom: 1px !important; right: 4px !important; left: 4px !important; }
+
 #webview-container ~ .StatusInfo .StatusInfo .UrlFragments, #webview-container ~ .StatusInfo .StatusInfo-Content {
-  background-color: var(--colorAccentBg) !important;
+  background: var(--colorBgAlphaBlur) !important;
+  backdrop-filter: var(--backgroundBlur) !important;
   color: var(--colorFg) !important;
-  border: 1px solid var(--colorAccentBorderDark) !important;
+  border: 0 !important;
 }
 
 .extension-popup { transform: translateY(-4px) !important; }
@@ -134,10 +155,11 @@ input[type=button], input[type=submit] { background-image: none !important; }
 /* =====================================
    Tabs
   ===================================== */
-#tabs-container.left .resize, #tabs-container.right .resize { overflow-x: unset !important; overflow-y: unset !important; }
+/* Removes gap between Workspace button and tabs */
+.tabbar-workspace-button + #tabs-tabbar-container.left, .tabbar-workspace-button + #tabs-tabbar-container.right { padding-top: unset !important; }
 
 /* Makes the tab background consistent with the side panel */
-#browser.transparent-tabbar #tabs-tabbar-container { background-color: var(--colorBgAlphaBlur) !important; }
+#browser.transparent-tabbar #tabs-tabbar-container, .transparent-tabbar .button-toolbar.workspace-popup.tabbar-workspace-button { background-color: var(--colorBgAlphaBlur) !important; }
 
 /* Close icon */
 .tab-position .tab .close svg path { d: path("m4.145 3.5-.645.643 3.858 3.856-3.856 3.856.643.643L8 8.642l3.856 3.858.643-.645L8.644 8 12.5 4.143l-.643-.643-3.856 3.856Z"); }
@@ -146,8 +168,6 @@ input[type=button], input[type=submit] { background-image: none !important; }
 #tabs-tabbar-container .newtab svg path {
   d: path("M20.48 12.73h-5.21V7.52a.52.52 0 1 0-1.04 0v5.209H9.02a.522.522 0 0 0 0 1.042h5.209v5.208a.522.522 0 0 0 1.042 0v-5.208h5.208a.521.521 0 0 0 0-1.042Z");
 }
-
-.color-behind-tabs-off .toolbar-tabbar > .button-toolbar > button, .color-behind-tabs-off .toolbar-tabbar > .toolbar-group > .button-toolbar > button { color: var(--colorAccentFg) !important; }
 
 /* Closed tabs icon */
 #tabs-container > div > div.toolbar.toolbar-tabbar.sync-and-trash-container.left > div > button > span > svg > line:nth-child(3),
@@ -160,7 +180,7 @@ input[type=button], input[type=submit] { background-image: none !important; }
 
 #browser:not(.alt-tabs) #tabs-container .tab:not(.tab-mini) .close { margin-right: 2px !important; }
 
-/* Recolouring tab thumbnails */
+/* Reduces the colour of background tabs */
 .tab-position .tab.tab.tab:not(.active) { filter: grayscale(100%) brightness(70%); }
 
 .tab-position .tab.tab.tab:not(.active):hover { filter: grayscale(0%) brightness(100%); }
@@ -174,94 +194,16 @@ input[type=button], input[type=submit] { background-image: none !important; }
 
 .tabs-left .tab-position .tab, .tabs-right .tab-position .tab { margin: 0 !important; border-radius: 0 !important; }
 
-/** Vertical thumbs style **/
-/* No title tab header */
-#app #browser:not(.stacks-substrip) #tabs-container:not(.no-thumbs) .tab-position .tab > .tab-header > .title { visibility: hidden; }
-
-#app #browser:not(.stacks-substrip) #tabs-container:not(.no-thumbs) .tab-position .tab.unread { background-image: none; }
-
-#app #browser:not(.stacks-substrip) #tabs-container:not(.no-thumbs) .tab-position .tab.unread > .thumbnail-image { -webkit-mask-image: none !important; }
-
-#app #browser:not(.stacks-substrip) #tabs-container:not(.no-thumbs) .tab-position .tab.unread > .tab-header::before {
-  content: "";
-  position: absolute;
-  top: 3px;
-  right: 0;
-  width: 8px;
-  height: 8px;
-  border-radius: 100%;
-  background: var(--colorHighlightBg);
-  z-index: 4;
-}
-
-#app #browser:not(.stacks-substrip) #tabs-container:not(.no-thumbs) .tab-position .tab.active { opacity: 1; }
-
-#app #browser:not(.stacks-substrip) #tabs-container:not(.no-thumbs) .tab-position .tab > .tab-header {
-  position: absolute;
-  z-index: 1;
-  width: calc(100% - 1px);
-  height: 100%;
-  align-items: stretch !important;
-}
-
-#app #browser:not(.stacks-substrip) #tabs-container:not(.no-thumbs) .tab-position .tab > .tab-header > .progress-indicator { border-radius: 1px; }
-
-#browser:not(.alt-tabs) #tabs-container .tab:not(.pinned):not(.tab-small).audio-on .favicon, #browser:not(.alt-tabs) #tabs-container .tab:not(.pinned):not(.tab-small).audio-muted .favicon, #browser:not(.alt-tabs) #tabs-container .tab:not(.pinned):not(.tab-small).tab-captured .favicon {
-  transform: unset !important;
-}
-
-.tabs-left .tab-position .tab > .tab-header, .tabs-right .tab-position .tab > .tab-header { margin: 5px -3px !important; }
-
-#app #browser:not(.stacks-substrip) #tabs-container:not(.no-thumbs) .tab-position .tab > .tab-header > .close, #app #browser:not(.stacks-substrip) #tabs-container:not(.no-thumbs) .tab-position .tab > .tab-header > .tab-audio {
-  background-color: var(--colorAccentBg) !important;
-  color: var(--colorAccentFg);
-  border-radius: 25px;
-}
-
-#browser:not(.alt-tabs) #tabs-container .tab:not(.tab-mini) .close, #browser:not(.alt-tabs) #tabs-tabbar-container .close {
-  position: absolute;
-  margin-right: 1px !important;
-  right: 0;
-  padding-left: .5px;
-  padding-bottom: .5px;
-  opacity: .9;
-}
-
-#app #browser:not(.stacks-substrip) #tabs-container:not(.no-thumbs) .tab-position .tab > .tab-header > .close:hover, #app #browser:not(.stacks-substrip) #tabs-container:not(.no-thumbs) .tab-position .tab > .tab-header > .tab-audio:hover {
-  background-color: var(--colorHighlightBg) !important;
-  fill: var(--colorAccentFg) !important;
-}
-
-.audioicon { margin-top: -1.5px; transform: scale(0.48) translateZ(0) !important; }
-
-#app #browser:not(.stacks-substrip) #tabs-container:not(.no-thumbs) .tab-position .tab > .tab-header > .tab-audio {
-  margin-top: 18px;
-  right: 0;
-  width: 18px;
-  height: 18px;
-  padding: 1.5px;
-  opacity: .9;
-}
-
-#app #browser:not(.stacks-substrip) #tabs-container.left:not(.no-thumbs) .tab-position .tab > .thumbnail-image,
-#app #browser:not(.stacks-substrip) #tabs-container.right:not(.no-thumbs) .tab-position .tab > .thumbnail-image {
-  background-color: transparent;
-  border-radius: 0 !important;
-  margin: 0 !important;
-}
-
-#vivaldi-tooltip .tooltip-item .thumbnail-image {	display: none !important; }
-
 /* =====================================
    Side Panel
   ===================================== */
+.panel > header h1 > span:first-child { margin: 0 auto; }
+
 #panels-container.icons, #panels-container.overlay, #panels, #switch, .toolbar-panel, .toolbar-panel .button-toolbar { width: 34px !important; }
 
 #switch { flex: 0 0 34px !important; max-width: 34px !important; padding-top: 0 !important; }
 
 #switch button { border-radius: 0 !important; transition: .5s !important; }
-
-#switch button:hover { background-color: var(--colorHighlightBg) !important; fill: var(--colorAccentFg) !important; }
 
 #switch > .button-toolbar.active:not(:focus), #switch > * > .button-toolbar.active:not(:focus), #switch > button.active:not(:focus), #switch .addwebpanel-wrapper > button.active:not(:focus) {
   color: var(--colorHighlightBg);
@@ -270,7 +212,7 @@ input[type=button], input[type=submit] { background-image: none !important; }
 
 #switch > .button-toolbar.active, #switch > * > .button-toolbar.active, #switch > button.active, #switch .addwebpanel-wrapper > button.active {
   background-color: transparent !important;
-  fill: var(--colorHighlightBg);
+  color: var(--colorHighlightBg);
   border-radius: 0 !important;
 }
 
@@ -278,10 +220,6 @@ input[type=button], input[type=submit] { background-image: none !important; }
   background-color: var(--colorHighlightBg);
   border: 1px solid var(--colorHighlightBg)
 }
-
-#switch button.webviewbtn img { background: transparent !important; filter: grayscale(100%) contrast(60%) invert(100%); }
-
-#switch button.webviewbtn.active img { background: none; filter: grayscale(10%) contrast(60%) invert(10%); }
 
 /* Download panel fixes */
 .panel.downloads .panel-pathfield .actionbuttons, .popout.downloads-popout .panel-pathfield .actionbuttons { margin-top: 2px !important; }
@@ -307,7 +245,7 @@ input[type=button], input[type=submit] { background-image: none !important; }
 
 .transparent { display: none; }
 
-/* Manger views*/
+/* Manger views */
 .manager { backdrop-filter: var(--backgroundBlur); }
 
 .manager .manager-content, .manager>.toolbar, .internal-page .manager-editor { background-color: var(--colorBgAlphaBlur) !important; }
@@ -318,9 +256,9 @@ input[type=button], input[type=submit] { background-image: none !important; }
 
 #panels .webpanel-stack .webpanel .webpanel-header { padding-top: 12px; }
 
-/* Notes editor manager
-  ----------------------------
-*/
+/* =====================================
+   Notes Manager
+  ===================================== */
 .NotesManager { opacity: .95; }
 
 .NotesManager-Tree>.toolbar { background-color: var(--colorBg); margin: unset !important; padding: 6px; }
@@ -329,13 +267,30 @@ input[type=button], input[type=submit] { background-image: none !important; }
 
 .MarkdownRender p, .MarkdownRender ul, .MarkdownRender ol, .MarkdownRender dl, .MarkdownRender table, .MarkdownRender pre, .MarkdownRender blockquote, body[contenteditable="plaintext-only"] { line-height: 1.4em; }
 
-.NotesManager-Footer { justify-content: right; align-items: center; height: 30px; opacity: 1 !important; }
+.NotesManager-Note { background-color: var(--colorBgAlphaBlur) !important; }
 
-.NotesManager-WordCount { color: var(--colorHighlightBg); }
+.NotesManager-EmptyPlaceholder:hover { outline: unset !important; }
 
-/* Calendar
-------------------------------
-*/
+.NotesManager-Footer {
+  background-color: var(--colorBgAlphaBlur) !important;
+  justify-content: center;
+  align-items: center;
+  height: 30px;
+  bottom: 4px;
+  opacity: 1 !important;
+
+}
+
+.NotesManager-WordCount {
+  background-color: var(--colorHighlightBg);
+  color: var(--colorAccentFg);
+  padding: 10px 25px;
+  border-radius: var(--radius);
+}
+
+/* =====================================
+   Calendar
+  ===================================== */
 .manager .manager-view { opacity: .95; background-image: var(--backgroundBlur); font-size: 1.1em; }
 
 .calendar.manager > .toolbar h1 { font-weight: 400 !important; font-size: 1.5rem !important; color: var(--colorHighlightBg); }
@@ -352,12 +307,14 @@ input[type=button], input[type=submit] { background-image: none !important; }
 
 .calendar-event .cal-event-header .cal-event-title { margin-left: 10px; }
 
-/* Mail
-  ----------------------------
-*/
+.calendar-grid-days .calendar-drop-target .day.current { color: var(--colorAccentFg) !important; }
+
+/* =====================================
+   Mail
+  ===================================== */
 .MailSearchField-Inner { background-color: transparent !important; border: 0 !important; }
 
-.webpageview #mail_view #mail_detail .mail-detail-header .subject { color: var(--colorHighlightBg) !important; }
+.webpageview #mail_view #mail_detail .mail-detail-header .subject { color: var(--colorFgIntense) !important; }
 
 /* =====================================
    Settings panel/window
@@ -416,7 +373,7 @@ input[type=button], input[type=submit] { background-image: none !important; }
    Miscellaneous stuff
   ===================================== */
 
-/* Alternating row colours */
+/* Alternating row colours for lists */
 .vivaldi-tree div>div:nth-child(even) { background-color: var(--colorBgAlphaHeavy); }
 .webpageview #mail_view.vertical .mail_entry .from, .webpageview #mail_view.vertical .mail_entry .mail_entry_row.subject_row { background-color: unset; }
 
@@ -532,4 +489,4 @@ input::-webkit-search-cancel-button {
 .cb-image svg .bookmark-shadow, .thumbnail-image svg .bookmark-shadow { fill: transparent !important; }
 
 /* Hides dropdown arrow for history in the address field */
-.button-toolbar>button[title="Show typed history"], .button-toolbar>button[title="Enter an address to activate typed history"] { display: none !important; } 
+.button-toolbar>button[title="Show typed history"], .button-toolbar>button[title="Enter an address to activate typed history"] { display: none !important; }
