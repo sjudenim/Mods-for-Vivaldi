@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8" />
+    <title>Date and Time</title>
+    <style>
+        @font-face { font-family: 'HelveticaNeueLTCom-UltLt'; src: url('fonts/HelveticaNeueLTCom-UltLt.ttf') format('truetype'); }
+
+        html, body { background: var(--colorBg); height: 100%; font-family: "HelveticaNeueLTCom-UltLt", system-ui, sans-serif; }
+
+        /* Wrapper */
+        .main { padding: 10px; width: 100%; height: 100%; }
+
+        /* Sizing & Transition */
+        *, *:after, *:before { box-sizing: border-box; margin: 0; padding: 0; transition: all 1s ease; }
+
+        /* Clock */
+        #clock {
+            display: grid;
+            font-weight: 100;
+            text-align: center;
+            font-size: 22vw;
+            color: var(--colorFg);
+            position: relative;
+        }
+
+        #minutes { color: var(--colorHighlightBg); }
+
+        /* Date */
+        #today {
+            font-weight: 600;
+            text-align: center;
+            font-size: 6vw;
+            width: 100%;
+            margin-top: 5vh;
+            color: var(--colorFg);
+        }
+
+        #date { color: var(--colorHighlightBg); }
+
+        /* Tall widget layout */
+        @media screen and (max-height: 200px) {
+            #clock { display: block; font-size: 20vw; margin-top: 4vh; }
+        }
+    </style>
+</head>
+
+<body id="body">
+    <div class="main">
+        <div id="clock">
+            <span id="hours">00</span> <span id="minutes">00</span> <span id="seconds">00</span>
+        </div>
+        <div id="today">
+            <span id="month"></span> <span id="date"></span> <span id="year"></span>
+        </div>
+    </div>
+
+    <script>
+        var Clock = {
+            updateClock: function () {
+                var now = new Date();
+                document.getElementById('hours').innerHTML = ((now.getHours() < 10) ? '0' : '') + now
+            .getHours();
+                document.getElementById('minutes').innerHTML = ((now.getMinutes() < 10) ? '0' : '') + now
+                    .getMinutes();
+                document.getElementById('seconds').innerHTML = ((now.getSeconds() < 10) ? '0' : '') + now
+                    .getSeconds();
+            },
+
+            init: function () {
+                setInterval(Clock.updateClock, 1000);
+            }
+        }
+
+        Clock.init();
+        let d = new Date();
+        let month = d.getMonth();
+        let monthArr = ["01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12"];
+        let date = d.getDate();
+        let year = d.getFullYear().toString().substr(2, 2);
+
+        month = monthArr[month];
+
+        document.getElementById("month").innerHTML = month;
+        document.getElementById("date").innerHTML = (date < 10 ? '0' : '') + d.getDate();
+        document.getElementById("year").innerHTML = year;
+
+        function save() {
+            var checkbox = document.getElementById('themeswitch');
+            localStorage.setItem('themeswitch', checkbox.checked);
+        }
+
+        function load() {
+            var checked = JSON.parse(localStorage.getItem('themeswitch'));
+            document.getElementById("themeswitch").checked = checked;
+        }
+
+        load();
+    </script>
+</body>
+
+</html>
