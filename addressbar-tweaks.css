@@ -1,86 +1,61 @@
 /*	
-* Vivaldi Addressbar Mods (updated for browser version 6)
+* Vivaldi Addressbar Mods (updated for browser version 7.0)
 * Written by sudenim	
 * GNU General Public License v3.0	
-* 	
+*
+* General ui changes that include: recolouring, re-positioning, font adjustments, icon replacements	
 */
-
-/* Line under addressbar */
-.color-behind-tabs-off.address-top .mainbar > .toolbar-mainbar, .address-top .mainbar > .toolbar-mainbar { border: none !important ; }
 
 /* fix for UI zoom */
 #browser.win button.vivaldi, #browser .window-buttongroup { scale: unset !important; }
 
 /* Fix for addressbar size */
-#browser.win.address-top .toolbar:has(.window-buttongroup.on-mainbar) {
-  min-height: unset !important;
-  padding-left: 44px !important;
-  padding-right: calc(46px * 3) !important;
-}
+#browser.win.address-top .toolbar:has(.window-buttongroup.on-mainbar) { min-height: unset !important; padding-right: calc(46px * 3) !important; }
 
+/* Removes border radius on buttons */
+.toolbar-mainbar > .button-toolbar > button { border-radius: 0 !important; }
+
+/* Removes Line under addressbar */
+.address-top .mainbar { border: none !important ; }
+
+#browser #header, #browser #tabs-tabbar-container { box-shadow: unset !important; }
+
+/*  */
+.SearchField.MailSearchField { background-color: var(--colorFgAlpha) !important; height: 26px; min-width: 20vw; }
 
 /* =====================================
    Menu Button
   ===================================== */
-.disable-titlebar.address-top#browser:not(.tabs-top) .vivaldi {
-  height: 34px !important;
-  width: 44px !important;
-}
+.disable-titlebar.address-top#browser:not(.tabs-top) .vivaldi { width: 44px !important; margin: 0 -2px 0 0 !important; border-radius: unset !important; }
 
-.vivaldi svg {
-  flex: 0 0 26px !important;
-  height: 26px !important;
-}
+.vivaldi svg { flex: 0 0 26px !important; height: 26px !important; }
 
-.vivaldi span { opacity: unset !important; }
-
-.vivaldi:hover { background-color: var(--colorHighlightBg) !important; }
+.vivaldi:hover, .vivaldi:hover svg { background-color: var(--colorHighlightBg) !important; fill: var(--colorAccentFg) !important; }
 
 #browser .vivaldi span.burger-icon:hover svg { fill: var(--colorAccentFg) !important; }
 
-#browser .vivaldi span.burger-icon svg path { d: path("M5 7.5v.846h16V7.5H5zm0 5.077v.846h16v-.846H5zm0 5.077v.846h16v-.846H5z"); }
+#browser .vivaldi span.burger-icon svg path { d: path("M3 6v1h18V6Zm0 6v1h18v-1zm0 6v1h18v-1z"); }
 
-#browser .vivaldi span.burger-icon svg {
-  margin-left: -6px;
-  margin-top: -5px;
-  fill: var(--colorFg);
-}
+#browser .vivaldi span.burger-icon svg { fill: var(--colorFg); }
 
 #browser .vivaldi:hover span svg { transform: scale(1) !important; }
 
 .color-behind-tabs-on .vivaldi span.vivaldi-v, .color-behind-tabs-on .vivaldi span.burger-icon { opacity: initial !important; }
 
-
 /* =====================================
-   Window buttons group
+   Window Buttons Group
   ===================================== */
 .disable-titlebar#browser.win .window-buttongroup { height: 34px !important; }
 
 .toolbar-mainbar>*:last-child:not(.button-toolbar) { margin-right: unset; }
 
-#browser.win .window-buttongroup button, #browser.win .window-buttongroup button.window-close {
-  fill: var(--colorFg) !important;
-  transition: .5s !important;
-}
+#browser.win .window-buttongroup button, #browser.win .window-buttongroup button.window-close { fill: var(--colorFg) !important; transition: .5s !important; }
 
-#browser.win .window-buttongroup button:hover {
-  background-color: var(--colorHighlightBg) !important;
-  fill: var(--colorAccentFg) !important;
-}
+#browser.win .window-buttongroup button:hover { background-color: var(--colorHighlightBg) !important; fill: var(--colorAccentFg) !important; }
 
 #browser.win .window-buttongroup button.window-maximize>svg path, #browser.win .window-buttongroup button.window-restore>svg path { d: path("M9 1v8H1V1h8m1-1H0v10h10V0z"); }
 
 .maximized#browser.win .window-buttongroup button.window-close, .fullscreen#browser.win .window-buttongroup button.window-close { padding-right: 0 !important; }
-
-
-/* =====================================
-   Addressbar
-  ===================================== */
-.address-top .toolbar-mainbar {
-  height: 34px;
-  padding: 4px 0;
-}
-
 
 /* =====================================
    Addressfield
@@ -89,53 +64,25 @@
 
 .UrlField .UrlBar-UrlField { text-align: center; }
 
-.toolbar-spacer-flexible ~ .UrlBar-AddressField { flex-grow: 5 !important; }
+.toolbar-spacer-flexible ~ .UrlBar-AddressField, .toolbar-spacer-panel ~ .UrlBar-AddressField { flex-grow: 8; }
 
-/* Default style mod
-.UrlBar-AddressField {
-  border: 0 !important;
-  outline: 0 !important;
-  outline-offset: 0 !important;
-  padding: 5px !important;
-  max-width: 70vw;
-  height: 24px !important;
-  margin: auto !important;
-  background-color: var(--colorAccentFgAlphaHeavy);
+.panel-bookmarks > header > div > input[type=search]:focus-within,
+.color-behind-tabs-off .SearchField:focus-within,
+.color-behind-tabs-off .MailSearchField-Inner:focus-within,
+.color-behind-tabs-off .UrlBar-AddressField:focus-within:focus-within {
+  outline: unset !important;
 }
-/* End style */
 
-/* Old Edge style
-.UrlBar-AddressField {
-  border: 0 !important;
-  outline: 0 !important;
-  outline-offset: 0 !important;
-  padding: 3px 5px !important;
-  height: 22px !important;
-  background-color: transparent !important;
-  border-radius: 0 !important;
-  border-left: 1px solid var(--colorFgAlpha) !important;
-  border-right: 1px solid var(--colorFgAlpha) !important;
-}
-/* End style */
-
-/* Chromium style */
+/* Chrome style */ 
 .UrlBar-AddressField, .SearchField {
   border: 0 !important;
-  outline: 0 !important;
-  outline-offset: 0 !important;
   padding: 5px !important;
-  height: 24px !important;
-  margin: auto !important;
-  background-color: var(--colorAccentFgAlphaHeavy);
+  background-color: var(--colorFgAlpha);
   border-radius: 25px !important;
 }
 /* End style */
 
-.addressfield form input.url {
-  margin-top: 1px;
-  padding-bottom: 3px !important;
-  text-align: center;
-}
+.addressfield form input.url { margin-top: 1px; padding-bottom: 3px !important; text-align: center; }
 
 /* Pageload bar */
 .UrlBar-AddressField .pageload.progressing .pageload-indicator { display: none; }
@@ -144,16 +91,10 @@
 .UrlFragment-Wrapper, .UrlFragment--Lowlight:first-of-type { color: var(--colorFgFaded); }
 
 /* URL Base-domain  */
-.UrlFragment-HostFragment-Basedomain, .UrlFragment-HostFragment-TLD {
-  color: var(--colorFgIntense) !important;
-  font-weight: 600;
-}
+.UrlFragment-HostFragment-Basedomain, .UrlFragment-HostFragment-TLD { color: var(--colorFg) !important; font-weight: 600; }
 
 /* URL Sub-domain */
-.UrlFragment-HostFragment-Subdomain {
-  color: var(--colorHighlightBg) !important;
-  font-weight: 600;
-}
+.UrlFragment-HostFragment-Subdomain { color: var(--colorHighlightBg) !important; font-weight: 600; }
 
 .toolbar-insideinput.toolbar-insideinput.toolbar-insideinput>.button-toolbar button:hover :not(:active):not(:focus):not(.button-pressed),
 .toolbar-insideinput.toolbar-insideinput.toolbar-insideinput>.toolbar-group>.button-toolbar button:hover :not(:active):not(:focus):not(.button-pressed),
@@ -162,14 +103,9 @@
   fill: var(--colorHighlightBg) !important;
 }
 
-.drop_down:hover, .drop_down[data-selected], #mail_panel section ul li.selected {
-  background-color: var(--colorHighlightBg) !important;
-}
+.drop_down:hover, .drop_down[data-selected], #mail_panel section ul li.selected { background-color: var(--colorHighlightBg) !important; }
 
-button.button-addressfield:hover {
-  background-color: transparent !important;
-  border-color: transparent !important
-}
+button.button-addressfield:hover { background-color: transparent !important; border-color: transparent !important; }
 
 .addressfield button.button-addressfield.input-dropdown:hover svg,
 .button-addressfield.reader-mode:hover svg,
@@ -177,13 +113,9 @@ button.button-addressfield:hover {
   fill: var(--colorHighlightBgDark) !important;
 }
 
-.button-addressfield.bookmark.bookmarked svg .bookmark-outline {
-  fill: var(--colorHighlightBgDark);
-}
+.button-addressfield.bookmark.bookmarked svg .bookmark-outline { fill: var(--colorHighlightBgDark); }
 
-.button-addressfield.bookmark svg .bookmark-animated-fill {
-  fill: var(--colorHighlightBgAlpha);
-}
+.button-addressfield.bookmark svg .bookmark-animated-fill { fill: var(--colorHighlightBgAlpha); }
 
 /* Content Blocking badge */
 .toolbar.toolbar-addressbar.toolbar-mainbar.toolbar-large>div.addressfield .ads,
@@ -193,23 +125,16 @@ button.button-addressfield:hover {
 }
 
 /* Site Info icon */
-.siteinfo-text { display: none; }
-
 .siteinfo-symbol:hover+.siteinfo-text { display: block; }
 
 .SiteInfoButton.secure, .SiteInfoButton.certified { fill: var(--colorHighlightBg); }
 
 .SiteInfoButton.warning { fill: var(--colorErrorBg); }
 
-.SiteInfoButton.secure:hover, .SiteInfoButton.certified:hover, .SiteInfoButton.warning {
-  background-color: transparent;
-  fill: var(--colorHighlightBg) !important;
-  transform: scale(1.1);
-}
+.SiteInfoButton.secure:hover, .SiteInfoButton.certified:hover, .SiteInfoButton.warning { background-color: transparent; fill: var(--colorHighlightBg) !important; transform: scale(1.1); }
 
 .SiteInfoButton.secure svg path,
 .SiteInfoButton.certified svg path {}
-
 
 /* Internal site icon */
 .SiteInfoButton.internal svg path, .SiteInfoButton.warning svg path {
@@ -218,7 +143,6 @@ button.button-addressfield:hover {
 
 /* Qr code icon */
 .create-qr-code button svg { fill: unset !important; }
-
 
 .toolbar-insideinput.toolbar-insideinput.toolbar-insideinput>.button-toolbar>button.button-pressed { background-color: unset !important; }
 
@@ -240,113 +164,98 @@ button.button-on path.bookmark-outline { fill: var(--colorHighlightBg) !importan
   display: none;
 }
 
-
 /* =====================================
-   Add Bookmark menu
+   Add Bookmark Dropdown
   ===================================== */
 /* Arrow */
-.button-popup-below:before { top: -11px !important; }
+.button-popup-pos-below:before { top: -10px !important; }
 
-/* Header */
-.DialogHeader { padding: 10px 18px !important; }
+/* Dialog Popup */
+.button-popup { max-height: unset !important;}
 
-.address-top .BookmarkPopup > header > h1 { font-size:0; } /* hide "added" text */
+.BookmarkPopup { grid-template-rows: 40px auto 46px; }
+
+/* Top header */
+.address-top .BookmarkPopup > header > h1 { font-size: 0; } /* hide "added" text */
 
 .address-top .BookmarkPopup > header > p {
   font-size: 1.1em;
   font-weight: 700;
-  text-indent: -24px;
+  text-indent: -22px;
   clip-path: inset(0 0 0 -7px);
+  margin-left: -5px;
 }
+
+/* Content */
+.BookmarkLocationSelector {
+  --ListHeight: 35vh;
+  grid-template-columns: [header checkbox search content footer] auto;
+  grid-template-rows: [header] 46px [checkbox] 0 [search] 46px [content] var(--ListHeight) [footer] auto;
+}
+
+/* Search bar */
+.BookmarkPopup .dialog-content { gap: unset !important; }
+
+.BookmarkLocationSelector-Header, .BookmarkLocationSelector-SearchInput, .BookmarkLocationSelector-AddFolderButton { background-color: var(--colorBg); }
+
+.BookmarkLocationSelector-SearchInput { grid-area: header !important; margin-top: -5px; width: 85%; }
+
+.BookmarkLocationSelector-SearchInput-Input:not(:focus), .BookmarkLocationSelector-SearchInput-Input:focus {
+  border-radius: var(--radiusRounded);
+  background-color: var(--colorBgIntense);
+  max-width: 250px;
+}
+
+.BookmarkLocationSelector-AddFolderButton {
+  grid-area: header !important;
+  position: absolute;
+  right: 0;
+  margin-top: -5px;
+  padding: 6.5px 18px;
+  height: 51px;
+}
+
+#browser > div.button-popup.button-popup-center.button-popup-pos-below.button-popup-arrow-dark.button-popup-appear-done.button-popup-enter-done > form > div > div.BookmarkLocationSelector.BookmarkPopup-LocationSelector > div.button-toolbar.BookmarkLocationSelector-AddFolderButton > button > span.button-icon > svg > path {
+  fill-rule: evenodd;
+  d: path("M 2.35717 3.36075 C 2.13323 3.58693 2.00515 3.89221 2 4.21203 V 11.7872 C 1.99441 11.9479 2.02163 12.1081 2.07996 12.2577 C 2.13828 12.4073 2.22648 12.5431 2.33904 12.6568 C 2.4516 12.7705 2.58613 12.8596 2.73425 12.9185 C 2.88237 12.9774 3.04091 13.0049 3.2 12.9993 H 12.8 C 13.1167 12.9941 13.4189 12.8647 13.6428 12.6385 C 13.8668 12.4123 13.9948 12.1071 14 11.7872 L 14 6 C 14 5.5 13.5 5 13 5 H 8 L 6.8 3 H 3.2 C 2.88334 3.0052 2.5811 3.13457 2.35717 3.36075 Z M 2.99939 11.822 L 3 11.8046 V 4.22318 C 3.00223 4.16171 3.02741 4.10511 3.06779 4.06432 C 3.10773 4.02398 3.15929 4.00208 3.21161 4 H 6.24589 L 7.5 6 H 12.8 C 12.9105 6 13 6.08796 13 6.19842 C 13 7.13107 13 11.0636 13 11.7761 C 12.9978 11.8376 12.9726 11.8942 12.9322 11.935 C 12.8923 11.9753 12.8407 11.9972 12.7884 11.9993 H 3.18227 L 3.16455 11.9999 C 3.14406 12.0006 3.12343 11.9971 3.10383 11.9893 C 3.08421 11.9815 3.06567 11.9694 3.04966 11.9533 C 3.03364 11.9371 3.02051 11.9171 3.01165 11.8944 C 3.00278 11.8717 2.99853 11.847 2.99939 11.822 Z");
+}
+
+.BookmarkLocationSelector-AddFolderButton > button {
+  background-image: unset !important;
+  background-color: var(--colorBgDarker);
+  font-size: 0;
+  padding: 13px;
+}
+
+.BookmarkLocationSelector-AddFolderButton > button:hover { background-color: var(--colorHighlightBg) !important; color: white; }
+
+/* Folder list */
+.BookmarkLocationSelector-FolderList { margin-top: -48px; }
+
+.dialog-content { scrollbar-gutter: unset !important; }
 
 /* Footer buttons */
-.address-top .button-popup.button-popup-enter-done .BookmarkPopup > footer > input.danger { width: 30%;}
+.address-top .BookmarkPopup > footer > input[type="submit"] { width:70%; }
 
-.address-top .BookmarkPopup > footer > input[type="submit"] { width:70%; } /* big DONE button */
+.address-top .BookmarkPopup > footer > input[type="submit"]:hover{ background-color: var(--colorHighlightBg); color: white; }
 
-/* Location toolbar */
-.BookmarkLocationSelector-Header {
-  font-size: 0 !important;
-  background-color: var(--colorBg);
-}
+.address-top .button-popup.button-popup-enter-done .BookmarkPopup > footer > input.danger { width: 30%; }
 
-.BookmarkPopup-LocationSelector { border-radius: none !important; }
+.address-top .button-popup.button-popup-enter-done .BookmarkPopup > footer > input.danger:hover { background-color: var(--colorErrorBg); color: white; }
 
 .BookmarkInputField:last-of-type { border-bottom: none !important; }
 
-.BookmarkLocationSelector-ToggleButtonGroup-Button:focus, .BookmarkLocationSelector-ToggleButtonGroup-Button--Pressed {
-  background-color: var(--colorHighlightBgAlpha);
-}
+.BookmarkLocationSelector-SpeedDialCheckbox { display: none; }
 
-.BookmarkLocationSelector-Header, .BookmarkLocationSelector-ToggleButtonGroup-Button--Pressed {
-  box-shadow: none !important;
-}
-
-.BookmarkLocationSelector-ToggleButtonGroup-Button--Pressed * { fill: var(--colorHighlightBg) !important; }
-
-.BookmarkLocationSelector-ToggleButtonGroup-Button:hover, .BookmarkLocationSelector-SearchInput-Button:hover {
-  background-color: var(--colorHighlightBg) !important;
-}
-
-.BookmarkLocationSelector-ToggleButtonGroup-Button:hover *, .BookmarkLocationSelector-SearchInput-Button:hover * {
-  fill: var(--colorAccentFg) !important;
-}
-
-.BookmarkLocationSelector-SearchInput-Button { border-radius: 0 !important; }
-
-.BookmarkLocationSelector-ToggleButtonGroup-Button { padding: 12px !important; }
-
-/* Bookmarks folder icon */
-.BookmarkLocationSelector-Header>button.BookmarkLocationSelector-ToggleButtonGroup-Button.BookmarkLocationSelector-ToggleButtonGroup-Button:nth-child(1)>svg>g>svg>path {
-  d: path("M13.23 2H6.768A.762.762 0 0 0 6 2.755v10.792a.46.46 0 0 0 .236.398.487.487 0 0 0 .469-.008l3.297-2.006 3.296 1.986a.452.452 0 0 0 .464.005.435.435 0 0 0 .238-.39V2.755A.763.763 0 0 0 13.23 2zm-.154 10.721-2.836-1.703a.447.447 0 0 0-.482 0l-2.834 1.715V2.906h6.15v9.814h.002z")
-}
-
-/* Speed dial folder icon */
-#browser>div.button-popup.button-popup-left.button-popup-below.button-popup-arrow-dark>form>div>div.BookmarkLocationSelector.BookmarkPopup-LocationSelector>div.BookmarkLocationSelector-Header>button:nth-child(2)>svg path {
-  d: path("M6 5.5h2.5V3H6v2.5zM9.75 13h2.5v-2.5h-2.5V13zM6 13h2.5v-2.5H6V13zm0-3.75h2.5v-2.5H6v2.5zm3.75 0h2.5v-2.5h-2.5v2.5zM13.5 3v2.5H16V3h-2.5zM9.75 5.5h2.5V3h-2.5v2.5zm3.75 3.75H16v-2.5h-2.5v2.5zm0 3.75H16v-2.5h-2.5V13z");
-}
-
-/* Bookmarks folder search */
-.BookmarkLocationSelector-SearchInput {
-  position: absolute !important;
-  right: 2px;
-  padding: 0 16px !important;
-  grid-gap: 3px !important;
-}
-
-.BookmarkLocationSelector-SearchInput-Button {
-  width: 46px !important;
-  height: 42px !important;
-}
-
-.BookmarkLocationSelector-SearchInput-Input {
-  border-color: transparent !important;
-  box-shadow: none;
-  background-color: var(--colorBgDark);
-  width: 210px;
-}
-
-.BookmarkLocationSelector { grid-template-rows: [header] 42px [search] 8px [content] auto [footer] auto !important; }
-
-.BookmarkInputField-Title {
-  color: var(--colorHighlightBg);
-  font-weight: 700;
-}
+.BookmarkInputField-Title { color: var(--colorHighlightBg); font-weight: 700; }
 
 /* Omnibox dropdown */
-.OmniDropdown {
-  border-radius: 0 0 var(--radius) var(--radius);
-  background-color: var(--colorBgAlphaBlur);
-  backdrop-filter: var(--backgroundBlur);
-}
+.OmniDropdown { border-radius: 0 0 var(--radius) var(--radius); background-color: var(--colorBgAlphaBlur); backdrop-filter: var(--backgroundBlur); }
 
-/* Delete dialog menu */
-#modal-bg>div {
-  border-radius: var(--radius) !important;
-  backdrop-filter: blur(2px);
-}
+/* Dropdown dialog menu */
+#modal-bg>div { border-radius: var(--radius) !important; backdrop-filter: blur(2px); }
 
-#modal-bg.slide { top: 1px !important; }
+#modal-bg.slide { top: 2px !important; }
 
 #modal-bg > div > div > form > footer > input[type=submit]:nth-child(1) { width: 60%; }
 
