@@ -1,10 +1,11 @@
-//
-//  Markdown Editor for Notes (updated for browser version 6.2)
-//  Written by Tam710562 and sudenim
-//  GNU General Public License v3.0
-// 
-//  Adds a markdwon toolbar to the notes editor
-//
+/*
+*  Markdown Editor for Notes (updated for browser version 7.0)
+*  Written by Tam710562 and sudenim
+*  GNU General Public License v3.0
+* 
+*  Adds a markdwon toolbar to the notes editor in the side panel
+*/
+
 (function () {
 
     const buttons = [
@@ -176,7 +177,7 @@
 
     addStyle([
         '.NotesEditor > .toolbar { flex-flow: row wrap; display: -webkit-box; }',
-        '.NotesEditor > .toolbar .notes-custom { width: 28px; height: 28px; margin-right: 1px; padding: 5px; border-radius: var(--radius); background-image: none; background-color: var(--colorBgLighter) }',
+        '.NotesEditor > .toolbar .notes-custom { width: 28px; height: 28px; margin-right: 1px; padding: 5px; border-radius: var(--radius); background-image: none; background-color: var(--colorBgDarker) }',
         '.NotesEditor > .toolbar .notes-custom:hover { background-color: var(--colorBgDark); }',
         '.NotesEditor > .toolbar .notes-custom svg { width: 16px; height: auto; fill: var(--colorFg); }',
         '.NotesEditor > .toolbar .notes-custom:hover svg { fill: var(--colorHighlightBg); }',
