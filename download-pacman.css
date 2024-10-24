@@ -1,0 +1,45 @@
+/*
+* Download Pacman
+* Written by MasterLeo29
+* 
+*/
+
+.panel.downloads .DownloadItem-ProgressBar.visible { height: 10px; /*More space for pacman*/ }
+
+.panel.downloads .DownloadItem-ProgressBar.loading.visible{
+  --pacman-open: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' height='19.037' width='18.053' viewBox='0 0 571.11 541.6'%3E%3Cpath style='fill:%23ffcc00' d='M535.441,412.339A280.868,280.868 0 1,1 536.186,161.733L284.493,286.29Z'%3E%3C/path%3E%3C/svg%3E%0A");
+  --pacman-close: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' height='19.037' width='18.053' viewBox='0 0 36 36'%3E%3Ccircle fill='%23ffcc00' cx='18' cy='18' r='18'/%3E%3C/svg%3E");
+  --pacman-point: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' height='11.422' width='10.831' viewBox='0 0 36 36'%3E%3Ccircle fill='%23ffffff' cx='18' cy='15' r='6'/%3E%3C/svg%3E");
+  --pacman-waga-ms: 400ms;
+}
+
+.panel.downloads .DownloadItem-ProgressBar.loading.visible { background-image: var(--pacman-point); }
+
+.panel.downloads .DownloadItem-ProgressBar.loading.visible::after { background-image: none; background-color: var(--colorBgFaded); }
+
+
+.panel.downloads .DownloadItem-ProgressBar.loading.visible::before {
+background-color: #ffcc00;
+background-image: none;
+content: '';
+position: absolute;
+z-index: 1;
+inset: 0;
+-webkit-animation: wagawaga var(--pacman-waga-ms) infinite !important;
+-webkit-mask-repeat: no-repeat !important;
+-webkit-mask-position-x: calc(var(--progress) * 100%) !important;
+transition: -webkit-mask-position-x var(--duration) linear !important;
+-webkit-mask-size: contain !important;
+}
+
+@keyframes wagawaga {
+0% {
+  -webkit-mask-image: var(--pacman-open);
+}
+50% {
+ -webkit-mask-image: var(--pacman-close);
+}
+100% {
+ -webkit-mask-image: var(--pacman-open);
+}
+}
