@@ -56,24 +56,17 @@
       let arrayIndex = Math.floor(Math.random() * quote.length);
       document.getElementById("quote").innerHTML = quote[arrayIndex].quote;
       document.getElementById("author").innerHTML = quote[arrayIndex].author;
-    }
 
-    function write_quotes(el) {
       const random = Math.floor(Math.random() * data.length);
       const rnd = data[random];
       const author = rnd.author ?
         `${typ(rnd.quote)}${typ(rnd.author)}` :
         typ(rnd.quote);
       console.info(`${random}: ${author}`);
-      el.innerHTML = author;
-    }
-
-    function init() {
-      const quotes = document.getElementById("quote");
-      write_quotes(quotes);
     }
 
     window.onload = function () {
+      const quotes = document.getElementById("quote");
       generateQuote();
     }
   </script>
