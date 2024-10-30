@@ -80,7 +80,7 @@ button:hover[title*="Show Closed Tabs"] svg { transform: unset !important; }
 
 .toolbar-default .button-toolbar>button:hover { background-color: var(--colorHighlightBg) !important; fill: var(--colorAccentFg) !important; color: var(--colorAccentFg) !important; }
 
-.toolbar-default .button-toolbar>button.button-pressed { background-image: linear-gradient(var(--colorHighlightBg), var(--colorHighlightBgDark)) !important; }
+.toolbar-default .button-toolbar>button.button-pressed { background-image: linear-gradient(var(--colorHighlightBg), var(--colorHighlightBg)) !important; }
 
 .toolbar-default .button-toolbar>button.button-pressed:active { background-image: linear-gradient(var(--colorBgDark), var(--colorBgDark)) !important; }
 
@@ -194,6 +194,9 @@ button:hover[title*="Show Closed Tabs"] svg { transform: unset !important; }
 
 .tabs-left .tab-position .tab, .tabs-right .tab-position .tab { margin: 0 !important; border-radius: 0 !important; }
 
+/* Tab stacks*/
+.transparent-tabbar .accordion-toggle-arrow:not(.closed.active) { background-color: var(--colorAccentBg); }
+
 /* =====================================
    Side Panel
   ===================================== */
@@ -287,27 +290,6 @@ button:hover[title*="Show Closed Tabs"] svg { transform: unset !important; }
   padding: 10px 25px;
   border-radius: var(--radius);
 }
-
-/* =====================================
-   Calendar
-  ===================================== */
-.manager .manager-view { opacity: .95; background-image: var(--backgroundBlur); font-size: 1.1em; }
-
-.calendar.manager > .toolbar h1 { font-weight: 400 !important; font-size: 1.5rem !important; color: var(--colorHighlightBg); }
-
-.calendar-multiweek-date.current .day {
-  background-color: var(--colorHighlightBg) !important;
-  font-size: 1.1em;
-  font-weight: 500 !important;
-  margin-top: -3px;
-  border-radius: calc(var(--radius) * 2);
-}
-
-.calendar-event .cal-event-header .cal-event-time, .calendar-event .cal-event-header .cal-event-title { font-weight: 400 !important; font-size: 1.15em; }
-
-.calendar-event .cal-event-header .cal-event-title { margin-left: 10px; }
-
-.calendar-grid-days .calendar-drop-target .day.current { color: var(--colorAccentFg) !important; }
 
 /* =====================================
    Mail
