@@ -10,21 +10,9 @@
         html, body { height: 100%; font-family: "HelveticaNeueLTCom-UltLt", system-ui, sans-serif; }
 
         /* Theme colors */
-        @media (prefers-color-scheme: dark) {
-            body { background: var(--colorBg, #18181b); }
-            #clock { color: var(--colorFg, #989ea4); }
-            #minutes { color: var(--colorHighlightBg, #00cccc); }
-            #today { color: var(--colorFg, #989ea4); }
-            #date { color: var(--colorHighlightBg, #00cccc); }
-        }
-
-        @media (prefers-color-scheme: light) {
-            body { background: var(--colorBg, #fcfcfc); }
-            #clock { color: var(--colorFg, #51514d); }
-            #minutes { color: var(--colorHighlightBg, #00cccc); }
-            #today { color: var(--colorFg, #51514d); }
-            #date { color: var(--colorHighlightBg, #00cccc); }
-        }
+            body { background: var(--colorBg); }
+            #clock, #today { color: var(--colorFg); }
+            #minutes, #date { color: var(--colorHighlightBg); }
 
         /* Wrapper */
         .main { padding: 10px; width: 100%; height: 100%; }
@@ -96,7 +84,7 @@
         document.getElementById("month").innerHTML = month;
         document.getElementById("date").innerHTML = (date < 10 ? '0' : '') + d.getDate();
         document.getElementById("year").innerHTML = year;
-
+        
         function save() {
             var checkbox = document.getElementById('themeswitch');
             localStorage.setItem('themeswitch', checkbox.checked);
