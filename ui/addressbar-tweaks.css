@@ -1,5 +1,5 @@
 /*	
-* Vivaldi Addressbar Mods (updated for browser version 7.0)
+* Vivaldi Addressbar Mods (updated for browser version 7.1)
 * Written by sudenim	
 * GNU General Public License v3.0	
 *
@@ -32,11 +32,9 @@
 
 .vivaldi:hover, .vivaldi:hover svg { background-color: var(--colorHighlightBg) !important; fill: var(--colorAccentFg) !important; }
 
-#browser .vivaldi span.burger-icon:hover svg { fill: var(--colorAccentFg) !important; }
-
 #browser .vivaldi span.burger-icon svg path { d: path("M3 6v1h18V6Zm0 6v1h18v-1zm0 6v1h18v-1z"); }
 
-#browser .vivaldi span.burger-icon svg { fill: var(--colorFg); }
+#browser .vivaldi span.burger-icon svg { fill: var(--colorAccentFgFaded); }
 
 #browser .vivaldi:hover span svg { transform: scale(1) !important; }
 
@@ -49,9 +47,9 @@
 
 .toolbar-mainbar>*:last-child:not(.button-toolbar) { margin-right: unset; }
 
-#browser.win .window-buttongroup button, #browser.win .window-buttongroup button.window-close { fill: var(--colorFg) !important; transition: .5s !important; }
+#browser.win .window-buttongroup button, #browser.win .window-buttongroup button.window-close { fill: var(--colorAccentFgFaded) !important; transition: .5s !important; }
 
-#browser.win .window-buttongroup button:hover { background-color: var(--colorHighlightBg) !important; fill: var(--colorAccentFg) !important; }
+#browser.win .window-buttongroup button:hover { background-color: var(--colorHighlightBg) !important }
 
 #browser.win .window-buttongroup button.window-maximize>svg path, #browser.win .window-buttongroup button.window-restore>svg path { d: path("M9 1v8H1V1h8m1-1H0v10h10V0z"); }
 
@@ -84,17 +82,24 @@
 
 .addressfield form input.url { margin-top: 1px; padding-bottom: 3px !important; text-align: center; }
 
+.SearchField, .MailSearchField-Inner, .UrlBar-AddressField { color: var(--colorAccentFgFaded) !important; }
+
+/* Hides dropdown arrow for history in the address field */
+.button-toolbar>button[title="Show typed history"], .button-toolbar>button[title="Enter an address to activate typed history"] { display: none !important; }
+
 /* Pageload bar */
 .UrlBar-AddressField .pageload.progressing .pageload-indicator { display: none; }
 
 /* URL */
-.UrlFragment-Wrapper, .UrlFragment--Lowlight:first-of-type { color: var(--colorFgFaded); }
+.UrlFragment-Wrapper, .UrlFragment--Lowlight:first-of-type { color: var(--colorAccentFgFaded); }
 
 /* URL Base-domain  */
-.UrlFragment-HostFragment-Basedomain, .UrlFragment-HostFragment-TLD { color: var(--colorFg) !important; font-weight: 600; }
+.UrlFragment-HostFragment-Basedomain, .UrlFragment-HostFragment-TLD { color: var(--colorAccentFgFaded) !important; font-weight: 600; }
 
 /* URL Sub-domain */
 .UrlFragment-HostFragment-Subdomain { color: var(--colorHighlightBg) !important; font-weight: 600; }
+
+.UrlFragment-Wrapper:not(.UrlFragment-Wrapper--ShouldHighlight) { --HighlightColor: unset !important; --LowlightColor: unset !important; }
 
 .toolbar-insideinput.toolbar-insideinput.toolbar-insideinput>.button-toolbar button:hover :not(:active):not(:focus):not(.button-pressed),
 .toolbar-insideinput.toolbar-insideinput.toolbar-insideinput>.toolbar-group>.button-toolbar button:hover :not(:active):not(:focus):not(.button-pressed),
@@ -153,8 +158,6 @@ path.bookmark-outline, clipPath#addBookmarkPath path {
   d: path("M14.051 3.176a4.026 4.026 0 0 0-5.687 0L8 3.54l-.363-.364a4.026 4.026 0 0 0-5.687 0C.414 4.711.405 7.146 1.927 8.838c1.389 1.543 5.485 4.878 5.659 5.019.118.097.26.143.401.143h.014a.605.605 0 0 0 .415-.143c.173-.141 4.27-3.476 5.658-5.019 1.522-1.692 1.511-4.127-.023-5.662zm-.924 4.81C12.044 9.19 9.068 11.671 8 12.552c-1.069-.881-4.044-3.362-5.127-4.565C1.811 6.807 1.8 5.125 2.85 4.076c.536-.535 1.24-.804 1.943-.804s1.407.268 1.943.804l.8.8a.612.612 0 0 0 .342.172.635.635 0 0 0 .585-.172l.801-.801a2.752 2.752 0 0 1 3.886 0c1.048 1.05 1.038 2.732-.023 3.911z");
 }
 
-button:not(.button-on) path.bookmark-outline { fill: var(--colorFg); }
-
 button.button-on path.bookmark-outline { fill: var(--colorHighlightBg) !important; }
 
 .add-bookmark-shadow, .bookmark-animated-fill { display: none; }
@@ -187,10 +190,12 @@ button.button-on path.bookmark-outline { fill: var(--colorHighlightBg) !importan
 }
 
 /* Content */
+.BookmarkPopup-TextInputWrapper { padding: 0 18px 6px !important; }
+
 .BookmarkLocationSelector {
   --ListHeight: 35vh;
   grid-template-columns: [header checkbox search content footer] auto;
-  grid-template-rows: [header] 46px [checkbox] 0 [search] 46px [content] var(--ListHeight) [footer] auto;
+  grid-template-rows: [header] 40px [checkbox] 0 [search] 40px [content] var(--ListHeight) [footer] auto;
 }
 
 /* Search bar */
@@ -212,7 +217,7 @@ button.button-on path.bookmark-outline { fill: var(--colorHighlightBg) !importan
   right: 0;
   margin-top: -5px;
   padding: 6.5px 18px;
-  height: 51px;
+  height: 45px;
 }
 
 #browser > div.button-popup.button-popup-center.button-popup-pos-below.button-popup-arrow-dark.button-popup-appear-done.button-popup-enter-done > form > div > div.BookmarkLocationSelector.BookmarkPopup-LocationSelector > div.button-toolbar.BookmarkLocationSelector-AddFolderButton > button > span.button-icon > svg > path {
@@ -230,12 +235,12 @@ button.button-on path.bookmark-outline { fill: var(--colorHighlightBg) !importan
 .BookmarkLocationSelector-AddFolderButton > button:hover { background-color: var(--colorHighlightBg) !important; color: white; }
 
 /* Folder list */
-.BookmarkLocationSelector-FolderList { margin-top: -48px; }
+.BookmarkLocationSelector-FolderList { margin-top: -41px; }
 
 .dialog-content { scrollbar-gutter: unset !important; }
 
 /* Footer buttons */
-.address-top .BookmarkPopup > footer > input[type="submit"] { width:70%; }
+.address-top .BookmarkPopup > footer > input[type="submit"] { width:40%; }
 
 .address-top .BookmarkPopup > footer > input[type="submit"]:hover{ background-color: var(--colorHighlightBg); color: white; }
 
@@ -257,6 +262,4 @@ button.button-on path.bookmark-outline { fill: var(--colorHighlightBg) !importan
 
 #modal-bg.slide { top: 2px !important; }
 
-#modal-bg > div > div > form > footer > input[type=submit]:nth-child(1) { width: 60%; }
-
-#modal-bg > div > div > form > footer > input[type=button]:nth-child(2) { width: 40%; }
+#modal-bg > div > div > form > footer > input[type=submit]:nth-child(1) { width: 40%; }
