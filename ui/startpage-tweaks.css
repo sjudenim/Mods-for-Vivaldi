@@ -1,19 +1,18 @@
 /*
-* Vivaldi Start page mods (updated for browser version 7.0)
+* Vivaldi Start page mods (updated for browser version 7.1)
 * Written by sudenim
 * GNU General Public License v3.0
 * 
 * Re-styling of the Speed Dial and Dashboard
 */
 
-.SpeedDialView-Head:empty { margin-top: 15vh; }
+.SpeedDialView-Head:empty { margin-top: 10vh; }
 
 /* Navigation bar */
 .startpage .startpage-navigation {
   background-color: var(--colorBgAlphaHeavier) !important;
   color: var(--colorAccentFg) !important;
   box-shadow: none !important;
-  min-height: 34px !important;
   padding: 10px 25px 10px 0;
   font-size: 1.1em;
 }
@@ -22,13 +21,14 @@
 
 /* Navigation bar buttons */
 .startpage .startpage-navigation .button-startpage {
+  background-image: linear-gradient(to top, var(--colorBgAlphaHeavy), var(--colorAlpha)) !important;
   border-radius: calc(var(--radius)* 2) !important;
-  border: 1px solid var(--colorFg) !important;
+  border: 1px solid var(--colorAccentFgFaded) !important;
 }
 
 .button-startpage, .startpage .startpage-navigation .button-startpage, .startpage .startpage-folder-navigation .button-startpage {
   margin: 0 5px;
-  text-shadow: 0 0 4px hsl(0,0%,40%) !important;
+  text-shadow: 0 0 4px hsl(0,0%,20%) !important;
   mask-image: unset;
 } 
 
@@ -36,19 +36,18 @@
 
 .startpage-navigation-group .editable-title-container .button-startpage { padding: 0 15px; }
 
-.button-startpage.button-toolbar { padding: 0 5px !important; }
+.button-startpage.button-toolbar { padding: 0 5px !important; width: 34px; }
 
-.button-startpage:hover, .button-startpage.active  {
-  background-color: var(--colorBgAlpha);
-  color: var(--colorAccentFg);
-  border-radius: calc(var(--radius) * 2) !important;
-  fill: unset !important;
+.button-startpage.active  { background-color: var(--colorBgAlphaHeavy); color: var(--colorAccentFg); fill: unset !important; }
 
-}
+.button-startpage:hover { background-color: var(--colorBgAlphaHeavy); }
 
-.button-startpage:hover { color: var(--colorHighlightBg) !important; }
+.button-startpage:hover svg { color: var(--colorAccentFg) !important; }
 
 .startpage .startpage-navigation .startpage-navigation-group:not(:empty) + .startpage-navigation-group { border-left: 0 !important; }
+
+/* Hide Quick Settings panel buton */
+.SpeedDialView-Settings-Button { display: none; }
 
 /* Sub-folder title and button */
 .startpage .startpage-folder-navigation button {
@@ -59,7 +58,7 @@
   box-shadow: none;
   border: none;
   color: white !important;
-  top: -100px;
+  top: -60px;
   left: -15px
 }
 
@@ -88,46 +87,174 @@
   background-color: transparent !important;
   background-image: linear-gradient(to top, var(--colorBgAlphaHeavy), var(--colorAccentBgAlpha)) !important;
   backdrop-filter: var(--backgroundBlur) !important;
-  border-radius: calc(var(--radius) * 2) !important;
 }
+
+.speeddial .dial:hover { background-image: linear-gradient(to top, var(--colorBgAlphaHeavy), var(--colorHighlightBgAlpha)) !important; }
 
 .sd-titles-onhover.dials .dial .button-title { color: var(--colorHighlightBg) !important; }
 
 .speeddial .dial > .thumbnail-title { justify-content: center; }
 
-/* Settings panel */
-.SpeedDialView-Settings-Button { display: none; }
+/* Hides New Speed Dial suggestions */
+.startpage-drawer section.drawer-categories, .startpage-drawer section.drawer-suggestions { display: none !important; }
+
+/* =====================================
+   Managers
+  ===================================== */
+/* Manager backgrounds */
+.manager { backdrop-filter: var(--backgroundBlur); }
+
+/* Calendar
+  ===================================== */
+.manager .manager-view { opacity: .95; background-image: var(--backgroundBlur); font-size: 1.1em; }
+
+.calendar.manager > .toolbar h1 { margin-bottom: 10px; font-weight: 400 !important; font-size: 2rem !important; color: var(--colorHighlightBg); }
+
+.calendar-multiweek-date.current .day {
+  background-color: var(--colorHighlightBg) !important;
+  font-size: 1.1em;
+  font-weight: 500 !important;
+  margin-top: -3px;
+  border-radius: calc(var(--radius) * 2);
+}
+
+.calendar-event .cal-event-header { font-weight: 500; }
+
+.calendar-event .cal-event-header .cal-event-time { color: var(--colorAccentFg); }
+
+.calendar-event .cal-event-header .cal-event-title { color: var(--colorFg); margin-left: 10px; }
+
+.calendar-event .cal-event-dot { margin-right: 12px !important;  color: var(--colorHighlightBg) !important; }
+
+.calendar-event .cal-event-dot > svg { margin-bottom: 1px; }
+
+.calendar-grid-days .calendar-drop-target .day.current { color: var(--colorAccentFg) !important; }
+
+.calendar-grid-agenda .cal-tasks-row .cal-tasks-row-date { color: var(--colorHighlightBg) !important; }
+
+.calendar-event { color: var(--colorFg) !important; }
+
+.calendar-event input[type=submit] { border-color: unset !important; color: unset !important; }
+
+.calendar-event input[type='checkbox'] { border-color: var(--colorHighlightBg) !important; }
+
+.CalendarEventBubble-Inner, .CalendarEventBubble-Arrow { background: var(--colorAccentBg) !important;}
+
+/* Notes Manager
+  ===================================== */
+.NotesManager { opacity: .95; background-image: var(--backgroundBlur); }
+
+.NotesManager-Tree>.toolbar { background-color: var(--colorBg); margin: unset !important; padding: 6px; }
+ 
+.NotesManager-Buttons { background-color: var(--colorBg); border-bottom: 1px solid var(--colorBgDarker); }
+  
+.MarkdownRender p, .MarkdownRender ul, .MarkdownRender ol, .MarkdownRender dl, .MarkdownRender table, .MarkdownRender pre, .MarkdownRender blockquote, body[contenteditable="plaintext-only"] { line-height: 1.4em; }
+  
+.NotesManager-Note { background-color: var(--colorBgAlphaBlur) !important; }
+  
+.NotesManager-EmptyPlaceholder:hover { outline: unset !important; }
+  
+.NotesManager-Footer {
+  background-color: var(--colorBgAlphaBlur) !important;
+  justify-content: center;
+  align-items: center;
+  height: 30px;
+  bottom: 4px;
+  opacity: 1 !important;
+}
+  
+.NotesManager-WordCount {
+  background-color: var(--colorHighlightBg);
+  color: var(--colorAccentFg);
+  padding: 10px 25px;
+  border-radius: var(--radius);
+}
 
 /* =====================================
    Dashboard
   ===================================== */
-.Dashboard-Webpage .url-wrapper { display: none; }
-
-.Dashboard-Webpage .dashboard-widget-header { text-indent: -28px; }
-
-.Dashboard-Widgets .blur-background, .Dashboard-Widgets .solid-background, .dashboard-list-wrapper  { background-color: var(--colorBgAlpha) !important; backdrop-filter: var(--backgroundBlur); }
-
-.Dashboard-Widgets .dashboard-widget { border-radius: calc(var(--radius) * 2) !important; }
-
-.widget-config { border-color: var(--colorHighlightBg); background-color: var(--colorBgAlpha) !important; }
-
-.Dashboard .feed-wrapper .unread, .Dashboard .email-wrapper .unread { color: var(--colorFgIntense) !important; }
-
-.Dashboard > .add-button {
-  gap: 0 !important;
-  padding: 8px !important;
-  border-radius: var(--radius);
-  background-color: var(--colorBgAlpha) !important;
-  border-radius: 25px !important;
-  font-size: 0;
+/* Semi-transparent background */
+  .Dashboard-Widgets .semi-transparent {
+    background-color: var(--colorBgAlphaBlur) !important;
+    backdrop-filter: var(--backgroundBlur);
+}
+  
+/* Transparent background */
+.Dashboard-Widgets .transparent {
+  background-image: linear-gradient(to top, var(--colorBgAlphaHeavy), var(--colorAccentBgAlpha)) !important;
+  color: var(--colorImageCenterFg, var(--colorWindowFg)) !important;
 }
 
+.Dashboard-Widgets .dashboard-widget-header { max-height: 25px; }
+
+.Dashboard-Widgets .dashboard-widget-header .title { font-size: 0 !important; }
+
+.Dashboard-Webpage .url-wrapper { display: none; }
+ 
+.dashboard-list-wrapper { background-color: var(--colorBgAlphaBlur) !important; }
+  
+.widget-config { border-color: var(--colorHighlightBg); background-color: var(--colorBgAlpha) !important; }
+  
+.Dashboard > .add-button {
+  gap: 0 !important;
+  padding: 6px !important;
+  background-color: var(--colorBgAlphaHeavy) !important;
+  border-radius: calc(var(--radius) * 2) !important;
+  fill: var(--colorAccentFgFaded);
+  border: 1px solid var(--colorAccentFgAlpha);
+  font-size: 0;
+}
+  
 .Dashboard > .add-button:hover { background-color: var(--colorHighlightBg) !important; fill: var(--colorAccentFg); }
-
-.Dashboard > .add-button span svg { height: 24px !important; width: 24px !important; }
-
-.dashboard-list-wrapper .button-wrapper .add-button { background-color: var(--colorBgLight) !important; border-radius: calc(var(--radius) * 2) !important; }
-
+  
+.Dashboard > .add-button span svg { height: 20px !important; width: 20px !important; }
+  
+.dashboard-list-wrapper .button-wrapper .add-button { background-color: transparent !important; box-shadow: none !important; }
+  
 .dashboard-list-wrapper .button-wrapper .add-button:hover { color: var(--colorHighlightBg); }
-
+  
 .dashboard-list-wrapper .button-wrapper .add-button[disabled] { color: var(--colorFgFadedMost); }
+  
+/* Date widget
+  ===================================== */ 
+.Dashboard-Date .date-wrapper .day-display { color: var(--colorHighlightBg); }
+  
+.Dashboard-Date .date-wrapper .date-display { display: unset !important; }
+  
+.Dashboard-Date .date-wrapper .date-display .date { font-weight: 200 !important; color: var(--colorAccentFg); }
+  
+.Dashboard-Date .date-wrapper .week-display { opacity: 1 !important; font-weight: 500; }
+  
+.Dashboard-Date .date-wrapper .time-display { text-align: end; text-transform: lowercase; font-size: 1.6em; letter-spacing: 1px; }
+  
+/* Email and Feed widget
+  ===================================== */
+.Dashboard .email-wrapper .unread .title-row .title, .Dashboard .email-wrapper .unread .data-row .title,
+.Dashboard .feed-wrapper .unread .title-row .title, .Dashboard .feed-wrapper .unread .data-row .title { color: var(--colorHighlightBg) !important; }
+  
+.Dashboard .feed-wrapper .unread .subject-row .title, .Dashboard .email-wrapper .unread .subject-row .title { color: var(--colorAccentFg) !important; }
+  
+.Dashboard .feed-wrapper .feed-row .title-row .date, .Dashboard .email-wrapper .feed-row .title-row .date,
+.Dashboard .feed-wrapper .email-item .data-row .date, .Dashboard .email-wrapper .email-item .data-row .date { opacity: 0.9 !important; font-weight: 500; }
+  
+/* Events Widget
+  ===================================== */
+.Dashboard-TasksWidget .widget-image-intro ~ .calendar-viewport .calendar-add-event-button,
+.Dashboard-CalendarWidget .widget-image-intro ~ .calendar-viewport .calendar-add-event-button { background-color: var(--colorBgDarker); color: var(--colorAccentFg); border-radius: calc(var(--radius) * 2); }
+  
+.Dashboard-TasksWidget .widget-image-intro ~ .calendar-viewport .calendar-add-event-button:hover,
+.Dashboard-CalendarWidget .widget-image-intro ~ .calendar-viewport .calendar-add-event-button:hover { background-color: var(--colorHighlightBg); color: var(--colorAccentFg); }
+  
+/* Date for events and tasks */
+.calendar-grid-agenda .cal-tasks-row .cal-tasks-row-date {font-size: unset !important; }
+  
+/* Weather widget
+  ===================================== */
+.Dashboard-WeatherWidget .weather-wrapper .today-forecast-wrapper .heading.block { color: var(--colorHighlightBg) !important; font-weight: 300 !important; }
+  
+.Dashboard-WeatherWidget .weather-wrapper .today-forecast-wrapper .heading { font-weight: 300 !important; }
+  
+.Dashboard-WeatherWidget .weather-wrapper .today-forecast-wrapper .current-forecast { color: var(--colorAccentFg); }
+  
+.Dashboard-WeatherWidget .weather-wrapper .today-forecast-wrapper .date { display: none; }
+
