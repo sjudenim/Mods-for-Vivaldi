@@ -1,5 +1,5 @@
 /*
-* Vivaldi Ui tweaks (updated for browser version 7.0)
+* Vivaldi Ui tweaks (updated for browser version 7.1)
 * Written by sudenim
 * GNU General Public License v3.0
 * 
@@ -46,7 +46,7 @@
 /* =====================================
    Toolbars and Buttons
   ===================================== */
-button { box-shadow: none !important; border-color: transparent !important; }
+.button-toolbar > button { box-shadow: none !important; border-color: transparent !important; }
 
 .button-toolbar > button:hover, .button-toolbar > button:active { background-color: transparent !important; color: var(--colorHighlightBg) !important; }
 
@@ -118,25 +118,14 @@ button:hover[title*="Show Closed Tabs"] svg { transform: unset !important; }
 
 .toolbar-statusbar .toolbar-extensions .button-toolbar > button, .toolbar-statusbar > .button-toolbar > button { height: 28px !important; }
 
-.toolbar-statusbar .button-toolbar > button:hover, .toolbar-statusbar .button-toolbar > button.button-pressed {
-  background-color: transparent !important;
-  fill: var(--colorHighlightBg) !important;
-}
-  
 .toolbar-statusbar > .button-toolbar > button { padding-top: 1px !important; }
-  
-.toolbar-statusbar .button-toolbar > button:hover, .toolbar-statusbar .button-toolbar > button.button-pressed {
-  background-color: transparent !important;
-  fill: var(--colorHighlightBg) !important;
-}
 
 #webview-container ~ .StatusInfo { bottom: 1px !important; right: 4px !important; left: 4px !important; }
 
 #webview-container ~ .StatusInfo .StatusInfo .UrlFragments, #webview-container ~ .StatusInfo .StatusInfo-Content {
-  background: var(--colorBgAlphaBlur) !important;
-  backdrop-filter: var(--backgroundBlur) !important;
-  color: var(--colorFg) !important;
-  border: 0 !important;
+  background: var(--colorAccentBg) !important;
+  color: var(--colorAccentFgFaded) !important;
+  border: 1px solid var(--colorAccentFgAlpha) !important;
 }
 
 .extension-popup { transform: translateY(-4px) !important; }
@@ -160,6 +149,8 @@ button:hover[title*="Show Closed Tabs"] svg { transform: unset !important; }
 
 /* Makes the tab background consistent with the side panel */
 #browser.transparent-tabbar #tabs-tabbar-container, .transparent-tabbar .button-toolbar.workspace-popup.tabbar-workspace-button { background-color: var(--colorBgAlphaBlur) !important; }
+
+.tabs-left .tabbar-wrapper, .tabs-right .tabbar-wrapper { background-color: unset !important; }
 
 /* Close icon */
 .tab-position .tab .close svg path { d: path("m4.145 3.5-.645.643 3.858 3.856-3.856 3.856.643.643L8 8.642l3.856 3.858.643-.645L8.644 8 12.5 4.143l-.643-.643-3.856 3.856Z"); }
@@ -194,17 +185,21 @@ button:hover[title*="Show Closed Tabs"] svg { transform: unset !important; }
 
 .tabs-left .tab-position .tab, .tabs-right .tab-position .tab { margin: 0 !important; border-radius: 0 !important; }
 
-/* Tab stacks*/
-.transparent-tabbar .accordion-toggle-arrow:not(.closed.active) { background-color: var(--colorAccentBg); }
+/* Improves icon visibility */
+.color-behind-tabs-off .toolbar-tabbar > .button-toolbar > button, .color-behind-tabs-off .toolbar-tabbar > .toolbar-group > .button-toolbar > button { color: var(--colorFg) !important; }
+
+/* Tab tooltip */
+#vivaldi-tooltip .tooltip-item {
+  margin-top: 2px;
+  border-radius: var(--radius) !important;
+} 
+
+#vivaldi-tooltip .tooltip-item .title { color: var(--colorHighlightBg) !important;}
 
 /* =====================================
    Side Panel
   ===================================== */
 .panel > header h1 > span:first-child { margin: 0 auto; }
-
-#panels-container.icons, #panels-container.overlay, #panels, #switch, .toolbar-panel, .toolbar-panel .button-toolbar { width: 34px !important; }
-
-#switch { flex: 0 0 34px !important; max-width: 34px !important; padding-top: 0 !important; }
 
 #switch button { border-radius: 0 !important; transition: .5s !important; }
 
@@ -243,53 +238,43 @@ button:hover[title*="Show Closed Tabs"] svg { transform: unset !important; }
 
 .button-toolbar div.progress div.loaded { background-color: var(--colorHighlightBg) !important; height: 2px !important; }
 
+/* Web panel header */
+#panels .webpanel-stack .webpanel .webpanel-header {
+  box-shadow: unset !important;
+  min-height: unset !important;
+  padding: 0 !important;
+  order: 2;
+}
+
+#panels .webpanel-stack .webpanel .webpanel-header .toolbar-default .button-toolbar>button, #panels .webpanel-stack .webpanel .webpanel-header .button-toolbar {
+  background-color: transparent !important;
+  transition: .2s !important;
+  zoom: 1.1;
+}
+
+#panels .webpanel-stack .webpanel .webpanel-header .toolbar-default .button-toolbar>button:hover, #panels .webpanel-stack .webpanel .webpanel-header .button-toolbar:hover {
+  background-color: var(--colorBgDark) !important;
+  color: var(--colorHighlightBg) !important;
+  fill: var(--colorHighlightBg) !important} 
+
+#panels .webpanel-stack .webpanel .webpanel-header .webpanel-title { display: none; }
+
 /* Hides webpanel suggestions */
 .webpanel-suggestions { display: none; }
 
 .transparent { display: none; }
 
-/* Manger views */
-.manager { backdrop-filter: var(--backgroundBlur); }
-
-.manager .manager-content, .manager>.toolbar, .internal-page .manager-editor { background-color: var(--colorBgAlphaBlur) !important; }
-
+/* Tree views */
 .tree-row.folder { font-weight: 700; }
 
 .sortselector, .NotesManager--Vertical .NotesManager-Tree:not(.NotesManager-Tree--Collapsed) { border-color: var(--colorBgDarker) !important; }
 
-#panels .webpanel-stack .webpanel .webpanel-header { padding-top: 12px; }
+/* Divider */
+.panel .SlideBar--FullWidth.alternate {border-top: 1px solid !important; }
 
-/* =====================================
-   Notes Manager
-  ===================================== */
-.NotesManager { opacity: .95; }
+.panel .SlideBar--FullWidth.alternate, .theme-dark .panel .SlideBar--FullWidth.alternate { border-color: var(--colorFgAlpha) !important;}
 
-.NotesManager-Tree>.toolbar { background-color: var(--colorBg); margin: unset !important; padding: 6px; }
-
-.NotesManager-Buttons { background-color: var(--colorBg); border-bottom: 1px solid var(--colorBgDarker); }
-
-.MarkdownRender p, .MarkdownRender ul, .MarkdownRender ol, .MarkdownRender dl, .MarkdownRender table, .MarkdownRender pre, .MarkdownRender blockquote, body[contenteditable="plaintext-only"] { line-height: 1.4em; }
-
-.NotesManager-Note { background-color: var(--colorBgAlphaBlur) !important; }
-
-.NotesManager-EmptyPlaceholder:hover { outline: unset !important; }
-
-.NotesManager-Footer {
-  background-color: var(--colorBgAlphaBlur) !important;
-  justify-content: center;
-  align-items: center;
-  height: 30px;
-  bottom: 4px;
-  opacity: 1 !important;
-
-}
-
-.NotesManager-WordCount {
-  background-color: var(--colorHighlightBg);
-  color: var(--colorAccentFg);
-  padding: 10px 25px;
-  border-radius: var(--radius);
-}
+.manager-editor { padding-top: 10px; }
 
 /* =====================================
    Mail
@@ -354,7 +339,6 @@ button:hover[title*="Show Closed Tabs"] svg { transform: unset !important; }
 /* =====================================
    Miscellaneous stuff
   ===================================== */
-
 /* Alternating row colours for lists */
 .vivaldi-tree div>div:nth-child(even) { background-color: var(--colorBgAlphaHeavy); }
 .webpageview #mail_view.vertical .mail_entry .from, .webpageview #mail_view.vertical .mail_entry .mail_entry_row.subject_row { background-color: unset; }
@@ -443,9 +427,8 @@ input[type=range].isblurred::-webkit-slider-thumb, input[type=range][disabled]::
 
 input[type=range]:focus-visible::-webkit-slider-thumb { outline: 2px solid var(--colorHighlightBg); outline-offset: -1px; border-color: var(--colorHighlightBg); }
 
-#browser > footer .page-zoom-controls > .button-toolbar > button:not(:disabled) { color: var(--colorHighlightFg); }
-
 #browser > footer .page-zoom-controls > .button-toolbar > button:not(:disabled):hover { color: var(--colorHighlightBg); }
+
 
 /* =====================================
    Hiding stuff
@@ -469,6 +452,3 @@ input::-webkit-search-cancel-button {
 #fip-input-text::-webkit-search-cancel-button { appearance: none !important; }
 
 .cb-image svg .bookmark-shadow, .thumbnail-image svg .bookmark-shadow { fill: transparent !important; }
-
-/* Hides dropdown arrow for history in the address field */
-.button-toolbar>button[title="Show typed history"], .button-toolbar>button[title="Enter an address to activate typed history"] { display: none !important; }
