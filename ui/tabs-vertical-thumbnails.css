@@ -1,5 +1,5 @@
 /*	
-* Vivaldi Vertical Tab Thumbnails (updated for browser version 7.0)
+* Vivaldi Vertical Tab Thumbnails (updated for browser version 7.1)
 * Written by sudenim	
 * GNU General Public License v3.0
 *
@@ -7,7 +7,11 @@
 *
 */
 
-#tabs-container.left .tab-strip, #tabs-container.right .tab-strip { padding: 1px 0 !important; }
+/* Hide image in tab tooltip */
+#vivaldi-tooltip .tooltip-item .thumbnail-image {	display: none !important; }
+
+/* Slight adjustment to make tab span the entire width of the tab container */
+.tab-wrapper { margin: 0 0 1px 0 !important; }
 
 /* No title tab header */
 #app #browser:not(.stacks-substrip) #tabs-tabbar-container.left:not(.no-thumbs) .tab-position .tab > .tab-header > .title, #app #browser:not(.stacks-substrip) #tabs-tabbar-container.right:not(.no-thumbs) .tab-position .tab > .tab-header > .title  { visibility: hidden; }
@@ -95,4 +99,4 @@
   margin: 0 !important;
 }
 
-.color-behind-tabs-off .tab .stack-counter { margin-top: -132px; margin-right: 25px; padding: 1px; font-weight: 500; font-size: 1em; }
+.color-behind-tabs-off .tab .stack-counter { margin-top: -132px; margin-right: 25px; padding: 1px; font-size: 1em; }
