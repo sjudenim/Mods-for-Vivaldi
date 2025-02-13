@@ -102,11 +102,14 @@
    Managers
   ===================================== */
 /* Manager backgrounds */
-.manager { backdrop-filter: var(--backgroundBlur); }
+.manager .manager-content, .manager > .toolbar, .manager .manager-editor { background-color: var(--colorBgAlphaBlur) !important; backdrop-filter: var(--backgroundBlur); border: 0 !important; }
+
+/* History manager date */
+.manager > .toolbar > h1 { font-size: 1.2rem; color: var(--colorHighlightBg); }
 
 /* Calendar
   ===================================== */
-.manager .manager-view { opacity: .95; background-image: var(--backgroundBlur); font-size: 1.1em; }
+.manager .manager-view { opacity: .95; backdrop-filter: var(--backgroundBlur) !important; font-size: 1.1em; }
 
 .calendar.manager > .toolbar h1 { margin-bottom: 10px; font-weight: 400 !important; font-size: 2rem !important; color: var(--colorHighlightBg); }
 
@@ -257,4 +260,3 @@
 .Dashboard-WeatherWidget .weather-wrapper .today-forecast-wrapper .current-forecast { color: var(--colorAccentFg); }
   
 .Dashboard-WeatherWidget .weather-wrapper .today-forecast-wrapper .date { display: none; }
-
