@@ -7,9 +7,6 @@
 *
 */
 
-/* Hide image in tab tooltip */
-#vivaldi-tooltip .tooltip-item .thumbnail-image {	display: none !important; }
-
 /* Slight adjustment to make tab span the entire width of the tab container */
 .tab-wrapper { margin: 0 0 1px 0 !important; }
 
@@ -100,3 +97,34 @@
 }
 
 .color-behind-tabs-off .tab .stack-counter { margin-top: -132px; margin-right: 25px; padding: 1px; font-size: 1em; }
+
+/* Tab stacks */
+.tabs-left .tab-group-indicator, .tabs-right .tab-group-indicator { top: -4px !important; opacity: .5; }
+
+.color-behind-tabs-off .tab.active + .tab-group-indicator .tab-indicator.active, .tab-group-indicator .tab-indicator:hover:not(.active) { background-color: var(--colorHighlightBg); }
+
+/* Tab tooltip */
+#vivaldi-tooltip .tooltip-item { background-color: var(--colorAccentBg) !important; color: var(--colorAccentFgFaded) !important; border: 1px solid var(--colorAccentFgAlphaHeavy); margin-top: 2px; border-radius: var(--radiusHalf) !important; } 
+
+#vivaldi-tooltip .tooltip-item:hover { background-color: var(--colorBg) !important; color: var(--colorFg) !important; border-color: var(--colorHighlightBg); }
+
+#vivaldi-tooltip .tooltip-item .title { color: var(--colorHighlightBg) !important; }
+
+#vivaldi-tooltip .tooltip .tab-group { filter: none !important; }
+
+#vivaldi-tooltip .tooltip .tab-group .tooltip-item { box-shadow: none !important; }
+
+#vivaldi-tooltip .tooltip .tab-solo .tooltip-item .thumbnail-image { display: none; }
+
+#vivaldi-tooltip .tooltip .tab-group .thumbnail-image { border: 0 !important; border-radius: 3px !important; }
+
+#vivaldi-tooltip .tooltip .tooltip-item .tooltip-audio-button .audioicon {
+  background-color: var(--colorAccentBg) !important;
+  color: var(--colorAccentFg);
+  border-radius: 25px;
+}
+#vivaldi-tooltip .tooltip .tooltip-item .close {
+  background-color: var(--colorAccentBg) !important;
+  color: var(--colorAccentFg);
+  border-radius: 25px;
+}
