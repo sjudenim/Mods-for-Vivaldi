@@ -176,32 +176,20 @@ button:hover[title*="Show Closed Tabs"] svg { transform: unset !important; }
 
 .tab-position .tab.tab.tab:not(.active):hover { filter: grayscale(0%) brightness(100%); }
 
-.tab-position .tab .progress-indicator, .tab-group-indicator .tab-indicator.active, .tab-group-indicator .tab-indicator:hover:not(.active) {
-  background-color: var(--colorHighlightBg) !important;
-  height: 1px !important
-}
-
-.tab-group-indicator .tab-indicator { background-color: var(--colorHighlightBgAlpha) !important; }
+.tab-position .tab .progress-indicator { background-color: var(--colorHighlightBg) !important; height: 1px !important }
 
 .tabs-left .tab-position .tab, .tabs-right .tab-position .tab { margin: 0 !important; border-radius: 0 !important; }
 
 /* Improves icon visibility */
 .color-behind-tabs-off .toolbar-tabbar > .button-toolbar > button, .color-behind-tabs-off .toolbar-tabbar > .toolbar-group > .button-toolbar > button { color: var(--colorFg) !important; }
 
-/* Tab tooltip */
-#vivaldi-tooltip .tooltip-item {
-  margin-top: 2px;
-  border-radius: var(--radius) !important;
-} 
-
-#vivaldi-tooltip .tooltip-item .title { color: var(--colorHighlightBg) !important;}
-
 /* =====================================
    Side Panel
   ===================================== */
 .panel > header h1 > span:first-child { margin: 0 auto; }
 
-#switch button { border-radius: 0 !important; transition: .5s !important; }
+#switch button, #browser:not(.density-on) .right #switch .addwebpanel-wrapper > button, #browser:not(.density-on) .right #switch > .button-toolbar, #browser:not(.density-on) .right #switch > * > .button-toolbar, #browser:not(.density-on) .right #switch > button {
+  border-radius: 0 !important; transition: .5s !important; }
 
 #switch > .button-toolbar.active:not(:focus), #switch > * > .button-toolbar.active:not(:focus), #switch > button.active:not(:focus), #switch .addwebpanel-wrapper > button.active:not(:focus) {
   color: var(--colorHighlightBg);
@@ -224,7 +212,7 @@ button:hover[title*="Show Closed Tabs"] svg { transform: unset !important; }
 
 .panel .SlideBar--FullWidth.alternate { top: unset !important; }
 
-/* Hides bottom pane */
+/* Hides bottom pane 
 .panel.downloads .download-editor { display: none !important; }
 
 /* Download progress bar */
@@ -243,7 +231,6 @@ button:hover[title*="Show Closed Tabs"] svg { transform: unset !important; }
   box-shadow: unset !important;
   min-height: unset !important;
   padding: 0 !important;
-  order: 2;
 }
 
 #panels .webpanel-stack .webpanel .webpanel-header .toolbar-default .button-toolbar>button, #panels .webpanel-stack .webpanel .webpanel-header .button-toolbar {
@@ -257,7 +244,7 @@ button:hover[title*="Show Closed Tabs"] svg { transform: unset !important; }
   color: var(--colorHighlightBg) !important;
   fill: var(--colorHighlightBg) !important} 
 
-#panels .webpanel-stack .webpanel .webpanel-header .webpanel-title { display: none; }
+#panels .webpanel-stack .webpanel .webpanel-header .webpanel-title { order: 2; }
 
 /* Hides webpanel suggestions */
 .webpanel-suggestions { display: none; }
@@ -357,6 +344,9 @@ button:hover[title*="Show Closed Tabs"] svg { transform: unset !important; }
 
 /* New tab link marker */
 a[target="_blank"]:hover { outline: dotted 1.5px !important; }
+
+/* Serach input */
+input[type=search] { background-color: var(--colorBgDark) !important; }
 
 /* Check boxes and radio buttons */
 .theme-dark input[type=radio], .theme-dark input[type=checkbox] {background-image: none !important; }
