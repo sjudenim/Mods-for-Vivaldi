@@ -208,7 +208,6 @@ button.button-on path.bookmark-outline { fill: var(--colorHighlightBg) !importan
 .BookmarkLocationSelector-SearchInput-Input:not(:focus), .BookmarkLocationSelector-SearchInput-Input:focus {
   border-radius: var(--radiusRounded);
   background-color: var(--colorBgIntense);
-  max-width: 250px;
 }
 
 .BookmarkLocationSelector-AddFolderButton {
@@ -232,7 +231,7 @@ button.button-on path.bookmark-outline { fill: var(--colorHighlightBg) !importan
   padding: 13px;
 }
 
-.BookmarkLocationSelector-AddFolderButton > button:hover { background-color: var(--colorHighlightBg) !important; color: white; }
+.BookmarkLocationSelector-AddFolderButton > button:hover { background-color: var(--colorHighlightBg) !important; color: var(--colorAccentFg); }
 
 /* Folder list */
 .BookmarkLocationSelector-FolderList { margin-top: -41px; }
@@ -240,13 +239,15 @@ button.button-on path.bookmark-outline { fill: var(--colorHighlightBg) !importan
 .dialog-content { scrollbar-gutter: unset !important; }
 
 /* Footer buttons */
-.address-top .BookmarkPopup > footer > input[type="submit"] { width:40%; }
+.BookmarkPopup .dialog-footer { justify-content: space-between; }
 
-.address-top .BookmarkPopup > footer > input[type="submit"]:hover{ background-color: var(--colorHighlightBg); color: white; }
+.address-top .BookmarkPopup > footer > input[type="submit"] { width: 55%; }
+
+.address-top .BookmarkPopup > footer > input[type="submit"]:hover{ background-color: var(--colorHighlightBg); color: var(--colorAccentFg) }
 
 .address-top .button-popup.button-popup-enter-done .BookmarkPopup > footer > input.danger { width: 30%; }
 
-.address-top .button-popup.button-popup-enter-done .BookmarkPopup > footer > input.danger:hover { background-color: var(--colorErrorBg); color: white; }
+.address-top .button-popup.button-popup-enter-done .BookmarkPopup > footer > input.danger:hover { background-color: var(--colorErrorBg); color: white !important; }
 
 .BookmarkInputField:last-of-type { border-bottom: none !important; }
 
