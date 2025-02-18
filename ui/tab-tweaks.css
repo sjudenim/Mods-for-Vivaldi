@@ -7,14 +7,6 @@
 *
 */
 
-/* Removes gap between Workspace button and tabs */
-.tabbar-workspace-button + #tabs-tabbar-container.left, .tabbar-workspace-button + #tabs-tabbar-container.right { padding-top: unset !important; }
-
-/* Makes the tab background consistent with the side panel */
-#browser.transparent-tabbar #tabs-tabbar-container, .transparent-tabbar .button-toolbar.workspace-popup.tabbar-workspace-button { background-color: var(--colorBgAlphaBlur) !important; }
-
-.tabs-left .tabbar-wrapper, .tabs-right .tabbar-wrapper { background-color: unset !important; }
-
 /* Close icon */
 .tab-position .tab .close svg path, #vivaldi-tooltip .tooltip .tooltip-item .close svg path { d: path("m4.145 3.5-.645.643 3.858 3.856-3.856 3.856.643.643L8 8.642l3.856 3.858.643-.645L8.644 8 12.5 4.143l-.643-.643-3.856 3.856Z"); }
 
@@ -37,7 +29,7 @@
 /* Reduces the colour of background tabs */
 .tab-position .tab.tab.tab:not(.active) { filter: grayscale(100%) brightness(70%); }
 
-.tab-position .tab.tab.tab:not(.active):hover { filter: grayscale(0%) brightness(100%); }
+.tab-position .tab.tab.tab:not(.active):hover { filter: grayscale(0%) brightness(90%); }
 
 .tab-position .tab .progress-indicator { background-color: var(--colorHighlightBg) !important; height: 1px !important }
 
@@ -51,6 +43,14 @@
   ===================================== */
 /* Slight adjustment to make tab span the entire width of the tab container */
 .tab-wrapper { margin: 0 0 1px 0 !important; }
+
+/* Removes gap between Workspace button and tabs */
+.tabbar-workspace-button + #tabs-tabbar-container.left, .tabbar-workspace-button + #tabs-tabbar-container.right { padding-top: unset !important; }
+
+/* Makes the vertical tab background consistent with the side panel */
+#browser.transparent-tabbar #tabs-tabbar-container.left, #browser.transparent-tabbar #tabs-tabbar-container.right, .transparent-tabbar .button-toolbar.workspace-popup.tabbar-workspace-button { background-color: var(--colorBgAlphaBlur) !important; }
+
+.tabs-left .tabbar-wrapper, .tabs-right .tabbar-wrapper { background-color: unset !important; }
 
 /* No title tab header */
 #app #browser:not(.stacks-substrip) #tabs-tabbar-container.left:not(.no-thumbs) .tab-position .tab > .tab-header > .title, #app #browser:not(.stacks-substrip) #tabs-tabbar-container.right:not(.no-thumbs) .tab-position .tab > .tab-header > .title  { visibility: hidden; }
@@ -121,16 +121,15 @@
   fill: var(--colorAccentFg) !important;
 }
 
-.audioicon { margin-top: -1.5px; transform: scale(0.48) translateZ(0) !important; }
-
 #app #browser:not(.stacks-substrip) #tabs-tabbar-container.left:not(.no-thumbs) .tab-position .tab > .tab-header > .tab-audio,
 #app #browser:not(.stacks-substrip) #tabs-tabbar-container.right:not(.no-thumbs) .tab-position .tab > .tab-header > .tab-audio {
   margin-top: 18px;
   right: 1px;
   width: 18px;
   height: 18px;
-  padding: 1.5px;
 }
+
+.audioicon { margin-left: 1.5px; transform: scale(0.48) translateZ(0) !important; }
 
 #app #browser:not(.stacks-substrip) #tabs-container.left:not(.no-thumbs) .tab-position .tab > .thumbnail-image,
 #app #browser:not(.stacks-substrip) #tabs-container.right:not(.no-thumbs) .tab-position .tab > .thumbnail-image {
@@ -153,11 +152,15 @@
 
 #vivaldi-tooltip .tooltip-item .title { color: var(--colorHighlightBg) !important; }
 
+#vivaldi-tooltip .tooltip .tooltip-item .thumbnail-text .url { color: var(--colorAccentFg) !important; }
+
 #vivaldi-tooltip .tooltip .tab-group { filter: none !important; }
 
 #vivaldi-tooltip .tooltip .tab-group .tooltip-item { box-shadow: none !important; }
 
 #vivaldi-tooltip .tooltip .tab-solo .tooltip-item .thumbnail-image { display: none; }
+
+#vivaldi-tooltip .tooltip .tab-solo .tooltip-item { width: 300px !important; }
 
 #vivaldi-tooltip .tooltip .tab-group .thumbnail-image { border: 0 !important; border-radius: 3px !important; }
 
