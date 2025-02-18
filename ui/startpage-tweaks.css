@@ -26,6 +26,8 @@
   border: 1px solid var(--colorAccentFgFaded) !important;
 }
 
+.button-startpage.button-toolbar button:hover { background-color: transparent !important; }
+
 .button-startpage, .startpage .startpage-navigation .button-startpage, .startpage .startpage-folder-navigation .button-startpage {
   margin: 0 5px;
   text-shadow: 0 0 4px hsl(0,0%,20%) !important;
@@ -54,7 +56,6 @@
   background-color: unset !important;
   font-size: 2.5rem;
   font-weight: lighter !important;
-  text-shadow: 0 0 4px hsl(0,0%,80%) !important;
   box-shadow: none;
   border: none;
   color: white !important;
@@ -80,7 +81,6 @@
 .dials .dial:focus-within>.thumbnail-image:after { box-shadow: none !important; }
 
 .cb-image svg .folder-tab-color, .thumbnail-image svg .folder-tab-color { fill: var(--colorHighlightBg) !important; }
-
 
 /* Tiles */
 .speeddial .dial {
