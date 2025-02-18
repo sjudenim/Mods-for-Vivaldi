@@ -60,6 +60,8 @@ input[type=button], input[type=submit] { background-image: none !important; }
 /* Close icon */
 .close svg path { d: path("m4.145 3.5-.645.643 3.858 3.856-3.856 3.856.643.643L8 8.642l3.856 3.858.643-.645L8.644 8 12.5 4.143l-.643-.643-3.856 3.856Z"); }
 
+.close { background-color: transparent; }
+
 /* Scale up icons on hover */
 button:hover>svg, button:hover>img, button:hover>span>svg { transform: scale(1.15) !important; transition: .01s ease-in-out !important; }
 
@@ -129,6 +131,17 @@ button:hover[title*="Show Closed Tabs"] svg { transform: unset !important; }
 
 .toolbar-statusbar .button-toolbar > button > .button-badge{ position: absolute !important; right: -5px !important; }
 
+/* Button badge for extensions */
+.color-behind-tabs-off .toolbar-mainbar .button-badge{
+  top: 9px !important;
+  height: 16px;
+  width: 16px;
+  border-radius: var(--radius);
+}
+
+/* Adjust callout arrow*/
+.button-popup-pos-above:before { bottom: -11px !important; }
+
 /* Zoom controls */
 .toolbar-statusbar .page-zoom-controls { margin-top: 2px; }
 
@@ -136,6 +149,8 @@ button:hover[title*="Show Closed Tabs"] svg { transform: unset !important; }
    Side Panel
   ===================================== */
 .panel > header h1 > span:first-child { margin: 0 auto; }
+
+.panel > header h1 { justify-content: center; }
 
 #panels-container.icons, #panels-container.overlay, #panels, #switch, .toolbar-panel, .toolbar-panel .button-toolbar { width: 34px !important; }
 
@@ -210,8 +225,6 @@ button:hover[title*="Show Closed Tabs"] svg { transform: unset !important; }
 /* Tree views */
 .tree-row.folder { font-weight: 700; }
 
-.sortselector, .NotesManager--Vertical .NotesManager-Tree:not(.NotesManager-Tree--Collapsed) { border-color: var(--colorBgDarker) !important; }
-
 /* Divider */
 .panel .SlideBar--FullWidth.alternate {border-top: 1px solid !important; }
 
@@ -283,9 +296,9 @@ button:hover[title*="Show Closed Tabs"] svg { transform: unset !important; }
    Miscellaneous stuff
   ===================================== */
 /* Alternating row colours */
-.vivaldi-tree .tree-item:nth-child(even) { background-color: var(--colorFgAlpha); border-radius: var(--radiusHalf); } 
+.vivaldi-tree .tree-item:nth-child(even) { background-color: var(--colorFgAlpha); } 
 
-.vivaldi-tree .tree-row[data-selected] { border-radius: var(--radiusHalf) !important; }
+.vivaldi-tree .tree-item, .vivaldi-tree .tree-row[data-selected] { border-radius: 0 !important; }
 
 /* Quick command */
 .quick-command-container { box-shadow: 0 0 10px 0 rgba(0, 0, 0, .6) !important; }
@@ -304,6 +317,9 @@ a[target="_blank"]:hover { outline: dotted 1.5px !important; }
 
 /* Serach input */
 input[type=search] { background-color: var(--colorBgDark) !important; }
+
+/* Sort selectors */
+.sortselector { border-radius: 0 !important; } 
 
 /* Check boxes and radio buttons */
 .theme-dark input[type=radio], .theme-dark input[type=checkbox] {background-image: none !important; }
