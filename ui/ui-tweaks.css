@@ -38,7 +38,7 @@
 /* =====================================
    Toolbars and Buttons
   ===================================== */
-.button-toolbar > button { box-shadow: none !important; border-color: transparent !important; transition: .5s !important; }
+.button-toolbar > button { box-shadow: none !important; transition: .5s !important; }
 
 .toolbar.icons button, .toolbar.text button {
   background-image: none !important;
@@ -55,8 +55,6 @@
   margin-top: -1px !important
 }
 
-input[type=button], input[type=submit] { background-image: none !important; }
-
 /* Close icon */
 .close svg path { d: path("m4.145 3.5-.645.643 3.858 3.856-3.856 3.856.643.643L8 8.642l3.856 3.858.643-.645L8.644 8 12.5 4.143l-.643-.643-3.856 3.856Z"); }
 
@@ -66,8 +64,6 @@ input[type=button], input[type=submit] { background-image: none !important; }
 button:hover>svg, button:hover>img, button:hover>span>svg { transform: scale(1.15) !important; transition: .01s ease-in-out !important; }
 
 button:hover[title*="Show Closed Tabs"] svg { transform: unset !important; }
-
-.toolbar-default .button-toolbar>button { background-color: var(--colorBgDark); background-image: none !important; }
 
 .toolbar-default .button-toolbar>button:hover { background-color: var(--colorHighlightBg) !important; fill: var(--colorAccentFg) !important; color: var(--colorAccentFg) !important; }
 
@@ -105,6 +101,7 @@ button:hover[title*="Show Closed Tabs"] svg { transform: unset !important; }
   background: var(--colorBgAlphaBlur) !important;
   backdrop-filter: var(--backgroundBlur);
   border-top: 1px solid var(--colorBgAlphaHeavy) !important;
+  padding: 0 2px 0 0;
 }
 
 .toolbar-statusbar .toolbar-extensions .button-toolbar > button, .toolbar-statusbar > .button-toolbar > button { height: 28px !important; }
@@ -144,6 +141,15 @@ button:hover[title*="Show Closed Tabs"] svg { transform: unset !important; }
 
 /* Zoom controls */
 .toolbar-statusbar .page-zoom-controls { margin-top: 2px; }
+
+/* Reading list */
+.reading-list-dialog .dialog-header { font-weight: 600 !important; }
+
+.readinglist-listing-large .comment { display: none; }
+
+.reading-list-dialog .readinglist-item-large { background-color: unset !important; }
+
+.reading-list-dialog .readinglist-item-large:nth-child(even) { background-color: var(--colorFgAlpha) !important; } 
 
 /* =====================================
    Side Panel
@@ -315,9 +321,6 @@ button:hover[title*="Show Closed Tabs"] svg { transform: unset !important; }
 /* New tab link marker */
 a[target="_blank"]:hover { outline: dotted 1.5px !important; }
 
-/* Serach input */
-input[type=search] { background-color: var(--colorBgDark) !important; }
-
 /* Sort selectors */
 .sortselector { border-radius: 0 !important; } 
 
@@ -391,6 +394,9 @@ input[type=range].isblurred::-webkit-slider-thumb, input[type=range][disabled]::
 input[type=range]:focus-visible::-webkit-slider-thumb { outline: 2px solid var(--colorHighlightBg); outline-offset: -1px; border-color: var(--colorHighlightBg); }
 
 #browser > footer .page-zoom-controls > .button-toolbar > button:not(:disabled):hover { color: var(--colorHighlightBg); }
+
+/* Sort selcetor */
+.sortselector { background-color: var(--colorBgDark) !important; }
 
 /* =====================================
    Hiding stuff
