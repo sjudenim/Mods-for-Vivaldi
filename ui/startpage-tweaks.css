@@ -11,6 +11,7 @@
 /* Navigation bar */
 .startpage .startpage-navigation {
   background-color: var(--colorBgAlphaHeavier) !important;
+  backdrop-filter: var(--backgroundBlur) !important;
   color: var(--colorAccentFg) !important;
   box-shadow: none !important;
   padding: 10px 25px 10px 0;
