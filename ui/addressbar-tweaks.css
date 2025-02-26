@@ -34,8 +34,6 @@
 
 #browser .vivaldi span.burger-icon svg path { d: path("M3 6v1h18V6Zm0 6v1h18v-1zm0 6v1h18v-1z"); }
 
-#browser .vivaldi span.burger-icon svg { fill: var(--colorAccentFgFaded); }
-
 #browser .vivaldi:hover span svg { transform: scale(1) !important; }
 
 .color-behind-tabs-on .vivaldi span.vivaldi-v, .color-behind-tabs-on .vivaldi span.burger-icon { opacity: initial !important; }
@@ -47,7 +45,7 @@
 
 .toolbar-mainbar>*:last-child:not(.button-toolbar) { margin-right: unset; }
 
-#browser.win .window-buttongroup button, #browser.win .window-buttongroup button.window-close { fill: var(--colorAccentFgFaded) !important; transition: .5s !important; }
+#browser.win .window-buttongroup button, #browser.win .window-buttongroup button.window-close { transition: .5s !important; }
 
 #browser.win .window-buttongroup button:hover { background-color: var(--colorHighlightBg) !important }
 
@@ -158,6 +156,8 @@ path.bookmark-outline, clipPath#addBookmarkPath path {
   d: path("M14.051 3.176a4.026 4.026 0 0 0-5.687 0L8 3.54l-.363-.364a4.026 4.026 0 0 0-5.687 0C.414 4.711.405 7.146 1.927 8.838c1.389 1.543 5.485 4.878 5.659 5.019.118.097.26.143.401.143h.014a.605.605 0 0 0 .415-.143c.173-.141 4.27-3.476 5.658-5.019 1.522-1.692 1.511-4.127-.023-5.662zm-.924 4.81C12.044 9.19 9.068 11.671 8 12.552c-1.069-.881-4.044-3.362-5.127-4.565C1.811 6.807 1.8 5.125 2.85 4.076c.536-.535 1.24-.804 1.943-.804s1.407.268 1.943.804l.8.8a.612.612 0 0 0 .342.172.635.635 0 0 0 .585-.172l.801-.801a2.752 2.752 0 0 1 3.886 0c1.048 1.05 1.038 2.732-.023 3.911z");
 }
 
+.BookmarkButton-Button .ToolbarButton-Button { padding: 1px 3px 0 4px !important; }
+
 button.button-on path.bookmark-outline { fill: var(--colorHighlightBg) !important; }
 
 .add-bookmark-shadow, .bookmark-animated-fill { display: none; }
@@ -170,11 +170,10 @@ button.button-on path.bookmark-outline { fill: var(--colorHighlightBg) !importan
 /* =====================================
    Add Bookmark Dropdown
   ===================================== */
-/* Arrow */
-.button-popup-pos-below:before { top: -10px !important; }
-
 /* Dialog Popup */
-.button-popup { max-height: unset !important;}
+.button-popup-pos-below:before { top: -11px !important; left: calc(50% - 5px) !important; }
+
+.button-popup { max-height: unset !important; margin-top: 5px; }
 
 .BookmarkPopup { grid-template-rows: 40px auto 46px; }
 
@@ -207,7 +206,8 @@ button.button-on path.bookmark-outline { fill: var(--colorHighlightBg) !importan
 
 .BookmarkLocationSelector-SearchInput-Input:not(:focus), .BookmarkLocationSelector-SearchInput-Input:focus {
   border-radius: var(--radiusRounded);
-  background-color: var(--colorBgIntense);
+  background-color: var(--colorBgDarker);
+  max-width: 250px;
 }
 
 .BookmarkLocationSelector-AddFolderButton {
@@ -225,7 +225,6 @@ button.button-on path.bookmark-outline { fill: var(--colorHighlightBg) !importan
 }
 
 .BookmarkLocationSelector-AddFolderButton > button {
-  background-image: unset !important;
   background-color: var(--colorBgDarker);
   font-size: 0;
   padding: 13px;
@@ -241,11 +240,11 @@ button.button-on path.bookmark-outline { fill: var(--colorHighlightBg) !importan
 /* Footer buttons */
 .BookmarkPopup .dialog-footer { justify-content: space-between; }
 
-.address-top .BookmarkPopup > footer > input[type="submit"] { width: 55%; }
+.address-top .BookmarkPopup > footer > input[type="submit"] { width: 55%; border-color: var(--colorBorder); }
 
 .address-top .BookmarkPopup > footer > input[type="submit"]:hover{ background-color: var(--colorHighlightBg); color: var(--colorAccentFg) }
 
-.address-top .button-popup.button-popup-enter-done .BookmarkPopup > footer > input.danger { width: 30%; }
+.address-top .button-popup.button-popup-enter-done .BookmarkPopup > footer > input.danger { width: 40%; border-color: var(--colorBorder); }
 
 .address-top .button-popup.button-popup-enter-done .BookmarkPopup > footer > input.danger:hover { background-color: var(--colorErrorBg); color: white !important; }
 
@@ -261,6 +260,6 @@ button.button-on path.bookmark-outline { fill: var(--colorHighlightBg) !importan
 /* Dropdown dialog menu */
 #modal-bg>div { border-radius: var(--radius) !important; backdrop-filter: blur(2px); }
 
-#modal-bg.slide { top: 2px !important; }
-
 #modal-bg > div > div > form > footer > input[type=submit]:nth-child(1) { width: 40%; }
+
+#modal-bg.slide { top: 3px !important; }
