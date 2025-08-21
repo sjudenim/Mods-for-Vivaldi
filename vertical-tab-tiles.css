@@ -1,0 +1,196 @@
+/*	
+* Vertical Tab Tiles
+* For Vivaldi browser version 7.6 and up
+* Written by sudenim	
+*
+* Description: Re-style of vertical tabs with thumbnails enabled
+*
+* GNU General Public License v3.0
+*/
+
+/*=====================================
+   Tab container
+  =====================================*/
+/* Adjustment for tab container if using regular density*/
+.tabbar-wrapper > div:not(.tabbar-wrapper) { padding-top: 0 !important; }
+
+  /* Removes gap between Workspace button and tabs */
+.tabbar-workspace-button + #tabs-tabbar-container.left, .tabbar-workspace-button + #tabs-tabbar-container.right { padding-top: unset !important; }
+
+/* Makes the vertical tab background consistent with the side panel */
+#browser.transparent-tabbar #tabs-tabbar-container.left, #browser.transparent-tabbar #tabs-tabbar-container.right,
+#browser:not(.transparent-tabbar) #tabs-tabbar-container, .transparent-tabbar .button-toolbar.workspace-popup.tabbar-workspace-button { background-color: var(--colorBgAlphaBlur) !important; backdrop-filter: var(--backgroundBlur); }
+
+.tabs-left .tabbar-wrapper, .tabs-right .tabbar-wrapper { background-color: unset !important; }
+
+/* Subtle contaier border */
+#tabs-container.left { border-right: 1px solid var(--colorFgAlpha); }
+
+#tabs-container.right { border-left: 1px solid var(--colorFgAlpha); }
+
+/*=====================================
+   Tabs
+  =====================================*/
+/* Tab alignment */
+.tab-wrapper { box-shadow: 0 1px 3px rgba(0, 0, 0, .3) !important; border-radius: var(--radiusRounded); border: 3px solid var(--colorAccentBgAlphaHeavy); }
+
+.tab-wrapper:not(.active):hover { border-color: var(--colorAccentBgAlpha); }
+
+.tabs-left #tabs-container .toolbar-tabbar-after, .tabs-right #tabs-container .toolbar-tabbar-after { padding-top: 0 !important; }
+
+/* Better icon colour for transparent container */
+#browser.transparent-tabbar.tabs-left, #browser.transparent-tabbar.tabs-left { --colorImageFg: var(--colorFgIntense) !important; }
+
+.tab-position .tab .progress-indicator { background-color: var(--colorHighlightBg) !important; height: 1px !important }
+
+/* Reduces the colour of background tabs */
+.tab-position .tab.tab.tab:not(.active) { filter: grayscale(100%) brightness(40%); }
+
+.tab-position .tab.tab.tab:not(.active):hover { filter: grayscale(40%) brightness(70%); }
+
+/* Tab header */
+.tabs-left .tab-position .tab > .tab-header, .tabs-right .tab-position .tab > .tab-header { margin: 5px 5px 0 0 !important; }
+
+#app #browser:not(.stacks-substrip) #tabs-tabbar-container.left:not(.no-thumbs) .tab-position .tab > .tab-header > .title, #app #browser:not(.stacks-substrip) #tabs-tabbar-container.right:not(.no-thumbs) .tab-position .tab > .tab-header > .title  { visibility: hidden; }
+
+#app #browser:not(.stacks-substrip) #tabs-tabbar-container.left:not(.no-thumbs) .tab-position .tab.active, #app #browser:not(.stacks-substrip) #tabs-tabbar-container.right:not(.no-thumbs) .tab-position .tab.active { opacity: 1; }
+
+#app #browser:not(.stacks-substrip) #tabs-tabbar-container.left:not(.no-thumbs) .tab-position .tab > .tab-header, #app #browser:not(.stacks-substrip) #tabs-tabbar-container.right:not(.no-thumbs) .tab-position .tab > .tab-header {
+  position: absolute;
+  z-index: 1;
+  width: calc(100% - 1px);
+  height: 100%;
+  align-items: stretch !important;
+}
+
+#app #browser:not(.stacks-substrip) #tabs-tabbar-container.left:not(.no-thumbs) .tab-position .tab > .tab-header > .progress-indicator, #app #browser:not(.stacks-substrip) #tabs-tabbar-container.right:not(.no-thumbs) .tab-position .tab > .tab-header > .progress-indicator { border-radius: 1px; }
+
+/* Thumbnail image */
+:not(.ui-transparent-tabs).color-behind-tabs-off .tab,
+#app #browser:not(.stacks-substrip) #tabs-container.left:not(.no-thumbs) .tab-position .tab > .thumbnail-image,
+#app #browser:not(.stacks-substrip) #tabs-container.right:not(.no-thumbs) .tab-position .tab > .thumbnail-image {
+  background-color: transparent !important;
+  box-shadow: none !important;
+  border-radius: var(--radiusRounded) !important;
+  margin: 0 !important;
+}
+
+/* Fav icon */
+.tab .favicon { filter: drop-shadow(0px 1px 2px rgb(0 0 0 / 0.4)); }
+
+/* Unread indicator */
+#app #browser:not(.stacks-substrip) #tabs-tabbar-container.left:not(.no-thumbs) .tab-position .tab.unread > .tab-header::before,
+#app #browser:not(.stacks-substrip) #tabs-tabbar-container.right:not(.no-thumbs) .tab-position .tab.unread > .tab-header::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 8px;
+  height: 8px;
+  background: var(--colorAccentFg);
+}
+
+.color-behind-tabs-off #tabs-tabbar-container .toolbar:not(.toolbar-small) > .button-toolbar,
+.color-behind-tabs-off #tabs-tabbar-container .toolbar:not(.toolbar-small) > div > .button-toolbar {
+  color: var(--colorFg) !important;
+}
+
+
+.color-behind-tabs-off #tabs-tabbar-container .toolbar:not(.toolbar-small) > .button-toolbar:hover,
+.color-behind-tabs-off #tabs-tabbar-container .toolbar:not(.toolbar-small) > div > .button-toolbar:hover {
+    color: var(--colorFg);
+}
+
+/* Trash */
+#tabs-container > div > div.toolbar.toolbar-tabbar.sync-and-trash-container > div > button:hover > span > svg { color: var(--colorHighlightBg); }
+
+.tabs-top:not(.mac).color-behind-tabs-on #tabs-container, .tabs-top.mac.hasfocus.color-behind-tabs-on #tabs-container { background-image: none !important; }
+
+#browser:not(.alt-tabs) #tabs-container .tab:not(.tab-mini) .close { margin-right: 2px !important; }
+
+/* New tab button */
+#tabs-tabbar-container.left .newtab, #tabs-tabbar-container.right .newtab  { top: -3px; left: auto !important; width: 100% !important; border-radius: var(--radiusRounded) !important; }
+
+.button-toolbar > button { border-radius: var(--radiusRounded) !important; }
+
+
+/* Audio icon */
+.audioicon { margin-left: 1.5px; transform: scale(0.48) translateZ(0) !important; }
+
+#browser:not(.alt-tabs) #tabs-tabbar-container.left .tab:not(.pinned):not(.tab-small).audio-on .favicon,
+#browser:not(.alt-tabs) #tabs-tabbar-container.left .tab:not(.pinned):not(.tab-small).audio-muted .favicon,
+#browser:not(.alt-tabs) #tabs-tabbar-container.left .tab:not(.pinned):not(.tab-small).tab-captured .favicon,
+#browser:not(.alt-tabs) #tabs-tabbar-container.right .tab:not(.pinned):not(.tab-small).audio-on .favicon,
+#browser:not(.alt-tabs) #tabs-tabbar-container.right .tab:not(.pinned):not(.tab-small).audio-muted .favicon,
+#browser:not(.alt-tabs) #tabs-tabbar-container.right .tab:not(.pinned):not(.tab-small).tab-captured .favicon { transform: unset !important; }
+
+#app #browser:not(.stacks-substrip) #tabs-tabbar-container.left:not(.no-thumbs) .tab-position .tab > .tab-header > .close,
+#app #browser:not(.stacks-substrip) #tabs-tabbar-container.left:not(.no-thumbs) .tab-position .tab > .tab-header > .tab-audio,
+#app #browser:not(.stacks-substrip) #tabs-tabbar-container.right:not(.no-thumbs) .tab-position .tab > .tab-header > .close,
+#app #browser:not(.stacks-substrip) #tabs-tabbar-container.right:not(.no-thumbs) .tab-position .tab > .tab-header > .tab-audio,
+.color-behind-tabs-off .tab .stack-counter, .color-behind-tabs-off .tab.active .stack-counter {
+  background-color: var(--colorAccentBg) !important;
+  color: var(--colorAccentFg);
+  border-radius: 25px;
+  opacity: .9;
+}
+
+#browser:not(.alt-tabs) #tabs-tabbar-container.left .tab:not(.tab-mini) .close, #browser:not(.alt-tabs) #tabs-tabbar-container.left .close,
+#browser:not(.alt-tabs) #tabs-tabbar-container.right .tab:not(.tab-mini) .close, #browser:not(.alt-tabs) #tabs-tabbar-container.right .close {
+  position: absolute;
+  margin-right: 2px !important;
+  right: 0;
+}
+
+#app #browser:not(.stacks-substrip) #tabs-tabbar-container.left:not(.no-thumbs) .tab-position .tab > .tab-header > .close:hover,
+#app #browser:not(.stacks-substrip) #tabs-tabbar-container.left:not(.no-thumbs) .tab-position .tab > .tab-header > .tab-audio:hover,
+#app #browser:not(.stacks-substrip) #tabs-tabbar-container.right:not(.no-thumbs) .tab-position .tab > .tab-header > .close:hover,
+#app #browser:not(.stacks-substrip) #tabs-tabbar-container.right:not(.no-thumbs) .tab-position .tab > .tab-header > .tab-audio:hover,
+#vivaldi-tooltip .tooltip .tooltip-item .close:hover, #vivaldi-tooltip .tooltip .tooltip-item .tooltip-audio-button:hover  {
+  background-color: var(--colorHighlightBg) !important;
+  fill: var(--colorHighlightFg) !important;
+}
+
+#app #browser:not(.stacks-substrip) #tabs-tabbar-container.left:not(.no-thumbs) .tab-position .tab > .tab-header > .tab-audio,
+#app #browser:not(.stacks-substrip) #tabs-tabbar-container.right:not(.no-thumbs) .tab-position .tab > .tab-header > .tab-audio {
+  margin-top: 18px;
+  right: 2px;
+  width: 18px;
+  height: 18px;
+}
+
+/* Tab stacks */
+.tabs-left .tab-group-indicator, .tabs-right .tab-group-indicator { top: -4px !important; opacity: .5; }
+
+.color-behind-tabs-off .tab.active + .tab-group-indicator .tab-indicator.active, .tab-group-indicator .tab-indicator:hover:not(.active) { background-color: var(--colorHighlightBg); }
+
+.color-behind-tabs-off .tab .stack-counter { margin-top: -126px; margin-right: 25px; padding: 1px; font-size: 1em; }
+
+/*=====================================
+   Tab Tooltip
+  =====================================*/
+#vivaldi-tooltip .tooltip-item { margin-top: 2px; margin-left: 2px; background-color: var(--colorAccentBg) !important; border: 1px solid var(--colorAccentFgAlphaHeavy); border-radius: var(--radiusHalf) !important; } 
+
+#vivaldi-tooltip .tooltip-item:hover { background-color: var(--colorBg) !important; border-color: var(--colorHighlightBg); }
+
+#vivaldi-tooltip .tooltip-item .title { color: var(--colorHighlightBg) !important; }
+
+#vivaldi-tooltip .tooltip .tooltip-item .thumbnail-text .url { color: var(--colorAccentFg) !important; }
+
+#vivaldi-tooltip .tooltip .tab-group { filter: none !important; }
+
+#vivaldi-tooltip .tooltip .tab-group .tooltip-item { box-shadow: none !important; }
+
+#vivaldi-tooltip .tooltip .tab-solo .tooltip-item .thumbnail-image { display: none; }
+
+#vivaldi-tooltip .tooltip .tab-solo .tooltip-item { width: 300px !important; }
+
+#vivaldi-tooltip .tooltip .tab-group .thumbnail-image { border: 0 !important; border-radius: 3px !important; }
+
+#vivaldi-tooltip .tooltip .tooltip-item .close, #vivaldi-tooltip .tooltip .tooltip-item .tooltip-audio-button { background-color: var(--colorAccentBgFadedMore) !important; border-radius: 25px; }
+
+#vivaldi-tooltip .tooltip .tooltip-item .close svg { fill: var(--colorAccentFg) !important; }
+
+#vivaldi-tooltip .tooltip .tooltip-item .tooltip-audio-button .audioicon { margin-top: .5px; margin-left: 1px; }
+
+#vivaldi-tooltip .tooltip .tooltip-item .close:hover, #vivaldi-tooltip .tooltip .tooltip-item .tooltip-audio-button:hover  { background-color: var(--colorHighlightBg) !important; }

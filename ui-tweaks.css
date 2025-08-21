@@ -1,0 +1,464 @@
+/*
+* Ui tweaks
+* For Vivaldi browser version 7.6 and up
+* Written by sudenim
+* 
+* Desription: General ui changes that include: recolouring, re-positioning, font adjustments, icon replacements
+*
+* GNU General Public License v3.0
+*/
+
+/* Text selection */
+::selection { background-color: var(--colorHighlightBg) !important; color: white; }
+
+/* Fonts */
+* {
+  font-family: "Quicksand" !important;
+  text-shadow: 0 0 .8px var(--colorFgAlpha) !important;
+  letter-spacing: .1px;
+}
+
+/* Removes title bar but keeps it for setting window */
+#browser.win:not(.fullscreen, .disable-titlebar) #header { display: none; }
+
+.is-settingspage #header { display: initial !important; }
+
+/* Vertical Extensions Drop-Down Menu */
+.extensionIconPopupMenu { --popupWidth: 280px !important; top: unset !important; }
+
+.extensionIconPopupMenu > .toolbar {
+  max-height: 50vh;
+  overflow: clip auto;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  align-items: stretch;
+}
+.extensionIconPopupMenu .ExtensionDropdownIcon > button { justify-content: flex-start; padding: 1em; }
+
+.extensionIconPopupMenu .ExtensionDropdownIcon > button::after { content: attr(title); overflow: clip visible; text-overflow: ellipsis; width: 250px; }
+
+/* Private badge */
+.UrlBar-PrivateWindowIndicator { font-size: 0 !important; fill: var(--colorHighlightBg); padding: 0 6px !important; }
+
+.UrlBar-PrivateWindowIndicator svg { transform: scale(1.3); }
+
+
+#browser {
+    #header, .bookmark-bar {
+      background-color: var(--colorBgAlphaBlur) !important;
+      backdrop-filter: var(--backgroundBlur);
+  }
+}
+
+/*=====================================
+   Toolbars and Buttons
+  =====================================*/
+.button-toolbar > button { box-shadow: none !important; border: 0 !important; transition: .5s !important; }
+
+.toolbar.icons button, .toolbar.text button {
+  background-image: none !important;
+  background-color: var(--colorBgDark) !important;
+  border-color: var(--colorBg) !important;
+  height: 28px !important;
+  margin-top: -1px !important
+}
+
+.toolbar.icons button:hover, .toolbar.text button:hover {
+  background-image: none !important;
+  background-color: var(--colorHighlightBg) !important;
+  height: 28px !important;
+  margin-top: -1px !important
+}
+
+/* Close icon */
+.close svg path { d: path("m4.145 3.5-.645.643 3.858 3.856-3.856 3.856.643.643L8 8.642l3.856 3.858.643-.645L8.644 8 12.5 4.143l-.643-.643-3.856 3.856Z"); }
+
+.close { background-color: transparent; }
+
+/* Scale up icons on hover */
+button:hover>svg, button:hover>img, button:hover>span>svg { transform: scale(1.15) !important; transition: .01s ease-in-out !important; }
+
+button:hover[title*="Show Closed Tabs"] svg { transform: unset !important; }
+
+.toolbar-default .button-toolbar>button:hover { background-color: var(--colorHighlightBg) !important; fill: var(--colorAccentFg) !important; color: var(--colorAccentFg) !important; }
+
+.toolbar-default .button-toolbar>button.button-pressed { background-image: linear-gradient(var(--colorHighlightBg), var(--colorHighlightBg)) !important; color: var(--colorHighlightFg); fill: var(--colorHighlightFg) !important; }
+
+.toolbar-default .button-toolbar>button.button-pressed:active { background-image: linear-gradient(var(--colorBgDark), var(--colorBgDark)) !important; }
+
+.toolbar-mainbar>.button-toolbar>button:hover { background-color: var(--colorHighlightBg); fill: var(--colorAccentFg) !important; color: var(--colorAccentFg) !important; }
+
+.toolbar-mainbar>.button-toolbar>button:hover { fill: var(--colorHighlightBg) !important; color: var(--colorAccentFg); }
+
+._default-focus { outline: transparent !important; outline-offset: 0 !important }
+
+.urlSearch .favicon { display: inline !important; }
+
+.toolbar-default .button-toolbar>button.button-pressed { color: var(--colorAccentFg) !important; fill: var(--colorAccentFg) !important; }
+
+/* Won't show horizontal menu and window buttons when no ui */
+#browser.minimal-ui:not(.tabs-top) .topmenu, #browser.minimal-ui:not(.tabs-top) .window-buttongroup { display: none !important; }
+
+/* Workspaces button tweaks when in the addressbar */
+#browser .workspace-popup .button-icon:not(.override) { width: 0 !important; }
+
+.button-toolbar > button > span.button-toolbar-menu-indicator { margin-top: 4px; }
+
+/* Panel toggle */
+.button-toolbar > button[title*="Hide Panel"] svg { fill: var(--colorHighlightBg) !important; }
+
+/*=====================================
+   Status Bar
+  =====================================*/
+/* this turns the status bar into an overlay, kind of like a dock */  
+#browser:not(.tabs-bottom) footer#footer {
+  position: absolute;
+  bottom: 2px;
+  right: 35%; /* centering will depend on the width of your status bar */
+  width: fit-content;
+  border-radius: var(--radiusRounded);
+  border: 1px solid var(--colorFgAlpha) !important;
+}
+/* overlay style ends */
+
+#browser:not(.tabs-bottom) footer#footer { background: var(--colorBgAlphaBlur) !important; backdrop-filter: var(--backgroundBlur); }
+
+footer .toolbar-statusbar { font-size: .75rem !important; }
+
+:not(.tabs-bottom)#browser > footer:after { background-color: var(--colorBgAlphaHeavy) !important; }
+
+.toolbar-statusbar .toolbar-extensions .button-toolbar > button, .toolbar-statusbar > .button-toolbar > button { height: 28px !important; }
+
+.toolbar-statusbar > .button-toolbar > button { padding-top: 1px !important; }
+
+.toolbar-statusbar > .button-toolbar > button:hover, .toolbar-statusbar .toolbar-extensions .button-toolbar > button:hover { background-color: transparent; color: var(--colorHighlightBg); }
+
+#webview-container ~ .StatusInfo { bottom: 1px !important; right: 4px !important; left: 4px !important; }
+
+#webview-container ~ .StatusInfo .StatusInfo .UrlFragments, #webview-container ~ .StatusInfo .StatusInfo-Content {
+  background: var(--colorAccentBg) !important;
+  color: var(--colorAccentFgFaded) !important;
+  border: 1px solid var(--colorAccentFgAlpha) !important;
+}
+
+.extension-popup { transform: translateY(-4px) !important; }
+
+.button-popup-above { bottom: 45px !important;}
+
+.button-popup-wrapper { background-color: var(--colorBgDark); }
+  
+.button-toolbar > button > span + .button-title, .button-toolbar > button.button-textonly { padding-top: 2px; }
+
+.toolbar-statusbar .button-toolbar > button > .button-badge{ position: absolute !important; right: -5px !important; }
+
+/* Button badge for extensions */
+.color-behind-tabs-off .toolbar-mainbar .button-badge{
+  top: 9px !important;
+  height: 16px;
+  width: 16px;
+  border-radius: var(--radius);
+}
+
+/* Adjust callout arrow*/
+.button-popup-pos-above:before { bottom: -11px !important; }
+
+/* Reading list */
+.reading-list-dialog .dialog-header { font-weight: 600 !important; }
+
+.readinglist-listing-large .comment { display: none; }
+
+.reading-list-dialog .readinglist-item-large { background-color: unset !important; }
+
+.reading-list-dialog .readinglist-item-large:nth-child(even) { background-color: var(--colorFgAlpha) !important; } 
+
+/*=====================================
+   Side Panel
+  =====================================*/
+.panel > header h1 > span:first-child { margin: 0 auto; }
+
+.panel > header h1 { justify-content: center; }
+
+.panel > header h1 .close { display: none !important; }
+
+#switch button, #browser:not(.density-on) .right #switch .addwebpanel-wrapper > button, #browser:not(.density-on) .right #switch > .button-toolbar, #browser:not(.density-on) .right #switch > * > .button-toolbar, #browser:not(.density-on) .right #switch > button {
+  border-radius: 0 !important; transition: .5s !important;
+}
+
+#switch .button-toolbar > button:hover { background-color: transparent !important; fill: var(--colorHighlightBg) !important; color: var(--colorHighlightBg) !important; }
+
+#switch > .button-toolbar.active:not(:focus), #switch > * > .button-toolbar.active:not(:focus), #switch > button.active:not(:focus), #switch .addwebpanel-wrapper > button.active:not(:focus) {
+  color: var(--colorHighlightBg);
+  box-shadow: none !important;
+}
+
+#switch > .button-toolbar.active, #switch > * > .button-toolbar.active, #switch > button.active, #switch .addwebpanel-wrapper > button.active,
+.density-on #switch .addwebpanel-wrapper > button.active button, .density-on #switch > .button-toolbar.active button, .density-on #switch > * > .button-toolbar.active button, .density-on #switch > button.active button {
+  background-color: transparent !important;
+  color: var(--colorHighlightBg);
+  border-radius: 0 !important;
+}
+
+#switch .addwebpanel-wrapper>button.downloads.in-progress div.progress, #switch>button.downloads.in-progress div.progress {
+  background-color: var(--colorHighlightBg);
+  border: 1px solid var(--colorHighlightBg)
+}
+
+/* Download panel fixes */
+.panel.downloads .panel-pathfield .actionbuttons, .popout.downloads-popout .panel-pathfield .actionbuttons { margin-top: 2px !important; }
+
+.panel .SlideBar--FullWidth.alternate { top: unset !important; }
+
+/* Download progress bar */
+.button-toolbar div.progress {
+  background-color: var(--colorAccentBg) !important;
+  top: 23px;
+  height: 2px;
+  border: none !important;
+  border-radius: 1px !important;
+}
+
+.button-toolbar div.progress div.loaded { background-color: var(--colorHighlightBg) !important; height: 2px !important; }
+
+/* Web panel header */
+#panels .webpanel-stack .webpanel .webpanel-header {
+  box-shadow: unset !important;
+  min-height: unset !important;
+  padding: 0 !important;
+}
+
+#panels .webpanel-stack .webpanel .webpanel-header .toolbar-default .button-toolbar>button, #panels .webpanel-stack .webpanel .webpanel-header .button-toolbar {
+  background-color: transparent !important;
+  transition: .2s !important;
+  zoom: 1.1;
+}
+
+#panels .webpanel-stack .webpanel .webpanel-header .toolbar-default .button-toolbar>button:hover, #panels .webpanel-stack .webpanel .webpanel-header .button-toolbar:hover {
+  background-color: var(--colorBgDark) !important;
+  color: var(--colorHighlightBg) !important;
+  fill: var(--colorHighlightBg) !important} 
+
+#panels .webpanel-stack .webpanel .webpanel-header .webpanel-title { order: 2; }
+
+/* Hides webpanel suggestions */
+.webpanel-suggestions { display: none; }
+
+.transparent { display: none; }
+
+/* Tree views */
+.tree-row.folder { font-weight: 700; }
+
+/* Divider */
+.panel .SlideBar--FullWidth.alternate {border-top: 1px solid !important; }
+
+.panel .SlideBar--FullWidth.alternate, .theme-dark .panel .SlideBar--FullWidth.alternate { border-color: var(--colorFgAlpha) !important;}
+
+.manager-editor { padding-top: 10px; }
+
+/*=====================================
+   Mail
+  =====================================*/
+.MailSearchField-Inner { background-color: transparent !important; border: 0 !important; }
+
+.webpageview #mail_view #mail_detail .mail-detail-header .subject { color: var(--colorFgIntense) !important; }
+
+/*=====================================
+   Settings panel/window
+  =====================================*/
+.vivaldi-settings .settings-sidebar .settings-navigation { min-width: 200px !important; }
+
+.vivaldi-settings .settings-sidebar .button-category { border-radius: 0 !important; }
+
+.ContentBlocker { max-width: 1000px; }
+
+.colorpicker .colorpicker-plot .colorpicker-plot-reticle {
+  position: relative !important;
+  z-index: 1 !important;
+  top: -10px !important;
+  left: -5px !important;
+  height: 10px !important;
+  width: 10px !important;
+  padding: 0 !important;
+  border-radius: 50% !important;
+  border: 1px solid hsl(0, 0%, 0%) !important;
+  box-shadow: 0 0 0 1px #fff !important;
+  background-color: hsla(0, 0%, 0%, 0) !important;
+}
+
+.info { font-size: 12px !important; color: var(--colorFgFaded) !important; }
+
+.vivaldi-settings .settings-sidebar .button-category { height: 32px; }
+
+.vivaldi-settings .settings-sidebar .settings-navigation:focus-within .tree-row .button-category.category-selected {
+  color: var(--colorHighlightBg);
+  background-color: var(--colorBgLightIntense) !important;
+  border-top: 1px solid var(--colorBorder);
+  border-left: 1px solid var(--colorBorder);
+  border-bottom: 1px solid var(--colorBorder);
+}
+  /* Settings icons */
+.vivaldi-settings .settings-sidebar .button-category svg { stroke: var(--colorHighlightBg) !important; fill: transparent !important; }
+
+.vivaldi-settings .settings-sidebar .settings-navigation:focus-within .tree-row .button-category.category-selected svg { stroke: var(--colorHighlightBg) !important; }
+
+/* Removes schedule timeline size limit */
+.theme-schedule-timeline { max-width: unset !important; }
+
+/* Expands themes layout */
+.TabbedView { max-width: unset !important; }
+
+/* Theme timeline indicator */
+.theme-schedule-timeline .theme-schedule-now-indicator { color: var(--colorHighlightBg) !important; }
+
+.theme-schedule-timeline .theme-schedule-now-indicator:after { background-color: var(--colorHighlightBg); }
+
+/* Schedule label */
+.ThemePreview-Label-Meta>span { color: var(--colorHighlightBg); }
+
+.ThemePreview-Label-Meta { opacity: .8 !important; }
+
+/*=====================================
+   Tabs and Tabbar
+  =====================================*/
+.TabButtonPopup > header { top: 2px !important; }
+
+.TabButtonPopup > header .qc-entry {
+  box-shadow: none !important;
+  border: 0 !important;
+  background-color: var(--colorFgAlpha);
+  border-radius: 25px !important;
+}
+
+.TabButtonPopupSuggestion { display: none; }
+
+.TabButtonPopup .quick-commands, .TabButtonPopup .dialog-content, .TabButtonPopup .no-results { background-color: var(--colorBg) !important; }
+
+.TabButtonPopup .window-entry-button.selected > input, .TabButtonPopup > header .qc-entry:focus-within { outline: 0 !important; }
+
+/*=====================================
+   Miscellaneous stuff
+  =====================================*/
+/* Alternating row colours */
+.vivaldi-tree .tree-item:nth-child(even) { background-color: color-mix(in hsl, var(--colorAccentFgAlphaHeavy) 60%, var(--colorBgAlpha)); } 
+
+.vivaldi-tree .tree-item, .vivaldi-tree .tree-row[data-selected] { border-radius: 0 !important; }
+
+/* Quick command */
+.quick-command-container { box-shadow: 0 0 10px 0 rgba(0, 0, 0, .6) !important; }
+
+.quick-command-container, .quick-command-container .quick-commands>div { min-width: 40vw; cursor: auto; }
+
+.quick-command-container .quick-commands>div>div { max-width: 100% !important; }
+
+.quick-command-container .quick-command { cursor: pointer; }
+
+/* Rounds fav icons in lists */
+.vivaldi-tree .tree-row label>img, .vivaldi-tree .tree-row label .tree-row-image { border-radius: 50% !important; }
+
+/* New tab link marker */
+a[target="_blank"]:hover { outline: dotted 1.5px !important; }
+
+/* Sort selectors */
+.sortselector { border-radius: 0 !important; } 
+
+/* Tiled windows */
+#browser:not(.inner, .narrow-tiling) #webpage-stack > .tiled.visible { padding: 0 !important; }
+
+/* Check boxes and radio buttons */
+.theme-dark input[type=radio], .theme-dark input[type=checkbox] {background-image: none !important; }
+
+input[type=radio], input[type=checkbox] { background-color: var(--colorBgIntense) !important; }
+
+input[type=checkbox]:before, input[type=checkbox]:after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: var(--colorHighlightBg);
+  transform-origin: 0 0;
+  transition: transform 0ms linear 0ms;
+}
+
+input[type=checkbox]:checked:before {
+  transform: rotate(-45deg) translateY(45%) translateX(-30%) scaleX(0.25) scaleY(0.4);
+  transition-duration: 33.33333333ms;
+}
+
+input[type=checkbox]:checked:after {
+  transform: rotate(225deg) translateY(-30%) translateX(-95%) scaleX(0.25) scaleY(1.2);
+  transition-duration: 100ms;
+  transition-delay: 33.33333333ms;
+}
+
+input[type=radio]:before {
+  content: '';
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  right: 3px;
+  bottom: 3px;
+  transition: transform 50ms linear;
+  border-radius: var(--radiusRound);
+  background-color: var(--colorHighlightBg);
+  transform: scale(0);
+}
+
+input[type=radio]:checked:before { transition-timing-function: cubic-bezier(0, 0, 0.3, 1.5); transition-duration: 100ms; transform: scale(1); }
+
+input[type=radio]:checked { box-shadow: none !important; border-width: 1px !important; }
+
+/* UI Scrollbars */
+::-webkit-scrollbar { background-color: transparent !important; border: 0 !important; width: 12px !important; padding: 0 2px; }
+
+::-webkit-scrollbar-track { background-color: transparent !important; border: 0 !important; }
+
+::-webkit-scrollbar-thumb { background-color: var(--colorFgAlpha) !important; border: 4px solid transparent !important; border-radius: var(--radius); }
+
+::-webkit-scrollbar-thumb:hover, ::-webkit-scrollbar-thumb:active { background-color: var(--colorHighlightBg) !important; }
+
+::-webkit-scrollbar-button { display: none !important; }
+
+/* Slider */
+input[type=range] { background-color: var(--colorHighlightBg); height: 1px !important; }
+
+input[type=range]::-webkit-slider-thumb { width: 12px !important; height: 12px !important; border: 1px solid var(--colorFgIntense) !important; }
+
+input[type=range]::-webkit-slider-thumb:hover { border-color: var(--colorHighlightBg) !important; }
+
+input[type=range]::-webkit-slider-thumb:active { background: linear-gradient(var(--colorBg), var(--colorBgDarker)); }
+
+input[type=range].isblurred::-webkit-slider-thumb, input[type=range][disabled]::-webkit-slider-thumb { opacity: 0.7 !important; }
+
+input[type=range]:focus-visible::-webkit-slider-thumb { outline: 2px solid var(--colorHighlightBg); outline-offset: -1px; border-color: var(--colorHighlightBg); }
+
+#browser > footer .page-zoom-controls > .button-toolbar > button:not(:disabled):hover { color: var(--colorHighlightBg); }
+
+/* Sort selcetor */
+.sortselector { background-color: var(--colorBgDark) !important; }
+
+/* Zoom controls */
+.page-zoom-controls .zoom-percent { width: 35px !important; }
+
+/*=====================================
+   Hiding stuff
+  =====================================*/
+.color-behind-tabs-on .addressfield:focus-within,
+.color-behind-tabs-on .searchfield:focus-within,
+.UrlBar-AddressField:focus-within,
+.searchfield:focus-within,
+.toolbar.icons input[type=search] {
+  box-shadow: none !important
+}
+
+.tab-strip .thumbnail-image > svg,
+button.fip-previous,
+button.fip-next,
+button.fip-close,
+input::-webkit-search-cancel-button {
+  display: none !important
+}
+
+#fip-input-text::-webkit-search-cancel-button { appearance: none !important; }
+
+.cb-image svg .bookmark-shadow, .thumbnail-image svg .bookmark-shadow { fill: transparent !important; }

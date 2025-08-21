@@ -1,0 +1,267 @@
+/*	
+* Addressbar Mods
+* For Vivaldi browser version 7.6 and up
+* By sudenim	
+*
+* Description: Re-colouring, re-positioning, font adjustments and icon replacements for Addressbar elements	
+*
+* GNU General Public License v3.0	
+*/
+
+/* Fix for UI zoom */
+#browser.win button.vivaldi, #browser .window-buttongroup { scale: unset !important; }
+
+/* Fix for addressbar size */
+#browser.win.address-top .toolbar:has(.window-buttongroup.on-mainbar) { min-height: unset !important; padding-right: calc(46px * 3) !important; }
+
+/* Removes border radius on buttons */
+.toolbar-mainbar > .button-toolbar > button { border-radius: 0 !important; }
+
+/* Removes Line under addressbar */
+.address-top .mainbar { border: none !important ; }
+
+/* Styles the Mail search bar */
+.SearchField.MailSearchField { background-color: var(--colorFgAlpha) !important; height: 26px; min-width: 20vw; }
+
+/* Adds a background blur and subtle transparency to the addressbar 
+.color-behind-tabs-off .mainbar { opacity: .96; backdrop-filter: var(--backgroundBlur); }
+
+/*=====================================
+   Menu Button
+  =====================================*/
+.disable-titlebar.address-top#browser:not(.tabs-top) .vivaldi { width: 44px !important; margin: 0 -2px 0 0 !important; border-radius: unset !important; }
+
+.vivaldi svg { flex: 0 0 26px !important; height: 26px !important; }
+
+.vivaldi:hover, .vivaldi:hover svg { background-color: var(--colorHighlightBg) !important; fill: var(--colorHighlightFg) !important; }
+
+#browser .vivaldi span.burger-icon svg path { d: path("M3 6v1h18V6Zm0 6v1h18v-1zm0 6v1h18v-1z"); }
+
+#browser .vivaldi:hover span svg { transform: scale(1) !important; }
+
+.color-behind-tabs-on .vivaldi span.vivaldi-v, .color-behind-tabs-on .vivaldi span.burger-icon { opacity: initial !important; }
+
+/*=====================================
+   Window Buttons Group
+  =====================================*/
+.disable-titlebar#browser.win .window-buttongroup { height: 34px !important; }
+
+.toolbar-mainbar>*:last-child:not(.button-toolbar) { margin-right: unset; }
+
+#browser.win .window-buttongroup button, #browser.win .window-buttongroup button.window-close { transition: .5s !important; }
+
+#browser.win .window-buttongroup button:hover { background-color: var(--colorHighlightBg) !important; fill: var(--colorHighlightFg) !important; }
+
+#browser.win .window-buttongroup button.window-maximize>svg path, #browser.win .window-buttongroup button.window-restore>svg path { d: path("M9 1v8H1V1h8m1-1H0v10h10V0z"); }
+
+.maximized#browser.win .window-buttongroup button.window-close, .fullscreen#browser.win .window-buttongroup button.window-close { padding-right: 0 !important; }
+
+/*=====================================
+   Addressfield
+  =====================================*/
+.UrlField { justify-content: center; }
+
+.UrlField .UrlBar-UrlField { text-align: center; }
+
+.toolbar-spacer-flexible ~ .UrlBar-AddressField, .toolbar-spacer-panel ~ .UrlBar-AddressField { flex-grow: 8; }
+
+.panel-bookmarks > header > div > input[type=search]:focus-within,
+.color-behind-tabs-off .SearchField:focus-within,
+.color-behind-tabs-off .MailSearchField-Inner:focus-within,
+.color-behind-tabs-off .UrlBar-AddressField:focus-within:focus-within {
+  outline: unset !important;
+}
+
+/* Chrome style */ 
+.UrlBar-AddressField, .SearchField {
+  border: 0 !important;
+  padding: 5px !important;
+  background-color: var(--colorFgAlpha);
+  border-radius: 25px !important;
+}
+/* End style */
+
+.addressfield form input.url { margin-top: 1px; padding-bottom: 3px !important; text-align: center; }
+
+.SearchField, .MailSearchField-Inner, .UrlBar-AddressField { color: var(--colorAccentFgFaded) !important; }
+
+/* Hides dropdown arrow for history in the address field */
+.button-toolbar>button[title="Show typed history"], .button-toolbar>button[title="Enter an address to activate typed history"] { display: none !important; }
+
+/* Pageload bar */
+.UrlBar-AddressField .pageload.progressing .pageload-indicator { display: none; }
+
+/* URL */
+.UrlFragment-Wrapper, .UrlFragment--Lowlight:first-of-type { color: var(--colorAccentFgFaded); }
+
+/* URL Base-domain  */
+.UrlFragment-HostFragment-Basedomain, .UrlFragment-HostFragment-TLD { color: var(--colorAccentFgFaded) !important; font-weight: 600; }
+
+/* URL Sub-domain */
+.UrlFragment-HostFragment-Subdomain { color: var(--colorHighlightBg) !important; font-weight: 600; }
+
+.UrlFragment-Wrapper:not(.UrlFragment-Wrapper--ShouldHighlight) { --HighlightColor: unset !important; --LowlightColor: unset !important; }
+
+.toolbar-insideinput.toolbar-insideinput.toolbar-insideinput>.button-toolbar button:hover :not(:active):not(:focus):not(.button-pressed),
+.toolbar-insideinput.toolbar-insideinput.toolbar-insideinput>.toolbar-group>.button-toolbar button:hover :not(:active):not(:focus):not(.button-pressed),
+.toolbar .button-toolbar.reload:hover {
+  background-color: transparent !important;
+  fill: var(--colorHighlightBg) !important;
+}
+
+.drop_down:hover, .drop_down[data-selected], #mail_panel section ul li.selected { background-color: var(--colorHighlightBg) !important; }
+
+button.button-addressfield:hover { background-color: transparent !important; border-color: transparent !important; }
+
+.addressfield button.button-addressfield.input-dropdown:hover svg,
+.button-addressfield.reader-mode:hover svg,
+.button-addressfield.bookmark:hover svg .bookmark-outline {
+  fill: var(--colorHighlightBgDark) !important;
+}
+
+.button-addressfield.bookmark.bookmarked svg .bookmark-outline { fill: var(--colorHighlightBgDark); }
+
+.button-addressfield.bookmark svg .bookmark-animated-fill { fill: var(--colorHighlightBgAlpha); }
+
+/* Content Blocking badge */
+.toolbar.toolbar-addressbar.toolbar-mainbar.toolbar-large>div.addressfield .ads,
+.toolbar.toolbar-addressbar.toolbar-mainbar.toolbar-large>div.addressfield .blocking,
+.toolbar.toolbar-addressbar.toolbar-mainbar.toolbar-large>div.addressfield .trackers {
+  fill: var(--colorHighlightBg) !important;
+}
+
+/* Site Info icon */
+.siteinfo-symbol:hover+.siteinfo-text { display: block; }
+
+.SiteInfoButton.secure, .SiteInfoButton.certified { fill: var(--colorHighlightBg); }
+
+.SiteInfoButton.warning { fill: var(--colorErrorBg); }
+
+.SiteInfoButton.secure:hover, .SiteInfoButton.certified:hover, .SiteInfoButton.warning { background-color: transparent; fill: var(--colorHighlightBg) !important; transform: scale(1.1); }
+
+/* Internal site icon */
+.SiteInfoButton.internal svg path, .SiteInfoButton.warning svg path {
+  d: path("M10.4 5c-.4-.8 0-1.8 1-2 .7 0 1.5.4 1.6 1.2a1.4 1.4 0 0 1-.2 1l-4 7c-.3.5-.7.8-1.2.8-.6 0-1-.2-1.3-.7L3.8 7.8 2.2 5c-.5-.8 0-2 1-2 .7 0 1 .2 1.4.7l1 2 1 1.4a2 2 0 0 0 1.7 1.5 2.2 2.2 0 0 0 2.3-2V6c0-.3 0-.6-.2-1z");
+}
+
+/* Qr code icon */
+.create-qr-code button svg { fill: unset !important; }
+
+.toolbar-insideinput.toolbar-insideinput.toolbar-insideinput>.button-toolbar>button.button-pressed { background-color: unset !important; }
+
+/* Add bookmark icon */
+.BookmarkButton { border: unset !important; }
+
+path.bookmark-outline, clipPath#addBookmarkPath path {
+  d: path("M14.051 3.176a4.026 4.026 0 0 0-5.687 0L8 3.54l-.363-.364a4.026 4.026 0 0 0-5.687 0C.414 4.711.405 7.146 1.927 8.838c1.389 1.543 5.485 4.878 5.659 5.019.118.097.26.143.401.143h.014a.605.605 0 0 0 .415-.143c.173-.141 4.27-3.476 5.658-5.019 1.522-1.692 1.511-4.127-.023-5.662zm-.924 4.81C12.044 9.19 9.068 11.671 8 12.552c-1.069-.881-4.044-3.362-5.127-4.565C1.811 6.807 1.8 5.125 2.85 4.076c.536-.535 1.24-.804 1.943-.804s1.407.268 1.943.804l.8.8a.612.612 0 0 0 .342.172.635.635 0 0 0 .585-.172l.801-.801a2.752 2.752 0 0 1 3.886 0c1.048 1.05 1.038 2.732-.023 3.911z");
+}
+
+.BookmarkButton-Button .ToolbarButton-Button { padding: 1px 3px 0 4px !important; }
+
+button.button-on path.bookmark-outline { fill: var(--colorHighlightBg) !important; }
+
+.add-bookmark-shadow, .bookmark-animated-fill { display: none; }
+
+#main>div.toolbar.toolbar-addressbar.toolbar-mainbar.toolbar-large>div.addressfield>div.toolbar.toolbar-small.toolbar-insideinput>div.button-toolbar.cjvgsbzxr000i3n670rebhqf3>button>svg>g>path.bookmark-animated-fill,
+#main>div.toolbar.toolbar-addressbar.toolbar-mainbar.toolbar-large>div.addressfield>div.toolbar.toolbar-small.toolbar-insideinput>div.button-toolbar.cjvgsbzxr000i3n670rebhqf3>button>svg>g>path.bookmark-outline {
+  display: none;
+}
+
+/*=====================================
+   Add Bookmark Dropdown
+  =====================================*/
+/* Dialog Popup */
+.button-popup-pos-below:before { top: -11px !important; left: calc(50% - 5px) !important; }
+
+.button-popup { max-height: unset !important; margin-top: 5px; }
+
+.BookmarkPopup { grid-template-rows: 40px auto 46px; }
+
+/* Top header */
+.address-top .BookmarkPopup > header > h1 { font-size: 0; } /* hide "added" text */
+
+.address-top .BookmarkPopup > header > p {
+  font-size: 1.1em;
+  font-weight: 700;
+  text-indent: -22px;
+  clip-path: inset(0 0 0 -7px);
+  margin-left: -5px;
+}
+
+/* Content */
+.BookmarkPopup-TextInputWrapper { padding: 0 18px 6px !important; }
+
+.BookmarkLocationSelector {
+  --ListHeight: 35vh;
+  grid-template-columns: [header checkbox search content footer] auto;
+  grid-template-rows: [header] 40px [checkbox] 0 [search] 40px [content] var(--ListHeight) [footer] auto;
+}
+
+/* Search bar */
+.BookmarkPopup .dialog-content { gap: unset !important; }
+
+.BookmarkLocationSelector-Header, .BookmarkLocationSelector-SearchInput, .BookmarkLocationSelector-AddFolderButton { background-color: var(--colorBg); }
+
+.BookmarkLocationSelector-SearchInput { grid-area: header !important; margin-top: -5px; width: 85%; }
+
+.BookmarkLocationSelector-SearchInput-Input:not(:focus), .BookmarkLocationSelector-SearchInput-Input:focus {
+  border-radius: var(--radiusRounded);
+  background-color: var(--colorBgDarker);
+  max-width: 250px;
+}
+
+.BookmarkLocationSelector-AddFolderButton {
+  grid-area: header !important;
+  position: absolute;
+  right: 0;
+  margin-top: -5px;
+  padding: 6.5px 18px;
+  height: 45px;
+}
+
+#browser > div.button-popup.button-popup-center.button-popup-pos-below.button-popup-arrow-dark.button-popup-appear-done.button-popup-enter-done > form > div > div.BookmarkLocationSelector.BookmarkPopup-LocationSelector > div.button-toolbar.BookmarkLocationSelector-AddFolderButton > button > span.button-icon > svg > path {
+  fill-rule: evenodd;
+  d: path("M 2.35717 3.36075 C 2.13323 3.58693 2.00515 3.89221 2 4.21203 V 11.7872 C 1.99441 11.9479 2.02163 12.1081 2.07996 12.2577 C 2.13828 12.4073 2.22648 12.5431 2.33904 12.6568 C 2.4516 12.7705 2.58613 12.8596 2.73425 12.9185 C 2.88237 12.9774 3.04091 13.0049 3.2 12.9993 H 12.8 C 13.1167 12.9941 13.4189 12.8647 13.6428 12.6385 C 13.8668 12.4123 13.9948 12.1071 14 11.7872 L 14 6 C 14 5.5 13.5 5 13 5 H 8 L 6.8 3 H 3.2 C 2.88334 3.0052 2.5811 3.13457 2.35717 3.36075 Z M 2.99939 11.822 L 3 11.8046 V 4.22318 C 3.00223 4.16171 3.02741 4.10511 3.06779 4.06432 C 3.10773 4.02398 3.15929 4.00208 3.21161 4 H 6.24589 L 7.5 6 H 12.8 C 12.9105 6 13 6.08796 13 6.19842 C 13 7.13107 13 11.0636 13 11.7761 C 12.9978 11.8376 12.9726 11.8942 12.9322 11.935 C 12.8923 11.9753 12.8407 11.9972 12.7884 11.9993 H 3.18227 L 3.16455 11.9999 C 3.14406 12.0006 3.12343 11.9971 3.10383 11.9893 C 3.08421 11.9815 3.06567 11.9694 3.04966 11.9533 C 3.03364 11.9371 3.02051 11.9171 3.01165 11.8944 C 3.00278 11.8717 2.99853 11.847 2.99939 11.822 Z");
+}
+
+.BookmarkLocationSelector-AddFolderButton > button {
+  background-color: var(--colorBgDarker);
+  font-size: 0;
+  padding: 13px;
+}
+
+.BookmarkLocationSelector-AddFolderButton > button:hover { background-color: var(--colorHighlightBg) !important; color: var(--colorAccentFg); }
+
+/* Folder list */
+.BookmarkLocationSelector-FolderList { margin-top: -41px; }
+
+.dialog-content { scrollbar-gutter: unset !important; line-height: 20px; }
+
+/* Footer buttons */
+.BookmarkPopup .dialog-footer { justify-content: space-between; }
+
+.address-top .BookmarkPopup > footer > input[type="submit"] { width: 55%; border-color: var(--colorBorder); }
+
+.address-top .BookmarkPopup > footer > input[type="submit"]:hover{ background-color: var(--colorHighlightBg); color: var(--colorAccentFg) }
+
+.address-top .button-popup.button-popup-enter-done .BookmarkPopup > footer > input.danger { width: 40%; border-color: var(--colorBorder); }
+
+.address-top .button-popup.button-popup-enter-done .BookmarkPopup > footer > input.danger:hover { background-color: var(--colorErrorBg); color: white !important; }
+
+.BookmarkInputField:last-of-type { border-bottom: none !important; }
+
+.BookmarkLocationSelector-SpeedDialCheckbox { display: none; }
+
+.BookmarkInputField-Title { color: var(--colorHighlightBg); font-weight: 700; }
+
+/* Omnibox dropdown */
+.OmniDropdown { background-color: var(--colorBgAlphaBlur); backdrop-filter: var(--backgroundBlur); }
+
+.OmniDropdown-Label { background-color: var(--colorBgDarker); border-radius: 0 !important; }
+
+/* Dropdown dialog menu */
+#modal-bg>div { border-radius: 3px !important; }
+
+#modal-bg > div > div > form > footer > input[type=submit]:nth-child(1) { width: 40%; }
+
+#modal-bg.slide { top: 3px !important; }
