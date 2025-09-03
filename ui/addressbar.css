@@ -1,5 +1,5 @@
 /*	
-* Addressbar Mods
+* Addressbar Mods (08/26/25)
 * For Vivaldi browser version 7.6 and up
 * By sudenim	
 *
@@ -8,23 +8,19 @@
 * GNU General Public License v3.0	
 */
 
-/* Fix for UI zoom */
-#browser.win button.vivaldi, #browser .window-buttongroup { scale: unset !important; }
-
-/* Fix for addressbar size */
-#browser.win.address-top .toolbar:has(.window-buttongroup.on-mainbar) { min-height: unset !important; padding-right: calc(46px * 3) !important; }
-
 /* Removes border radius on buttons */
 .toolbar-mainbar > .button-toolbar > button { border-radius: 0 !important; }
 
 /* Removes Line under addressbar */
-.address-top .mainbar { border: none !important ; }
+.address-top .mainbar { border-bottom: 0 !important ; }
 
 /* Styles the Mail search bar */
 .SearchField.MailSearchField { background-color: var(--colorFgAlpha) !important; height: 26px; min-width: 20vw; }
 
-/* Adds a background blur and subtle transparency to the addressbar 
-.color-behind-tabs-off .mainbar { opacity: .96; backdrop-filter: var(--backgroundBlur); }
+/* Adds a transparency effect to the Address Bar */
+.mainbar { --transparency: transparent 10%; background-color: color-mix(in srgb, var(--colorAccentBg), var(--transparency)) !important; }
+
+#browser.win.address-top .toolbar:has(.window-buttongroup.on-mainbar) { backdrop-filter: var(--backgroundBlur); }
 
 /*=====================================
    Menu Button
@@ -44,6 +40,9 @@
 /*=====================================
    Window Buttons Group
   =====================================*/
+/* Addressbar padding */
+#browser.win.address-top .toolbar:has(.window-buttongroup.on-mainbar) { min-height: unset !important; padding-right: calc(46px * 3) !important; }
+
 .disable-titlebar#browser.win .window-buttongroup { height: 34px !important; }
 
 .toolbar-mainbar>*:last-child:not(.button-toolbar) { margin-right: unset; }
@@ -72,7 +71,7 @@
   outline: unset !important;
 }
 
-/* Chrome style */ 
+/* Chrome style, will also style search fields */ 
 .UrlBar-AddressField, .SearchField {
   border: 0 !important;
   padding: 5px !important;
@@ -255,9 +254,7 @@ button.button-on path.bookmark-outline { fill: var(--colorHighlightBg) !importan
 .BookmarkInputField-Title { color: var(--colorHighlightBg); font-weight: 700; }
 
 /* Omnibox dropdown */
-.OmniDropdown { background-color: var(--colorBgAlphaBlur); backdrop-filter: var(--backgroundBlur); }
-
-.OmniDropdown-Label { background-color: var(--colorBgDarker); border-radius: 0 !important; }
+.OmniDropdown { background-color: var(--colorAccentBg); }
 
 /* Dropdown dialog menu */
 #modal-bg>div { border-radius: 3px !important; }
