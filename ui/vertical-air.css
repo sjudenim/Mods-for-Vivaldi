@@ -1,0 +1,39 @@
+/*	
+* Vertical Air (08/26/25)
+* For Vivaldi browser version 7.6 and up
+* By sudenim	
+*
+* Description: A more subtle take on Opera Air, designed for vertical tabs.	
+*
+* GNU General Public License v3.0	
+*/
+
+/* Window */
+#main { margin: 3px; }
+
+/* Address Bar */
+.mainbar { --transparency: transparent 10%; background-color: color-mix(in srgb, var(--colorAccentBg), var(--transparency)) !important; }
+
+.address-top .mainbar { margin-bottom: 3px; }
+
+.address-bottom .mainbar { margin-top: 3px; }
+
+/* Webpage */
+#browser:not(.fullscreen) #webpage-stack { margin: 0 2px 0 3px; }
+
+/* Status Bar */
+#browser:not(.tabs-bottom) footer#footer { margin: 0 3px 3px; border-top: 0 !important; background: var(--colorBgAlphaBlur) !important; backdrop-filter: var(--backgroundBlur); }
+
+/* Tab Bar */
+#browser.transparent-tabbar #tabs-tabbar-container.left, #browser.transparent-tabbar #tabs-tabbar-container.right,
+#browser:not(.transparent-tabbar) #tabs-tabbar-container, .transparent-tabbar .button-toolbar.workspace-popup.tabbar-workspace-button { background-color: var(--colorBgAlphaBlur) !important; backdrop-filter: var(--backgroundBlur); }
+
+.tabs-left .tabbar-wrapper, .tabs-right .tabbar-wrapper { background-color: unset !important; }
+
+#browser.transparent-tabbar #tabs-tabbar-container.left #tabs-container, #browser.transparent-tabbar #tabs-tabbar-container.right #tabs-container { backdrop-filter: unset !important; }
+
+/* Removes page border of Tab Container added by "vertical-tab-tiles.css" */
+#tabs-container.left, #tabs-container.right { border: 0 !important; }
+
+/* Removes page border of Panel added in "ui-tweaks.css */
+#panels-container.left:not(.icons) .panel-group, #panels-container.right:not(.icons) .panel-group { border: 0 !important; }
