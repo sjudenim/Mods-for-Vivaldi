@@ -1,0 +1,18 @@
+/*	
+* Fixes (08/22/25)
+* For Vivaldi browser version 7.6 and up
+* By sudenim	
+*
+* Description: Random fixes for errors in the base ui	
+*
+* GNU General Public License v3.0	
+*/
+
+/* Ui zoom bug */
+#browser.win button.vivaldi, #browser .window-buttongroup { scale: unset !important; }
+
+/* Side panel audio icon mis-colouring and alignment */
+#switch .addwebpanel-wrapper > button .panel-audio .audioicon, #switch > .button-toolbar .panel-audio .audioicon, #switch > * > .button-toolbar .panel-audio .audioicon, #switch > button .panel-audio .audioicon {
+    right: 0 !important;
+    background: var(--colorHighlightBg) !important;
+}
