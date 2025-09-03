@@ -1,5 +1,5 @@
 /*
-* Start Page mods
+* Start Page mods (08/22/25)
 * For Vivaldi browser version 7.6 and up
 * By sudenim
 * 
@@ -33,7 +33,7 @@
 .startpage .startpage-navigation .button-startpage {
   background-image: linear-gradient(to top, var(--colorBgAlphaHeavy), var(--colorAlpha)) !important;
   border-radius: calc(var(--radius)* 2) !important;
-  border: 1px solid var(--colorAccentFgFaded) !important;
+  border: 1px solid var(--colorAccentFg);
 }
 
 .button-startpage.button-toolbar button:hover { background-color: transparent !important; }
@@ -50,11 +50,11 @@
 
 .button-startpage.button-toolbar { padding: 0 5px !important; width: 34px; }
 
-.button-startpage.active  { background-color: var(--colorBgAlphaHeavy); color: var(--colorAccentFg); fill: unset !important; }
+.button-startpage.active  { background-color: var(--colorBgAlphaBlur); color: var(--colorAccentFg) !important; fill: unset !important; }
 
-.button-startpage:hover { background-color: var(--colorBgAlphaHeavy); }
+.startpage .startpage-navigation .startpage-navigation-group .button-startpage:hover { background-color: var(--colorBgAlphaHeavy) !important; border: 1px solid var(--colorHighlightBg) !important; }
 
-.button-startpage:hover svg { color: var(--colorAccentFg) !important; }
+.button-startpage:hover svg { color: var(--colorAccentFg); }
 
 .startpage .startpage-navigation .startpage-navigation-group:not(:empty) + .startpage-navigation-group { border-left: 0 !important; }
 
@@ -64,27 +64,28 @@
 .SpeedDialView-Settings-Button { display: none; }
 
 /* Sub-folder title and button */
-.startpage .startpage-folder-navigation button {
-  background-color: unset !important;
-  font-size: 2.5rem;
-  font-weight: lighter !important;
-  box-shadow: none;
-  border: none;
-  color: white !important;
-  top: -60px;
-  left: -15px
-}
-
-/* Center the speed dial folder back button */
-.startpage .startpage-folder-navigation {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
+.button-startpage.up-level { padding: 0 8px 4px !important; }
 
 .button-startpage.up-level svg { display: none; }
 
-.startpage .startpage-folder-navigation button:hover { transform: scale(1.05) !important; transition: .1s ease-in-out !important; }
+.startpage .startpage-folder-navigation button {
+  background-color: unset !important;
+  border-radius: calc(var(--radius)* 2) !important;
+  font-size: 2.5rem;
+  font-weight: lighter;
+  box-shadow: none;
+  color: white !important;
+  text-shadow: 0 0 4px hsl(0,0%,20%) !important;
+  top: -60px;
+}
+
+.startpage .startpage-folder-navigation button:hover {
+  transform: scale(1.1);
+  transition: .1s ease-in-out !important;
+}
+
+/* Center the speed dial folder back button */
+.startpage .startpage-folder-navigation { display: flex; align-items: center; justify-content: center; }
 
 .dials .dial:focus-within>.thumbnail-image:after { box-shadow: none !important; }
 
@@ -96,17 +97,20 @@
 
 /* Add speed dial button */
 .SpeedDial-Add-Button {
-    gap: 0 !important;
+  gap: 0 !important;
   padding: 6px !important;
   background-color: var(--colorBgAlphaBlur) !important;
   backdrop-filter: var(--backgroundBlur) !important;
   border-radius: calc(var(--radius) * 2) !important;
-  fill: var(--colorAccentFgFaded);
+  fill: var(--colorAccentFg) !important;
   border: 1px solid var(--colorAccentFgAlpha);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, .3) !important;
   font-size: 0;
 }
 
-.SpeedDial-Add-Button:hover { background-color: var(--colorHighlightBg) !important; fill: var(--colorHighlightFg); }
+.SpeedDial-Add-Buttons { box-shadow: none !important; }
+
+.SpeedDial-Add-Button:hover { border-color: var(--colorHighlightBg) !important; }
   
 .SpeedDial-Add-Button  span svg { height: 20px !important; width: 20px !important; }
 
@@ -115,13 +119,12 @@
   background-color: transparent !important;
   background-image: linear-gradient(to top, var(--colorBgAlphaHeavy), var(--colorAccentBgAlpha)) !important;
   backdrop-filter: var(--backgroundBlur) !important;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, .3) !important;
 }
 
 .SpeedDial--Thumbnail:hover { background-image: linear-gradient(to top, var(--colorBgAlphaHeavy), var(--colorHighlightBgAlpha)) !important; }
 
-.sd-titles-onhover.dials .dial .button-title { color: var(--colorHighlightBg) !important; }
-
-.SpeedDial--Thumbnail > .thumbnail-title { justify-content: center; }
+.SpeedDial--Thumbnail > .thumbnail-title { justify-content: center; color: var(--colorHighlightBg) !important; }
 
 /* Hides New Speed Dial suggestions */
 .startpage-drawer section.drawer-categories, .startpage-drawer section.drawer-suggestions { display: none !important; }
