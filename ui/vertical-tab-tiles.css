@@ -1,5 +1,5 @@
 /*	
-* Vertical Tab Tiles
+* Vertical Tab Tiles (09/02/25)
 * For Vivaldi browser version 7.6 and up
 * Written by sudenim	
 *
@@ -11,19 +11,10 @@
 /*=====================================
    Tab container
   =====================================*/
-/* Adjustment for tab container if using regular density*/
-.tabbar-wrapper > div:not(.tabbar-wrapper) { padding-top: 0 !important; }
-
-  /* Removes gap between Workspace button and tabs */
+/* Removes gap between Workspace button and tabs */
 .tabbar-workspace-button + #tabs-tabbar-container.left, .tabbar-workspace-button + #tabs-tabbar-container.right { padding-top: unset !important; }
 
-/* Makes the vertical tab background consistent with the side panel */
-#browser.transparent-tabbar #tabs-tabbar-container.left, #browser.transparent-tabbar #tabs-tabbar-container.right,
-#browser:not(.transparent-tabbar) #tabs-tabbar-container, .transparent-tabbar .button-toolbar.workspace-popup.tabbar-workspace-button { background-color: var(--colorBgAlphaBlur) !important; backdrop-filter: var(--backgroundBlur); }
-
-.tabs-left .tabbar-wrapper, .tabs-right .tabbar-wrapper { background-color: unset !important; }
-
-/* Subtle contaier border */
+/* Subtle container border */
 #tabs-container.left { border-right: 1px solid var(--colorFgAlpha); }
 
 #tabs-container.right { border-left: 1px solid var(--colorFgAlpha); }
@@ -31,8 +22,9 @@
 /*=====================================
    Tabs
   =====================================*/
-/* Tab alignment */
-.tab-wrapper { box-shadow: 0 1px 3px rgba(0, 0, 0, .3) !important; border-radius: var(--radiusRounded); border: 3px solid var(--colorAccentBgAlphaHeavy); }
+.density-on.tabs-left .tab-wrapper, .density-on.tabs-right .tab-wrapper { margin: var(--densityGap) 0 !important; } /* Tab alignment */
+
+.tab-wrapper { box-shadow: 0 1px 3px rgba(0, 0, 0, .3) !important; border-radius: var(--radiusHalf); border: 3px solid var(--colorAccentBgAlphaHeavy); }
 
 .tab-wrapper:not(.active):hover { border-color: var(--colorAccentBgAlpha); }
 
@@ -71,9 +63,11 @@
 #app #browser:not(.stacks-substrip) #tabs-container.right:not(.no-thumbs) .tab-position .tab > .thumbnail-image {
   background-color: transparent !important;
   box-shadow: none !important;
-  border-radius: var(--radiusRounded) !important;
+  border-radius: var(--radiusHalf) !important;
   margin: 0 !important;
 }
+
+.tabs-left .tab:not(.tab-in-accordion, .tab-accordion), .tabs-right .tab:not(.tab-in-accordion, .tab-accordion) { border-radius: unset !important; }
 
 /* Fav icon */
 .tab .favicon { filter: drop-shadow(0px 1px 2px rgb(0 0 0 / 0.4)); }
@@ -112,7 +106,6 @@
 #tabs-tabbar-container.left .newtab, #tabs-tabbar-container.right .newtab  { top: -3px; left: auto !important; width: 100% !important; border-radius: var(--radiusRounded) !important; }
 
 .button-toolbar > button { border-radius: var(--radiusRounded) !important; }
-
 
 /* Audio icon */
 .audioicon { margin-left: 1.5px; transform: scale(0.48) translateZ(0) !important; }
