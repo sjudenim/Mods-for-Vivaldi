@@ -1,5 +1,5 @@
 /*
-* Ui tweaks
+* Ui tweaks (09/02/25)
 * For Vivaldi browser version 7.6 and up
 * Written by sudenim
 * 
@@ -18,11 +18,6 @@
   letter-spacing: .1px;
 }
 
-/* Removes title bar but keeps it for setting window */
-#browser.win:not(.fullscreen, .disable-titlebar) #header { display: none; }
-
-.is-settingspage #header { display: initial !important; }
-
 /* Vertical Extensions Drop-Down Menu */
 .extensionIconPopupMenu { --popupWidth: 280px !important; top: unset !important; }
 
@@ -35,24 +30,21 @@
 }
 .extensionIconPopupMenu .ExtensionDropdownIcon > button { justify-content: flex-start; padding: 1em; }
 
-.extensionIconPopupMenu .ExtensionDropdownIcon > button::after { content: attr(title); overflow: clip visible; text-overflow: ellipsis; width: 250px; }
+.extensionIconPopupMenu .ExtensionDropdownIcon > button::after { content: attr(title); overflow: clip visible; text-overflow: ellipsis; width: 230px; }
 
 /* Private badge */
 .UrlBar-PrivateWindowIndicator { font-size: 0 !important; fill: var(--colorHighlightBg); padding: 0 6px !important; }
 
 .UrlBar-PrivateWindowIndicator svg { transform: scale(1.3); }
 
-
-#browser {
-    #header, .bookmark-bar {
-      background-color: var(--colorBgAlphaBlur) !important;
-      backdrop-filter: var(--backgroundBlur);
-  }
-}
-
 /*=====================================
    Toolbars and Buttons
   =====================================*/
+/* Hides the header when there is no address bar. Tab on top will no show with this as they need the header */
+#browser.win:not(.fullscreen, .disable-titlebar) #header { display: none; }
+
+#browser:is(.popup, .is-settingspage):not(.fullscreen, .disable-titlebar) #header { display: initial; }
+
 .button-toolbar > button { box-shadow: none !important; border: 0 !important; transition: .5s !important; }
 
 .toolbar.icons button, .toolbar.text button {
@@ -108,15 +100,29 @@ button:hover[title*="Show Closed Tabs"] svg { transform: unset !important; }
 .button-toolbar > button[title*="Hide Panel"] svg { fill: var(--colorHighlightBg) !important; }
 
 /*=====================================
+   Tabs and Tab Container
+  =====================================*/
+/* Adjustment for tab container if using regular density*/
+.tabbar-wrapper > div:not(.tabbar-wrapper) { padding-top: 0 !important; }
+
+/* Makes the vertical tab background consistent with the side panel */
+#browser.transparent-tabbar #tabs-tabbar-container.left, #browser.transparent-tabbar #tabs-tabbar-container.right,
+#browser:not(.transparent-tabbar) #tabs-tabbar-container, .transparent-tabbar .button-toolbar.workspace-popup.tabbar-workspace-button { background-color: var(--colorBgAlphaBlur) !important; backdrop-filter: var(--backgroundBlur); }
+
+.tabs-left .tabbar-wrapper, .tabs-right .tabbar-wrapper { background-color: unset !important; }
+
+#browser.transparent-tabbar #tabs-tabbar-container.left #tabs-container, #browser.transparent-tabbar #tabs-tabbar-container.right #tabs-container { backdrop-filter: unset !important; }
+
+/*=====================================
    Status Bar
   =====================================*/
-/* this turns the status bar into an overlay, kind of like a dock */  
+/* this turns the status bar into an overlay, kind of like a dock   
 #browser:not(.tabs-bottom) footer#footer {
-  position: absolute;
-  bottom: 2px;
-  right: 35%; /* centering will depend on the width of your status bar */
+  position: fixed;
+  bottom: 3px;
+  left: 45vw; /* centering will depend on the width of your status bar 
   width: fit-content;
-  border-radius: var(--radiusRounded);
+  border-radius: var(--radius);
   border: 1px solid var(--colorFgAlpha) !important;
 }
 /* overlay style ends */
@@ -174,6 +180,12 @@ footer .toolbar-statusbar { font-size: .75rem !important; }
 /*=====================================
    Side Panel
   =====================================*/
+/* Subtle container border */
+#panels-container.left:not(.icons) .panel-group { border-right: 1px solid var(--colorFgAlpha); }
+
+#panels-container.right:not(.icons) .panel-group { border-left: 1px solid var(--colorFgAlpha); }
+
+/* Panel titles */
 .panel > header h1 > span:first-child { margin: 0 auto; }
 
 .panel > header h1 { justify-content: center; }
@@ -295,7 +307,8 @@ footer .toolbar-statusbar { font-size: .75rem !important; }
   border-left: 1px solid var(--colorBorder);
   border-bottom: 1px solid var(--colorBorder);
 }
-  /* Settings icons */
+
+/* Settings icons */
 .vivaldi-settings .settings-sidebar .button-category svg { stroke: var(--colorHighlightBg) !important; fill: transparent !important; }
 
 .vivaldi-settings .settings-sidebar .settings-navigation:focus-within .tree-row .button-category.category-selected svg { stroke: var(--colorHighlightBg) !important; }
@@ -317,7 +330,7 @@ footer .toolbar-statusbar { font-size: .75rem !important; }
 .ThemePreview-Label-Meta { opacity: .8 !important; }
 
 /*=====================================
-   Tabs and Tabbar
+   Tabs and Tab Bar
   =====================================*/
 .TabButtonPopup > header { top: 2px !important; }
 
