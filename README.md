@@ -1,3 +1,3 @@
 # Mods-for-Vivaldi
 
-![mods_for_Vivaldi](/preview.png)
+![mods_for_Vivaldi](/.png)
