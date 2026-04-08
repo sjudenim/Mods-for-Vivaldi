@@ -1,6 +1,6 @@
 /*
 * Start Page mods (08/22/25)
-* For Vivaldi browser version 7.6 and up
+* For Vivaldi browser version 7.9 and up
 * By sudenim
 * 
 * Description: Re-styling of Speed Dial and Dashboard elements
@@ -21,42 +21,37 @@
   backdrop-filter: var(--backgroundBlur) !important;
   color: var(--colorAccentFg) !important;
   box-shadow: none !important;
-  padding: 10px 25px 10px 0;
+  padding: 10px 0;
   font-size: 1.1em;
 }
-
-.button-toolbar > button .button-icon + .button-title { display: none; }
 
 /* Navigation Bar buttons */
 .startpage .startpage-navigation .startpage-navigation-group:first-of-type { margin-right: 0 !important; }
 
-.startpage .startpage-navigation .button-startpage {
+#browser .button-startpage {
   background-image: linear-gradient(to top, var(--colorBgAlphaHeavy), var(--colorAlpha)) !important;
   border-radius: calc(var(--radius)* 2) !important;
-  border: 1px solid var(--colorAccentFg);
+  border: 1px solid var(--colorAccentFg) !important;
+  padding: 0 3px;
 }
+
+.startpage-navigation-group .editable-title-container .button-startpage { padding: 0 15px !important; }
 
 .button-startpage.button-toolbar button:hover { background-color: transparent !important; }
 
-.button-startpage, .startpage .startpage-navigation .button-startpage, .startpage .startpage-folder-navigation .button-startpage {
-  margin: 0 5px;
-  text-shadow: 0 0 4px hsl(0,0%,20%) !important;
-  mask-image: unset;
-} 
+#browser .button-startpage { margin: 0 5px; text-shadow: 0 0 4px hsl(0,0%,20%) !important; mask-image: unset !important; } 
 
 .startpage .startpage-navigation .button-startpage svg, .startpage .startpage-folder-navigation .button-startpage svg { filter: drop-shadow(0 0 4px hsl(0,0%,40%)); width: auto; }
 
-.startpage-navigation-group .editable-title-container .button-startpage { padding: 0 15px; }
-
+.button-startpage { min-height: 34px !important;}
+ 
 .button-startpage.button-toolbar { padding: 0 5px !important; width: 34px; }
 
-.button-startpage.active  { background-color: var(--colorBgAlphaBlur); color: var(--colorAccentFg) !important; fill: unset !important; }
+#browser .button-startpage:focus-visible, #browser .button-startpage.active { background-color: var(--colorBgAlphaBlur); color: var(--colorAccentFg) !important; fill: unset !important; }
 
-.startpage .startpage-navigation .startpage-navigation-group .button-startpage:hover { background-color: var(--colorBgAlphaHeavy) !important; border: 1px solid var(--colorHighlightBg) !important; }
+.startpage .startpage-navigation .startpage-navigation-group .button-startpage:hover { background-color: var(--colorHighlightBg) !important; border: 1px solid rgba(255, 255, 255, .1) !important; }
 
 .button-startpage:hover svg { color: var(--colorAccentFg); }
-
-.startpage .startpage-navigation .startpage-navigation-group:not(:empty) + .startpage-navigation-group { border-left: 0 !important; }
 
 .button-startpage.add-set svg path { fill: unset !important; }
  
@@ -68,9 +63,9 @@
 
 .button-startpage.up-level svg { display: none; }
 
-.startpage .startpage-folder-navigation button {
+#browser .button-startpage.up-level {
   background-color: unset !important;
-  border-radius: calc(var(--radius)* 2) !important;
+  border: 0 !important;
   font-size: 2.5rem;
   font-weight: lighter;
   box-shadow: none;
@@ -79,7 +74,7 @@
   top: -60px;
 }
 
-.startpage .startpage-folder-navigation button:hover {
+#browser .button-startpage.up-level:hover {
   transform: scale(1.1);
   transition: .1s ease-in-out !important;
 }
@@ -98,7 +93,7 @@
 /* Add speed dial button */
 .SpeedDial-Add-Button {
   gap: 0 !important;
-  padding: 6px !important;
+  padding: 4px !important;
   background-color: var(--colorBgAlphaBlur) !important;
   backdrop-filter: var(--backgroundBlur) !important;
   border-radius: calc(var(--radius) * 2) !important;
@@ -106,11 +101,13 @@
   border: 1px solid var(--colorAccentFgAlpha);
   box-shadow: 0 1px 3px rgba(0, 0, 0, .3) !important;
   font-size: 0;
+  height: 32px;
+  width: 32px;
 }
 
 .SpeedDial-Add-Buttons { box-shadow: none !important; }
 
-.SpeedDial-Add-Button:hover { border-color: var(--colorHighlightBg) !important; }
+.SpeedDial-Add-Button:hover { background-color: var(--colorHighlightBg) !important; border-color: rgba(255, 255, 255, .1) !important; }
   
 .SpeedDial-Add-Button  span svg { height: 20px !important; width: 20px !important; }
 
@@ -133,7 +130,7 @@
    Managers
   =====================================*/
 /* Manager backgrounds */
-.manager .manager-content, .manager > .toolbar, .manager .manager-editor { background-color: var(--colorBgAlphaBlur) !important; backdrop-filter: var(--backgroundBlur); border: 0 !important; }
+.manager .manager-content, .manager > .toolbar, .manager .manager-editor, .NotesManager { background-color: var(--colorBgAlphaBlur) !important; backdrop-filter: var(--backgroundBlur); border: 0 !important; }
 
 /* History manager date */
 .manager > .toolbar > h1 { font-size: 1.2rem; color: var(--colorHighlightBg); }
@@ -202,10 +199,9 @@
 .Dashboard-Widgets .dashboard-widget { padding: 5px; }
 
 /* Semi-transparent background */
-  .Dashboard-Widgets .semi-transparent {
-    background-color: var(--colorBgAlphaBlur) !important;
-    backdrop-filter: var(--backgroundBlur);
-}
+.Dashboard-Widgets .semi-transparent { background-color: var(--colorBgAlphaBlur) !important; backdrop-filter: var(--backgroundBlur); }
+
+.Dashboard .Dashboard-Widgets .TabbedView.semi-transparent {background-color: transparent !important; }
 
 /* Title bar */
 .Dashboard-Widgets .dashboard-widget-header { max-height: 12px; }
@@ -238,7 +234,9 @@
   
 .Dashboard-Date .date-wrapper .week-display { opacity: 1 !important; font-weight: 500; }
   
-.Dashboard-Date .date-wrapper .time-display { text-align: end; text-transform: lowercase; font-size: 1.6em; letter-spacing: 1px; }
+.Dashboard-Date .date-wrapper .time-display { text-transform: lowercase; font-size: 1.5em; letter-spacing: 1px; }
+
+.Dashboard-Date .month-dots .dot { border-radius: var(--radius) !important; }
   
 /* Email and Feed widget */
 .Dashboard .email-wrapper .unread .title-row .title, .Dashboard .email-wrapper .unread .data-row .title,
@@ -255,7 +253,9 @@
   
 .Dashboard-TasksWidget .widget-image-intro ~ .calendar-viewport .calendar-add-event-button:hover,
 .Dashboard-CalendarWidget .widget-image-intro ~ .calendar-viewport .calendar-add-event-button:hover { background-color: var(--colorHighlightBg); color: var(--colorAccentFg); }
-  
+
+.calendar-grid-agenda .cal-tasks-row { border-color: var(--colorFgAlpha); }
+
 /* Date for events and tasks */
 .calendar-grid-agenda .cal-tasks-row .cal-tasks-row-date {font-size: unset !important; }
   
