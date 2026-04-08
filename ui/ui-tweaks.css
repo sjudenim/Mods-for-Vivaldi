@@ -1,6 +1,6 @@
 /*
-* Ui tweaks (08/22/25)
-* For Vivaldi browser version 7.6 and up
+* Ui tweaks (03/20/26)
+* For Vivaldi browser version 7.9 and up
 * Written by sudenim
 * 
 * Desription: General ui changes that include: recolouring, re-positioning, font adjustments, icon replacements
@@ -8,44 +8,10 @@
 * GNU General Public License v3.0
 */
 
-/* Text selection */
-::selection { background-color: var(--colorHighlightBg) !important; color: white; }
-
-/* Fonts */
-* {
-  font-family: "Quicksand" !important;
-  text-shadow: 0 0 .8px var(--colorFgAlpha) !important;
-  letter-spacing: .1px;
-}
-
-/* Vertical Extensions Drop-Down Menu */
-.extensionIconPopupMenu { --popupWidth: 280px !important; top: unset !important; }
-
-.extensionIconPopupMenu > .toolbar {
-  max-height: 50vh;
-  overflow: clip auto;
-  flex-direction: column;
-  flex-wrap: nowrap;
-  align-items: stretch;
-}
-.extensionIconPopupMenu .ExtensionDropdownIcon > button { justify-content: flex-start; padding: 1em; }
-
-.extensionIconPopupMenu .ExtensionDropdownIcon > button::after { content: attr(title); overflow: clip visible; text-overflow: ellipsis; width: 230px; }
-
-/* Private badge */
-.UrlBar-PrivateWindowIndicator { font-size: 0 !important; fill: var(--colorHighlightBg); padding: 0 6px !important; }
-
-.UrlBar-PrivateWindowIndicator svg { transform: scale(1.3); }
-
 /*=====================================
-   Toolbars and Buttons
+   Toolbars - Buttons - Icons
   =====================================*/
-/* Hides the header when there is no address bar. Tab on top will no show with this as they need the header */
-#browser.win:not(.fullscreen, .disable-titlebar) #header { display: none; }
-
-#browser:is(.popup, .is-settingspage):not(.fullscreen, .disable-titlebar) #header { display: initial; }
-
-.button-toolbar > button { box-shadow: none !important; border: 0 !important; transition: .5s !important; }
+.button-toolbar > button { box-shadow: none !important; border: 0 !important; border-radius: var(--radiusRounded) !important; transition: .5s !important; }
 
 .toolbar.icons button, .toolbar.text button {
   background-image: none !important;
@@ -55,12 +21,23 @@
   margin-top: -1px !important
 }
 
-.toolbar.icons button:hover, .toolbar.text button:hover {
-  background-image: none !important;
-  background-color: var(--colorHighlightBg) !important;
-  height: 28px !important;
-  margin-top: -1px !important
-}
+.toolbar-default .button-toolbar > button:enabled { background-image: none !important; background-color: var(--colorBgIntense); }
+
+#switch > .toolbar.toolbar-vertical .button-toolbar > button { border-radius: var(--radiusRounded) !important; }
+
+#switch .button-toolbar > button { color: var(--colorAccentFg) !important; }
+
+#switch .button-toolbar > button:hover, .toolbar-statusbar > .button-toolbar > button:hover, .toolbar-statusbar .toolbar-extensions .button-toolbar > button:hover { background-color: var(--colorHighlightBg) !important; color: var(--colorHighlightFg) !important; }
+
+#switch > .button-toolbar.active:hover, #switch > * > .button-toolbar.active:hover,
+#switch > button.active:hover, #switch .addwebpanel-wrapper > button.active:hover,
+.density-on #switch .addwebpanel-wrapper > button.active button:hover,
+.density-on #switch > .button-toolbar.active button:hover,
+.density-on #switch > * > .button-toolbar.active button:hover, .density-on #switch > button.active button:hover {
+  background-color: var(--colorHighlightBg) !important; color: var(--colorHighlightFg) !important; border-radius: var(--radiusRounded) !important; } 
+
+/* hover colour for tab bar toolbar */
+#tabs-tabbar-container .toolbar-tabbar-after > div > .button-toolbar > button:hover { background-color: var(--colorHighlightBg) !important; color: var(--colorHighlightFg) !important; }
 
 /* Close icon */
 .close svg path { d: path("m4.145 3.5-.645.643 3.858 3.856-3.856 3.856.643.643L8 8.642l3.856 3.858.643-.645L8.644 8 12.5 4.143l-.643-.643-3.856 3.856Z"); }
@@ -74,13 +51,11 @@ button:hover[title*="Show Closed Tabs"] svg { transform: unset !important; }
 
 .toolbar-default .button-toolbar>button:hover { background-color: var(--colorHighlightBg) !important; fill: var(--colorAccentFg) !important; color: var(--colorAccentFg) !important; }
 
-.toolbar-default .button-toolbar>button.button-pressed { background-image: linear-gradient(var(--colorHighlightBg), var(--colorHighlightBg)) !important; color: var(--colorHighlightFg); fill: var(--colorHighlightFg) !important; }
+.toolbar-default .button-toolbar>button.button-pressed { background-color: var(--colorHighlightBg) !important; background-image: linear-gradient(var(--colorHighlightBg), var(--colorHighlightBg)) !important; color: var(--colorHighlightFg); fill: var(--colorHighlightFg) !important; }
 
 .toolbar-default .button-toolbar>button.button-pressed:active { background-image: linear-gradient(var(--colorBgDark), var(--colorBgDark)) !important; }
 
-.toolbar-mainbar>.button-toolbar>button:hover { background-color: var(--colorHighlightBg); fill: var(--colorAccentFg) !important; color: var(--colorAccentFg) !important; }
-
-.toolbar-mainbar>.button-toolbar>button:hover { fill: var(--colorHighlightBg) !important; color: var(--colorAccentFg); }
+.toolbar-mainbar>.button-toolbar>button:hover { background-color: var(--colorHighlightBg) !important; fill: var(--colorAccentFg) !important; color: var(--colorAccentFg) !important; }
 
 ._default-focus { outline: transparent !important; outline-offset: 0 !important }
 
@@ -96,38 +71,40 @@ button:hover[title*="Show Closed Tabs"] svg { transform: unset !important; }
 
 .button-toolbar > button > span.button-toolbar-menu-indicator { margin-top: 4px; }
 
-/* Panel toggle */
-.button-toolbar > button[title*="Hide Panel"] svg { fill: var(--colorHighlightBg) !important; }
-
 /*=====================================
    Tabs and Tab Container
   =====================================*/
-/* Adjustment for tab container if using regular density*/
-.tabbar-wrapper > div:not(.tabbar-wrapper) { padding-top: 0 !important; }
+.TabButtonPopup > header { top: 2px !important; }
 
-/* Makes the vertical tab background consistent with the side panel */
-#browser.transparent-tabbar #tabs-tabbar-container.left, #browser.transparent-tabbar #tabs-tabbar-container.right,
-#browser:not(.transparent-tabbar) #tabs-tabbar-container, .transparent-tabbar .button-toolbar.workspace-popup.tabbar-workspace-button { background-color: var(--colorBgAlphaBlur) !important; backdrop-filter: var(--backgroundBlur); }
+.TabButtonPopup > header .qc-entry {
+  box-shadow: none !important;
+  border: 0 !important;
+  background-color: var(--colorFgAlpha);
+  border-radius: 25px !important;
+}
 
-.tabs-left .tabbar-wrapper, .tabs-right .tabbar-wrapper { background-color: unset !important; }
+.TabButtonPopupSuggestion { display: none; }
 
-#browser.transparent-tabbar #tabs-tabbar-container.left #tabs-container, #browser.transparent-tabbar #tabs-tabbar-container.right #tabs-container { backdrop-filter: unset !important; }
+.TabButtonPopup .quick-commands, .TabButtonPopup .dialog-content, .TabButtonPopup .no-results { background-color: var(--colorBg) !important; }
+
+.TabButtonPopup .window-entry-button.selected > input, .TabButtonPopup > header .qc-entry:focus-within { outline: 0 !important; }
 
 /*=====================================
    Status Bar
   =====================================*/
-/* this turns the status bar into an overlay, kind of like a dock   
-#browser:not(.tabs-bottom) footer#footer {
+/* this turns the status bar into an overlay, kind of like a dock */
+#browser:not(.tabs-top) footer#footer, #browser:not(.tabs-bottom) footer#footer {
   position: fixed;
   bottom: 3px;
-  left: 45vw; /* centering will depend on the width of your status bar 
   width: fit-content;
   border-radius: var(--radius);
   border: 1px solid var(--colorFgAlpha) !important;
-}
+  left: calc(50% + (var(--vTabBarWidth) / 2));
+  transform: translateX(-50%);
+  }
 /* overlay style ends */
 
-#browser:not(.tabs-bottom) footer#footer { background: var(--colorBgAlphaBlur) !important; backdrop-filter: var(--backgroundBlur); }
+#browser:not(.tabs-bottom) footer#footer { background: var(--colorBgAlphaBlur) !important; backdrop-filter: var(--backgroundBlur); border-top: 1px solid var(--colorFgAlpha) !important; }
 
 footer .toolbar-statusbar { font-size: .75rem !important; }
 
@@ -137,8 +114,6 @@ footer .toolbar-statusbar { font-size: .75rem !important; }
 
 .toolbar-statusbar > .button-toolbar > button { padding-top: 1px !important; }
 
-.toolbar-statusbar > .button-toolbar > button:hover, .toolbar-statusbar .toolbar-extensions .button-toolbar > button:hover { background-color: transparent; color: var(--colorHighlightBg); }
-
 #webview-container ~ .StatusInfo { bottom: 1px !important; right: 4px !important; left: 4px !important; }
 
 #webview-container ~ .StatusInfo .StatusInfo .UrlFragments, #webview-container ~ .StatusInfo .StatusInfo-Content {
@@ -147,15 +122,28 @@ footer .toolbar-statusbar { font-size: .75rem !important; }
   border: 1px solid var(--colorAccentFgAlpha) !important;
 }
 
+.ControlPanel.Default { bottom: 3px !important; }
+
 .extension-popup { transform: translateY(-4px) !important; }
 
-.button-popup-above { bottom: 45px !important;}
+.button-popup-pos-above { bottom: calc(var(--buttonHeight, 20px) + var(--verticalMargin, 0px) + (14px)) !important; }
+
+.button-popup-center{ margin-left: calc(var(--popupWidth) * -0.47) !important; }
 
 .button-popup-wrapper { background-color: var(--colorBgDark); }
   
 .button-toolbar > button > span + .button-title, .button-toolbar > button.button-textonly { padding-top: 2px; }
 
 .toolbar-statusbar .button-toolbar > button > .button-badge{ position: absolute !important; right: -5px !important; }
+
+.toolbar-statusbar > .button-toolbar > button:active, .toolbar-statusbar .drag-area > .button-toolbar > button:active,
+.toolbar-statusbar .toolbar-extensions .button-toolbar > button:active, .toolbar-statusbar .page-zoom-controls .button-toolbar > button:active,
+.toolbar-statusbar > .button-toolbar > button.button-pressed, .toolbar-statusbar .drag-area > .button-toolbar > button.button-pressed,
+.toolbar-statusbar .toolbar-extensions .button-toolbar > button.button-pressed, .toolbar-statusbar .page-zoom-controls .button-toolbar > button.button-pressed {
+  background-color: var(--colorHighlightBg) !important;
+  color: var(--colorHighlightFg) !important;
+  fill: var(--colorHighlightFg) !important;
+}
 
 /* Button badge for extensions */
 .color-behind-tabs-off .toolbar-mainbar .button-badge{
@@ -165,8 +153,10 @@ footer .toolbar-statusbar { font-size: .75rem !important; }
   border-radius: var(--radius);
 }
 
-/* Adjust callout arrow*/
+/* Adjust callout arrow */
 .button-popup-pos-above:before { bottom: -11px !important; }
+
+.button-popup:before { filter: unset !important; }
 
 /* Reading list */
 .reading-list-dialog .dialog-header { font-weight: 600 !important; }
@@ -180,23 +170,11 @@ footer .toolbar-statusbar { font-size: .75rem !important; }
 /*=====================================
    Side Panel
   =====================================*/
-/* Subtle container border */
-#panels-container.left:not(.icons) .panel-group { border-right: 1px solid var(--colorFgAlpha); }
-
-#panels-container.right:not(.icons) .panel-group { border-left: 1px solid var(--colorFgAlpha); }
-
-/* Panel titles */
-.panel > header h1 > span:first-child { margin: 0 auto; }
-
-.panel > header h1 { justify-content: center; }
-
-.panel > header h1 .close { display: none !important; }
+#switch { background-color: color-mix(in srgb, var(--colorAccentBg), var(--transparency)); padding: 3px !important; scrollbar-gutter: unset !important; }
 
 #switch button, #browser:not(.density-on) .right #switch .addwebpanel-wrapper > button, #browser:not(.density-on) .right #switch > .button-toolbar, #browser:not(.density-on) .right #switch > * > .button-toolbar, #browser:not(.density-on) .right #switch > button {
-  border-radius: 0 !important; transition: .5s !important;
+  transition: .5s !important;
 }
-
-#switch .button-toolbar > button:hover { background-color: transparent !important; fill: var(--colorHighlightBg) !important; color: var(--colorHighlightBg) !important; }
 
 #switch > .button-toolbar.active:not(:focus), #switch > * > .button-toolbar.active:not(:focus), #switch > button.active:not(:focus), #switch .addwebpanel-wrapper > button.active:not(:focus) {
   color: var(--colorHighlightBg);
@@ -206,7 +184,7 @@ footer .toolbar-statusbar { font-size: .75rem !important; }
 #switch > .button-toolbar.active, #switch > * > .button-toolbar.active, #switch > button.active, #switch .addwebpanel-wrapper > button.active,
 .density-on #switch .addwebpanel-wrapper > button.active button, .density-on #switch > .button-toolbar.active button, .density-on #switch > * > .button-toolbar.active button, .density-on #switch > button.active button {
   background-color: transparent !important;
-  color: var(--colorHighlightBg);
+  color: var(--colorHighlightBg) !important;
   border-radius: 0 !important;
 }
 
@@ -214,6 +192,16 @@ footer .toolbar-statusbar { font-size: .75rem !important; }
   background-color: var(--colorHighlightBg);
   border: 1px solid var(--colorHighlightBg)
 }
+
+/* Subtle container border */
+#panels-container.left:not(.icons) .panel-group { border-right: 1px solid var(--colorFgAlpha); }
+
+#panels-container.right:not(.icons) .panel-group { border-left: 1px solid var(--colorFgAlpha); }
+
+/* Panel titles */
+.panel > header h1 > span:first-child { margin: 0 auto; }
+
+.panel > header h1 .close { display: none !important; }
 
 /* Download panel fixes */
 .panel.downloads .panel-pathfield .actionbuttons, .popout.downloads-popout .panel-pathfield .actionbuttons { margin-top: 2px !important; }
@@ -248,8 +236,6 @@ footer .toolbar-statusbar { font-size: .75rem !important; }
   background-color: var(--colorBgDark) !important;
   color: var(--colorHighlightBg) !important;
   fill: var(--colorHighlightBg) !important} 
-
-#panels .webpanel-stack .webpanel .webpanel-header .webpanel-title { order: 2; }
 
 /* Hides webpanel suggestions */
 .webpanel-suggestions { display: none; }
@@ -330,32 +316,30 @@ footer .toolbar-statusbar { font-size: .75rem !important; }
 .ThemePreview-Label-Meta { opacity: .8 !important; }
 
 /*=====================================
-   Tabs and Tab Bar
-  =====================================*/
-.TabButtonPopup > header { top: 2px !important; }
-
-.TabButtonPopup > header .qc-entry {
-  box-shadow: none !important;
-  border: 0 !important;
-  background-color: var(--colorFgAlpha);
-  border-radius: 25px !important;
-}
-
-.TabButtonPopupSuggestion { display: none; }
-
-.TabButtonPopup .quick-commands, .TabButtonPopup .dialog-content, .TabButtonPopup .no-results { background-color: var(--colorBg) !important; }
-
-.TabButtonPopup .window-entry-button.selected > input, .TabButtonPopup > header .qc-entry:focus-within { outline: 0 !important; }
-
-/*=====================================
    Miscellaneous stuff
   =====================================*/
+/* Text selection */
+::selection { background-color: var(--colorHighlightBg) !important; color: white; }
+
+/* Fonts */
+* { font-family: "Quicksand" !important; text-shadow: 0 0 .8px var(--colorFgAlpha) !important; letter-spacing: .1px; }
+
+/* Re-colour the Private Window badge */
+.UrlBar-PrivateWindowIndicator { font-size: 0 !important; fill: var(--colorHighlightBg); padding: 0 6px !important; }
+
+.UrlBar-PrivateWindowIndicator svg { transform: scale(1.3); }
+
+/* Hides the header when there is no address bar. Tab on top will now show with this as they need the header */
+#browser.win:not(.fullscreen, .disable-titlebar) #header { display: none; }
+
+#browser:is(.popup, .is-settingspage):not(.fullscreen, .disable-titlebar) #header { display: initial; }
+
 /* Alternating row colours */
 .vivaldi-tree .tree-item:nth-child(even) { background-color: color-mix(in hsl, var(--colorAccentFgAlphaHeavy) 60%, var(--colorBgAlpha)); } 
 
 .vivaldi-tree .tree-item, .vivaldi-tree .tree-row[data-selected] { border-radius: 0 !important; }
 
-/* Quick command */
+/* Quick command Re-styling*/
 .quick-command-container { box-shadow: 0 0 10px 0 rgba(0, 0, 0, .6) !important; }
 
 .quick-command-container, .quick-command-container .quick-commands>div { min-width: 40vw; cursor: auto; }
@@ -445,9 +429,12 @@ input[type=range].isblurred::-webkit-slider-thumb, input[type=range][disabled]::
 
 input[type=range]:focus-visible::-webkit-slider-thumb { outline: 2px solid var(--colorHighlightBg); outline-offset: -1px; border-color: var(--colorHighlightBg); }
 
-#browser > footer .page-zoom-controls > .button-toolbar > button:not(:disabled):hover { color: var(--colorHighlightBg); }
+/* Rest button */
+#browser > footer .page-zoom-controls > .button-toolbar > button:not(:disabled):hover { background-color: var(--colorHighlightBg); color: var(--colorHighlightFg); }
 
-/* Sort selcetor */
+.button-toolbar > button:disabled > .button-title { opacity: .3; } 
+
+/* Sort selector */
 .sortselector { background-color: var(--colorBgDark) !important; }
 
 /* Zoom controls */
@@ -461,16 +448,11 @@ input[type=range]:focus-visible::-webkit-slider-thumb { outline: 2px solid var(-
 .UrlBar-AddressField:focus-within,
 .searchfield:focus-within,
 .toolbar.icons input[type=search] {
-  box-shadow: none !important
+  box-shadow: none !important;
+  outline: none !important;
 }
 
-.tab-strip .thumbnail-image > svg,
-button.fip-previous,
-button.fip-next,
-button.fip-close,
-input::-webkit-search-cancel-button {
-  display: none !important
-}
+input::-webkit-search-cancel-button, .UrlBar-UrlObfuscationWarning { display: none !important; }
 
 #fip-input-text::-webkit-search-cancel-button { appearance: none !important; }
 
