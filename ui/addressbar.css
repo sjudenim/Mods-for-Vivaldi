@@ -1,5 +1,5 @@
 /*	
-* Addressbar Mods (08/26/25)
+* Addressbar Mods (03/26/26)
 * For Vivaldi browser version 7.6 and up
 * By sudenim	
 *
@@ -8,19 +8,19 @@
 * GNU General Public License v3.0	
 */
 
+/* Adds transparency to the addressbar */
+.mainbar { background-color: color-mix(in srgb, var(--colorAccentBg), var(--transparency)) !important; backdrop-filter: var(--backgroundBlur); }
+
 /* Removes border radius on buttons */
 .toolbar-mainbar > .button-toolbar > button { border-radius: 0 !important; }
 
-/* Removes Line under addressbar */
+/* Removes the bordering line from the addressbar */
 .address-top .mainbar { border-bottom: 0 !important ; }
+
+.address-bottom .mainbar { border-top: 0 !important; }
 
 /* Styles the Mail search bar */
 .SearchField.MailSearchField { background-color: var(--colorFgAlpha) !important; height: 26px; min-width: 20vw; }
-
-/* Adds a transparency effect to the Address Bar */
-.mainbar { --transparency: transparent 10%; background-color: color-mix(in srgb, var(--colorAccentBg), var(--transparency)) !important; }
-
-#browser.win.address-top .toolbar:has(.window-buttongroup.on-mainbar) { backdrop-filter: var(--backgroundBlur); }
 
 /*=====================================
    Menu Button
@@ -58,6 +58,8 @@
 /*=====================================
    Addressfield
   =====================================*/
+.density-on .UrlBar-SearchField, .density-on .UrlBar-AddressField { height: 26px !important; }
+  
 .UrlField { justify-content: center; }
 
 .UrlField .UrlBar-UrlField { text-align: center; }
@@ -71,11 +73,11 @@
   outline: unset !important;
 }
 
-/* Chrome style, will also style search fields */ 
+/* Chrome style, will also style search fields */
 .UrlBar-AddressField, .SearchField {
   border: 0 !important;
   padding: 5px !important;
-  background-color: var(--colorFgAlpha);
+  background-color: var(--colorAccentFgAlphaHeavy);
   border-radius: 25px !important;
 }
 /* End style */
