@@ -1,0 +1,32 @@
+/*
+* Panels Auto-Hide (02/08/26)
+* For Vivaldi browser version 7.8 and up
+* Author: sudenim
+*
+* Description: Turns the side panel into an auto-hide overlay
+*
+* GNU General Public License v3.0
+*/
+
+#panels-container.left { left: 0; }
+
+#panels-container.right { right: 0; }
+
+#panels-container.left, #panels-container.right { position: absolute; z-index: 1; height: 100%; transition: transform var(--shortDuration) var(--shortDelay) !important; }
+
+#panels-container.left::after, #panels-container.right::before {
+  content: '';
+  display: block;
+  position: absolute;
+  background-color: transparent;
+  height: 100%;
+  width: var(--triggerSize);
+}
+
+#panels-container.left::after { margin-left: 100%; }
+
+#panels-container.right::before { margin-left: -6px; }
+
+#panels-container.left:not(:hover) { transform: translateX(-100%); transition: transform var(--longDuration) var(--longDelay) !important; }
+
+#panels-container.right:not(:hover) { transform: translateX(100%); transition: transform var(--longDuration) var(--longDelay) !important; }

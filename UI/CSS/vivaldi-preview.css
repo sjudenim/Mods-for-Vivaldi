@@ -1,0 +1,194 @@
+/*
+* Vivaldi Preview (04/15/26)
+* For Vivaldi browser version 7.8 and up
+* Authors: biruktes, tam710562, oudstand, sudenim
+* Forum link: https://forum.vivaldi.net/topic/92501/open-in-dialog-mod?_=1717490394230
+*
+* Description: Opens a preview window for links
+*
+* GNU General Public License v3.0
+*/
+
+@keyframes dialog-tab-open-anchored {
+    from {
+        opacity: 0;
+        transform: translate(var(--tx0, 0px), var(--ty0, 0px)) scale(var(--s0, 0.1));
+        filter: blur(6px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translate(0px, 0px) scale(1);
+        filter: blur(0px);
+    }
+}
+
+@keyframes dialog-tab-close-anchored {
+    from {
+        opacity: 1;
+        transform: translate(0px, 0px) scale(1);
+        filter: blur(0px);
+    }
+
+    to {
+        opacity: 0;
+        transform: translate(var(--tx0, 0px), var(--ty0, 0px)) scale(var(--s0, 0.1));
+        filter: blur(6px);
+    }
+}
+
+@keyframes dialog-tab-animate-progress-bar {
+    from {
+        transform: translateX(-100%);
+    }
+
+    to {
+        transform: translateX(100%);
+    }
+}
+
+.dialog-container {
+    z-index: 999;
+    position: fixed;
+    inset: 0;
+    background-color: transparent;
+    transition: background-color 220ms ease;
+    backdrop-filter: blur(5px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    &.is-open {
+        background-color: rgba(0, 0, 0, .75);
+    }
+
+    &.is-leave { pointer-events: none; }
+
+    /* prevent progress bar from flashing before the overlay is open */
+    &:not(.is-open) .progress-bar { visibility: hidden; }
+
+    .dialog-tab {
+        /* top-left origin so our translate math is exact */
+        transform-origin: 0 0;
+        will-change: transform, opacity, filter;
+        backface-visibility: hidden;
+        transform: translate3d(0, 0, 0);
+        contain: layout style paint;
+
+        &.animating-open {
+            animation: dialog-tab-open-anchored 320ms cubic-bezier(0.12, 0.8, 0.2, 1) both;
+        }
+
+        &.animating-close {
+            animation: dialog-tab-close-anchored 320ms cubic-bezier(0.4, 0, 0.6, 0.4) both;
+        }
+
+        position: relative;
+        display: flex;
+        flex-direction: column;
+
+        .options-container {
+            display: flex;
+            flex-direction: row;
+            flex-wrap: nowrap;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            height: 40px;
+            padding-top: 2px;
+            text-align: center;
+            color: var(--colorAccentFg);
+            z-index: 9999;
+            width: 100%;
+            opacity: 1;
+            transition: opacity 0.3s ease;
+        }
+
+        .options-container.fade-out { opacity: 0; }
+
+        .options-button {
+            display: flex;
+            position: relative;
+            background: transparent;
+            border: none;
+            border-radius: var(--rounding);
+            cursor: pointer;
+            width: 35px;
+            height: 35px;
+            align-items: center;
+            justify-content: center;
+            flex: 0 0 35px;
+        }
+
+        .options-button:hover { background-color: var(--colorHighlightBg); color: var(--colorHighlightFg); }
+
+        .options-button::after {
+            content: attr(data-tooltip);
+            position: absolute;
+            bottom: -35px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--colorAccentBg);
+            color: var(--colorAccentFg);
+            font-size: 12px;
+            padding: 4px 8px;
+            border: 1px solid var(--colorAccentFgAlpha);
+            border-radius: var(--radiusHalf);
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity .15s ease;
+            white-space: nowrap;
+        }
+
+        .options-button:hover::after { opacity: 1; transition-delay: .8s; }
+
+        .dialog-input {
+            background: var(--colorFgAlpha);
+            color: var(--colorAccentFg);
+            border: none;
+            border-radius: var(--inputRadius);
+            margin: 0 0.5rem;
+            padding: 0.3rem 0.6rem;
+            flex: 0 0 20%;
+            min-width: 20vw;
+        }
+
+        .progress-bar {
+            background-color: var(--colorHighlightBg);
+            left: calc(var(--radius) * 0.75);
+            height: 1px;
+            max-width: calc(100% - var(--radius) * 1.5);
+            transition: width 0.2s linear;
+            overflow: hidden;
+            position: relative;
+
+            &.is-complete::after {
+                content: "";
+                position: absolute;
+                top: 0;
+                left: 0;
+                height: 100%;
+                width: 50%;
+                background-image: linear-gradient(to right,
+                        rgba(255, 255, 255, 0.5),
+                        rgba(255, 255, 255, 0.8),
+                        rgba(255, 255, 255, 0.5));
+                transform: translateX(-100%);
+                animation: dialog-tab-animate-progress-bar 1.5s linear infinite;
+                will-change: transform;
+            }
+        }
+
+        webview {
+            position: relative;
+            flex: 1;
+            overflow: hidden;
+            border-radius: var(--radius);
+        }
+
+        &.reader-open .reader-view-toggle {
+            background-color: var(--colorBgAlphaHeavy);
+            border-color: var(--colorFgAlpha);
+        }
+    }
+}

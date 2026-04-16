@@ -1,0 +1,181 @@
+/*
+* Community Mods (03/20/26)
+* For Vivaldi browser version 7.8 and up
+* Written by various contributors
+*
+* Desription: General ui changes
+*
+* GNU General Public License v3.0
+*/
+
+/*
+* Vertical Extensions Drop-Down Menu
+* Authors: quodroc and sudenim
+* Forum Link: https://forum.vivaldi.net/post/742203
+*/
+.extensionIconPopupMenu { --popupWidth: 280px !important; top: unset !important; }
+
+.extensionIconPopupMenu > .toolbar {
+  max-height: 50vh;
+  overflow: clip auto;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  align-items: stretch;
+}
+.extensionIconPopupMenu .ExtensionDropdownIcon > button { justify-content: flex-start; padding: 1em; }
+
+.extensionIconPopupMenu .ExtensionDropdownIcon > button::after { content: attr(title); overflow: clip visible; text-overflow: ellipsis; width: calc(var(--popupWidth) - 50px); }
+
+/*
+* Download Pacman
+* Authors: MasterLeo29 and sudenim
+* Forum Link: https://forum.vivaldi.net/topic/92009/download-pacman-animation-waga-waga?_=1775665265160
+*/
+.panel.downloads .DownloadItem-ProgressBar.visible { height: 10px; /*More space for pacman*/ }
+
+.panel.downloads .DownloadItem-ProgressBar.loading.visible{
+  --pacman-open: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' height='19.037' width='18.053' viewBox='0 0 571.11 541.6'%3E%3Cpath style='fill:%23ffcc00' d='M535.441,412.339A280.868,280.868 0 1,1 536.186,161.733L284.493,286.29Z'%3E%3C/path%3E%3C/svg%3E%0A");
+  --pacman-close: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' height='19.037' width='18.053' viewBox='0 0 36 36'%3E%3Ccircle fill='%23ffcc00' cx='18' cy='18' r='18'/%3E%3C/svg%3E");
+  --pacman-point: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' height='11.422' width='10.831' viewBox='0 0 36 36'%3E%3Ccircle fill='%23ffffff' cx='18' cy='15' r='6'/%3E%3C/svg%3E");
+  --pacman-waga-ms: 400ms;
+}
+
+.panel.downloads .DownloadItem-ProgressBar.loading.visible { background-image: var(--pacman-point); }
+
+.panel.downloads .DownloadItem-ProgressBar.loading.visible::after { background-image: none; background-color: var(--colorBgFaded); }
+
+.panel.downloads .DownloadItem-ProgressBar.loading.visible::before {
+background-color: #ffcc00;
+background-image: none;
+content: '';
+position: absolute;
+z-index: 1;
+inset: 0;
+-webkit-animation: wagawaga var(--pacman-waga-ms) infinite !important;
+-webkit-mask-repeat: no-repeat !important;
+-webkit-mask-position-x: calc(var(--progress) * 100%) !important;
+transition: -webkit-mask-position-x var(--duration) linear !important;
+-webkit-mask-size: contain !important;
+}
+
+@keyframes wagawaga {
+0% {
+  -webkit-mask-image: var(--pacman-open);
+}
+50% {
+ -webkit-mask-image: var(--pacman-close);
+}
+100% {
+ -webkit-mask-image: var(--pacman-open);
+}
+}
+
+.panel.downloads .DownloadItem-ProgressBar.visible:not(.loading):after,
+.popout.downloads-popout .DownloadItem-ProgressBar.visible:not(.loading):after {
+  background-color: transparent !important;
+}
+
+/*
+* Adaptive Foward and Back
+* Authors: PaRr0tBoy and sudenim
+* Forum Link: https://forum.vivaldi.net/topic/112116/adaptive-back-forwards
+*/
+/* Hides disabled forward/back navigation buttons */
+button.ToolbarButton-Button[disabled] { display: none !important; }
+
+/* Allows other disabled elements to still work */
+#switch > .toolbar.toolbar-vertical > .toolbar-divider > button, .toolbar-statusbar .page-zoom-controls .button-toolbar > button { display: flex !important; }
+
+/* Show only enabled navigation buttons */
+button.ToolbarButton-Button:not([disabled]) { display: inline-flex !important; }
+
+/*
+* Quietify audio icon replacement
+* Authors: PaRr0tBoy and sudenim
+* Forum Link: https://forum.vivaldi.net/topic/112101/a-sleek-audio-icon-replacement?_=1759121392828
+*/
+:root { --tab-icon-size: 12px; --popup-icon-size: 12px; --panel-icon-size: 10px; }
+
+/* Icon Position */
+.tab-audio, .panel-audio { margin-top: 1px; margin-left: 1px !important; overflow: visible !important; position: relative; }
+
+#vivaldi-tooltip .tooltip .tooltip-item .tooltip-audio-button .audioicon { margin-top: -1.5px; margin-left: -1px; }
+
+/* Make the original canvas icon transparent and remove its dimensions */
+.tab-audio canvas.audioicon, .tooltip-audio-button canvas.audioicon, .audio-container canvas.audioicon, .button-icon.audio canvas.audioicon,
+.panel-audio canvas.audioicon { opacity: 0 !important;  /*width: 0 !important;  height: 0 !important;*/ position: absolute !important; }
+
+/* Position the parent containers so the pseudo-elements can be placed correctly */
+.tab-audio, .tooltip-audio-button, .panel-audio, .audio-container, .button-icon.audio {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--tab-icon-size);
+  height: var(--tab-icon-size);
+}
+
+/* Panel background and placement */
+.button-toolbar > button > span.panel-audio {
+  right: 2px !important;
+  top: 0 !important;
+  height: 14px;
+  width: 14px;
+  border-radius: var(--radiusRound);
+  background-color: var(--colorHighlightBg);
+}
+
+/* --- Generic Pseudo-element Style --- */
+/* Apply the icon to the container, not the canvas itself */
+.tab-audio::before, .panel-audio::before, .tooltip-audio-button::before, .audio-container::before, .button-icon.audio::before {
+  content: "";
+  display: inline-block;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: var(--colorAccentFg, #000);
+  mask-repeat: no-repeat;
+  mask-position: center;
+  mask-size: contain;
+  transition: transform 0.15s ease-out;
+  pointer-events: none;
+}
+
+/* --- Size Variations --- */
+/* Audio icon in tab */
+.tab-audio::before, .tooltip-audio-button::before { width: var(--tab-icon-size); height: var(--tab-icon-size); }
+
+/* Audio icon in workspace popup */
+.audio-container::before, .button-icon.audio::before { width: var(--popup-icon-size); height: var(--popup-icon-size); }
+
+/* Audio icon in panel */
+.panel-audio::before { /*z-index: 999 !important;*/ width: var(--panel-icon-size); height: var(--panel-icon-size); }
+
+/* --- State Detection --- */
+/* Playing State: Select the container if its child canvas has the "Mute" title */
+.audio-container:has(.audioicon[title*="Mute"]),
+.tooltip-audio-button:has(.audioicon[title*="Mute"]),
+.button-icon.audio:has(.audioicon[title*="Mute"]),
+.tab-audio:has(.audioicon[title*="Mute"]),
+.panel-audio:has(.audioicon[title*="Mute"]) {
+  /* Apply the animated icon */
+  &::before {
+    mask-image: url("data:image/svg+xml,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%20135%20140%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20fill%3D%22%22%3E%3Crect%20y%3D%2210%22%20width%3D%2215%22%20height%3D%22120%22%20rx%3D%226%22%3E%3Canimate%20attributeName%3D%22height%22%20begin%3D%220.5s%22%20dur%3D%221s%22%20values%3D%22120%3B110%3B100%3B90%3B80%3B70%3B60%3B50%3B40%3B140%3B120%22%20calcMode%3D%22linear%22%20repeatCount%3D%22indefinite%22%2F%3E%3Canimate%20attributeName%3D%22y%22%20begin%3D%220.5s%22%20dur%3D%221s%22%20values%3D%2210%3B15%3B20%3B25%3B30%3B35%3B40%3B45%3B50%3B0%3B10%22%20calcMode%3D%22linear%22%20repeatCount%3D%22indefinite%22%2F%3E%3C%2Frect%3E%3Crect%20x%3D%2230%22%20y%3D%2210%22%20width%3D%2215%22%20height%3D%22120%22%20rx%3D%226%22%3E%3Canimate%20attributeName%3D%22height%22%20begin%3D%220.25s%22%20dur%3D%221s%22%20values%3D%22120%3B110%3B100%3B90%3B80%3B70%3B60%3B50%3B40%3B140%3B120%22%20calcMode%3D%22linear%22%20repeatCount%3D%22indefinite%22%2F%3E%3Canimate%20attributeName%3D%22y%22%20begin%3D%220.25s%22%20dur%3D%221s%22%20values%3D%2210%3B15%3B20%3B25%3B30%3B35%3B40%3B45%3B50%3B0%3B10%22%20calcMode%3D%22linear%22%20repeatCount%3D%22indefinite%22%2F%3E%3C%2Frect%3E%3Crect%20x%3D%2260%22%20width%3D%2215%22%20height%3D%22140%22%20rx%3D%226%22%3E%3Canimate%20attributeName%3D%22height%22%20begin%3D%220s%22%20dur%3D%221s%22%20values%3D%22120%3B110%3B100%3B90%3B80%3B70%3B60%3B50%3B40%3B140%3B120%22%20calcMode%3D%22linear%22%20repeatCount%3D%22indefinite%22%2F%3E%3Canimate%20attributeName%3D%22y%22%20begin%3D%220s%22%20dur%3D%221s%22%20values%3D%2210%3B15%3B20%3B25%3B30%3B35%3B40%3B45%3B50%3B0%3B10%22%20calcMode%3D%22linear%22%20repeatCount%3D%22indefinite%22%2F%3E%3C%2Frect%3E%3Crect%20x%3D%2290%22%20y%3D%2210%22%20width%3D%2215%22%20height%3D%22120%22%20rx%3D%226%22%3E%3Canimate%20attributeName%3D%22height%22%20begin%3D%220.25s%22%20dur%3D%221s%22%20values%3D%22120%3B110%3B100%3B90%3B80%3B70%3B60%3B50%3B40%3B140%3B120%22%20calcMode%3D%22linear%22%20repeatCount%3D%22indefinite%22%2F%3E%3Canimate%20attributeName%3D%22y%22%20begin%3D%220.25s%22%20dur%3D%221s%22%20values%3D%2210%3B15%3B20%3B25%3B30%3B35%3B40%3B45%3B50%3B0%3B10%22%20calcMode%3D%22linear%22%20repeatCount%3D%22indefinite%22%2F%3E%3C%2Frect%3E%3Crect%20x%3D%22120%22%20y%3D%2210%22%20width%3D%2215%22%20height%3D%22120%22%20rx%3D%226%22%3E%3Canimate%20attributeName%3D%22height%22%20begin%3D%220.5s%22%20dur%3D%221s%22%20values%3D%22120%3B110%3B100%3B90%3B80%3B70%3B60%3B50%3B40%3B140%3B120%22%20calcMode%3D%22linear%22%20repeatCount%3D%22indefinite%22%2F%3E%3Canimate%20attributeName%3D%22y%22%20begin%3D%220.5s%22%20dur%3D%221s%22%20values%3D%2210%3B15%3B20%3B25%3B30%3B35%3B40%3B45%3B50%3B0%3B10%22%20calcMode%3D%22linear%22%20repeatCount%3D%22indefinite%22%2F%3E%3C%2Frect%3E%3C%2Fsvg%3E") !important;
+  }
+}
+
+/* Muted State: Select the container if its child canvas has the "Unmute" title */
+.audio-container:has(.audioicon[title*="Unmute"]),
+.tooltip-audio-button:has(.audioicon[title*="Unmute"]),
+.button-icon.audio:has(.audioicon[title*="Unmute"]),
+.tab-audio:has(.audioicon[title*="Unmute"]),
+.panel-audio:has(.audioicon[title*="Unmute"]) {
+  /* Apply the static icon */
+  &::before {
+    mask-image: url("data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTYiIGhlaWdodD0iMTYiIHZpZXdCb3g9IjAgMCAxMzYgMTQwIiBmaWxsPSIjZmZmIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxyZWN0IHg9IjQiIHk9IjcwIiB3aWR0aD0iMTUiIGhlaWdodD0iMTUiIHJ4PSI2Ii8+PHJlY3QgeD0iMzQiIHk9IjcwIiB3aWR0aD0iMTUiIGhlaWdodD0iMTUiIHJ4PSI2Ii8+PHJlY3QgeD0iNjQiIHk9IjcwIiB3aWR0aD0iMTUiIGhlaWdodD0iMTUiIHJ4PSI2Ii8+PHJlY3QgeD0iOTQiIHk9IjcwIiB3aWR0aD0iMTUiIGhlaWdodD0iMTUiIHJ4PSI2Ii8+PHJlY3QgeD0iMTI0IiB5PSI3MCIgd2lkdGg9IjE1IiBoZWlnaHQ9IjE1IiByeD0iNiIvPjwvc3ZnPg==") !important;
+  }
+}
+
+/* Hover effect */
+.tooltip-audio-button:hover::before, .tab-audio:hover::before, .panel-audio:hover::before, .audio-container:hover::before, .button-icon.audio:hover::before { transform: translate(-50%, -50%) scale(1.15); }

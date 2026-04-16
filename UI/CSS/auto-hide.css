@@ -1,0 +1,59 @@
+/*
+* Auto-hide (03/20/26)
+* For Vivaldi browser version 7.9 and up
+* Written by sudenim
+* 
+* Desription: Adjustments to size, spacing, colouring and animations
+*
+* GNU General Public License v3.0
+*/
+
+/* Sets a static vertical tab container size */
+#tabs-tabbar-container.left, #tabs-tabbar-container.right { width: var(--vTabBarWidth) !important; }
+
+/* Makes the addressbar sit next to the vertical tab bar insead of on top of it (remove if not using vertical tabs) */
+.auto-hide-wrapper.top, .auto-hide-wrapper.bottom { left: var(--vTabBarWidth); width: calc(100% - var(--vTabBarWidth)) !important; }
+
+/* Re-colours the top and bottom overlays with a transparent accent colour */
+.auto-hide-wrapper .toolbar-statusbar { background-color: color-mix(in srgb, var(--colorAccentBg), var(--transparency)) !important; backdrop-filter: var(--backgroundBlur); }
+
+.auto-hide #browser:has(.auto-hide-wrapper.show).transparent-tabbar.color-behind-tabs-off .auto-hide-wrapper.has-tabbar { background: transparent !important; }
+
+/* Adds a consistent drop shadow */
+.auto-hide-wrapper.top, .auto-hide-wrapper.bottom, .auto-hide-wrapper.top.show, .auto-hide-wrapper.bottom.show { box-shadow: 0 3px 3px 0px rgba(0,0,0,0.25) !important; }
+
+/* Fullscreen addressbar spacing */
+#browser.fullscreen .auto-hide-wrapper.top, #browser.fullscreen .auto-hide-wrapper.bottom { left: 0 !important; width: 100% !important; }
+
+/* Left side spacing */
+#browser:not(.mac).maximized .auto-hide-wrapper.left.show { transform: translateX(var(--triggerSize)) !important; }
+
+/* Border size */
+.auto-hide { grid-template-columns: var(--triggerSize) [content] 1fr var(--triggerSize) !important; grid-template-rows: var(--triggerSize) [content] 1fr var(--triggerSize) !important; }
+
+.address-top .mainbar { width: calc(100% - var(--triggerSize)); margin-bottom: var(--triggerSize); }
+
+.auto-hide-wrapper.top { top: var(--triggerSize) !important; }
+
+.auto-hide-wrapper.left { top: var(--triggerSize) !important; left: var(--triggerSize) !important; height: 100% !important; }
+
+.auto-hide-wrapper.right { top: var(--triggerSize) !important; right: var(--triggerSize) !important; height: 100% !important; }
+
+.auto-hide-wrapper.bottom { bottom: var(--triggerSize) !important; }
+
+/* Auto-hide panel's border radius */
+.auto-hide-wrapper .mainbar:first-child { border-top-left-radius: var(--rounding) !important; border-top-right-radius: var(--rounding) !important; }
+
+.auto-hide-wrapper .mainbar:last-child { border-bottom-left-radius: var(--rounding) !important; border-bottom-right-radius: var(--rounding) !important; }
+
+/* Auto hide animation */
+.auto-hide-wrapper.top, .auto-hide-wrapper.bottom { transition-delay: var(--longDelay); transition-duration: var(--longDuration) !important; }
+
+.auto-hide-wrapper.top.show, .auto-hide-wrapper.bottom.show { transition-delay: var(--shortDelay); transition-duration: var(--shortDuration) !important; }
+
+.auto-hide-wrapper.left, .auto-hide-wrapper.right { transition-delay: var(--longDelay); transition-duration: var(--longDuration); }
+
+.auto-hide-wrapper.left.show, .auto-hide-wrapper.right.show { transition-delay: var(--longDelay); transition-duration: var(--longDuration); }
+
+/* Makes the panel top most so that auto-hide adressbar doesn't cover it */
+#panels-container { z-index: 10 !important; }

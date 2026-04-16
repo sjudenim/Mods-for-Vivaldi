@@ -1,0 +1,77 @@
+// Monochrome icons
+// version 2026.2.1
+// https://forum.vivaldi.net/post/791344
+// Makes web panel thumbnails monochrome depending on theme colors.
+
+(async function monochrome_icons() {
+  "use strict";
+
+  function theme(css) {
+    const color = document.getElementById("main");
+    color.style =
+      "color: color-mix(in oklch, var(--colorFg) 80%, var(--colorFg));";
+    const oklch = getComputedStyle(color).getPropertyValue("color");
+    color.removeAttribute("style");
+    // get hue from oklch, rotate to counteract sepia filter
+    const hue = (Number(oklch.match(/-?\d+(\.\d+)?/g)[2]) - 50).toFixed(2);
+    let filter;
+    if (!isNaN(hue)) {
+      console.info(`monochrome-icons hue-change: ${hue}°`);
+      filter = `sepia(1) hue-rotate(${hue}deg)`;
+    } else {
+      console.info("monochrome-icons grayscale mode");
+      filter = "grayscale(1)";
+    }
+    css.innerHTML = `
+        .button-toolbar-webpanel img, .toolbar-statusbar .toolbar-extensions .button-toolbar > button img,
+  .toolbar-panel .toolbar-extensions .button-toolbar > button img, .toolbar-statusbar .toolbar-extensions .button-toolbar > button img{
+        filter: brightness(0.85) ${filter};
+      }
+      #browser.isblurred.dim-blurred .button-toolbar-webpanel img {
+        filter: brightness(0.85) ${filter} opacity(0.65) !important;
+      }
+    `;
+  }
+
+  const add_style = (id) => {
+    const style = document.createElement("style");
+    style.setAttribute("type", "text/css");
+    style.id = id;
+    document.head.appendChild(style);
+    return document.getElementById(id);
+  };
+
+  const wait = () => {
+    return new Promise((resolve) => {
+      const check = document.getElementById("browser");
+      if (check) return resolve(check);
+      else {
+        const startup = new MutationObserver(() => {
+          const el = document.getElementById("browser");
+          if (el) {
+            startup.disconnect();
+            resolve(el);
+          }
+        });
+        startup.observe(document.body, { childList: true, subtree: true });
+      }
+    });
+  };
+
+  const lazy = (el, observer) => {
+    observer.observe(el, { attributes: true, attributeFilter: ["style"] });
+  };
+
+  await wait().then((browser) => {
+    const css = add_style("vm-mi-style");
+    theme(css);
+    const lazy_obs = new MutationObserver(() => {
+      lazy_obs.disconnect();
+      setTimeout(() => {
+        theme(css);
+        lazy(browser, lazy_obs);
+      }, 300);
+    });
+    lazy(browser, lazy_obs);
+  });
+})();
