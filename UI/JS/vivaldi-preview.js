@@ -1,5 +1,5 @@
 /*
-* Vivaldi Preview (04/15/26)
+* Vivaldi Preview (04/17/26)
 * For Vivaldi browser version 7.8 and up
 * Authors: biruktes, tam710562, oudstand, sudenim
 * Forum link: https://forum.vivaldi.net/topic/92501/open-in-dialog-mod?_=1717490394230
@@ -120,6 +120,9 @@
             };
         }
 
+        getActiveWebview() {
+            return document.querySelector('.active.visible.webpageview webview');
+        }
         /**
          * Open Default Search Engine in Preview and search for the selected text
          * @returns {Promise<void>}
@@ -152,7 +155,19 @@
          * @param {String} combination written in the form (CTRL+SHIFT+ALT+KEY)
          */
         keyCombo(_, combination) {
-            const handler = this.KEYBOARD_SHORTCUTS[combination];
+            if (!combination) return;
+
+            const normalized = combination
+                .replace('Key', '')
+                .replace('Period', '.')
+                .replace('Comma', ',')
+                .replace('Slash', '/')
+                .replace(/\s+/g, '');
+
+            const handler =
+                this.KEYBOARD_SHORTCUTS[combination] ||
+                this.KEYBOARD_SHORTCUTS[normalized];
+
             if (handler) handler();
         }
 
@@ -225,9 +240,15 @@
          */
         dialogTab(linkUrl, fromPanel = undefined, origin = undefined) {
             chrome.windows.getLastFocused(window => {
-                if (window.id === vivaldiWindowId && window.state !== chrome.windows.WindowState.MINIMIZED) {
-                    this.showPreview(linkUrl, fromPanel, origin); // pass origin through
-                }
+                chrome.windows.getCurrent(current => {
+                    const isValidWindow =
+                        window.id === current.id &&
+                        window.state !== chrome.windows.WindowState.MINIMIZED;
+
+                    if (isValidWindow) {
+                        this.showPreview(linkUrl, fromPanel, origin);
+                    }
+                });
             });
         }
 
@@ -257,7 +278,8 @@
                 webview: webview,
                 fromPanel: fromPanel,
                 tabId: tabId,
-                pointerdownListener: null // Will be set later if fromPanel is true
+                pointerdownListener: null,
+                pointerdownAttached: false
             });
 
             // remove dialogs when tab is closed without closing dialogs
@@ -350,67 +372,53 @@
             });
 
             webview.addEventListener('loadcommit', () => {
-                // Update the current page URL when the load is committed
-                currentPageUrl = webview.src;
-                titleFetched = false;  // Reset title flag for the new page
-
-                // Reset loading state
-                isLoading = true;
+                titleFetched = false;
                 progressBar.clear(true);
             });
 
             webview.addEventListener('loadstop', () => {
-                // Page has finished loading; give it a moment for any dynamic content to settle
                 progressBar.clear(true);
 
-                try {
-                    // Ensure the page has finished loading and is not loading anymore
-                    if (isLoading) {
-                        // Mark loading as complete
-                        isLoading = false;
+                const expectedSrc = webview.src; // snapshot (IMPORTANT)
 
-                        // Wait for a moment before trying to get the title to ensure the page is fully settled
-                        setTimeout(() => {
-                            let title = '';
+                setTimeout(() => {
+                    let title = '';
 
-                            // First, try to get the title using the native getTitle method
-                            if (webview.getTitle) {
-                                title = webview.getTitle();
-                            }
+                    try {
+                        if (webview.getTitle) {
+                            title = webview.getTitle();
+                        }
 
-                            // If no title from getTitle, fall back to executeScript
-                            if (!title) {
-                                webview.executeScript({ code: 'document.title' }, (results) => {
-                                    if (results && results[0]) {
-                                        title = results[0];
-                                    }
+                        if (!title) {
+                            webview.executeScript({ code: 'document.title' }, (results) => {
+                                if (!results || !results[0]) return;
 
-                                    // Only update the title if it matches the current page URL
-                                    if (webview.src === currentPageUrl && title) {
-                                        titleFetched = true;
-                                        pageTitle = title;
+                                const resolvedTitle = results[0];
 
-                                        // Update the optionsContainer text with the title (if not showing options)
-                                        if (!showingOptions) {
-                                            optionsContainer.textContent = pageTitle;
-                                        }
-                                    }
-                                });
-                            } else {
-                                // Directly use the title if getTitle works
-                                if (webview.src === currentPageUrl) {
+                                // ONLY apply if still same page
+                                if (webview.src === expectedSrc && resolvedTitle) {
+                                    pageTitle = resolvedTitle;
                                     titleFetched = true;
-                                    pageTitle = title;
+
                                     if (!showingOptions) {
                                         optionsContainer.textContent = pageTitle;
                                     }
                                 }
+                            });
+                        } else {
+                            if (webview.src === expectedSrc) {
+                                pageTitle = title;
+                                titleFetched = true;
+
+                                if (!showingOptions) {
+                                    optionsContainer.textContent = pageTitle;
+                                }
                             }
-                        }, 500); // Wait for 500ms before trying to fetch the title
+                        }
+                    } catch (e) {
+                        console.error('Title fetch failed:', e);
                     }
-                } catch (e) {
-                    console.error('Error loading title:', e);
-                }
+                }, 300);
             });
             //#endregion
 
