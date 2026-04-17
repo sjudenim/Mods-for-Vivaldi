@@ -15,12 +15,15 @@
         linkIconInteractionOnHover: false, // if false, you have to click the icon to show the dialog - if true, the dialog shows on mouseenter
         showIconDelay: 0, // set to 0 to disable - delays showing the icon on hovering a link
         showPreviewOnHoverDelay: 0 // set to 0 to disable - delays showing the dialog on hovering the linkIcon
-    },
-        CONTEXT_MENU_CONFIG = {
-            linkMenuTitle: 'Open in Preview',
-            searchMenuTitle: 'Search in Preview',
-            selectSearchMenuTitle: 'Select Search in Preview'
-        };
+    }
+    const UI_CONFIG = {
+        showUrlInput: 0 // 1 = enabled, 0 = disabled - shows the input box in the options container
+    };
+    const CONTEXT_MENU_CONFIG = {
+        linkMenuTitle: 'Open in Preview',
+        searchMenuTitle: 'Search in Preview',
+        selectSearchMenuTitle: 'Select Search in Preview'
+    };
 
     // Wait for the browser to come to a ready state
     setTimeout(function waitPreview() {
@@ -362,12 +365,13 @@
                 webview.style.backgroundColor = 'var(--colorBorder)';
                 progressBar.start();
 
-                const input = document.getElementById(`input-${webview.id}`);
-                if (input !== null) {
-                    input.value = webview.src;
+                if (UI_CONFIG.showUrlInput) {
+                    const input = document.getElementById(`input-${webview.id}`);
+                    if (input !== null) {
+                        input.value = webview.src;
+                    }
                 }
 
-                // Mark the page as loading
                 isLoading = true;
             });
 
@@ -434,7 +438,7 @@
                 event.preventDefault();
                 event.stopPropagation();
 
-                if (event.target.id === `input-${webviewId}`) {
+                if (UI_CONFIG.showUrlInput && event.target.id === `input-${webviewId}`) {
                     const inputElement = event.target;
 
                     // Calculate the cursor position based on the click location
@@ -447,8 +451,6 @@
                     const text = inputElement.value;
                     let low = 0,
                         high = text.length;
-
-                    this.#canvasContext.font = window.getComputedStyle(inputElement).font;
 
                     while (low < high) {
                         const mid = (low + high) >> 1;
@@ -552,42 +554,31 @@
                 data = this.webviews.get(webviewId),
                 webview = data ? data.webview : undefined;
             if (webview && document.getElementById(inputId) === null) {
-                const input = document.createElement('input', 'text'),
-                    // Allowed URL schemes for webview navigation
-                    VALID_URL_PREFIXES = ['http://', 'https://', 'file://', 'vivaldi://', 'chrome://', 'chrome-extension://', 'data:', 'blob:'],
-                    // Blocked schemes that could be dangerous
-                    BLOCKED_SCHEMES = ['javascript:', 'vbscript:'],
-                    isValidUrl = url => {
-                        if (!url || typeof url !== 'string') return false;
-                        const trimmedUrl = url.trim();
+                let input = null;
 
-                        // Check for blocked schemes first
-                        if (BLOCKED_SCHEMES.some(scheme => trimmedUrl.toLowerCase().startsWith(scheme))) {
-                            return false;
+                if (UI_CONFIG.showUrlInput) {
+                    input = document.createElement('input');
+
+                    input.value = webview.src;
+                    input.id = inputId;
+                    input.setAttribute('class', 'dialog-input');
+
+                    input.addEventListener('keydown', async event => {
+                        if (event.key === 'Enter') {
+                            let value = input.value;
+
+                            if (isValidUrl(value)) {
+                                webview.src = value;
+                            } else {
+                                const searchRequest = await vivaldi.searchEngines.getSearchRequest(
+                                    this.searchEngineUtils.defaultSearchId,
+                                    value
+                                );
+                                webview.src = searchRequest.url;
+                            }
                         }
-
-                        // Allow about: pages
-                        if (trimmedUrl.startsWith('about:')) return true;
-
-                        // Check valid prefixes
-                        return VALID_URL_PREFIXES.some(prefix => trimmedUrl.startsWith(prefix));
-                    };
-
-                input.value = webview.src;
-                input.id = inputId;
-                input.setAttribute('class', 'dialog-input');
-
-                input.addEventListener('keydown', async event => {
-                    if (event.key === 'Enter') {
-                        let value = input.value;
-                        if (isValidUrl(value)) {
-                            webview.src = value;
-                        } else {
-                            const searchRequest = await vivaldi.searchEngines.getSearchRequest(this.searchEngineUtils.defaultSearchId, value);
-                            webview.src = searchRequest.url;
-                        }
-                    }
-                });
+                    });
+                }
 
                 const fragment = document.createDocumentFragment(),
                     buttons = [
@@ -600,8 +591,22 @@
                             cls: 'reader-view-toggle',
                             tooltip: 'Toggle Reader View'
                         },
-                        { content: this.iconUtils.newTab, action: () => this.openNewTab(inputId, true), tooltip: 'Open in new tab' },
-                        { content: this.iconUtils.backgroundTab, action: () => this.openNewTab(inputId, false), tooltip: 'Open in background tab' }
+                        {
+                            content: this.iconUtils.newTab,
+                            action: () =>
+                                UI_CONFIG.showUrlInput
+                                    ? this.openNewTab(inputId, true)
+                                    : this.openNewTabFromWebview(webview, true),
+                            tooltip: 'Open in new tab'
+                        },
+                        {
+                            content: this.iconUtils.backgroundTab,
+                            action: () =>
+                                UI_CONFIG.showUrlInput
+                                    ? this.openNewTab(inputId, false)
+                                    : this.openNewTabFromWebview(webview, false),
+                            tooltip: 'Open in background tab'
+                        }
                     ];
 
                 buttons.forEach(button =>
@@ -614,7 +619,7 @@
                         )
                     )
                 );
-                fragment.appendChild(input);
+                if (input) fragment.appendChild(input);
 
                 thisElement.append(fragment);
             }
@@ -679,6 +684,9 @@
         openNewTab(inputId, active) {
             const url = document.getElementById(inputId).value;
             chrome.tabs.create({ url: url, active: active });
+        }
+        openNewTabFromWebview(webview, active) {
+            chrome.tabs.create({ url: webview.src, active });
         }
     }
 
