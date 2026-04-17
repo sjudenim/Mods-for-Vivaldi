@@ -284,7 +284,6 @@
             optionsContainer.setAttribute('class', 'options-container');
 
             let pageTitle = linkUrl; // fallback so it's never empty
-            optionsContainer.textContent = pageTitle;
             const fadeDuration = 300; // match css value (0.3s)
             let timeout;
             let showingOptions = false;
