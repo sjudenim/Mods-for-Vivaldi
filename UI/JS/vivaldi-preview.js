@@ -1,5 +1,5 @@
 /*
-* Vivaldi Preview (04/17/26)
+* Vivaldi Preview (04/21/26)
 * For Vivaldi browser version 7.8 and up
 * Authors: biruktes, tam710562, oudstand, sudenim
 * Forum link: https://forum.vivaldi.net/topic/92501/open-in-dialog-mod?_=1717490394230
@@ -17,7 +17,7 @@
         showPreviewOnHoverDelay: 0 // set to 0 to disable - delays showing the dialog on hovering the linkIcon
     }
     const UI_CONFIG = {
-        showUrlInput: 0 // 1 = enabled, 0 = disabled - shows the input box in the options container
+        showUrlInput: false // true = enabled, false = disabled - shows the input url box in the options container
     };
     const CONTEXT_MENU_CONFIG = {
         linkMenuTitle: 'Open in Preview',
@@ -34,8 +34,6 @@
         new PreviewWindow();
     }, 300);
 
-
-
     class PreviewWindow {
         rootBrowser = document.getElementById('browser');
         // Animation constants
@@ -51,9 +49,10 @@
 
         webviews = new Map();
         iconUtils = new IconUtils();
+        renderer = new PreviewRenderer(this);
         searchEngineUtils = new SearchEngineUtils(
-            url => this.dialogTab(url),
-            (engineId, searchText) => this.dialogTabSearch(engineId, searchText),
+            url => this.previewWindow(url),
+            (engineId, searchText) => this.previewWindowSearch(engineId, searchText),
             CONTEXT_MENU_CONFIG
         );
         KEYBOARD_SHORTCUTS = {
@@ -82,7 +81,7 @@
 
             new WebsiteInjectionUtils(
                 navigationDetails => this.getWebviewConfig(navigationDetails),
-                (url, fromPanel, origin) => this.dialogTab(url, fromPanel, origin), // pass origin through
+                (url, fromPanel, origin) => this.previewWindow(url, fromPanel, origin), // pass origin through
                 ICON_CONFIG
             );
         }
@@ -114,7 +113,7 @@
 
             const active = this.getActiveWebview();
             const lastId =
-                active?.closest('.dialog-container')
+                active?.closest('.preview-container')
                     ?.querySelector('webview')?.id;
 
             return {
@@ -136,20 +135,20 @@
 
             vivaldi.utilities.getSelectedText(
                 tab.id,
-                text => this.dialogTabSearch(this.searchEngineUtils.defaultSearchId, text)
+                text => this.previewWindowSearch(this.searchEngineUtils.defaultSearchId, text)
             );
         }
 
         /**
-         * Prepares url for search, calls dialogTab function
+         * Prepares url for search, calls previewWindow function
          * @param {String} engineId engine id of the engine to be used
          * @param {int} selectionText the text to search
          */
-        async dialogTabSearch(engineId, selectionText) {
+        async previewWindowSearch(engineId, selectionText) {
             const searchRequest =
                 await vivaldi.searchEngines.getSearchRequest(engineId, selectionText);
 
-            this.dialogTab(searchRequest.url);
+            this.previewWindow(searchRequest.url);
         }
 
         /**
@@ -183,7 +182,7 @@
             if (!data) return;
 
             const container = data.divContainer;
-            const dialogTab = container.querySelector('.dialog-tab');
+            const previewWindow = container.querySelector('.preview-window');
 
             if (container.dataset.closing === '1') return;
             container.dataset.closing = '1';
@@ -192,7 +191,7 @@
             const pointerY = Number(container.dataset.pointerY ?? window.innerHeight / 2);
 
             // Recompute anchored translate for current layout
-            this.setAnchoredTransformVars(dialogTab, pointerX, pointerY);
+            this.setAnchoredTransformVars(previewWindow, pointerX, pointerY);
 
             requestAnimationFrame(() => {
                 container.classList.remove('is-open'); // overlay fades out via transition
@@ -200,11 +199,11 @@
                 // remove blur immediately so background is crisp while closing
                 container.style.backdropFilter = 'none';
 
-                dialogTab.classList.add('animating-close');
+                previewWindow.classList.add('animating-close');
 
                 const finishRemoval = () => {
                     chrome.tabs.query({}, tabs => {
-                        const tab = tabs.find(tab => tab.vivExtData && tab.vivExtData.includes(`${webviewId}tabId`));
+                        const tab = tabs.find(t => String(t.vivExtData || '').includes(`${webviewId}tabId`));
                         if (tab) chrome.tabs.remove(tab.id);
                     });
 
@@ -223,12 +222,12 @@
                 };
 
                 const onCloseEnd = e => {
-                    if (e.animationName === 'dialog-tab-close-anchored') {
-                        dialogTab.removeEventListener('animationend', onCloseEnd);
+                    if (e.animationName === 'preview-window-close-anchored') {
+                        previewWindow.removeEventListener('animationend', onCloseEnd);
                         finishRemoval();
                     }
                 };
-                dialogTab.addEventListener('animationend', onCloseEnd);
+                previewWindow.addEventListener('animationend', onCloseEnd);
 
                 // Fallback in case animationend doesn't fire
                 setTimeout(finishRemoval, this.ANIMATION_DURATIONS.CLOSE_TIMEOUT);
@@ -241,7 +240,7 @@
          * @param {boolean} fromPanel indicates whether the dialog is opened from a panel
          * @param {{x:number, y:number}} origin the viewport coordinates to anchor the animation
          */
-        dialogTab(linkUrl, fromPanel = undefined, origin = undefined) {
+        previewWindow(linkUrl, fromPanel = undefined, origin = undefined) {
             chrome.windows.getLastFocused(window => {
                 chrome.windows.getCurrent(current => {
                     const isValidWindow =
@@ -263,18 +262,24 @@
          */
 
         showPreview(linkUrl, fromPanel, origin) {
-            const dialogContainer = document.createElement('div'),
-                dialogTab = document.createElement('div'),
-                webview = document.createElement('webview'),
-                webviewId = `dialog-${this.getWebviewId()}`,
-                progressBar = new ProgressBar(webviewId),
-                optionsContainer = document.createElement('div');
+            const webviewId = `dialog-${this.getWebviewId()}`;
+
+            const {
+                dialogContainer,
+                previewWindow,
+                webview,
+                optionsContainer,
+                progressBar
+            } = this.renderer.createBaseElements(webviewId, linkUrl);
 
             if (fromPanel === undefined && this.webviews.size !== 0) {
                 fromPanel = Array.from(this.webviews.values()).at(-1).fromPanel;
             }
 
-            const tabId = !fromPanel ? Number(document.querySelector('.active.visible.webpageview webview').tab_id) : null;
+            const activeWebview = this.getActiveWebview();
+            const tabId = !fromPanel && activeWebview
+                ? Number(activeWebview.tab_id)
+                : null;
 
             this.webviews.set(webviewId, {
                 divContainer: dialogContainer,
@@ -297,12 +302,9 @@
                 chrome.tabs.onRemoved.addListener(clearWebviews);
             }
 
-            //#region dialogTab properties
-            dialogTab.setAttribute('class', 'dialog-tab');
-            dialogTab.style.width = 85 - 5 * this.webviews.size + '%';
-            dialogTab.style.height = 95 - 5 * this.webviews.size + '%';
-            // keep hidden until anchored start is ready
-            dialogTab.style.visibility = 'hidden';
+            //#region previewWindow properties
+            previewWindow.setAttribute('class', 'preview-window');
+            this.renderer.applyInitialSizing(previewWindow, this.webviews.size);
             //#endregion
 
             //#region optionsContainer properties
@@ -427,7 +429,7 @@
             //#endregion
 
             //#region dialogContainer properties
-            dialogContainer.setAttribute('class', 'dialog-container');
+            dialogContainer.setAttribute('class', 'preview-container');
 
             const pointerX = origin?.x ?? window.innerWidth / 2;
             const pointerY = origin?.y ?? window.innerHeight / 2;
@@ -482,47 +484,25 @@
 
             //#endregion
 
-            dialogTab.appendChild(optionsContainer);
-            dialogTab.appendChild(progressBar.element);
-            dialogTab.appendChild(webview);
+            this.renderer.attachStructure({
+                dialogContainer,
+                previewWindow,
+                optionsContainer,
+                progressBar,
+                webview
+            });
 
-            dialogContainer.appendChild(dialogTab);
-
-            (fromPanel ? (this.rootBrowser || document.querySelector('#browser')) : document.querySelector('.active.visible.webpageview')).appendChild(dialogContainer);
+            this.renderer.mount(dialogContainer, fromPanel, this.rootBrowser);
 
             // Two-frame start: measure anchored start, then overlay, then animate with a tiny delay
-            requestAnimationFrame(() => {
-                const t = this.setAnchoredTransformVars(dialogTab, pointerX, pointerY); // sets --tx0/--ty0/--s0 and returns numbers
-                // show anchored start inline immediately
-                dialogTab.style.transform = `translate(${t.t0x}px, ${t.t0y}px) scale(${t.s0})`;
-                dialogTab.style.opacity = '0';
-                dialogTab.style.visibility = 'visible';
-                requestAnimationFrame(() => {
-                    dialogTab.getBoundingClientRect();
-
-                    requestAnimationFrame(() => {
-                        dialogContainer.classList.add('is-open');
-                    });
-                });
-
-                requestAnimationFrame(() => {
-                    dialogContainer.classList.add('is-open');
-                    setTimeout(() => {
-                        dialogTab.classList.add('animating-open');
-
-                        const onOpenEnd = e => {
-                            if (e.animationName === 'dialog-tab-open-anchored') {
-                                dialogTab.classList.remove('animating-open');
-                                // cleanup inline styles
-                                dialogTab.style.removeProperty('transform');
-                                dialogTab.style.removeProperty('opacity');
-                                dialogTab.removeEventListener('animationend', onOpenEnd);
-                            }
-                        };
-                        dialogTab.addEventListener('animationend', onOpenEnd);
-                    }, this.ANIMATION_DURATIONS.FADE_DELAY);
-                });
-            });
+            this.renderer.runOpenAnimation(
+                previewWindow,
+                dialogContainer,
+                pointerX,
+                pointerY,
+                this.setAnchoredTransformVars.bind(this),
+                this.ANIMATION_DURATIONS
+            );
         }
 
         /**
@@ -530,16 +510,16 @@
          * grows exactly from (viewportX, viewportY) when scaling from s0 → 1.
          * We precompute the starting translation T0 = (1 - s0) * (P - L).
          */
-        setAnchoredTransformVars(dialogTab, viewportX, viewportY, s0 = 0.1) {
-            const rect = dialogTab.getBoundingClientRect();
+        setAnchoredTransformVars(previewWindow, viewportX, viewportY, s0 = 0.1) {
+            const rect = previewWindow.getBoundingClientRect();
             const dx = viewportX - rect.left;
             const dy = viewportY - rect.top;
             const t0x = (1 - s0) * dx;
             const t0y = (1 - s0) * dy;
 
-            dialogTab.style.setProperty('--s0', String(s0));
-            dialogTab.style.setProperty('--tx0', `${t0x}px`);
-            dialogTab.style.setProperty('--ty0', `${t0y}px`);
+            previewWindow.style.setProperty('--s0', String(s0));
+            previewWindow.style.setProperty('--tx0', `${t0x}px`);
+            previewWindow.style.setProperty('--ty0', `${t0y}px`);
 
             return { t0x, t0y, s0 };
         }
@@ -561,7 +541,7 @@
 
                     input.value = webview.src;
                     input.id = inputId;
-                    input.setAttribute('class', 'dialog-input');
+                    input.setAttribute('class', 'url-input');
 
                     input.addEventListener('keydown', async event => {
                         if (event.key === 'Enter') {
@@ -666,13 +646,13 @@
          * @param {webview} webview the webview to update
          */
         showReaderView(webview) {
-            const dialogTab = webview.parentElement;
+            const previewWindow = webview.parentElement;
             if (webview.src.includes(this.READER_VIEW_URL)) {
                 webview.src = webview.src.replace(this.READER_VIEW_URL, '');
-                dialogTab.classList.remove('reader-open');
+                previewWindow.classList.remove('reader-open');
             } else {
                 webview.src = this.READER_VIEW_URL + webview.src;
-                dialogTab.classList.add('reader-open');
+                previewWindow.classList.add('reader-open');
             }
         }
 
@@ -687,6 +667,95 @@
         }
         openNewTabFromWebview(webview, active) {
             chrome.tabs.create({ url: webview.src, active });
+        }
+    }
+
+    class PreviewRenderer {
+        constructor(context) {
+            this.ctx = context; // reference to PreviewWindow
+        }
+
+        createBaseElements(webviewId, linkUrl) {
+            const dialogContainer = document.createElement('div');
+            const previewWindow = document.createElement('div');
+            const webview = document.createElement('webview');
+            const optionsContainer = document.createElement('div');
+            const progressBar = new ProgressBar(webviewId);
+
+            previewWindow.className = 'preview-window';
+            optionsContainer.className = 'options-container';
+            dialogContainer.className = 'preview-container';
+
+            webview.id = webviewId;
+            webview.tab_id = `${webviewId}tabId`;
+            webview.setAttribute('src', linkUrl);
+
+            return {
+                dialogContainer,
+                previewWindow,
+                webview,
+                optionsContainer,
+                progressBar
+            };
+        }
+
+        attachStructure({ dialogContainer, previewWindow, optionsContainer, progressBar, webview }) {
+            previewWindow.appendChild(optionsContainer);
+            previewWindow.appendChild(progressBar.element);
+            previewWindow.appendChild(webview);
+            dialogContainer.appendChild(previewWindow);
+        }
+
+        mount(dialogContainer, fromPanel, rootBrowser) {
+            (fromPanel
+                ? (rootBrowser || document.querySelector('#browser'))
+                : document.querySelector('.active.visible.webpageview')
+            ).appendChild(dialogContainer);
+        }
+
+        applyInitialSizing(previewWindow, stackIndex) {
+            previewWindow.style.width = 85 - 5 * stackIndex + '%';
+            previewWindow.style.height = 95 - 5 * stackIndex + '%';
+            previewWindow.style.visibility = 'hidden';
+        }
+
+        runOpenAnimation(previewWindow, dialogContainer, pointerX, pointerY, setAnchoredTransformVars, durations) {
+            requestAnimationFrame(() => {
+                const t = setAnchoredTransformVars(previewWindow, pointerX, pointerY);
+
+                Object.assign(previewWindow.style, {
+                    transform: `translate(${t.t0x}px, ${t.t0y}px) scale(${t.s0})`,
+                    opacity: '0',
+                    visibility: 'visible'
+                });
+
+                requestAnimationFrame(() => {
+                    previewWindow.getBoundingClientRect();
+
+                    requestAnimationFrame(() => {
+                        dialogContainer.classList.add('is-open');
+                    });
+                });
+
+                requestAnimationFrame(() => {
+                    dialogContainer.classList.add('is-open');
+
+                    setTimeout(() => {
+                        previewWindow.classList.add('animating-open');
+
+                        const onOpenEnd = e => {
+                            if (e.animationName === 'preview-window-open-anchored') {
+                                previewWindow.classList.remove('animating-open');
+                                previewWindow.style.removeProperty('transform');
+                                previewWindow.style.removeProperty('opacity');
+                                previewWindow.removeEventListener('animationend', onOpenEnd);
+                            }
+                        };
+
+                        previewWindow.addEventListener('animationend', onOpenEnd);
+                    }, durations.FADE_DELAY);
+                });
+            });
         }
     }
 
@@ -837,7 +906,8 @@
                     this.#sendPreviewMessage(this.icon.dataset.targetUrl, x, y);
                 });
                 icon.addEventListener('mouseenter', () => clearTimeout(this.timers.hideIcon));
-                icon.addEventListener('mouseleave', this.#hideLinkIcon.bind(this));
+                this.boundHideIcon = this.#hideLinkIcon.bind(this);
+                icon.addEventListener('mouseleave', this.boundHideIcon);
             }
 
             this.icon = icon;
@@ -925,9 +995,9 @@
             this.privateSearchId = null;
 
             // Cache static IDs for frequent access
-            this.LINK_ID = 'dialog-tab-link';
-            this.SEARCH_ID = 'search-dialog-tab';
-            this.SELECT_SEARCH_ID = 'select-search-dialog-tab';
+            this.LINK_ID = 'preview-window-link';
+            this.SEARCH_ID = 'search-preview-window';
+            this.SELECT_SEARCH_ID = 'select-search-preview-window';
 
             this.#initialize();
         }
