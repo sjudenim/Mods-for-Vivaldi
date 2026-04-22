@@ -22,7 +22,7 @@
     const CONTEXT_MENU_CONFIG = {
         linkMenuTitle: 'Open in Preview',
         searchMenuTitle: 'Search in Preview',
-        selectSearchMenuTitle: 'Select Search in Preview'
+        selectSearchMenuTitle: 'Select Search for Preview'
     };
 
     // Wait for the browser to come to a ready state
