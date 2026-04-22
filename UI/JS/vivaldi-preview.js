@@ -47,8 +47,13 @@
         #canvasContext = document.createElement('canvas').getContext('2d');
 
         webviews = new Map();
-        iconUtils = new IconUtils();
-        renderer = new PreviewRenderer(this);
+        get iconUtils() {
+            return this._iconUtils ??= new IconUtils();
+        }
+
+        get renderer() {
+            return this._renderer ??= new PreviewRenderer(this);
+        }
         searchEngineUtils = new SearchEngineUtils(
             url => this.previewWindow(url),
             (engineId, searchText) => this.previewWindowSearch(engineId, searchText),
@@ -1137,46 +1142,55 @@
     }
 
     class ProgressBar {
-        static CLEAR_DELAY = 250; // Delay before hiding progress bar after completion
+        static CLEAR_DELAY = 250;
 
         constructor(webviewId) {
             this.webviewId = webviewId;
             this.progress = 0;
-            this.interval = null;
+
             this.element = this.#createProgressBar(webviewId);
+            this._raf = null;
         }
 
         #createProgressBar(webviewId) {
-            const progressBar = document.createElement('div');
-            progressBar.setAttribute('class', 'progress-bar');
-            progressBar.id = `progressBar-${webviewId}`;
-            return progressBar;
+            const el = document.createElement('div');
+            el.className = 'progress-bar';
+            el.id = `progressBar-${webviewId}`;
+            return el;
         }
 
         start() {
             this.element.style.visibility = 'visible';
             this.element.classList.remove('is-complete');
-            this.progress = 0;
 
-            if (!this.interval) {
-                this.interval = setInterval(() => {
-                    if (this.progress >= 100) {
-                        this.clear();
-                    } else {
-                        this.progress++;
-                        this.element.style.width = this.progress + '%';
-                    }
-                }, 10);
-            }
+            this.progress = 0;
+            this.element.style.width = '0%';
+
+            // Smooth “indeterminate-ish” animation instead of interval spam
+            this.#animateTo(85);
+        }
+
+        #animateTo(target) {
+            cancelAnimationFrame(this._raf);
+
+            const step = () => {
+                // ease-like increment
+                this.progress += (target - this.progress) * 0.08;
+
+                this.element.style.width = `${this.progress.toFixed(2)}%`;
+
+                if (this.progress < target - 0.5) {
+                    this._raf = requestAnimationFrame(step);
+                }
+            };
+
+            this._raf = requestAnimationFrame(step);
         }
 
         clear(loadStop = false) {
-            this.element.classList.add('is-complete');
+            cancelAnimationFrame(this._raf);
 
-            if (this.interval) {
-                clearInterval(this.interval);
-                this.interval = null;
-            }
+            this.element.classList.add('is-complete');
 
             if (loadStop) {
                 this.element.style.width = '100%';
@@ -1184,9 +1198,14 @@
                 setTimeout(() => {
                     this.progress = 0;
                     this.element.style.visibility = 'hidden';
-                    this.element.style.width = this.progress + '%';
+                    this.element.style.width = '0%';
                 }, ProgressBar.CLEAR_DELAY);
             }
+        }
+
+        destroy() {
+            cancelAnimationFrame(this._raf);
+            this._raf = null;
         }
     }
 
