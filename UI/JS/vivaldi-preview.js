@@ -1,5 +1,5 @@
 /*
-* Vivaldi Preview (04/21/26)
+* Vivaldi Preview (04/22/26)
 * For Vivaldi browser version 7.8 and up
 * Authors: biruktes, tam710562, oudstand, sudenim
 * Forum link: https://forum.vivaldi.net/topic/92501/open-in-dialog-mod?_=1717490394230
@@ -240,16 +240,17 @@
          * @param {boolean} fromPanel indicates whether the dialog is opened from a panel
          * @param {{x:number, y:number}} origin the viewport coordinates to anchor the animation
          */
-        previewWindow(linkUrl, fromPanel = undefined, origin = undefined) {
+        async previewWindow(linkUrl, fromPanel = undefined, origin = undefined) {
             chrome.windows.getLastFocused(window => {
-                chrome.windows.getCurrent(current => {
+                chrome.windows.getCurrent(async current => {
                     const isValidWindow =
                         window.id === current.id &&
                         window.state !== chrome.windows.WindowState.MINIMIZED;
 
-                    if (isValidWindow) {
-                        this.showPreview(linkUrl, fromPanel, origin);
-                    }
+                    if (!isValidWindow) return;
+
+                    const url = await UrlUtils.normalizeOrSearch(linkUrl, this.searchEngineUtils);
+                    this.showPreview(url, fromPanel, origin);
                 });
             });
         }
@@ -547,15 +548,8 @@
                         if (event.key === 'Enter') {
                             let value = input.value;
 
-                            if (isValidUrl(value)) {
-                                webview.src = value;
-                            } else {
-                                const searchRequest = await vivaldi.searchEngines.getSearchRequest(
-                                    this.searchEngineUtils.defaultSearchId,
-                                    value
-                                );
-                                webview.src = searchRequest.url;
-                            }
+                            const resolvedUrl = await UrlUtils.normalizeOrSearch(value, this.searchEngineUtils);
+                            webview.src = resolvedUrl;
                         }
                     });
                 }
@@ -661,9 +655,10 @@
          * @param {string} inputId is the id of the input containing current url
          * @param {boolean} active indicates whether the tab is active or not (background tab)
          */
-        openNewTab(inputId, active) {
-            const url = document.getElementById(inputId).value;
-            chrome.tabs.create({ url: url, active: active });
+        async openNewTab(inputId, active) {
+            const input = document.getElementById(inputId).value;
+            const url = await UrlUtils.normalizeOrSearch(input, this.searchEngineUtils);
+            chrome.tabs.create({ url, active });
         }
         openNewTabFromWebview(webview, active) {
             chrome.tabs.create({ url: webview.src, active });
@@ -758,7 +753,52 @@
             });
         }
     }
+    class UrlUtils {
+        static VALID_PREFIXES = [
+            'http://',
+            'https://',
+            'file://',
+            'vivaldi://',
+            'chrome://',
+            'chrome-extension://',
+            'data:',
+            'blob:'
+        ];
 
+        static BLOCKED_SCHEMES = [
+            'javascript:',
+            'vbscript:'
+        ];
+
+        static isValid(url) {
+            if (!url || typeof url !== 'string') return false;
+
+            const trimmed = url.trim().toLowerCase();
+
+            // Block dangerous schemes first
+            if (this.BLOCKED_SCHEMES.some(s => trimmed.startsWith(s))) {
+                return false;
+            }
+
+            // Allow about:
+            if (trimmed.startsWith('about:')) return true;
+
+            return this.VALID_PREFIXES.some(prefix => trimmed.startsWith(prefix));
+        }
+
+        static async normalizeOrSearch(input, searchEngineUtils) {
+            if (this.isValid(input)) {
+                return input;
+            }
+
+            const searchRequest = await vivaldi.searchEngines.getSearchRequest(
+                searchEngineUtils.defaultSearchId,
+                input
+            );
+
+            return searchRequest.url;
+        }
+    }
     class WebsiteInjectionUtils {
         constructor(getWebviewConfig, openPreview, iconConfig) {
             this.iconConfig = JSON.stringify(iconConfig);
