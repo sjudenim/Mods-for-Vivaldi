@@ -266,7 +266,7 @@
             const webviewId = `dialog-${this.getWebviewId()}`;
 
             const {
-                dialogContainer,
+                previewContainer,
                 previewWindow,
                 webview,
                 optionsContainer,
@@ -283,7 +283,7 @@
                 : null;
 
             this.webviews.set(webviewId, {
-                divContainer: dialogContainer,
+                divContainer: previewContainer,
                 webview: webview,
                 fromPanel: fromPanel,
                 tabId: tabId,
@@ -429,13 +429,13 @@
             });
             //#endregion
 
-            //#region dialogContainer properties
-            dialogContainer.setAttribute('class', 'preview-container');
+            //#region previewContainer properties
+            previewContainer.setAttribute('class', 'preview-container');
 
             const pointerX = origin?.x ?? window.innerWidth / 2;
             const pointerY = origin?.y ?? window.innerHeight / 2;
-            dialogContainer.dataset.pointerX = String(pointerX);
-            dialogContainer.dataset.pointerY = String(pointerY);
+            previewContainer.dataset.pointerX = String(pointerX);
+            previewContainer.dataset.pointerY = String(pointerY);
 
             const stopEvent = event => {
                 event.preventDefault();
@@ -477,8 +477,8 @@
                 this.webviews.get(webviewId).pointerdownListener = stopEvent;
             }
 
-            dialogContainer.addEventListener('click', event => {
-                if (event.target === dialogContainer) {
+            previewContainer.addEventListener('click', event => {
+                if (event.target === previewContainer) {
                     this.removePreview(webviewId);
                 }
             });
@@ -486,19 +486,19 @@
             //#endregion
 
             this.renderer.attachStructure({
-                dialogContainer,
+                previewContainer,
                 previewWindow,
                 optionsContainer,
                 progressBar,
                 webview
             });
 
-            this.renderer.mount(dialogContainer, fromPanel, this.rootBrowser);
+            this.renderer.mount(previewContainer, fromPanel, this.rootBrowser);
 
             // Two-frame start: measure anchored start, then overlay, then animate with a tiny delay
             this.renderer.runOpenAnimation(
                 previewWindow,
-                dialogContainer,
+                previewContainer,
                 pointerX,
                 pointerY,
                 this.setAnchoredTransformVars.bind(this),
@@ -671,7 +671,7 @@
         }
 
         createBaseElements(webviewId, linkUrl) {
-            const dialogContainer = document.createElement('div');
+            const previewContainer = document.createElement('div');
             const previewWindow = document.createElement('div');
             const webview = document.createElement('webview');
             const optionsContainer = document.createElement('div');
@@ -679,14 +679,14 @@
 
             previewWindow.className = 'preview-window';
             optionsContainer.className = 'options-container';
-            dialogContainer.className = 'preview-container';
+            previewContainer.className = 'preview-container';
 
             webview.id = webviewId;
             webview.tab_id = `${webviewId}tabId`;
             webview.setAttribute('src', linkUrl);
 
             return {
-                dialogContainer,
+                previewContainer,
                 previewWindow,
                 webview,
                 optionsContainer,
@@ -694,18 +694,18 @@
             };
         }
 
-        attachStructure({ dialogContainer, previewWindow, optionsContainer, progressBar, webview }) {
+        attachStructure({ previewContainer, previewWindow, optionsContainer, progressBar, webview }) {
             previewWindow.appendChild(optionsContainer);
             previewWindow.appendChild(progressBar.element);
             previewWindow.appendChild(webview);
-            dialogContainer.appendChild(previewWindow);
+            previewContainer.appendChild(previewWindow);
         }
 
-        mount(dialogContainer, fromPanel, rootBrowser) {
+        mount(previewContainer, fromPanel, rootBrowser) {
             (fromPanel
                 ? (rootBrowser || document.querySelector('#browser'))
                 : document.querySelector('.active.visible.webpageview')
-            ).appendChild(dialogContainer);
+            ).appendChild(previewContainer);
         }
 
         applyInitialSizing(previewWindow, stackIndex) {
@@ -714,7 +714,7 @@
             previewWindow.style.visibility = 'hidden';
         }
 
-        runOpenAnimation(previewWindow, dialogContainer, pointerX, pointerY, setAnchoredTransformVars, durations) {
+        runOpenAnimation(previewWindow, previewContainer, pointerX, pointerY, setAnchoredTransformVars, durations) {
             requestAnimationFrame(() => {
                 const t = setAnchoredTransformVars(previewWindow, pointerX, pointerY);
 
@@ -728,12 +728,12 @@
                     previewWindow.getBoundingClientRect();
 
                     requestAnimationFrame(() => {
-                        dialogContainer.classList.add('is-open');
+                        previewContainer.classList.add('is-open');
                     });
                 });
 
                 requestAnimationFrame(() => {
-                    dialogContainer.classList.add('is-open');
+                    previewContainer.classList.add('is-open');
 
                     setTimeout(() => {
                         previewWindow.classList.add('animating-open');
