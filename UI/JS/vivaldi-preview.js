@@ -10,12 +10,18 @@
 */
 
 (() => {
+    const ANIMATION_DURATIONS = {
+        CLOSE_TIMEOUT: 800, // Fallback timeout for close animation
+        FADE_DELAY: 80, // Delay before starting fade animation
+        PROGRESS_CLEAR: 250, // Progress bar clear timeout
+        OPTIONS_HIDE: 800 // Options container hide delay
+    };
     const ICON_CONFIG = {
         linkIcon: '', // if set, an icon shows up after links - example values 'fa-solid fa-up-right-from-square', 'fa-solid fa-circle-info', 'fa-regular fa-square' search for other icons: https://fontawesome.com/search?o=r&ic=free&s=solid&ip=classic
         linkIconInteractionOnHover: false, // if false, you have to click the icon to show the dialog - if true, the dialog shows on mouseenter
         showIconDelay: 0, // set to 0 to disable - delays showing the icon on hovering a link
         showPreviewOnHoverDelay: 0 // set to 0 to disable - delays showing the dialog on hovering the linkIcon
-    }
+    };
     const UI_CONFIG = {
         showUrlInput: false // true = enabled, false = disabled - shows the input url box in the options container
     };
@@ -36,13 +42,6 @@
 
     class PreviewWindow {
         rootBrowser = document.getElementById('browser');
-        // Animation constants
-        ANIMATION_DURATIONS = {
-            CLOSE_TIMEOUT: 800, // Fallback timeout for close animation
-            FADE_DELAY: 80, // Delay before starting fade animation
-            PROGRESS_CLEAR: 250, // Progress bar clear timeout
-            OPTIONS_HIDE: 800 // Options container hide delay
-        };
 
         // Cached canvas context for text measurement (performance optimization)
         #canvasContext = document.createElement('canvas').getContext('2d');
@@ -230,7 +229,7 @@
                 previewWindow.addEventListener('animationend', onCloseEnd);
 
                 // Fallback in case animationend doesn't fire
-                setTimeout(finishRemoval, this.ANIMATION_DURATIONS.CLOSE_TIMEOUT);
+                setTimeout(finishRemoval, ANIMATION_DURATIONS.CLOSE_TIMEOUT);
             });
         }
 
@@ -345,7 +344,7 @@
                         showingOptions = false;
                     }, fadeDuration);
 
-                }, this.ANIMATION_DURATIONS.OPTIONS_HIDE);
+                }, ANIMATION_DURATIONS.OPTIONS_HIDE);
             });
             //#endregion
 
@@ -502,7 +501,7 @@
                 pointerX,
                 pointerY,
                 this.setAnchoredTransformVars.bind(this),
-                this.ANIMATION_DURATIONS
+                ANIMATION_DURATIONS
             );
         }
 
