@@ -10,6 +10,14 @@
 */
 
 (() => {
+    const UI_CONFIG = {
+        showUrlInput: false // true = enabled, false = disabled - shows the input url box in the options container
+    };
+    const CONTEXT_MENU_CONFIG = {
+        linkMenuTitle: 'Open in Preview',
+        searchMenuTitle: 'Search in Preview',
+        selectSearchMenuTitle: 'Select Search for Preview'
+    };
     const ANIMATION_DURATIONS = {
         closeTimeout: 800, // Fallback timeout for close animation
         fadeDelay: 80, // Delay before starting fade animation
@@ -20,14 +28,6 @@
         linkIconInteractionOnHover: false, // if false, you have to click the icon to show the dialog - if true, the dialog shows on mouseenter
         showIconDelay: 0, // set to 0 to disable - delays showing the icon on hovering a link
         showPreviewOnHoverDelay: 0 // set to 0 to disable - delays showing the dialog on hovering the linkIcon
-    };
-    const UI_CONFIG = {
-        showUrlInput: false // true = enabled, false = disabled - shows the input url box in the options container
-    };
-    const CONTEXT_MENU_CONFIG = {
-        linkMenuTitle: 'Open in Preview',
-        searchMenuTitle: 'Search in Preview',
-        selectSearchMenuTitle: 'Select Search for Preview'
     };
 
     // Wait for the browser to come to a ready state
@@ -88,18 +88,22 @@
         READER_VIEW_URL = 'https://www.smry.ai/proxy?url=';
         // alternative source
         //READER_VIEW_URL = 'https://app.web-highlights.com/reader/open-website-in-reader-mode?url=';
-        constructor() {
-            this._listeners = new Set();
-            // Setup keyboard shortcuts
-            vivaldi.tabsPrivate.onKeyboardShortcut.addListener(this.keyCombo.bind(this));
+constructor() {
+    this._listeners = new Set();
 
-            new WebsiteInjectionUtils(
-                navigationDetails => this.getWebviewConfig(navigationDetails),
-                (url, fromPanel, origin) => this.previewWindow(url, fromPanel, origin), // pass origin through
-                ICON_CONFIG
-            );
-            window.addEventListener('unload', () => this.cleanupAll());
-        }
+    // Setup keyboard shortcuts
+    vivaldi.tabsPrivate.onKeyboardShortcut.addListener(
+        this.keyCombo.bind(this)
+    );
+
+    new WebsiteInjectionUtils(
+        navigationDetails => this.getWebviewConfig(navigationDetails),
+        (url, fromPanel, origin) => this.previewWindow(url, fromPanel, origin),
+        ICON_CONFIG
+    );
+
+    window.addEventListener('unload', () => this.cleanupAll());
+}
 
         /**
          * Finds the correct configuration for showing the dialog
@@ -127,14 +131,13 @@
             }
 
             const active = this.getActiveWebview();
-            const lastId =
-                active?.closest('.preview-container')
-                    ?.querySelector('webview')?.id;
+const container = active?.closest('.preview-container');
+const lastWebviewId = container?.querySelector('webview')?.id;
 
-            return {
-                webview: this.webviews.get(lastId)?.webview,
-                fromPanel: false
-            };
+return {
+    webview: this.webviews.get(lastWebviewId)?.webview,
+    fromPanel: false
+};
         }
 
         getActiveWebview() {
@@ -175,7 +178,7 @@
             if (!combination) return;
 
             const normalized = combination
-                .replace('Key', '')
+                .replaceAll('Key', '')
                 .replace('Period', '.')
                 .replace('Comma', ',')
                 .replace('Slash', '/')
@@ -197,7 +200,8 @@
             if (!data) return;
 
             const container = data.divContainer;
-            const previewWindow = container.querySelector('.preview-window');
+            const previewWindow = container?.querySelector('.preview-window');
+if (!container || !previewWindow) return;
 
             if (container.dataset.closing === '1') return;
             container.dataset.closing = '1';
