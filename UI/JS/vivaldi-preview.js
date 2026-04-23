@@ -1,5 +1,5 @@
 /*
-* Vivaldi Preview (04/22/26)
+* Vivaldi Preview (04/23/26)
 * For Vivaldi browser version 7.8 and up
 * Authors: biruktes, tam710562, oudstand, sudenim
 * Forum link: https://forum.vivaldi.net/topic/92501/open-in-dialog-mod?_=1717490394230
@@ -11,10 +11,9 @@
 
 (() => {
     const ANIMATION_DURATIONS = {
-        CLOSE_TIMEOUT: 800, // Fallback timeout for close animation
-        FADE_DELAY: 80, // Delay before starting fade animation
-        PROGRESS_CLEAR: 250, // Progress bar clear timeout
-        OPTIONS_HIDE: 800 // Options container hide delay
+        closeTimeout: 800, // Fallback timeout for close animation
+        fadeDelay: 80, // Delay before starting fade animation
+        optionsHide: 800 // Options container hide delay
     };
     const ICON_CONFIG = {
         linkIcon: '', // if set, an icon shows up after links - example values 'fa-solid fa-up-right-from-square', 'fa-solid fa-circle-info', 'fa-regular fa-square' search for other icons: https://fontawesome.com/search?o=r&ic=free&s=solid&ip=classic
@@ -47,6 +46,17 @@
         #canvasContext = document.createElement('canvas').getContext('2d');
 
         webviews = new Map();
+        addListener(target, event, handler, options) {
+            target.addEventListener(event, handler, options);
+            this._listeners.add({ target, event, handler, options });
+        }
+
+        removeAllListeners() {
+            for (const l of this._listeners) {
+                l.target.removeEventListener(l.event, l.handler, l.options);
+            }
+            this._listeners.clear();
+        }
         get iconUtils() {
             return this._iconUtils ??= new IconUtils();
         }
@@ -74,12 +84,12 @@
                 webviewData && this.removePreview(webviewData.webview.id);
             }
         };
-        // 'https://clearthis.page/?u='; stopped service?
-        // change also in dialog.css => &:has(webview[src^="READER_VIEW_URL"]) .reader-view-toggle
-        // alternative => https://www.smry.ai/proxy?url=
-        READER_VIEW_URL = 'https://app.web-highlights.com/reader/open-website-in-reader-mode?url=';
-
+        // choose the reader view source that works best
+        READER_VIEW_URL = 'https://www.smry.ai/proxy?url=';
+        // alternative source
+        //READER_VIEW_URL = 'https://app.web-highlights.com/reader/open-website-in-reader-mode?url=';
         constructor() {
+            this._listeners = new Set();
             // Setup keyboard shortcuts
             vivaldi.tabsPrivate.onKeyboardShortcut.addListener(this.keyCombo.bind(this));
 
@@ -88,6 +98,7 @@
                 (url, fromPanel, origin) => this.previewWindow(url, fromPanel, origin), // pass origin through
                 ICON_CONFIG
             );
+            window.addEventListener('unload', () => this.cleanupAll());
         }
 
         /**
@@ -218,7 +229,7 @@
                     if (data.tabCloseListener) {
                         chrome.tabs.onRemoved.removeListener(data.tabCloseListener);
                     }
-                    if (data.pointerdownListener && data.fromPanel) {
+                    if (data.pointerdownListener) {
                         document.body.removeEventListener('pointerdown', data.pointerdownListener);
                     }
 
@@ -234,7 +245,7 @@
                 previewWindow.addEventListener('animationend', onCloseEnd);
 
                 // Fallback in case animationend doesn't fire
-                setTimeout(finishRemoval, ANIMATION_DURATIONS.CLOSE_TIMEOUT);
+                setTimeout(finishRemoval, ANIMATION_DURATIONS.closeTimeout);
             });
         }
 
@@ -305,6 +316,8 @@
                 };
                 this.webviews.get(webviewId).tabCloseListener = clearWebviews;
                 chrome.tabs.onRemoved.addListener(clearWebviews);
+                this._tabListeners ??= new Set();
+                this._tabListeners.add(clearWebviews);
             }
 
             //#region previewWindow properties
@@ -349,7 +362,7 @@
                         showingOptions = false;
                     }, fadeDuration);
 
-                }, ANIMATION_DURATIONS.OPTIONS_HIDE);
+                }, ANIMATION_DURATIONS.optionsHide);
             });
             //#endregion
 
@@ -476,9 +489,10 @@
             };
 
             if (fromPanel) {
-                document.body.addEventListener('pointerdown', stopEvent);
-                // Store listener reference for cleanup
-                this.webviews.get(webviewId).pointerdownListener = stopEvent;
+                const boundStopEvent = stopEvent.bind(this);
+
+                this.addListener(document.body, 'pointerdown', boundStopEvent);
+                this.webviews.get(webviewId).pointerdownListener = boundStopEvent;
             }
 
             previewContainer.addEventListener('click', event => {
@@ -667,6 +681,24 @@
         openNewTabFromWebview(webview, active) {
             chrome.tabs.create({ url: webview.src, active });
         }
+        /**
+ * Global cleanup for listeners and cached state
+ */
+        cleanupAll() {
+            this.removeAllListeners();
+
+            // cleanup tab listeners safely
+            if (this._tabListeners) {
+                for (const fn of this._tabListeners) {
+                    chrome.tabs.onRemoved.removeListener(fn);
+                }
+                this._tabListeners.clear();
+            }
+
+            // cleanup webviews map safety
+            this.webviews.clear();
+        }
+
     }
 
     class PreviewRenderer {
@@ -752,7 +784,7 @@
                         };
 
                         previewWindow.addEventListener('animationend', onOpenEnd);
-                    }, durations.FADE_DELAY);
+                    }, durations.fadeDelay);
                 });
             });
         }
