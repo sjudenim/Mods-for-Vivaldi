@@ -1,5 +1,5 @@
 /*
-* Vivaldi Preview (04/23/26)
+* Vivaldi Preview (04/24/26)
 * For Vivaldi browser version 7.8 and up
 * Authors: biruktes, tam710562, oudstand, sudenim
 * Forum link: https://forum.vivaldi.net/topic/92501/open-in-dialog-mod?_=1717490394230
@@ -18,16 +18,16 @@
         searchMenuTitle: 'Search in Preview',
         selectSearchMenuTitle: 'Select Search for Preview'
     };
-    const ANIMATION_DURATIONS = {
-        closeTimeout: 800, // Fallback timeout for close animation
-        fadeDelay: 80, // Delay before starting fade animation
-        optionsHide: 800 // Options container hide delay
-    };
     const ICON_CONFIG = {
         linkIcon: '', // if set, an icon shows up after links - example values 'fa-solid fa-up-right-from-square', 'fa-solid fa-circle-info', 'fa-regular fa-square' search for other icons: https://fontawesome.com/search?o=r&ic=free&s=solid&ip=classic
         linkIconInteractionOnHover: false, // if false, you have to click the icon to show the dialog - if true, the dialog shows on mouseenter
         showIconDelay: 0, // set to 0 to disable - delays showing the icon on hovering a link
         showPreviewOnHoverDelay: 0 // set to 0 to disable - delays showing the dialog on hovering the linkIcon
+    };
+    const ANIMATION_DURATIONS = {
+        closeTimeout: 800, // Fallback timeout for close animation
+        fadeDelay: 80, // Delay before starting fade animation
+        optionsHide: 800 // Options container hide delay
     };
 
     // Wait for the browser to come to a ready state
@@ -57,12 +57,14 @@
             }
             this._listeners.clear();
         }
+        #iconUtils;
         get iconUtils() {
-            return this._iconUtils ??= new IconUtils();
+            return this.#iconUtils ??= new IconUtils();
         }
 
+        #renderer;
         get renderer() {
-            return this._renderer ??= new PreviewRenderer(this);
+            return this.#renderer ??= new PreviewRenderer(this);
         }
         searchEngineUtils = new SearchEngineUtils(
             url => this.previewWindow(url),
@@ -88,22 +90,22 @@
         READER_VIEW_URL = 'https://www.smry.ai/proxy?url=';
         // alternative source
         //READER_VIEW_URL = 'https://app.web-highlights.com/reader/open-website-in-reader-mode?url=';
-constructor() {
-    this._listeners = new Set();
+        constructor() {
+            this._listeners = new Set();
 
-    // Setup keyboard shortcuts
-    vivaldi.tabsPrivate.onKeyboardShortcut.addListener(
-        this.keyCombo.bind(this)
-    );
+            // Setup keyboard shortcuts
+            vivaldi.tabsPrivate.onKeyboardShortcut.addListener(
+                this.keyCombo.bind(this)
+            );
 
-    new WebsiteInjectionUtils(
-        navigationDetails => this.getWebviewConfig(navigationDetails),
-        (url, fromPanel, origin) => this.previewWindow(url, fromPanel, origin),
-        ICON_CONFIG
-    );
+            new WebsiteInjectionUtils(
+                navigationDetails => this.getWebviewConfig(navigationDetails),
+                (url, fromPanel, origin) => this.previewWindow(url, fromPanel, origin),
+                ICON_CONFIG
+            );
 
-    window.addEventListener('unload', () => this.cleanupAll());
-}
+            window.addEventListener('unload', () => this.cleanupAll());
+        }
 
         /**
          * Finds the correct configuration for showing the dialog
@@ -131,13 +133,13 @@ constructor() {
             }
 
             const active = this.getActiveWebview();
-const container = active?.closest('.preview-container');
-const lastWebviewId = container?.querySelector('webview')?.id;
+            const container = active?.closest('.preview-container');
+            const lastWebviewId = container?.querySelector('webview')?.id;
 
-return {
-    webview: this.webviews.get(lastWebviewId)?.webview,
-    fromPanel: false
-};
+            return {
+                webview: this.webviews.get(lastWebviewId)?.webview,
+                fromPanel: false
+            };
         }
 
         getActiveWebview() {
@@ -201,7 +203,7 @@ return {
 
             const container = data.divContainer;
             const previewWindow = container?.querySelector('.preview-window');
-if (!container || !previewWindow) return;
+            if (!container || !previewWindow) return;
 
             if (container.dataset.closing === '1') return;
             container.dataset.closing = '1';
