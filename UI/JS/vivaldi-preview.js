@@ -39,6 +39,32 @@
         new PreviewWindow();
     }, 300);
 
+    const chromeAsync = {
+        getLastFocusedWindow: () =>
+            new Promise(resolve =>
+                chrome.windows.getLastFocused(resolve)
+            ),
+
+        getCurrentWindow: () =>
+            new Promise(resolve =>
+                chrome.windows.getCurrent(resolve)
+            ),
+
+        queryTabs: query =>
+            new Promise(resolve =>
+                chrome.tabs.query(query, resolve)
+            ),
+        removeTab: tabId =>
+            new Promise(resolve =>
+                chrome.tabs.remove(tabId, resolve)
+            ),
+        getSelectedText: tabId =>
+            new Promise(resolve =>
+                vivaldi.utilities.getSelectedText(tabId, resolve)
+            )
+
+    };
+
     class PreviewWindow {
         rootBrowser = document.getElementById('browser');
 
@@ -150,15 +176,30 @@
          * @returns {Promise<void>}
          */
         async searchForSelectedText() {
-            const tabs = await chrome.tabs.query({ active: true });
-            const tab = tabs[0];
+            const tabs = await chromeAsync.queryTabs({
+                active: true,
+                currentWindow: true
+            });
 
-            vivaldi.utilities.getSelectedText(
-                tab.id,
-                text => this.previewWindowSearch(this.searchEngineUtils.defaultSearchId, text)
+            const tab = tabs[0];
+            if (!tab) return;
+
+            let text = '';
+
+            try {
+                text = await chromeAsync.getSelectedText(tab.id);
+            } catch (e) {
+                console.error('Failed to get selected text:', e);
+                return;
+            }
+
+            if (!text) return;
+
+            this.previewWindowSearch(
+                this.searchEngineUtils.defaultSearchId,
+                text
             );
         }
-
         /**
          * Prepares url for search, calls previewWindow function
          * @param {String} engineId engine id of the engine to be used
@@ -222,16 +263,20 @@
 
                 previewWindow.classList.add('animating-close');
 
-                const finishRemoval = () => {
-                    chrome.tabs.query({}, tabs => {
-                        const tab = tabs.find(t => String(t.vivExtData || '').includes(`${webviewId}tabId`));
-                        if (tab) chrome.tabs.remove(tab.id);
-                    });
+                const finishRemoval = async () => {
+                    const tabs = await chromeAsync.queryTabs({});
+
+                    const tab = tabs.find(t =>
+                        String(t.vivExtData || '').includes(`${webviewId}tabId`)
+                    );
+
+                    if (tab) {
+                        await chromeAsync.removeTab(tab.id);
+                    }
 
                     container.classList.remove('is-leave');
                     data.divContainer.remove();
 
-                    // Clean up event listeners
                     if (data.tabCloseListener) {
                         chrome.tabs.onRemoved.removeListener(data.tabCloseListener);
                     }
@@ -262,18 +307,30 @@
          * @param {{x:number, y:number}} origin the viewport coordinates to anchor the animation
          */
         async previewWindow(linkUrl, fromPanel = undefined, origin = undefined) {
-            chrome.windows.getLastFocused(window => {
-                chrome.windows.getCurrent(async current => {
-                    const isValidWindow =
-                        window.id === current.id &&
-                        window.state !== chrome.windows.WindowState.MINIMIZED;
+            let lastFocused, current;
 
-                    if (!isValidWindow) return;
+            try {
+                [lastFocused, current] = await Promise.all([
+                    chromeAsync.getLastFocusedWindow(),
+                    chromeAsync.getCurrentWindow()
+                ]);
+            } catch (err) {
+                console.error('Failed to get windows:', err);
+                return;
+            }
 
-                    const url = await UrlUtils.normalizeOrSearch(linkUrl, this.searchEngineUtils);
-                    this.showPreview(url, fromPanel, origin);
-                });
-            });
+            const isValidWindow =
+                lastFocused.id === current.id &&
+                lastFocused.state !== chrome.windows.WindowState.MINIMIZED;
+
+            if (!isValidWindow) return;
+
+            const url = await UrlUtils.normalizeOrSearch(
+                linkUrl,
+                this.searchEngineUtils
+            );
+
+            this.showPreview(url, fromPanel, origin);
         }
 
         /**
