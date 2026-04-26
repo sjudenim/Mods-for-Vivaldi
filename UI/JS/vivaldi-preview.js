@@ -1,5 +1,5 @@
 /*
-* Vivaldi Preview (04/24/26)
+* Vivaldi Preview (04/26/26)
 * For Vivaldi browser version 7.8 and up
 * Authors: biruktes, tam710562, oudstand, sudenim
 * Forum link: https://forum.vivaldi.net/topic/92501/open-in-dialog-mod?_=1717490394230
@@ -24,10 +24,20 @@
         showIconDelay: 0, // set to 0 to disable - delays showing the icon on hovering a link
         showPreviewOnHoverDelay: 0 // set to 0 to disable - delays showing the dialog on hovering the linkIcon
     };
-    const ANIMATION_DURATIONS = {
-        closeTimeout: 800, // Fallback timeout for close animation
-        fadeDelay: 80, // Delay before starting fade animation
-        optionsHide: 800 // Options container hide delay
+    const ANIMATION_DURATION = {
+        // Core animation timings
+        fade: 300, // matches CSS transition (0.3s)
+        fadeDelay: 80, // delay before starting animations
+        progressEasing: 0.08, // ease-like increment for progress bar
+        // Close behavior
+        closeTimeout: 800, // fallback if animationend fails
+        // UI interactions
+        optionsHideDelay: 800, // delay before hiding options panel
+    };
+        const TIMING = {
+        middleClickDelay: 500, // delay for middle click trigger
+        // Webview/title handling
+        titleFetchDelay: 300 // delay before reading document.title
     };
 
     // Wait for the browser to come to a ready state
@@ -296,7 +306,7 @@
                 previewWindow.addEventListener('animationend', onCloseEnd);
 
                 // Fallback in case animationend doesn't fire
-                setTimeout(finishRemoval, ANIMATION_DURATIONS.closeTimeout);
+                setTimeout(finishRemoval, ANIMATION_DURATION.closeTimeout);
             });
         }
 
@@ -392,7 +402,7 @@
             optionsContainer.setAttribute('class', 'options-container');
 
             let pageTitle = linkUrl; // fallback so it's never empty
-            const fadeDuration = 300; // match css value (0.3s)
+            const fadeDuration = ANIMATION_DURATION.fade;
             let timeout;
             let showingOptions = false;
 
@@ -425,7 +435,7 @@
                         showingOptions = false;
                     }, fadeDuration);
 
-                }, ANIMATION_DURATIONS.optionsHide);
+                }, ANIMATION_DURATION.optionsHideDelay);
             });
             //#endregion
 
@@ -505,7 +515,7 @@
                     } catch (e) {
                         console.error('Title fetch failed:', e);
                     }
-                }, 300);
+                }, ANIMATION_DURATION.titleFetchDelay);
             });
             //#endregion
 
@@ -583,7 +593,7 @@
                 pointerX,
                 pointerY,
                 this.setAnchoredTransformVars.bind(this),
-                ANIMATION_DURATIONS
+                ANIMATION_DURATION
             );
         }
 
@@ -979,7 +989,7 @@
                     const href = link.href;
                     holdTimerForMiddleClick = setTimeout(() => {
                         this.#sendPreviewMessage(href, px, py);
-                    }, 500);
+                    }, TIMING.middleClickDelay);
                 }
             });
 
@@ -1269,8 +1279,7 @@
             cancelAnimationFrame(this._raf);
 
             const step = () => {
-                // ease-like increment
-                this.progress += (target - this.progress) * 0.08;
+                this.progress += (target - this.progress) * ANIMATION_DURATION.progressEasing;
 
                 this.element.style.width = `${this.progress.toFixed(2)}%`;
 
