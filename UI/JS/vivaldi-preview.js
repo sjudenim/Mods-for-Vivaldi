@@ -1,5 +1,5 @@
 /*
-* Vivaldi Preview (04/26/26)
+* Vivaldi Preview (04/27/26)
 * For Vivaldi browser version 7.8 and up
 * Authors: biruktes, tam710562, oudstand, sudenim
 * Forum link: https://forum.vivaldi.net/topic/92501/open-in-dialog-mod?_=1717490394230
@@ -10,13 +10,24 @@
 */
 
 (() => {
-    const UI_CONFIG = {
-        showUrlInput: false // true = enabled, false = disabled - shows the input url box in the options container
-    };
     const CONTEXT_MENU_CONFIG = {
         linkMenuTitle: 'Open in Preview',
         searchMenuTitle: 'Search in Preview',
         selectSearchMenuTitle: 'Select Search for Preview'
+    };
+    const SHORTCUT_CONFIG = {
+        keyboard: {
+            searchSelected: ['Ctrl+Alt+Period', 'Ctrl+Shift+F'],
+            closePreview: ['Esc']
+        },
+        mouse: {
+            openPreview: {
+                ctrl: true,
+                alt: true,
+                buttons: [0, 1]
+            },
+            middleClickDelay: 500
+        }
     };
     const ICON_CONFIG = {
         linkIcon: '', // if set, an icon shows up after links - example values 'fa-solid fa-up-right-from-square', 'fa-solid fa-circle-info', 'fa-regular fa-square' search for other icons: https://fontawesome.com/search?o=r&ic=free&s=solid&ip=classic
@@ -24,19 +35,15 @@
         showIconDelay: 0, // set to 0 to disable - delays showing the icon on hovering a link
         showPreviewOnHoverDelay: 0 // set to 0 to disable - delays showing the dialog on hovering the linkIcon
     };
-    const ANIMATION_DURATION = {
-        // Core animation timings
+    const UI_CONFIG = {
+        showUrlInput: false // true = enabled, false = disabled - shows the input url box in the options container
+    };
+    const TIMING_CONFIG = {
         fade: 300, // matches CSS transition (0.3s)
         fadeDelay: 80, // delay before starting animations
         progressEasing: 0.08, // ease-like increment for progress bar
-        // Close behavior
-        closeTimeout: 800, // fallback if animationend fails
-        // UI interactions
+        closeTimeout: 800, // close behavior, fallback if animationend fails
         optionsHideDelay: 800, // delay before hiding options panel
-    };
-        const TIMING = {
-        middleClickDelay: 500, // delay for middle click trigger
-        // Webview/title handling
         titleFetchDelay: 300 // delay before reading document.title
     };
 
@@ -108,17 +115,20 @@
             CONTEXT_MENU_CONFIG
         );
         KEYBOARD_SHORTCUTS = {
-            'Ctrl+Alt+Period': this.searchForSelectedText.bind(this),
-            'Ctrl+Shift+F': this.searchForSelectedText.bind(this),
-            Esc: () => {
+            [SHORTCUT_CONFIG.keyboard.searchSelected[0]]: this.searchForSelectedText.bind(this),
+            [SHORTCUT_CONFIG.keyboard.searchSelected[1]]: this.searchForSelectedText.bind(this),
+
+            [SHORTCUT_CONFIG.keyboard.closePreview[0]]: () => {
                 if (!this.webviews.size) return;
 
                 const webviewValues = Array.from(this.webviews.values());
                 let webviewData = webviewValues.at(-1);
+
                 if (!webviewData.fromPanel) {
                     const tabId = this.selectors.getActiveWebview()?.tabId;
                     webviewData = webviewValues.findLast(_data => _data.tabId === tabId);
                 }
+
                 webviewData && this.removePreview(webviewData.webview.id);
             }
         };
@@ -306,7 +316,7 @@
                 previewWindow.addEventListener('animationend', onCloseEnd);
 
                 // Fallback in case animationend doesn't fire
-                setTimeout(finishRemoval, ANIMATION_DURATION.closeTimeout);
+                setTimeout(finishRemoval, TIMING_CONFIG.closeTimeout);
             });
         }
 
@@ -402,7 +412,7 @@
             optionsContainer.setAttribute('class', 'options-container');
 
             let pageTitle = linkUrl; // fallback so it's never empty
-            const fadeDuration = ANIMATION_DURATION.fade;
+            const fadeDuration = TIMING_CONFIG.fade;
             let timeout;
             let showingOptions = false;
 
@@ -435,7 +445,7 @@
                         showingOptions = false;
                     }, fadeDuration);
 
-                }, ANIMATION_DURATION.optionsHideDelay);
+                }, TIMING_CONFIG.optionsHideDelay);
             });
             //#endregion
 
@@ -515,7 +525,7 @@
                     } catch (e) {
                         console.error('Title fetch failed:', e);
                     }
-                }, ANIMATION_DURATION.titleFetchDelay);
+                }, TIMING_CONFIG.titleFetchDelay);
             });
             //#endregion
 
@@ -593,7 +603,7 @@
                 pointerX,
                 pointerY,
                 this.setAnchoredTransformVars.bind(this),
-                ANIMATION_DURATION
+                TIMING_CONFIG
             );
         }
 
@@ -976,25 +986,40 @@
         #setupMouseHandling() {
             let holdTimerForMiddleClick;
 
+            // capture config locally (IMPORTANT: avoids scope/injection issues)
+            const mouseCfg = SHORTCUT_CONFIG.mouse.openPreview;
+            const holdDelay = SHORTCUT_CONFIG.mouse.middleClickDelay;
+
             document.addEventListener('pointerdown', event => {
-                // Check if the Ctrl key, Alt key, and mouse button were pressed
-                if (event.ctrlKey && event.altKey && [0, 1].includes(event.button)) {
+                // Ctrl + Alt + click (any button defined in config)
+                if (
+                    event.ctrlKey === mouseCfg.ctrl &&
+                    event.altKey === mouseCfg.alt &&
+                    mouseCfg.buttons.includes(event.button)
+                ) {
                     this.#callPreview(event);
-                } else if (event.button === 1) {
-                    // MMB-hold: cache link+coords NOW, use after timeout (prevents drift)
+                    return;
+                }
+
+                // Middle-click hold behavior
+                if (event.button === 1) {
                     const link = this.#getLinkElement(event);
                     if (!link) return;
-                    const px = event.clientX,
-                        py = event.clientY;
+
+                    const px = event.clientX;
+                    const py = event.clientY;
                     const href = link.href;
+
                     holdTimerForMiddleClick = setTimeout(() => {
                         this.#sendPreviewMessage(href, px, py);
-                    }, TIMING.middleClickDelay);
+                    }, holdDelay);
                 }
             });
 
             document.addEventListener('pointerup', event => {
-                if (event.button === 1) clearTimeout(holdTimerForMiddleClick);
+                if (event.button === 1) {
+                    clearTimeout(holdTimerForMiddleClick);
+                }
             });
         }
 
@@ -1279,7 +1304,7 @@
             cancelAnimationFrame(this._raf);
 
             const step = () => {
-                this.progress += (target - this.progress) * ANIMATION_DURATION.progressEasing;
+                this.progress += (target - this.progress) * TIMING_CONFIG.progressEasing;
 
                 this.element.style.width = `${this.progress.toFixed(2)}%`;
 
