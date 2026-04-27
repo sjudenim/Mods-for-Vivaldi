@@ -24,7 +24,7 @@
             openPreview: {
                 ctrl: true,
                 alt: true,
-                buttons: [0, 1]
+                buttons: [0, 1, 2] // 0 = left click, 1 = middle click, 2 = right click
             },
             middleClickDelay: 500
         }
