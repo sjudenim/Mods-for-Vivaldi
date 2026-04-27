@@ -1,5 +1,5 @@
 /*
-* Vivaldi Preview (04/25/26)
+* Vivaldi Preview (04/27/26)
 * For Vivaldi browser version 7.8 and up
 * Authors: biruktes, tam710562, oudstand, sudenim
 * Forum link: https://forum.vivaldi.net/topic/92501/open-in-dialog-mod?_=1717490394230
@@ -10,13 +10,19 @@
 */
 
 (() => {
-    const UI_CONFIG = {
-        showUrlInput: false // true = enabled, false = disabled - shows the input url box in the options container
-    };
     const CONTEXT_MENU_CONFIG = {
         linkMenuTitle: 'Open in Preview',
         searchMenuTitle: 'Search in Preview',
         selectSearchMenuTitle: 'Select Search for Preview'
+    };
+    const INPUT_CONFIG = {
+        shortcuts: {
+            openSearchSelected: ['Ctrl+Alt+Period', 'Ctrl+Shift+F'], // make sure this key combo is not in use by Vivaldi or it will not work
+            closePreview: ['Escape', 'Esc']
+        }
+    };
+    const UI_CONFIG = {
+        showUrlInput: false // true = enabled, false = disabled - shows the input url box in the options container
     };
     const ICON_CONFIG = {
         linkIcon: '', // if set, an icon shows up after links - example values 'fa-solid fa-up-right-from-square', 'fa-solid fa-circle-info', 'fa-regular fa-square' search for other icons: https://fontawesome.com/search?o=r&ic=free&s=solid&ip=classic
@@ -24,20 +30,15 @@
         showIconDelay: 0, // set to 0 to disable - delays showing the icon on hovering a link
         showPreviewOnHoverDelay: 0 // set to 0 to disable - delays showing the dialog on hovering the linkIcon
     };
-    const ANIMATION_DURATION = {
+    const TIMING_CONFIG = {
+        titleFetchDelay: 300, // delay before reading document.title
+        closeTimeout: 800, // close behavior fallback if animationend fails
+        middleClickDelay: 500, // delay for middle click trigger
         // Core animation timings
         fade: 300, // matches CSS transition (0.3s)
         fadeDelay: 80, // delay before starting animations
         progressEasing: 0.08, // ease-like increment for progress bar
-        // Close behavior
-        closeTimeout: 800, // fallback if animationend fails
-        // UI interactions
         optionsHideDelay: 800, // delay before hiding options panel
-    };
-        const TIMING = {
-        middleClickDelay: 500, // delay for middle click trigger
-        // Webview/title handling
-        titleFetchDelay: 300 // delay before reading document.title
     };
 
     // Wait for the browser to come to a ready state
@@ -108,17 +109,18 @@
             CONTEXT_MENU_CONFIG
         );
         KEYBOARD_SHORTCUTS = {
-            'Ctrl+Alt+Period': this.searchForSelectedText.bind(this),
-            'Ctrl+Shift+F': this.searchForSelectedText.bind(this),
-            Esc: () => {
+            openSearchSelected: this.searchForSelectedText.bind(this),
+            closePreview: () => {
                 if (!this.webviews.size) return;
 
                 const webviewValues = Array.from(this.webviews.values());
                 let webviewData = webviewValues.at(-1);
+
                 if (!webviewData.fromPanel) {
-                    const tabId = this.selectors.getActiveWebview()?.tabId;
+                    const tabId = this.selectors?.getActiveWebview?.()?.tabId;
                     webviewData = webviewValues.findLast(_data => _data.tabId === tabId);
                 }
+
                 webviewData && this.removePreview(webviewData.webview.id);
             }
         };
@@ -237,11 +239,16 @@
                 .replace('Slash', '/')
                 .replace(/\s+/g, '');
 
-            const handler =
-                this.KEYBOARD_SHORTCUTS[combination] ||
-                this.KEYBOARD_SHORTCUTS[normalized];
+            const isClose =
+                INPUT_CONFIG.shortcuts.closePreview.includes(combination) ||
+                INPUT_CONFIG.shortcuts.closePreview.includes(normalized);
 
-            if (handler) handler();
+            const isSearch =
+                INPUT_CONFIG.shortcuts.openSearchSelected.includes(combination) ||
+                INPUT_CONFIG.shortcuts.openSearchSelected.includes(normalized);
+
+            if (isSearch) return this.KEYBOARD_SHORTCUTS.openSearchSelected();
+            if (isClose) return this.KEYBOARD_SHORTCUTS.closePreview();
         }
 
         /**
@@ -306,7 +313,7 @@
                 previewWindow.addEventListener('animationend', onCloseEnd);
 
                 // Fallback in case animationend doesn't fire
-                setTimeout(finishRemoval, ANIMATION_DURATION.closeTimeout);
+                setTimeout(finishRemoval, TIMING_CONFIG.closeTimeout);
             });
         }
 
@@ -402,7 +409,7 @@
             optionsContainer.setAttribute('class', 'options-container');
 
             let pageTitle = linkUrl; // fallback so it's never empty
-            const fadeDuration = ANIMATION_DURATION.fade;
+            const fadeDuration = TIMING_CONFIG.fade;
             let timeout;
             let showingOptions = false;
 
@@ -435,7 +442,7 @@
                         showingOptions = false;
                     }, fadeDuration);
 
-                }, ANIMATION_DURATION.optionsHideDelay);
+                }, TIMING_CONFIG.optionsHideDelay);
             });
             //#endregion
 
@@ -515,7 +522,7 @@
                     } catch (e) {
                         console.error('Title fetch failed:', e);
                     }
-                }, ANIMATION_DURATION.titleFetchDelay);
+                }, TIMING_CONFIG.titleFetchDelay);
             });
             //#endregion
 
@@ -593,7 +600,7 @@
                 pointerX,
                 pointerY,
                 this.setAnchoredTransformVars.bind(this),
-                ANIMATION_DURATION
+                TIMING_CONFIG
             );
         }
 
@@ -989,7 +996,7 @@
                     const href = link.href;
                     holdTimerForMiddleClick = setTimeout(() => {
                         this.#sendPreviewMessage(href, px, py);
-                    }, TIMING.middleClickDelay);
+                    }, TIMING_CONFIG.middleClickDelay);
                 }
             });
 
@@ -1279,7 +1286,7 @@
             cancelAnimationFrame(this._raf);
 
             const step = () => {
-                this.progress += (target - this.progress) * ANIMATION_DURATION.progressEasing;
+                this.progress += (target - this.progress) * TIMING_CONFIG.progressEasing;
 
                 this.element.style.width = `${this.progress.toFixed(2)}%`;
 
