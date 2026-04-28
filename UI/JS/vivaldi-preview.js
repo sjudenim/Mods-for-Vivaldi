@@ -1,8 +1,8 @@
 /*
-* Vivaldi Preview (04/27/26)
+* Vivaldi Preview (04/28/26)
 * For Vivaldi browser version 7.8 and up
 * Authors: biruktes, tam710562, oudstand, sudenim
-* Forum link: https://forum.vivaldi.net/topic/92501/open-in-dialog-mod?_=1717490394230
+* Forum link: https://forum.vivaldi.net/topic/92501/open-in-preview-mod?_=1717490394230
 *
 * Description: Opens a preview window for links
 *
@@ -16,19 +16,16 @@
         selectSearchMenuTitle: 'Select Search for Preview'
     };
     const INPUT_CONFIG = {
-        shortcuts: {
-            openSearchSelected: ['Ctrl+Alt+Period', 'Ctrl+Shift+F'], // make sure this key combo is not in use by Vivaldi or it will not work
-            closePreview: ['Escape', 'Esc']
-        }
+        openSearchSelected: ['Ctrl+Shift+S'], // make sure this key combo is not in use
     };
     const UI_CONFIG = {
         showUrlInput: false // true = enabled, false = disabled - shows the input url box in the options container
     };
     const ICON_CONFIG = {
         linkIcon: '', // if set, an icon shows up after links - example values 'fa-solid fa-up-right-from-square', 'fa-solid fa-circle-info', 'fa-regular fa-square' search for other icons: https://fontawesome.com/search?o=r&ic=free&s=solid&ip=classic
-        linkIconInteractionOnHover: false, // if false, you have to click the icon to show the dialog - if true, the dialog shows on mouseenter
+        linkIconInteractionOnHover: false, // if false, you have to click the icon to show the preview - if true, the preview shows on mouseenter
         showIconDelay: 0, // set to 0 to disable - delays showing the icon on hovering a link
-        showPreviewOnHoverDelay: 0 // set to 0 to disable - delays showing the dialog on hovering the linkIcon
+        showPreviewOnHoverDelay: 0 // set to 0 to disable - delays showing the preview on hovering the linkIcon
     };
     const TIMING_CONFIG = {
         titleFetchDelay: 300, // delay before reading document.title
@@ -85,14 +82,15 @@
         webviews = new Map();
         addListener(target, event, handler, options) {
             target.addEventListener(event, handler, options);
-            this._listeners.add({ target, event, handler, options });
+            this._listeners.push({ target, event, handler, options });
+            return handler;
         }
 
         removeAllListeners() {
             for (const l of this._listeners) {
                 l.target.removeEventListener(l.event, l.handler, l.options);
             }
-            this._listeners.clear();
+            this._listeners.length = 0;
         }
         #iconUtils;
         get iconUtils() {
@@ -110,28 +108,15 @@
         );
         KEYBOARD_SHORTCUTS = {
             openSearchSelected: this.searchForSelectedText.bind(this),
-            closePreview: () => {
-                if (!this.webviews.size) return;
-
-                const webviewValues = Array.from(this.webviews.values());
-                let webviewData = webviewValues.at(-1);
-
-                if (!webviewData.fromPanel) {
-                    const tabId = this.selectors?.getActiveWebview?.()?.tabId;
-                    webviewData = webviewValues.findLast(_data => _data.tabId === tabId);
-                }
-
-                webviewData && this.removePreview(webviewData.webview.id);
-            }
         };
-        // choose the reader view source that works best
+
+        // choose reader view source that works best
         READER_VIEW_URL = 'https://www.smry.ai/proxy?url=';
         // alternative source
         //READER_VIEW_URL = 'https://app.web-highlights.com/reader/open-website-in-reader-mode?url=';
         constructor() {
-            this._listeners = new Set();
+            this._listeners = [];
 
-            // Setup keyboard shortcuts
             vivaldi.tabsPrivate.onKeyboardShortcut.addListener(
                 this.keyCombo.bind(this)
             );
@@ -145,9 +130,7 @@
             window.addEventListener('unload', () => this.cleanupAll());
         }
 
-        /**
-         * Finds the correct configuration for showing the dialog
-         */
+        // Finds the correct configuration for showing the preview
         getWebviewConfig(navigationDetails) {
             if (navigationDetails.frameType !== 'outermost_frame') {
                 return { webview: null, fromPanel: false };
@@ -183,6 +166,7 @@
         getActiveWebview() {
             return document.querySelector('.active.visible.webpageview webview');
         }
+
         /**
          * Open Default Search Engine in Preview and search for the selected text
          * @returns {Promise<void>}
@@ -226,8 +210,8 @@
 
         /**
          * Handle a potential keyboard shortcut (copy from KeyboardMachine)
-         * @param {number} id I don't know what this does, but it's an extra argument
-         * @param {String} combination written in the form (CTRL+SHIFT+ALT+KEY)
+         * @param {number} id
+         * @param {String} combination
          */
         keyCombo(_, combination) {
             if (!combination) return;
@@ -239,20 +223,15 @@
                 .replace('Slash', '/')
                 .replace(/\s+/g, '');
 
-            const isClose =
-                INPUT_CONFIG.shortcuts.closePreview.includes(combination) ||
-                INPUT_CONFIG.shortcuts.closePreview.includes(normalized);
-
             const isSearch =
-                INPUT_CONFIG.shortcuts.openSearchSelected.includes(combination) ||
-                INPUT_CONFIG.shortcuts.openSearchSelected.includes(normalized);
+                INPUT_CONFIG.openSearchSelected.includes(combination) ||
+                INPUT_CONFIG.openSearchSelected.includes(normalized);
 
             if (isSearch) return this.KEYBOARD_SHORTCUTS.openSearchSelected();
-            if (isClose) return this.KEYBOARD_SHORTCUTS.closePreview();
         }
 
         /**
-         * Removes the dialog for a given webview
+         * Removes the preview for a given webview
          * @param webviewId The id of the webview
          */
         removePreview(webviewId) {
@@ -318,9 +297,9 @@
         }
 
         /**
-         * Checks if the current window is the correct window to show the dialog and then opens the dialog
+         * Checks if the current window is the correct window to show the previw and then opens the preview
          * @param {string} linkUrl the url to load
-         * @param {boolean} fromPanel indicates whether the dialog is opened from a panel
+         * @param {boolean} fromPanel indicates whether the preview is opened from a panel
          * @param {{x:number, y:number}} origin the viewport coordinates to anchor the animation
          */
         async previewWindow(linkUrl, fromPanel = undefined, origin = undefined) {
@@ -351,9 +330,9 @@
         }
 
         /**
-         * Opens a link in a dialog like display in the current visible tab
+         * Opens a link in a preview like display in the current visible tab
          * @param {string} linkUrl the url to load
-         * @param {boolean} fromPanel indicates whether the dialog is opened from a panel
+         * @param {boolean} fromPanel indicates whether the preview is opened from a panel
          * @param {{x:number, y:number}} origin the viewport coordinates to anchor the animation
          */
 
@@ -386,7 +365,7 @@
                 pointerdownAttached: false
             });
 
-            // remove dialogs when tab is closed without closing dialogs
+            // remove previews when tab is closed without closing previews
             if (!fromPanel) {
                 const clearWebviews = closedTabId => {
                     if (tabId === closedTabId) {
@@ -580,7 +559,6 @@
                     this.removePreview(webviewId);
                 }
             });
-
             //#endregion
 
             this.renderer.attachStructure({
@@ -605,7 +583,7 @@
         }
 
         /**
-         * Compute anchored translate for the current layout so that the dialog
+         * Compute anchored translate for the current layout so that the preview
          * grows exactly from (viewportX, viewportY) when scaling from s0 → 1.
          * We precompute the starting translation T0 = (1 - s0) * (P - L).
          */
@@ -734,7 +712,6 @@
 
         /**
          * Sets the webviews content to a reader version
-         *
          * @param {webview} webview the webview to update
          */
         showReaderView(webview) {
@@ -761,9 +738,8 @@
         openNewTabFromWebview(webview, active) {
             chrome.tabs.create({ url: webview.src, active });
         }
-        /**
- * Global cleanup for listeners and cached state
- */
+
+        // Global cleanup for listeners and cached state
         cleanupAll() {
             this.removeAllListeners();
 
@@ -925,7 +901,7 @@
                 webview && this.injectCode(webview, fromPanel);
             });
 
-            // react on demand to open a dialog
+            // react on demand to open a preview
             chrome.runtime.onMessage.addListener(message => {
                 if (message.url) {
                     openPreview(message.url, message.fromPanel, message.origin);
@@ -940,8 +916,20 @@
                 if (window.__dialogHandlerInitialized) return;
                 window.__dialogHandlerInitialized = true;
 
-                new (${handler})(${fromPanel}, ${this.iconConfig});
-`;
+                window.__previewInjectedCleanupRun = () => {
+                window.__previewInjectedCleanup?.forEach(fn => fn());
+                window.__previewInjectedCleanup?.clear?.();
+            };
+
+                window.addEventListener('beforeunload', () => {
+                window.__previewInjectedCleanupRun?.();
+            });
+                window.addEventListener('pagehide', () => {
+                window.__previewInjectedCleanupRun?.();
+            });
+
+            new (${handler})(${fromPanel}, ${this.iconConfig});
+            `;
 
             try {
                 webview.executeScript({ code: instantiationCode }, () => {
@@ -958,6 +946,8 @@
 
     class WebsiteLinkInteractionHandler {
         constructor(fromPanel, config) {
+            window.__previewInjectedCleanup ??= new Set();
+
             this.fromPanel = fromPanel;
             this.config = config;
             this.icon = null;
@@ -966,9 +956,7 @@
             this.#initialize();
         }
 
-        /**
-         * Checks if a link is clicked by the middle mouse while pressing Ctrl + Alt, then fires an event with the Url
-         */
+        // Checks if a link is clicked by the middle mouse while pressing Ctrl + Alt, then fires an event with the Url
         #initialize() {
             this.#setupMouseHandling();
 
@@ -977,31 +965,40 @@
             }
         }
 
-        /**
-         * Sets up the mouse event listeners
-         */
+        // Sets up the mouse event listeners
         #setupMouseHandling() {
             let holdTimerForMiddleClick;
 
-            document.addEventListener('pointerdown', event => {
-                // Check if the Ctrl key, Alt key, and mouse button were pressed
+            const pointerDownHandler = event => {
                 if (event.ctrlKey && event.altKey && [0, 1].includes(event.button)) {
                     this.#callPreview(event);
                 } else if (event.button === 1) {
-                    // MMB-hold: cache link+coords NOW, use after timeout (prevents drift)
                     const link = this.#getLinkElement(event);
                     if (!link) return;
+
                     const px = event.clientX,
                         py = event.clientY;
+
                     const href = link.href;
+
                     holdTimerForMiddleClick = setTimeout(() => {
                         this.#sendPreviewMessage(href, px, py);
                     }, TIMING_CONFIG.middleClickDelay);
                 }
-            });
+            };
 
-            document.addEventListener('pointerup', event => {
+            const pointerUpHandler = event => {
                 if (event.button === 1) clearTimeout(holdTimerForMiddleClick);
+            };
+
+            document.addEventListener('pointerdown', pointerDownHandler);
+            document.addEventListener('pointerup', pointerUpHandler);
+
+            window.__previewInjectedCleanup ??= new Set();
+
+            window.__previewInjectedCleanup.add(() => {
+                document.removeEventListener('pointerdown', pointerDownHandler);
+                document.removeEventListener('pointerup', pointerUpHandler);
             });
         }
 
@@ -1123,9 +1120,7 @@
         }
     }
 
-    /**
-     * Utility class for adding and updating context menu items
-     */
+    // Utility class for adding and updating context menu items
     class SearchEngineUtils {
         /**
          * Constructor for SearchEngineUtils
@@ -1176,9 +1171,7 @@
             });
         }
 
-        /**
-         * Creates context menu items to open a dialog tab
-         */
+        // Creates context menu items to open a preview tab
         #createContextMenuOption() {
             chrome.contextMenus.create({
                 id: this.LINK_ID,
@@ -1211,9 +1204,7 @@
             });
         }
 
-        /**
-         * Updates the search engines and context menu
-         */
+        // Updates the search engines and context menu
         async #updateSearchEnginesAndContextMenu() {
             const searchEngines = await vivaldi.searchEngines.getTemplateUrls();
             this.searchEngineCollection = searchEngines.templateUrls;
@@ -1223,9 +1214,7 @@
             this.#createContextMenuSelectSearch();
         }
 
-        /**
-         * Removes sub-context menu items for select search engine menu item
-         */
+        // Removes sub-context menu items for select search engine menu item
         #removeContextMenuSelectSearch() {
             this.createdContextMenuMap.forEach((_, engineId) => {
                 const menuId = this.SELECT_SEARCH_ID + engineId;
@@ -1235,9 +1224,7 @@
             this.createdContextMenuMap.clear();
         }
 
-        /**
-         * Creates sub-context menu items for select search engine menu item
-         */
+        // Creates sub-context menu items for select search engine menu item
         #createContextMenuSelectSearch() {
             this.searchEngineCollection.forEach(engine => {
                 if (!this.createdContextMenuMap.has(engine.guid)) {
@@ -1364,18 +1351,14 @@
             this.#initializeStaticIcons();
         }
 
-        /**
-         * Initializes static icons
-         */
+        // Initializes static icons
         #initializeStaticIcons() {
             Object.entries(IconUtils.SVG).forEach(([key, value]) => {
                 this.#iconMap.set(key, value);
             });
         }
 
-        /**
-         * Initialize Vivaldi icons from the DOM or use fallback
-         */
+        // Initialize Vivaldi icons from the DOM or use fallback
         #initializeVivaldiIcons() {
             if (this.#initialized) return;
 
