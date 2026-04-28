@@ -1,5 +1,5 @@
 /*
-* Vertical Tab Tiles (10/10/25)
+* Vertical Tab Tiles (04/26/26)
 * For Vivaldi browser version 7.6 and up
 * Author: sudenim
 *
@@ -37,9 +37,9 @@
 
 .tabs-left .tab-wrapper, .tabs-right .tab-wrapper, .density-on.tabs-left .tab-wrapper, .density-on.tabs-right .tab-wrapper { margin: var(--spacing) 0 !important; }
 
-.tab-wrapper { box-shadow: 0 1px 3px rgba(0, 0, 0, .3) !important; border-radius: var(--radiusHalf); border: 3px solid var(--colorAccentBg); }
+.tab-wrapper { box-shadow: 0 1px 3px rgba(0, 0, 0, .3) !important; border-radius: var(--radiusHalf); background: var(--colorAccentBg);  padding: var(--borderSize); }
 
-.tab-wrapper:not(.active):hover { border-color: var(--colorHighlightBg); }
+.tab-wrapper:not(.active):hover { background: var(--colorHighlightBg); }
 
 .tab-position .tab .progress-indicator { background-color: var(--colorHighlightBg) !important; height: 1px !important }
 
@@ -47,6 +47,29 @@
 .tab-position .tab.tab.tab:not(.active) { filter: grayscale(100%) brightness(40%); }
 
 .tab-position .tab.tab.tab:not(.active):hover { filter: grayscale(40%) brightness(70%); }
+
+/*
+* Animated Gradient Border for Not Active Tabs Playing Audio
+* Authors: AstronGlitch and sudenim
+* Forum Link: https://forum.vivaldi.net/topic/115942/animated-gradient-border-for-tabs-playing-audio
+*/
+.tab-wrapper:has(.tab.audio-on:not(.audio-muted)) {
+  background: conic-gradient(
+    from var(--deg) at center,
+    var(--colorHighlightBgFaded),
+    var(--colorHighlightBg),
+    var(--colorHighlightBgDark),
+    var(--colorHighlightBgAlpha),
+    var(--colorHighlightBgAlpha),
+    var(--colorHighlightBgDark),
+    var(--colorHighlightBg),
+	  var(--colorHighlightBgFaded)
+  );
+    animation: autoRotate 6s linear infinite;
+}
+@property --deg { syntax: '<angle>'; inherits: false;	initial-value: 0deg; }
+
+@keyframes autoRotate { to{ --deg: 360deg; }}
 
 /* Tab header */
 .tabs-left .tab-position .tab > .tab-header, .tabs-right .tab-position .tab > .tab-header { margin: 5px 5px 0 0 !important; }
