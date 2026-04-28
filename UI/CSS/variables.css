@@ -10,7 +10,8 @@
 
 :root {
     --transparency: transparent 5%;
-    --spacing: 2px; 
+    --borderSize: 2px;
+    --spacing: 2px;
     --rounding: 25px;
     --inputRadius: 25px;
     --vTabBarWidth: 230px;
