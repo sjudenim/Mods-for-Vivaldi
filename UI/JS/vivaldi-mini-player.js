@@ -44,34 +44,34 @@
   `;
   (document.body || document.documentElement).appendChild(root);
 
-// DRAGGABLE PLAYER
-// --------------------------------------------------
-let dragX = null, dragY = null;
+  // MAKES IT DRAGGABLE
+  // --------------------------------------------------
+  let dragX = null, dragY = null;
 
-root.addEventListener('mousedown', e => {
-  // Don't drag if clicking buttons or slider
-  if (e.target.closest('button') || e.target.closest('.vmp-slider-wrap') || e.target.closest('.vmp-custom-slider')) return;
-  dragX = e.clientX - root.getBoundingClientRect().left;
-  dragY = e.clientY - root.getBoundingClientRect().top;
-  root.style.transition = 'none';
-  e.preventDefault();
-});
+  root.addEventListener('mousedown', e => {
+    // Don't drag if clicking buttons or slider
+    if (e.target.closest('button') || e.target.closest('.vmp-slider-wrap') || e.target.closest('.vmp-custom-slider')) return;
+    dragX = e.clientX - root.getBoundingClientRect().left;
+    dragY = e.clientY - root.getBoundingClientRect().top;
+    root.style.transition = 'none';
+    e.preventDefault();
+  });
 
-document.addEventListener('mouseup', () => {
-  dragX = null;
-  dragY = null;
-  root.style.transition = '';
-});
+  document.addEventListener('mouseup', () => {
+    dragX = null;
+    dragY = null;
+    root.style.transition = '';
+  });
 
-document.addEventListener('mousemove', e => {
-  if (dragX === null) return;
-  const x = e.clientX - dragX;
-  const y = e.clientY - dragY;
-  root.style.left = x + 'px';
-  root.style.top = y + 'px';
-  root.style.transform = 'none';
-  root.style.bottom = 'auto';
-});
+  document.addEventListener('mousemove', e => {
+    if (dragX === null) return;
+    const x = e.clientX - dragX;
+    const y = e.clientY - dragY;
+    root.style.left = x + 'px';
+    root.style.top = y + 'px';
+    root.style.transform = 'none';
+    root.style.bottom = 'auto';
+  });
 
   // CUSTOMIZABLE VOLUME SLIDER
   // --------------------------------------------------
