@@ -1,5 +1,5 @@
 /*
-* Vivaldi Preview (04/21/26)
+* Vivaldi Preview (05/03/26)
 * For Vivaldi browser version 7.8 and up
 * Authors: biruktes, tam710562, oudstand, sudenim
 * Forum link: https://forum.vivaldi.net/topic/92501/open-in-dialog-mod?_=1717490394230
@@ -8,66 +8,67 @@
 *
 * GNU General Public License v3.0
 */
-
-@keyframes preview-window-open-anchored {
+@keyframes dialog-tab-open-anchored {
     from {
         opacity: 0;
-        transform: translate(var(--tx0, 0px), var(--ty0, 0px)) scale(var(--s0, 0.1));
-        filter: blur(6px);
+        transform: translate3d(var(--tx0, 0px), var(--ty0, 0px), 0) scale(var(--s0, 0.1));
+        filter: blur(3px);
     }
-
     to {
         opacity: 1;
-        transform: translate(0px, 0px) scale(1);
+        transform: translate3d(0, 0, 0) scale(1);
         filter: blur(0px);
     }
 }
 
-@keyframes preview-window-close-anchored {
+@keyframes dialog-tab-close-anchored {
     from {
         opacity: 1;
-        transform: translate(0px, 0px) scale(1);
+        transform: translate3d(0, 0, 0) scale(1);
         filter: blur(0px);
     }
-
     to {
         opacity: 0;
-        transform: translate(var(--tx0, 0px), var(--ty0, 0px)) scale(var(--s0, 0.1));
-        filter: blur(6px);
+        transform: translate3d(var(--tx0, 0px), var(--ty0, 0px), 0) scale(var(--s0, 0.1));
+        filter: blur(2px);
     }
 }
 
-@keyframes preview-window-animate-progress-bar {
+@keyframes dialog-tab-animate-progress-bar {
     from {
         transform: translateX(-100%);
     }
-
     to {
         transform: translateX(100%);
     }
 }
 
-.preview-container {
+.dialog-container {
     z-index: 999;
     position: fixed;
     inset: 0;
-    background-color: transparent;
+    background-color: rgba(0, 0, 0, 0);
     transition: background-color 220ms ease;
-    backdrop-filter: blur(5px);
+    border-radius: var(--radius);
     display: flex;
     justify-content: center;
     align-items: center;
 
     &.is-open {
-        background-color: rgba(0, 0, 0, .75);
+        background-color: rgba(0, 0, 0, 0.6);
+        backdrop-filter: blur(6px);
+    }
+    &.is-leave {
+        pointer-events: none;
+        backdrop-filter: none;
     }
 
-    &.is-leave { pointer-events: none; }
-
     /* prevent progress bar from flashing before the overlay is open */
-    &:not(.is-open) .progress-bar { visibility: hidden; }
+    &:not(.is-open) .progress-bar {
+        visibility: hidden;
+    }
 
-    .preview-window {
+    .dialog-tab {
         /* top-left origin so our translate math is exact */
         transform-origin: 0 0;
         will-change: transform, opacity, filter;
@@ -76,11 +77,10 @@
         contain: layout style paint;
 
         &.animating-open {
-            animation: preview-window-open-anchored 320ms cubic-bezier(0.12, 0.8, 0.2, 1) both;
+            animation: dialog-tab-open-anchored 320ms cubic-bezier(0.12, 0.8, 0.2, 1) both;
         }
-
         &.animating-close {
-            animation: preview-window-close-anchored 320ms cubic-bezier(0.4, 0, 0.6, 0.4) both;
+            animation: dialog-tab-close-anchored 240ms cubic-bezier(0.4, 0, 0.6, 0.4) both;
         }
 
         position: relative;
@@ -94,24 +94,42 @@
             align-items: center;
             justify-content: center;
             gap: 0.5rem;
-            height: 40px;
-            padding-top: 2px;
+            height: 35px;
             text-align: center;
-            color: var(--colorAccentFg);
-            z-index: 9999;
+            color: white;
+            z-index: 1160;
             width: 100%;
+            box-sizing: border-box;
+            padding: 0 0.5rem;
             opacity: 1;
-            transition: opacity 0.3s ease;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            transition: opacity 300ms ease;
         }
 
-        .options-container.fade-out { opacity: 0; }
+        .options-container.fade-out {
+            opacity: 0;
+        }
+
+        .options-container.showing-options {
+            overflow: visible;
+        }
+
+        .options-title {
+            min-width: 0;
+            max-width: 100%;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
 
         .options-button {
             display: flex;
             position: relative;
             background: transparent;
             border: none;
-            border-radius: var(--rounding);
+            border-radius: var(--rounding, var(--radiusHalf));
             cursor: pointer;
             width: 35px;
             height: 35px;
@@ -120,9 +138,11 @@
             flex: 0 0 35px;
         }
 
-        .options-button:hover { background-color: var(--colorHighlightBg); color: var(--colorHighlightFg); }
+        .options-button:hover {
+            background-color: var(--colorHighlightBg);
+        }
 
-        .options-button::after {
+        .options-button[data-tooltip]::after {
             content: attr(data-tooltip);
             position: absolute;
             bottom: -35px;
@@ -136,45 +156,47 @@
             border-radius: var(--radiusHalf);
             opacity: 0;
             pointer-events: none;
-            transition: opacity .15s ease;
+            transition: opacity 150ms ease;
             white-space: nowrap;
+            z-index: 1161;
         }
 
-        .options-button:hover::after { opacity: 1; transition-delay: .8s; }
+        .options-button[data-tooltip]:hover::after {
+            opacity: 1;
+            transition-delay: 800ms;
+        }
 
-        .url-input {
-            background: var(--colorFgAlpha);
-            color: var(--colorAccentFg);
+        .dialog-input {
+            background: var(--colorAccentBgAlpha);
+            color: white;
             border: none;
-            border-radius: var(--inputRadius);
+            border-radius: var(--inputRadius, var(--radiusHalf));
             margin: 0 0.5rem;
-            padding: 0.3rem 0.6rem;
+            padding: 0.25rem 0.5rem;
             flex: 0 0 20%;
-            min-width: 20vw;
+            min-width: 10rem;
         }
 
         .progress-bar {
-            background-color: var(--colorHighlightBg);
-            left: calc(var(--radius) * 0.75);
-            height: 1px;
+            height: 3px;
             max-width: calc(100% - var(--radius) * 1.5);
+            left: calc(var(--radius) * 0.75);
+            background-color: var(--colorHighlightBg);
+            border-radius: var(--radius);
             transition: width 0.2s linear;
             overflow: hidden;
             position: relative;
 
             &.is-complete::after {
-                content: "";
+                content: '';
                 position: absolute;
                 top: 0;
                 left: 0;
                 height: 100%;
                 width: 50%;
-                background-image: linear-gradient(to right,
-                        rgba(255, 255, 255, 0.5),
-                        rgba(255, 255, 255, 0.8),
-                        rgba(255, 255, 255, 0.5));
+                background-image: linear-gradient(to right, rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.5));
                 transform: translateX(-100%);
-                animation: preview-window-animate-progress-bar 1.5s linear infinite;
+                animation: dialog-tab-animate-progress-bar 1.5s linear infinite;
                 will-change: transform;
             }
         }
@@ -186,9 +208,169 @@
             border-radius: var(--radius);
         }
 
+        .dialog-reader-toolbar {
+            display: none;
+            align-items: center;
+            justify-content: center;
+            flex: 0 0 auto;
+            width: 100%;
+            height: 0;
+            padding: 0 6px;
+            overflow: hidden;
+            opacity: 0.01;
+            color: var(--colorFg);
+            background-color: var(--colorBgLightIntense, var(--colorBg));
+            border-bottom: 1px solid var(--colorBgDark);
+            border-radius: var(--radius) var(--radius) 0 0;
+            box-sizing: border-box;
+            pointer-events: none;
+            transition:
+                height 100ms ease-out,
+                opacity 100ms ease-out;
+            z-index: 1;
+        }
+
+        .dialog-reader-toolbar.reader-toolbar-enter-active {
+            height: 40px;
+            opacity: 1;
+            pointer-events: auto;
+            transition:
+                height 200ms ease-out,
+                opacity 200ms ease-out;
+        }
+
+        .dialog-reader-toolbar .toolbar-group {
+            display: flex;
+            align-items: center;
+            overflow: hidden;
+            height: 28px;
+            margin: 0 2px;
+            border: 1px solid color-mix(in srgb, var(--colorBorder) 55%, transparent);
+            border-radius: var(--radius);
+        }
+
+        .dialog-reader-toolbar .button-toolbar {
+            display: flex;
+            align-items: center;
+            position: relative;
+        }
+
+        .dialog-reader-toolbar .button-toolbar + .button-toolbar > button {
+            border-left-width: 0;
+            border-top-left-radius: 0;
+            border-bottom-left-radius: 0;
+        }
+
+        .dialog-reader-toolbar .button-toolbar:not(:last-child) > button {
+            border-right-width: 0;
+            border-top-right-radius: 0;
+            border-bottom-right-radius: 0;
+        }
+
+        .dialog-reader-toolbar .button-toolbar > button {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 28px;
+            height: 28px;
+            margin: 0;
+            padding: 0 6px;
+            color: inherit;
+            fill: currentColor;
+            background-color: transparent;
+            background-image: none;
+            border: 1px solid color-mix(in srgb, var(--colorBorder) 45%, transparent);
+            border-radius: var(--radius);
+            box-shadow: none;
+            text-shadow: none;
+        }
+
+        .dialog-reader-toolbar .button-toolbar > button:hover,
+        .dialog-reader-toolbar .button-toolbar > button:active,
+        .dialog-reader-toolbar .button-toolbar > button.button-pressed {
+            background-color: var(--colorBgDark, var(--colorBgAlpha));
+        }
+
+        .dialog-reader-toolbar svg {
+            width: 16px;
+            height: 16px;
+        }
+
+        .dialog-reader-toolbar .decrease-font-size svg {
+            transform: scale(0.8);
+        }
+
+        .dialog-reader-toolbar .increase-font-size svg {
+            transform: scale(1.2);
+        }
+
+        .dialog-reader-settings-toggle {
+            display: none;
+            position: absolute;
+            top: 43px;
+            right: calc(16px + 6px);
+            z-index: 2;
+            width: 32px;
+            height: 32px;
+        }
+
+        .dialog-reader-settings-toggle > button,
+        .dialog-reader-settings-toggle > button:active {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 32px;
+            height: 32px;
+            margin: 0;
+            padding: 0;
+            color: var(--colorFg);
+            fill: currentColor;
+            background-color: transparent;
+            border: 0;
+            box-shadow: none;
+        }
+
+        .dialog-reader-settings-toggle svg {
+            width: 18px;
+            height: 18px;
+            fill-opacity: 0.8;
+            opacity: 0.8;
+            transition: fill 200ms linear;
+        }
+
+        .dialog-reader-webview {
+            display: none;
+            min-height: 0;
+            width: 100%;
+        }
+
+        &.reader-open .dialog-reader-toolbar {
+            display: flex;
+        }
+
+        &.reader-open .dialog-reader-settings-toggle {
+            display: block;
+        }
+
+        &.reader-open .dialog-reader-webview {
+            display: block;
+        }
+
+        &.reader-open.reader-toolbar-open .dialog-reader-webview {
+            border-top-left-radius: 0;
+            border-top-right-radius: 0;
+        }
+
+        &.reader-open .dialog-page-webview {
+            position: absolute;
+            inset: 40px 0 0;
+            opacity: 0;
+            pointer-events: none;
+        }
+
         &.reader-open .reader-view-toggle {
             background-color: var(--colorBgAlphaHeavy);
-            border-color: var(--colorFgAlpha);
+            border-color: var(--colorBgDarker);
         }
     }
 }
