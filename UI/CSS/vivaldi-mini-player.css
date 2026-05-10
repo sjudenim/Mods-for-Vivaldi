@@ -1,0 +1,214 @@
+/*
+* Vivaldi Mini Media Player (05/08/26)
+* For Vivaldi browser version 7.8 and up
+* Author: sudenim and Tam710562
+*
+* Description: Adds a mini player to the bottom of a page when media source is a background tab
+*
+* GNU General Public License v3.0
+*/
+
+:root {
+    --playerWidth: clamp(90px, 11vw, 280px);
+    --accentColor: rgba(253, 53, 53, 0.9);
+}
+
+#vmp {
+  position: fixed;
+  transform: none;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.8s ease;
+  z-index: 2;
+}
+
+/* Player's starting position */
+#vmp { bottom: 8px; left: 50%; transform: translateX(-50%); }
+
+/* Visible state */
+#vmp.visible { opacity: 1; pointer-events: auto; }
+
+/* Main bar */
+.vmp-bar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: fit-content;
+  height: 56px;
+  padding: 10px 14px;
+  border-radius: 999px;
+  background: rgba(20, 20, 20, 0.96);
+  backdrop-filter: blur(14px);
+  border: 1px solid rgba(50, 50, 50, 0.5);
+  color: white;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+}
+
+/* Play button */
+.vmp-play {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  border: none;
+  background: white;
+  color: black;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Track info */
+.vmp-info {
+  display: flex;
+  flex-direction: column;
+  width: var(--playerWidth);
+  overflow: hidden;
+}
+
+.vmp-title { font-size: 13px; font-weight: 500; }
+
+/* Container for scrolling text */
+#vmp .vmp-title {
+  position: relative;
+  display: block;
+  overflow: hidden;
+  width: var(--playerWidth);
+  height: 18px;
+}
+
+/* Fade overlays */
+#vmp .vmp-title::before,
+#vmp .vmp-title::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  height: 100%;
+  z-index: 2;
+  pointer-events: none;
+}
+
+#vmp .vmp-title::before {
+  left: -2px;
+  width: 6px;
+  background: linear-gradient(to right, rgba(20, 20, 20, 0.92), rgba(20, 20, 20, 0));
+}
+
+#vmp .vmp-title::after {
+  right: -10px;
+  width: 35px;
+  background: linear-gradient(to left, rgba(20, 20, 20, 0.92), rgba(20, 20, 20, 0));
+}
+
+/* Scrolling content */
+#vmp .vmp-title span {
+  display: inline-block;
+  padding-right: 50px; /* space between repetitions */
+  white-space: nowrap;
+}
+
+#vmp .vmp-title span::after { content: attr(data-text); padding-left: 50px; }
+
+@keyframes scroll-title {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+#vmp .vmp-title.scroll span { animation: scroll-title 30s linear infinite; }
+
+#vmp .vmp-title:not(.scroll) span::after { content: ""; padding-left: 0; }
+
+/* Artist */
+.vmp-artist {
+  font-size: 12px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  opacity: 0.5;
+}
+
+/* Playback time */
+.vmp-time { font-size: 11px; opacity: 0.5; }
+
+/* Volume container */
+#vmp .vmp-volume {
+  display: flex;
+  align-items: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 14px;
+  background: rgba(255, 255, 255, .06);
+  overflow: hidden;
+  transition: width 0.25s ease;
+  cursor: pointer;
+}
+
+/* Volume button */
+#vmp .vmp-volume-btn {
+  width: 28px;
+  height: 28px;
+  flex: 0 0 28px;
+  border: none;
+  background: transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  padding: 0;
+}
+
+#vmp .vmp-volume-btn svg { width: 16px; height: 16px; fill: white; }
+
+/* Expand slider on hover */
+#vmp .vmp-volume:hover { width: 120px; overflow: hidden; }
+
+/* Hides slider when not expanded */
+#vmp .vmp-volume:not(:hover) .vmp-slider-thumb, #vmp .vmp-volume:not(:hover) .vmp-slider-fill { opacity: 0; }
+
+#vmp .vmp-volume:hover .vmp-slider-thumb, #vmp .vmp-volume:hover .vmp-slider-fill { opacity: 1; transition: opacity 0.15s ease; }
+
+/* hide native slider */
+.vmp-slider-wrap .vmp-vol {
+  position: absolute;
+  width: 0;
+  height: 0;
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* custom slider */
+.vmp-custom-slider {
+  position: relative;
+  width: 80px;
+  height: 1px;
+  background: black;
+  cursor: pointer;
+}
+
+.vmp-slider-fill {
+  position: absolute;
+  height: 100%;
+  width: 0;
+  background: var(--accentColor);
+  border-radius: 2px;
+}
+
+.vmp-slider-thumb {
+  position: absolute;
+  top: 50%;
+  left: 0%;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: rgba(28, 28, 28, 0.95);
+  border: 1px solid rgba(255, 255, 255, 0.9);
+  transform: translate(-50%, -50%);
+  cursor: pointer;
+  transition: transform 0.1s;
+}
+
+.vmp-slider-thumb:hover { background: rgba(255, 255, 255, 0.9); }
+
+#vmp input[type="range"] { outline: none; }
+
+.vmp-vol { flex: initial; }
