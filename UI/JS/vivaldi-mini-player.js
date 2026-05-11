@@ -21,6 +21,8 @@
   let lockedSource = null;
   let currentState = null;
   let dismissed = false;
+  let sliderFill = null;
+  let sliderThumb = null;
 
   // VOLUME ICONS
   // --------------------------------------------------
@@ -124,15 +126,17 @@
   `);
 
     const slider = sliderWrap.querySelector('.vmp-custom-slider');
-    const fill = slider.querySelector('.vmp-slider-fill');
     const thumb = slider.querySelector('.vmp-slider-thumb');
+
+    sliderFill = slider.querySelector('.vmp-slider-fill');
+    sliderThumb = thumb;
 
     root.__vmpSliderDragging = false;
 
     function updateSliderVisual(value) {
       const pct = Math.max(0, Math.min(value, 1)) * 100;
-      fill.style.width = pct + '%';
-      thumb.style.left = pct + '%';
+      sliderFill.style.width = pct + '%';
+      sliderThumb.style.left = pct + '%';
     }
 
     updateSliderVisual(parseFloat(volInput.value) || 1);
@@ -185,19 +189,15 @@
     else volumeBtn.innerHTML = volumeIcons.high;
   }
 
-  // Single source of truth for applying a volume value
   function applyVolume(newVol) {
     if (!currentState) return;
     volInput.value = newVol;
     updateVolumeIcon(newVol);
 
-    // Keep custom slider fill/thumb in sync
-    const fill = root.querySelector('.vmp-slider-fill');
-    const thumb = root.querySelector('.vmp-slider-thumb');
-    if (fill && thumb) {
+    if (sliderFill && sliderThumb) {
       const pct = newVol * 100;
-      fill.style.width = pct + '%';
-      thumb.style.left = pct + '%';
+      sliderFill.style.width = pct + '%';
+      sliderThumb.style.left = pct + '%';
     }
 
     chrome.tabs.sendMessage(
@@ -247,10 +247,6 @@
     );
   });
 
-  volInput.addEventListener('input', e => {
-    applyVolume(parseFloat(e.target.value));
-  });
-
   volumeBtn.addEventListener('click', () => {
     if (!currentState) return;
     applyVolume(parseFloat(volInput.value) === 0 ? 1 : 0);
@@ -264,7 +260,6 @@
 
     let currentMedia = null;
 
-    // Grab the original addEventListener once from EventTarget
     const origAddEventListener = EventTarget.prototype.addEventListener;
     const origVideoPlay = HTMLVideoElement.prototype.play;
     const origAudioPlay = HTMLAudioElement.prototype.play;
@@ -487,7 +482,7 @@
     updateMiniPlayerVisibility();
   });
 
-  // Interval fall back
+  // Interval fallback
   setInterval(updateMiniPlayerVisibility, 500);
   updateMiniPlayerVisibility();
 
