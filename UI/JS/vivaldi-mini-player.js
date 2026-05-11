@@ -1,5 +1,5 @@
 /*
- * Vivaldi Mini Media Player (05/10/26)
+ * Vivaldi Mini Media Player (05/11/26)
  * For Vivaldi browser version 7.9 and up
  * Author: sudenim and Tam710562
  *
@@ -88,6 +88,7 @@
         root.style.right = (window.innerWidth - rect.right) + 'px';
         root.style.left = 'auto';
       }
+      checkFlip();
     }
     dragX = null;
     dragY = null;
@@ -208,31 +209,52 @@
     );
   }
 
+  let lastTitle = null, lastArtist = null, lastPaused = null, lastVolume = null;
+
   // UPDATE UI
   // --------------------------------------------------
   function updateUI(data) {
     if (!data) return;
     currentState = data;
 
-    // Title with CSS-only scroll
-    let span = titleEl.querySelector("span");
-    if (!span) {
-      span = document.createElement("span");
-      titleEl.innerHTML = "";
-      titleEl.appendChild(span);
-    }
     const titleText = data.title || "No media detected";
-    span.textContent = titleText;
-    span.setAttribute("data-text", titleText);
+    const artist = data.artist || data.hostname || '';
+    const paused = data.paused;
+    const volume = data.volume ?? 1;
 
-    titleEl.classList.toggle("scroll", titleText.length > 30);
-
-    artistEl.textContent = data.artist || data.hostname || '';
-
-    if (!root.__vmpSliderDragging) {
-      applyVolume(data.volume ?? 1);
+    if (titleText !== lastTitle) {
+      lastTitle = titleText;
+      let span = titleEl.querySelector("span");
+      if (!span) {
+        span = document.createElement("span");
+        titleEl.innerHTML = "";
+        titleEl.appendChild(span);
+      }
+      span.textContent = titleText;
+      span.setAttribute("data-text", titleText);
+      titleEl.classList.toggle("scroll", titleText.length > 30);
     }
-    playBtn.textContent = data.paused ? "❚❚" : "▶";
+
+    if (artist !== lastArtist) {
+      lastArtist = artist;
+      artistEl.textContent = artist;
+    }
+
+    if (paused !== lastPaused) {
+      lastPaused = paused;
+      playBtn.textContent = paused ? "❚❚" : "▶";
+    }
+
+    if (!root.__vmpSliderDragging && volume !== lastVolume) {
+      lastVolume = volume;
+      volInput.value = volume;
+      updateVolumeIcon(volume);
+      if (sliderFill && sliderThumb) {
+        const pct = volume * 100;
+        sliderFill.style.width = pct + '%';
+        sliderThumb.style.left = pct + '%';
+      }
+    }
   }
 
   // CONTROLS
@@ -310,10 +332,15 @@
       window.postMessage({ type: messageType, data: getDataControl(el) }, '*');
     }
 
+    let lastEmitTime = 0;
     function timeupdateHandler(event) {
       if (!event.target.paused) {
         currentMedia = event.target;
-        emit(currentMedia);
+        const now = Date.now();
+        if (now - lastEmitTime >= 1000) {
+          lastEmitTime = now;
+          emit(currentMedia);
+        }
       }
     }
 
@@ -462,7 +489,7 @@
 
     if (isBackgroundTab) {
       lastAudioTime = Date.now();
-    } else {
+    } else if (!playingTab) {
       dismissed = false;
     }
 
@@ -472,13 +499,11 @@
     root.classList.toggle("visible", shouldShow);
   }
 
-  // Prefer event-driven updates; fall back to a conservative poll interval
   chrome.tabs.onUpdated.addListener((_tabId, changeInfo) => {
     if ('audible' in changeInfo) updateMiniPlayerVisibility();
   });
 
   chrome.tabs.onActivated.addListener(() => {
-    dismissed = false;
     updateMiniPlayerVisibility();
   });
 
