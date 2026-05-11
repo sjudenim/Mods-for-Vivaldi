@@ -53,10 +53,10 @@
 
   // ELEMENTS
   // --------------------------------------------------
-  const playBtn   = root.querySelector(".vmp-play");
-  const titleEl   = root.querySelector(".vmp-title");
-  const artistEl  = root.querySelector(".vmp-artist");
-  const volInput  = root.querySelector(".vmp-vol");
+  const playBtn = root.querySelector(".vmp-play");
+  const titleEl = root.querySelector(".vmp-title");
+  const artistEl = root.querySelector(".vmp-artist");
+  const volInput = root.querySelector(".vmp-vol");
   const volumeBtn = root.querySelector(".vmp-volume-btn");
 
   // DRAG LOGIC
@@ -73,10 +73,10 @@
 
   document.addEventListener('mousemove', e => {
     if (dragX === null) return;
-    root.style.left   = (e.clientX - dragX) + 'px';
-    root.style.top    = (e.clientY - dragY) + 'px';
+    root.style.left = (e.clientX - dragX) + 'px';
+    root.style.top = (e.clientY - dragY) + 'px';
     root.style.bottom = 'auto';
-    root.style.right  = 'auto';
+    root.style.right = 'auto';
   });
 
   document.addEventListener('mouseup', () => {
@@ -84,7 +84,7 @@
       const rect = root.getBoundingClientRect();
       if (rect.right + 120 > window.innerWidth) {
         root.style.right = (window.innerWidth - rect.right) + 'px';
-        root.style.left  = 'auto';
+        root.style.left = 'auto';
       }
     }
     dragX = null;
@@ -98,7 +98,7 @@
     const spaceRight = window.innerWidth - rect.right;
     if (spaceRight < 160) {
       root.style.right = spaceRight + 'px';
-      root.style.left  = 'auto';
+      root.style.left = 'auto';
     } else {
       const currentRight = parseFloat(root.style.right);
       if (!isNaN(currentRight)) {
@@ -114,41 +114,66 @@
     const sliderWrap = root.querySelector('.vmp-slider-wrap');
     if (!sliderWrap) return;
 
+    volInput.style.display = 'none';
+
     sliderWrap.insertAdjacentHTML('beforeend', `
-      <div class="vmp-custom-slider">
-        <div class="vmp-slider-fill"></div>
-        <div class="vmp-slider-thumb"></div>
-      </div>
-    `);
+    <div class="vmp-custom-slider">
+      <div class="vmp-slider-fill"></div>
+      <div class="vmp-slider-thumb"></div>
+    </div>
+  `);
 
     const slider = sliderWrap.querySelector('.vmp-custom-slider');
-    const fill   = slider.querySelector('.vmp-slider-fill');
-    const thumb  = slider.querySelector('.vmp-slider-thumb');
-    let dragging = false;
+    const fill = slider.querySelector('.vmp-slider-fill');
+    const thumb = slider.querySelector('.vmp-slider-thumb');
+
+    root.__vmpSliderDragging = false;
 
     function updateSliderVisual(value) {
-      const pct = value * 100;
-      fill.style.width  = pct + '%';
-      thumb.style.left  = pct + '%';
+      const pct = Math.max(0, Math.min(value, 1)) * 100;
+      fill.style.width = pct + '%';
+      thumb.style.left = pct + '%';
     }
 
     updateSliderVisual(parseFloat(volInput.value) || 1);
 
+    // Debounce sendMessage
+    let sendTimer = null;
     function setVolumeFromMouse(clientX) {
-      const rect   = slider.getBoundingClientRect();
-      const pos    = Math.max(0, Math.min(clientX - rect.left, rect.width));
+      const rect = slider.getBoundingClientRect();
+      const pos = Math.max(0, Math.min(clientX - rect.left, rect.width));
       const volume = pos / rect.width;
-      applyVolume(volume);
+      volInput.value = volume;
       updateSliderVisual(volume);
+      updateVolumeIcon(volume);
+
+      clearTimeout(sendTimer);
+      sendTimer = setTimeout(() => applyVolume(volume), 50);
     }
 
-    thumb.addEventListener('mousedown', e => { dragging = true; e.preventDefault(); });
-    document.addEventListener('mouseup',   () => { dragging = false; });
-    document.addEventListener('mousemove', e => { if (dragging) setVolumeFromMouse(e.clientX); });
+    thumb.addEventListener('mousedown', e => {
+      root.__vmpSliderDragging = true;
+      e.preventDefault();
+    });
+
+    document.addEventListener('mouseup', () => {
+      if (root.__vmpSliderDragging) {
+        root.__vmpSliderDragging = false;
+
+        clearTimeout(sendTimer);
+        applyVolume(parseFloat(volInput.value));
+      }
+    });
+
+    document.addEventListener('mousemove', e => {
+      if (root.__vmpSliderDragging) setVolumeFromMouse(e.clientX);
+    });
+
     slider.addEventListener('click', e => setVolumeFromMouse(e.clientX));
 
-    // Keep custom slider in sync when volInput changes from other sources
-    volInput.addEventListener('input', e => updateSliderVisual(parseFloat(e.target.value)));
+    volInput.addEventListener('change', e => {
+      if (!root.__vmpSliderDragging) updateSliderVisual(parseFloat(e.target.value));
+    });
   }, 0);
 
   // HELPERS
@@ -167,7 +192,7 @@
     updateVolumeIcon(newVol);
 
     // Keep custom slider fill/thumb in sync
-    const fill  = root.querySelector('.vmp-slider-fill');
+    const fill = root.querySelector('.vmp-slider-fill');
     const thumb = root.querySelector('.vmp-slider-thumb');
     if (fill && thumb) {
       const pct = newVol * 100;
@@ -204,7 +229,9 @@
 
     artistEl.textContent = data.artist || data.hostname || '';
 
-    applyVolume(data.volume ?? 1);
+    if (!root.__vmpSliderDragging) {
+      applyVolume(data.volume ?? 1);
+    }
     playBtn.textContent = data.paused ? "❚❚" : "▶";
   }
 
@@ -262,7 +289,7 @@
       return origAddEventListener.apply(this, arguments);
     };
 
-    function getTitle()  { return navigator.mediaSession.metadata?.title  || document.title || null; }
+    function getTitle() { return navigator.mediaSession.metadata?.title || document.title || null; }
     function getArtist() { return navigator.mediaSession.metadata?.artist || null; }
 
     function isActive(el) { return !el.paused && !el.ended && el.readyState >= 2; }
@@ -273,14 +300,14 @@
 
     function getDataControl(el) {
       return {
-        type:        messageType,
-        title:       getTitle(),
-        artist:      getArtist(),
+        type: messageType,
+        title: getTitle(),
+        artist: getArtist(),
         currentTime: el.currentTime,
-        duration:    el.duration,
-        paused:      el.paused,
-        volume:      el.muted ? 0 : el.volume,
-        muted:       el.muted,
+        duration: el.duration,
+        paused: el.paused,
+        volume: el.muted ? 0 : el.volume,
+        muted: el.muted,
       };
     }
 
@@ -317,13 +344,13 @@
       if (el.__vmpTracked) return;
       el.__vmpTracked = true;
 
-      origAddEventListener.call(el, 'play',         timeupdateHandler);
-      origAddEventListener.call(el, 'playing',      timeupdateHandler);
-      origAddEventListener.call(el, 'timeupdate',   timeupdateHandler);
-      origAddEventListener.call(el, 'pause',        pauseHandler);
+      origAddEventListener.call(el, 'play', timeupdateHandler);
+      origAddEventListener.call(el, 'playing', timeupdateHandler);
+      origAddEventListener.call(el, 'timeupdate', timeupdateHandler);
+      origAddEventListener.call(el, 'pause', pauseHandler);
       origAddEventListener.call(el, 'volumechange', volumechangeHandler);
-      origAddEventListener.call(el, 'ended',        endedHandler);
-      origAddEventListener.call(el, 'error',        endedHandler);
+      origAddEventListener.call(el, 'ended', endedHandler);
+      origAddEventListener.call(el, 'error', endedHandler);
     }
 
     function trackExisting() {
@@ -340,11 +367,11 @@
       if (!event.data || event.data.type !== messageType + '-cmd') return;
       if (!currentMedia) return;
       const { action, value } = event.data;
-      if      (action === 'play')   currentMedia.play();
-      else if (action === 'pause')  currentMedia.pause();
+      if (action === 'play') currentMedia.play();
+      else if (action === 'pause') currentMedia.pause();
       else if (action === 'volume') {
         currentMedia.volume = Math.max(0, Math.min(1, parseFloat(value)));
-        currentMedia.muted  = false;
+        currentMedia.muted = false;
       }
     });
   }
@@ -404,26 +431,26 @@
     if (!msg || msg.type !== MESSAGE_TYPE) return;
     if (!msg.data || !sender.tab) return;
 
-    const tabId   = sender.tab.id;
+    const tabId = sender.tab.id;
     const frameId = sender.frameId;
 
-    const tabEl      = document.querySelector(`.tab-wrapper[data-id="tab-${tabId}"] .tab`);
-    const isAudioOn  = tabEl?.classList.contains("audio-on");
+    const tabEl = document.querySelector(`.tab-wrapper[data-id="tab-${tabId}"] .tab`);
+    const isAudioOn = tabEl?.classList.contains("audio-on");
 
     // Ignore tabs with no audio indicator
     if (!isAudioOn) return;
 
     // Keep lock on current source unless it has lost its audio indicator
     if (lockedSource && lockedSource.tabId !== tabId) {
-      const lockedTabEl  = document.querySelector(`.tab-wrapper[data-id="tab-${lockedSource.tabId}"] .tab`);
+      const lockedTabEl = document.querySelector(`.tab-wrapper[data-id="tab-${lockedSource.tabId}"] .tab`);
       const lockedActive = lockedTabEl?.classList.contains("audio-on");
       if (lockedActive) return;
     }
 
-    lockedSource          = { tabId, frameId };
-    msg.data.tabId        = tabId;
-    msg.data.frameId      = frameId;
-    msg.data.hostname     = sender.tab?.url ? new URL(sender.tab.url).hostname : '';
+    lockedSource = { tabId, frameId };
+    msg.data.tabId = tabId;
+    msg.data.frameId = frameId;
+    msg.data.hostname = sender.tab?.url ? new URL(sender.tab.url).hostname : '';
     updateUI(msg.data);
   });
 
@@ -435,7 +462,7 @@
   // --------------------------------------------------
   function updateMiniPlayerVisibility() {
     const playingTab = document.querySelector(".tab-position .tab.audio-on");
-    const activeTab  = document.querySelector(".tab-position .tab.active");
+    const activeTab = document.querySelector(".tab-position .tab.active");
     const isBackgroundTab = playingTab && playingTab !== activeTab;
 
     if (isBackgroundTab) {
@@ -445,7 +472,7 @@
     }
 
     const keepVisible = (Date.now() - lastAudioTime) < HIDE_DELAY_MS;
-    const shouldShow  = (isBackgroundTab && !dismissed) || (!isBackgroundTab && keepVisible);
+    const shouldShow = (isBackgroundTab && !dismissed) || (!isBackgroundTab && keepVisible);
 
     root.classList.toggle("visible", shouldShow);
   }
@@ -460,7 +487,7 @@
     updateMiniPlayerVisibility();
   });
 
-  // Interval safety net for cases where DOM class changes
+  // Interval fall back
   setInterval(updateMiniPlayerVisibility, 500);
   updateMiniPlayerVisibility();
 
