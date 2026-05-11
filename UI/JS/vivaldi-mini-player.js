@@ -95,7 +95,7 @@
     root.style.transition = '';
   });
 
-  // Expand from right edge when near viewport edge
+  // Expand from right when near viewport edge
   function checkFlip() {
     const rect = root.getBoundingClientRect();
     const spaceRight = window.innerWidth - rect.right;
@@ -161,18 +161,20 @@
       e.preventDefault();
     });
 
-    document.addEventListener('mouseup', () => {
+    function onSliderMouseUp() {
       if (root.__vmpSliderDragging) {
         root.__vmpSliderDragging = false;
-
         clearTimeout(sendTimer);
         applyVolume(parseFloat(volInput.value));
       }
-    });
+    }
 
-    document.addEventListener('mousemove', e => {
+    function onSliderMouseMove(e) {
       if (root.__vmpSliderDragging) setVolumeFromMouse(e.clientX);
-    });
+    }
+
+    document.addEventListener('mouseup', onSliderMouseUp);
+    document.addEventListener('mousemove', onSliderMouseMove);
 
     slider.addEventListener('click', e => setVolumeFromMouse(e.clientX));
 
@@ -281,6 +283,7 @@
     window.__vmpMainInjected = true;
 
     let currentMedia = null;
+    let volEmitTimer = null;
 
     const origAddEventListener = EventTarget.prototype.addEventListener;
     const origVideoPlay = HTMLVideoElement.prototype.play;
@@ -312,7 +315,7 @@
     function isActive(el) { return !el.paused && !el.ended && el.readyState >= 2; }
 
     function hasMediaPlaying() {
-      return Array.from(document.querySelectorAll('video, audio')).find(el => isActive(el));
+      return Array.from(document.querySelectorAll('video, audio')).some(el => isActive(el));
     }
 
     function getDataControl(el) {
@@ -334,14 +337,15 @@
 
     let lastEmitTime = 0;
     function timeupdateHandler(event) {
-      if (!event.target.paused) {
-        currentMedia = event.target;
-        const now = Date.now();
-        if (now - lastEmitTime >= 1000) {
-          lastEmitTime = now;
-          emit(currentMedia);
-        }
-      }
+      if (event.target.paused) return;
+
+      currentMedia = event.target;
+
+      const now = Date.now();
+      if (now - lastEmitTime < 1000) return;
+
+      lastEmitTime = now;
+      emit(currentMedia);
     }
 
     function pauseHandler(event) {
@@ -352,7 +356,9 @@
     }
 
     function volumechangeHandler(event) {
-      if (currentMedia === event.target) emit(currentMedia);
+      if (currentMedia !== event.target) return;
+      clearTimeout(volEmitTimer);
+      volEmitTimer = setTimeout(() => emit(currentMedia), 100);
     }
 
     function endedHandler() {
@@ -375,13 +381,22 @@
       origAddEventListener.call(el, 'error', endedHandler);
     }
 
-    function trackExisting() {
-      document.querySelectorAll('video, audio').forEach(el => trackElement(el));
-    }
+    // One-time scan for elements already in the DOM at inject time
+    document.querySelectorAll('video, audio').forEach(trackElement);
 
-    trackExisting();
+    const observer = new MutationObserver(mutations => {
+      for (const m of mutations) {
+        for (const node of m.addedNodes) {
+          if (node.nodeType !== 1) continue;
+          if (node.tagName === 'VIDEO' || node.tagName === 'AUDIO') {
+            trackElement(node);
+          } else {
+            node.querySelectorAll('video, audio').forEach(trackElement);
+          }
+        }
+      }
+    });
 
-    const observer = new MutationObserver(trackExisting);
     observer.observe(document, { childList: true, subtree: true });
 
     // Listen for commands forwarded from the bridge
@@ -482,6 +497,8 @@
 
   // PLAYER VISIBILITY
   // --------------------------------------------------
+  let visibilityInterval = null;
+
   function updateMiniPlayerVisibility() {
     const playingTab = document.querySelector(".tab-position .tab.audio-on");
     const activeTab = document.querySelector(".tab-position .tab.active");
@@ -499,16 +516,29 @@
     root.classList.toggle("visible", shouldShow);
   }
 
+  function scheduleVisibilityCheck() {
+    if (visibilityInterval) return;
+    visibilityInterval = setInterval(() => {
+      updateMiniPlayerVisibility();
+      if (Date.now() - lastAudioTime >= HIDE_DELAY_MS) {
+        clearInterval(visibilityInterval);
+        visibilityInterval = null;
+      }
+    }, 500);
+  }
+
   chrome.tabs.onUpdated.addListener((_tabId, changeInfo) => {
-    if ('audible' in changeInfo) updateMiniPlayerVisibility();
+    if ('audible' in changeInfo) {
+      updateMiniPlayerVisibility();
+      scheduleVisibilityCheck();
+    }
   });
 
   chrome.tabs.onActivated.addListener(() => {
     updateMiniPlayerVisibility();
+    scheduleVisibilityCheck();
   });
 
-  // Interval fallback
-  setInterval(updateMiniPlayerVisibility, 500);
   updateMiniPlayerVisibility();
 
   // Dismiss on double-click
