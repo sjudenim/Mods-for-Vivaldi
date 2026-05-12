@@ -1,9 +1,9 @@
 /*
-* Vivaldi Mini Media Player (05/10/26)
+* Vivaldi Mini Media Player (05/12/26)
 * For Vivaldi browser version 7.8 and up
 * Author: sudenim and Tam710562
 *
-* Description: Adds a draggable mini player to a page when the media source is a background tab
+* Description: Adds a draggable mini player to a page when the media source is on a background tab
 *
 * GNU General Public License v3.0
 */
@@ -13,7 +13,7 @@
 }
 
 /* Player container */
-#vmp { position: fixed; bottom: 8px; left: calc(50% - 9vw); opacity: 0; pointer-events: none; transition: opacity 0.8s ease; z-index: 2; }
+#vmp { position: fixed; bottom: 8px; left: calc((95vw - var(--playerWidth))/ 2); opacity: 0; pointer-events: none; transition: opacity 0.8s ease; z-index: 2; }
 
 #vmp.visible { opacity: 1; pointer-events: auto; }
 
