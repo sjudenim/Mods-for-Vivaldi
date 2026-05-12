@@ -1,5 +1,5 @@
 /*
- * Vivaldi Mini Media Player (05/11/26)
+ * Vivaldi Mini Media Player (05/12/26)
  * For Vivaldi browser version 7.9 and up
  * Author: sudenim and Tam710562
  *
@@ -23,6 +23,7 @@
   let dismissed = false;
   let sliderFill = null;
   let sliderThumb = null;
+  let sliderDragging = false;
 
   // VOLUME ICONS
   // --------------------------------------------------
@@ -95,7 +96,7 @@
     root.style.transition = '';
   });
 
-  // Expand from right when near viewport edge
+  // Expand from right edge when near viewport edge
   function checkFlip() {
     const rect = root.getBoundingClientRect();
     const spaceRight = window.innerWidth - rect.right;
@@ -132,14 +133,6 @@
     sliderFill = slider.querySelector('.vmp-slider-fill');
     sliderThumb = thumb;
 
-    root.__vmpSliderDragging = false;
-
-    function updateSliderVisual(value) {
-      const pct = Math.max(0, Math.min(value, 1)) * 100;
-      sliderFill.style.width = pct + '%';
-      sliderThumb.style.left = pct + '%';
-    }
-
     updateSliderVisual(parseFloat(volInput.value) || 1);
 
     // Debounce sendMessage
@@ -157,20 +150,20 @@
     }
 
     thumb.addEventListener('mousedown', e => {
-      root.__vmpSliderDragging = true;
+      sliderDragging = true;
       e.preventDefault();
     });
 
     function onSliderMouseUp() {
-      if (root.__vmpSliderDragging) {
-        root.__vmpSliderDragging = false;
+      if (sliderDragging) {
+        sliderDragging = false;
         clearTimeout(sendTimer);
         applyVolume(parseFloat(volInput.value));
       }
     }
 
     function onSliderMouseMove(e) {
-      if (root.__vmpSliderDragging) setVolumeFromMouse(e.clientX);
+      if (sliderDragging) setVolumeFromMouse(e.clientX);
     }
 
     document.addEventListener('mouseup', onSliderMouseUp);
@@ -179,12 +172,19 @@
     slider.addEventListener('click', e => setVolumeFromMouse(e.clientX));
 
     volInput.addEventListener('change', e => {
-      if (!root.__vmpSliderDragging) updateSliderVisual(parseFloat(e.target.value));
+      if (!sliderDragging) updateSliderVisual(parseFloat(e.target.value));
     });
   }, 0);
 
   // HELPERS
   // --------------------------------------------------
+  function updateSliderVisual(value) {
+    if (!sliderFill || !sliderThumb) return;
+    const pct = Math.max(0, Math.min(value, 1)) * 100;
+    sliderFill.style.width = pct + '%';
+    sliderThumb.style.left = pct + '%';
+  }
+
   function updateVolumeIcon(volume) {
     const v = parseFloat(volume);
     if (v <= 0) volumeBtn.innerHTML = volumeIcons.off;
@@ -196,12 +196,7 @@
     if (!currentState) return;
     volInput.value = newVol;
     updateVolumeIcon(newVol);
-
-    if (sliderFill && sliderThumb) {
-      const pct = newVol * 100;
-      sliderFill.style.width = pct + '%';
-      sliderThumb.style.left = pct + '%';
-    }
+    updateSliderVisual(newVol);
 
     chrome.tabs.sendMessage(
       currentState.tabId,
@@ -247,15 +242,11 @@
       playBtn.textContent = paused ? "❚❚" : "▶";
     }
 
-    if (!root.__vmpSliderDragging && volume !== lastVolume) {
+    if (!sliderDragging && volume !== lastVolume) {
       lastVolume = volume;
       volInput.value = volume;
       updateVolumeIcon(volume);
-      if (sliderFill && sliderThumb) {
-        const pct = volume * 100;
-        sliderFill.style.width = pct + '%';
-        sliderThumb.style.left = pct + '%';
-      }
+      updateSliderVisual(volume);
     }
   }
 
@@ -284,28 +275,29 @@
 
     let currentMedia = null;
     let volEmitTimer = null;
+    const tracked = new WeakSet();
 
     const origAddEventListener = EventTarget.prototype.addEventListener;
     const origVideoPlay = HTMLVideoElement.prototype.play;
     const origAudioPlay = HTMLAudioElement.prototype.play;
 
     HTMLVideoElement.prototype.play = function () {
-      if (!this.__vmpTracked) trackElement(this);
+      trackElement(this);
       return origVideoPlay.apply(this, arguments);
     };
 
     HTMLAudioElement.prototype.play = function () {
-      if (!this.__vmpTracked) trackElement(this);
+      trackElement(this);
       return origAudioPlay.apply(this, arguments);
     };
 
     HTMLVideoElement.prototype.addEventListener = function () {
-      if (!this.__vmpTracked) trackElement(this);
+      trackElement(this);
       return origAddEventListener.apply(this, arguments);
     };
 
     HTMLAudioElement.prototype.addEventListener = function () {
-      if (!this.__vmpTracked) trackElement(this);
+      trackElement(this);
       return origAddEventListener.apply(this, arguments);
     };
 
@@ -369,8 +361,8 @@
     }
 
     function trackElement(el) {
-      if (el.__vmpTracked) return;
-      el.__vmpTracked = true;
+      if (tracked.has(el)) return;
+      tracked.add(el);
 
       origAddEventListener.call(el, 'play', timeupdateHandler);
       origAddEventListener.call(el, 'playing', timeupdateHandler);
