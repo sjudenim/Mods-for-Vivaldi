@@ -71,7 +71,8 @@
   // --------------------------------------------------
   let dragX = null, dragY = null;
 
-  root.addEventListener('mousedown', e => {
+  root.addEventListener('pointerdown', e => {
+    if (e.button !== 0) return;
     if (e.target.closest('button') || e.target.closest('.vmp-slider-wrap') || e.target.closest('.vmp-custom-slider')) return;
     dragX = e.clientX - root.getBoundingClientRect().left;
     dragY = e.clientY - root.getBoundingClientRect().top;
@@ -79,7 +80,7 @@
     e.preventDefault();
   });
 
-  document.addEventListener('mousemove', e => {
+  document.addEventListener('pointermove', e => {
     if (dragX === null) return;
     root.style.left = (e.clientX - dragX) + 'px';
     root.style.top = (e.clientY - dragY) + 'px';
@@ -87,7 +88,7 @@
     root.style.right = 'auto';
   });
 
-  document.addEventListener('mouseup', () => {
+  document.addEventListener('pointerup', e => {
     if (dragX !== null) {
       const rect = root.getBoundingClientRect();
       if (rect.right + 120 > window.innerWidth) {
@@ -154,7 +155,7 @@
       sendTimer = setTimeout(() => applyVolume(volume), 50);
     }
 
-    thumb.addEventListener('mousedown', e => {
+    thumb.addEventListener('pointerdown', e => {
       sliderDragging = true;
       e.preventDefault();
     });
@@ -171,8 +172,8 @@
       if (sliderDragging) setVolumeFromMouse(e.clientX);
     }
 
-    document.addEventListener('mouseup', onSliderMouseUp);
-    document.addEventListener('mousemove', onSliderMouseMove);
+    document.addEventListener('pointerup', onSliderMouseUp);
+    document.addEventListener('pointermove', onSliderMouseMove);
 
     slider.addEventListener('click', e => setVolumeFromMouse(e.clientX));
 
