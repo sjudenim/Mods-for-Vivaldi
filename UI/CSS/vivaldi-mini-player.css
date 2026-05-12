@@ -13,7 +13,7 @@
 }
 
 /* Player container */
-#vmp { position: fixed; bottom: 8px; left: calc((95vw - var(--playerWidth))/ 2); opacity: 0; pointer-events: none; transition: opacity 0.8s ease; z-index: 2; }
+#vmp { position: fixed; bottom: 8px; left: calc((95vw - var(--playerWidth))/ 2); opacity: 0; pointer-events: none; transition: opacity 0.8s ease; z-index: 8; }
 
 #vmp.visible { opacity: 1; pointer-events: auto; }
 
@@ -33,7 +33,7 @@
   box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
 }
 
-/* Play button */
+/* Play/Pause button */
 .vmp-play {
   width: 34px;
   height: 34px;
@@ -46,6 +46,8 @@
   align-items: center;
   justify-content: center;
 }
+
+.vmp-play svg { height: 18px; width: 18px; }
 
 /* Track info */
 .vmp-info { display: flex; flex-direction: column; width: var(--playerWidth); overflow: hidden; }
