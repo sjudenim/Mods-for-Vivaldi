@@ -82,8 +82,10 @@
 
   document.addEventListener('pointermove', e => {
     if (dragX === null) return;
-    root.style.left = (e.clientX - dragX) + 'px';
-    root.style.top = (e.clientY - dragY) + 'px';
+    const x = Math.max(0, Math.min(e.clientX - dragX, window.innerWidth - root.offsetWidth));
+    const y = Math.max(0, Math.min(e.clientY - dragY, window.innerHeight - root.offsetHeight));
+    root.style.left = x + 'px';
+    root.style.top = y + 'px';
     root.style.bottom = 'auto';
     root.style.right = 'auto';
   });
@@ -236,6 +238,10 @@
       span.textContent = titleText;
       span.setAttribute("data-text", titleText);
       titleEl.classList.toggle("scroll", titleText.length > 30);
+      if (titleText.length > 30) {
+        const duration = Math.max(8, titleText.length * 0.4);
+        titleEl.style.setProperty('--scroll-duration', duration + 's');
+      }
     }
 
     if (artist !== lastArtist) {
