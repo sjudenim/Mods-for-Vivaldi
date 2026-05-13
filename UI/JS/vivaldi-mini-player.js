@@ -503,22 +503,24 @@
   // --------------------------------------------------
   let visibilityInterval = null;
 
-  function updateMiniPlayerVisibility() {
-    const playingTab = document.querySelector(".tab-position .tab.audio-on");
-    const activeTab = document.querySelector(".tab-position .tab.active");
-    const isBackgroundTab = playingTab && playingTab !== activeTab;
+function updateMiniPlayerVisibility() {
+  const playingTab = document.querySelector(".tab-position .tab.audio-on");
+  const activeTab = document.querySelector(".tab-position .tab.active");
+  const isBackgroundTab = playingTab && playingTab !== activeTab;
 
-    if (isBackgroundTab) {
-      lastAudioTime = Date.now();
-    } else if (!playingTab) {
-      dismissed = false;
-    }
-
-    const keepVisible = (Date.now() - lastAudioTime) < HIDE_DELAY_MS;
-    const shouldShow = (isBackgroundTab && !dismissed) || (!isBackgroundTab && keepVisible);
-
-    root.classList.toggle("visible", shouldShow);
+  if (isBackgroundTab) {
+    lastAudioTime = Date.now();
+  } else if (playingTab && playingTab === activeTab) {
+    lastAudioTime = 0;
+  } else if (!playingTab) {
+    dismissed = false;
   }
+
+  const keepVisible = (Date.now() - lastAudioTime) < HIDE_DELAY_MS;
+  const shouldShow = (isBackgroundTab && !dismissed) || (!isBackgroundTab && keepVisible);
+
+  root.classList.toggle("visible", shouldShow);
+}
 
   function scheduleVisibilityCheck() {
     if (visibilityInterval) return;
