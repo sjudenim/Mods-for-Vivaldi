@@ -20,7 +20,7 @@
   let lastAudioTime = 0;
   let lockedSource = null;
   let currentState = null;
-  let dismissed = false;
+  let dismissedTabs = new Set();
   let sliderFill = null;
   let sliderThumb = null;
   let sliderDragging = false;
@@ -497,30 +497,33 @@
 
   chrome.tabs.onRemoved.addListener(tabId => {
     if (lockedSource?.tabId === tabId) lockedSource = null;
+    dismissedTabs.delete(tabId);
   });
 
   // PLAYER VISIBILITY
   // --------------------------------------------------
   let visibilityInterval = null;
 
-function updateMiniPlayerVisibility() {
-  const playingTab = document.querySelector(".tab-position .tab.audio-on");
-  const activeTab = document.querySelector(".tab-position .tab.active");
-  const isBackgroundTab = playingTab && playingTab !== activeTab;
+  function updateMiniPlayerVisibility() {
+    const playingTab = document.querySelector(".tab-position .tab.audio-on");
+    const activeTab = document.querySelector(".tab-position .tab.active");
+    const isBackgroundTab = playingTab && playingTab !== activeTab;
 
-  if (isBackgroundTab) {
-    lastAudioTime = Date.now();
-  } else if (playingTab && playingTab === activeTab) {
-    lastAudioTime = 0;
-  } else if (!playingTab) {
-    dismissed = false;
+    if (isBackgroundTab) {
+      lastAudioTime = Date.now();
+    } else if (playingTab && playingTab === activeTab) {
+      lastAudioTime = 0;
+    }
+
+    chrome.tabs.query({ active: true, currentWindow: true }, tabs => {
+      const activeTabId = tabs[0]?.id;
+      const isDismissed = activeTabId && dismissedTabs.has(activeTabId);
+      const isSourceTab = activeTabId && lockedSource?.tabId === activeTabId;
+      const keepVisible = (Date.now() - lastAudioTime) < HIDE_DELAY_MS;
+      const shouldShow = (isBackgroundTab && !isDismissed && !isSourceTab) || (!isBackgroundTab && keepVisible);
+      root.classList.toggle("visible", shouldShow);
+    });
   }
-
-  const keepVisible = (Date.now() - lastAudioTime) < HIDE_DELAY_MS;
-  const shouldShow = (isBackgroundTab && !dismissed) || (!isBackgroundTab && keepVisible);
-
-  root.classList.toggle("visible", shouldShow);
-}
 
   function scheduleVisibilityCheck() {
     if (visibilityInterval) return;
@@ -541,7 +544,6 @@ function updateMiniPlayerVisibility() {
   });
 
   chrome.tabs.onActivated.addListener(() => {
-    dismissed = false;
     updateMiniPlayerVisibility();
     scheduleVisibilityCheck();
   });
@@ -553,7 +555,9 @@ function updateMiniPlayerVisibility() {
     root.classList.add('vmp-shake');
     root.addEventListener('animationend', () => {
       root.classList.remove('vmp-shake');
-      dismissed = true;
+      chrome.tabs.query({ active: true, currentWindow: true }, tabs => {
+        if (tabs[0]?.id) dismissedTabs.add(tabs[0].id);
+      });
     }, { once: true });
   });
 
