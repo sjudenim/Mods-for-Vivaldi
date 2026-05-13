@@ -7,6 +7,7 @@
 *
 * GNU General Public License v3.0
 */
+
 (() => {
   console.log("Vivaldi Media Player");
 
@@ -496,8 +497,10 @@
   });
 
   chrome.tabs.onRemoved.addListener(tabId => {
-    if (lockedSource?.tabId === tabId) lockedSource = null;
-    dismissedTabs.delete(tabId);
+    if (lockedSource?.tabId === tabId) {
+      lockedSource = null;
+      lastAudioTime = 0;
+    }
   });
 
   // PLAYER VISIBILITY
@@ -552,9 +555,10 @@
 
   // Dismiss on double-click
   root.addEventListener('dblclick', () => {
-    root.classList.add('vmp-shake');
+    root.classList.add('vmp-close');
     root.addEventListener('animationend', () => {
-      root.classList.remove('vmp-shake');
+      root.classList.remove('vmp-close');
+      root.classList.remove('visible');
       chrome.tabs.query({ active: true, currentWindow: true }, tabs => {
         if (tabs[0]?.id) dismissedTabs.add(tabs[0].id);
       });
