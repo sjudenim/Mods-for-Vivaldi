@@ -1,14 +1,14 @@
 /*
- * Vivaldi Mini Media Player (05/12/26)
- * For Vivaldi browser version 7.9 and up
- * Author: sudenim and Tam710562
- *
- * Description: Adds a draggable mini player to a page when the media source is on a background tab
- *
- * GNU General Public License v3.0
- */
+* Vivaldi Media Player (05/13/26)
+* For Vivaldi browser version 7.9 and up
+* Author: sudenim and Tam710562
+*
+* Description: Adds a draggable mini player to a page when the media source is on a background tab
+*
+* GNU General Public License v3.0
+*/
 (() => {
-  console.log("Vivaldi Mini Player");
+  console.log("Vivaldi Media Player");
 
   // CONSTANTS
   // --------------------------------------------------
@@ -44,9 +44,9 @@
   root.id = "vmp";
   root.innerHTML = `
     <div class="vmp-bar">
-      <button class="vmp-play">▶</button>
+      <button class="vmp-play">${playerIcons.play}</button>
       <div class="vmp-info">
-        <div class="vmp-title">No media detected</div>
+        <div class="vmp-title">Vivaldi Media Player</div>
         <div class="vmp-artist"></div>
       </div>
       <div class="vmp-volume">
@@ -340,7 +340,7 @@
     }
 
     let lastEmitTime = 0;
-    function timeupdateHandler(event) {
+    function mediaActivityHandler(event) {
       if (event.target.paused) return;
 
       currentMedia = event.target;
@@ -376,9 +376,9 @@
       if (tracked.has(el)) return;
       tracked.add(el);
 
-      origAddEventListener.call(el, 'play', timeupdateHandler);
-      origAddEventListener.call(el, 'playing', timeupdateHandler);
-      origAddEventListener.call(el, 'timeupdate', timeupdateHandler);
+      origAddEventListener.call(el, 'play', mediaActivityHandler);
+      origAddEventListener.call(el, 'playing', mediaActivityHandler);
+      origAddEventListener.call(el, 'timeupdate', mediaActivityHandler);
       origAddEventListener.call(el, 'pause', pauseHandler);
       origAddEventListener.call(el, 'volumechange', volumechangeHandler);
       origAddEventListener.call(el, 'ended', endedHandler);
@@ -539,6 +539,7 @@
   });
 
   chrome.tabs.onActivated.addListener(() => {
+    dismissed = false;
     updateMiniPlayerVisibility();
     scheduleVisibilityCheck();
   });
@@ -546,7 +547,13 @@
   updateMiniPlayerVisibility();
 
   // Dismiss on double-click
-  root.addEventListener('dblclick', () => { dismissed = true; });
+  root.addEventListener('dblclick', () => {
+    root.classList.add('vmp-shake');
+    root.addEventListener('animationend', () => {
+      root.classList.remove('vmp-shake');
+      dismissed = true;
+    }, { once: true });
+  });
 
   setTimeout(checkFlip, 100);
 })();
