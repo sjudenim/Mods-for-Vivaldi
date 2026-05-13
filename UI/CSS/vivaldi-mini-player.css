@@ -8,562 +8,160 @@
 * GNU General Public License v3.0
 */
 
-(() => {
-  console.log("Vivaldi Media Player");
-
-  // CONSTANTS
-  // --------------------------------------------------
-  const MESSAGE_TYPE = "vmp-media-controls";
-  const HIDE_DELAY_MS = 3000;
-
-  // STATE
-  // --------------------------------------------------
-  let lastAudioTime = 0;
-  let lockedSource = null;
-  let currentState = null;
-  let dismissedTabs = new Set();
-  let sliderFill = null;
-  let sliderThumb = null;
-  let sliderDragging = false;
-
-  // SVG ICONS
-  // --------------------------------------------------
-  const volumeIcons = {
-    high: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="currentColor" d="M14,3.23V5.29C16.89,6.15 19,8.83 19,12C19,15.17 16.89,17.84 14,18.7V20.77C18,19.86 21,16.28 21,12C21,7.72 18,4.14 14,3.23M16.5,12C16.5,10.23 15.5,8.71 14,7.97V16C15.5,15.29 16.5,13.76 16.5,12M3,9V15H7L12,20V4L7,9H3Z"/></svg>`,
-    medium: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="currentColor" d="M5,9V15H9L14,20V4L9,9M18.5,12C18.5,10.23 17.5,8.71 16,7.97V16C17.5,15.29 18.5,13.76 18.5,12Z"/></svg>`,
-    off: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="currentColor" d="M12,4L9.91,6.09L12,8.18M4.27,3L3,4.27L7.73,9H3V15H7L12,20V13.27L16.25,17.53C15.58,18.04 14.83,18.46 14,18.7V20.77C15.38,20.45 16.63,19.82 17.68,18.96L19.73,21L21,19.73L12,10.73M19,12C19,12.94 18.8,13.82 18.46,14.64L19.97,16.15C20.62,14.91 21,13.5 21,12C21,7.72 18,4.14 14,3.23V5.29C16.89,6.15 19,8.83 19,12M16.5,12C16.5,10.23 15.5,8.71 14,7.97V10.18L16.45,12.63C16.5,12.43 16.5,12.21 16.5,12Z"/></svg>`
-  };
-
-  const playerIcons = {
-    play: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="currentColor" d="M8,5.14V19.14L19,12.14L8,5.14Z"/></svg>`,
-    pause: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="currentColor" d="M14,19H18V5H14M6,19H10V5H6V19Z"/></svg>`
-  };
-
-  // UI LAYOUT
-  // --------------------------------------------------
-  const root = document.createElement("div");
-  root.id = "vmp";
-  root.innerHTML = `
-    <div class="vmp-bar">
-      <button class="vmp-play">${playerIcons.play}</button>
-      <div class="vmp-info">
-        <div class="vmp-title">Vivaldi Media Player</div>
-        <div class="vmp-artist"></div>
-      </div>
-      <div class="vmp-volume">
-        <button class="vmp-volume-btn">${volumeIcons.high}</button>
-        <div class="vmp-slider-wrap">
-          <input class="vmp-vol" type="range" min="0" max="1" step="0.01">
-        </div>
-      </div>
-    </div>
-  `;
-  (document.body || document.documentElement).appendChild(root);
-
-  // ELEMENTS
-  // --------------------------------------------------
-  const playBtn = root.querySelector(".vmp-play");
-  const titleEl = root.querySelector(".vmp-title");
-  const artistEl = root.querySelector(".vmp-artist");
-  const volInput = root.querySelector(".vmp-vol");
-  const volumeBtn = root.querySelector(".vmp-volume-btn");
-
-  // DRAG LOGIC
-  // --------------------------------------------------
-  let dragX = null, dragY = null;
-
-  root.addEventListener('pointerdown', e => {
-    if (e.button !== 0) return;
-    if (e.target.closest('button') || e.target.closest('.vmp-slider-wrap') || e.target.closest('.vmp-custom-slider')) return;
-    dragX = e.clientX - root.getBoundingClientRect().left;
-    dragY = e.clientY - root.getBoundingClientRect().top;
-    root.style.transition = 'none';
-    e.preventDefault();
-  });
-
-  document.addEventListener('pointermove', e => {
-    if (dragX === null) return;
-    const x = Math.max(0, Math.min(e.clientX - dragX, window.innerWidth - root.offsetWidth));
-    const y = Math.max(0, Math.min(e.clientY - dragY, window.innerHeight - root.offsetHeight));
-    root.style.left = x + 'px';
-    root.style.top = y + 'px';
-    root.style.bottom = 'auto';
-    root.style.right = 'auto';
-  });
-
-  document.addEventListener('pointerup', e => {
-    if (dragX !== null) {
-      const rect = root.getBoundingClientRect();
-      if (rect.right + 120 > window.innerWidth) {
-        root.style.right = (window.innerWidth - rect.right) + 'px';
-        root.style.left = 'auto';
-      }
-      checkFlip();
-    }
-    dragX = null;
-    dragY = null;
-    root.style.transition = '';
-  });
-
-  // Expand from right edge when near viewport edge
-  function checkFlip() {
-    const rect = root.getBoundingClientRect();
-    const spaceRight = window.innerWidth - rect.right;
-    if (spaceRight < 160) {
-      root.style.right = spaceRight + 'px';
-      root.style.left = 'auto';
-    } else {
-      const currentRight = parseFloat(root.style.right);
-      if (!isNaN(currentRight)) {
-        root.style.left = (window.innerWidth - currentRight - root.offsetWidth) + 'px';
-      }
-      root.style.right = 'auto';
-    }
-  }
-
-  // CUSTOM VOLUME SLIDER
-  // --------------------------------------------------
-  setTimeout(() => {
-    const sliderWrap = root.querySelector('.vmp-slider-wrap');
-    if (!sliderWrap) return;
-
-    volInput.style.display = 'none';
-
-    sliderWrap.insertAdjacentHTML('beforeend', `
-    <div class="vmp-custom-slider">
-      <div class="vmp-slider-fill"></div>
-      <div class="vmp-slider-thumb"></div>
-    </div>
-  `);
-
-    const slider = sliderWrap.querySelector('.vmp-custom-slider');
-    const thumb = slider.querySelector('.vmp-slider-thumb');
-
-    sliderFill = slider.querySelector('.vmp-slider-fill');
-    sliderThumb = thumb;
-
-    updateSliderVisual(parseFloat(volInput.value) || 1);
-
-    // Debounce sendMessage
-    let sendTimer = null;
-    function setVolumeFromMouse(clientX) {
-      const rect = slider.getBoundingClientRect();
-      const pos = Math.max(0, Math.min(clientX - rect.left, rect.width));
-      const volume = pos / rect.width;
-      volInput.value = volume;
-      updateSliderVisual(volume);
-      updateVolumeIcon(volume);
-
-      clearTimeout(sendTimer);
-      sendTimer = setTimeout(() => applyVolume(volume), 50);
-    }
-
-    thumb.addEventListener('pointerdown', e => {
-      sliderDragging = true;
-      e.preventDefault();
-    });
-
-    function onSliderMouseUp() {
-      if (sliderDragging) {
-        sliderDragging = false;
-        clearTimeout(sendTimer);
-        applyVolume(parseFloat(volInput.value));
-      }
-    }
-
-    function onSliderMouseMove(e) {
-      if (sliderDragging) setVolumeFromMouse(e.clientX);
-    }
-
-    document.addEventListener('pointerup', onSliderMouseUp);
-    document.addEventListener('pointermove', onSliderMouseMove);
-
-    slider.addEventListener('click', e => setVolumeFromMouse(e.clientX));
-
-    volInput.addEventListener('change', e => {
-      if (!sliderDragging) updateSliderVisual(parseFloat(e.target.value));
-    });
-  }, 0);
-
-  // HELPERS
-  // --------------------------------------------------
-  function updateSliderVisual(value) {
-    if (!sliderFill || !sliderThumb) return;
-    const pct = Math.max(0, Math.min(value, 1)) * 100;
-    sliderFill.style.width = pct + '%';
-    sliderThumb.style.left = pct + '%';
-  }
-
-  function updateVolumeIcon(volume) {
-    const v = parseFloat(volume);
-    if (v <= 0) volumeBtn.innerHTML = volumeIcons.off;
-    else if (v < 0.5) volumeBtn.innerHTML = volumeIcons.medium;
-    else volumeBtn.innerHTML = volumeIcons.high;
-  }
-
-  function applyVolume(newVol) {
-    if (!currentState) return;
-    volInput.value = newVol;
-    updateVolumeIcon(newVol);
-    updateSliderVisual(newVol);
-
-    chrome.tabs.sendMessage(
-      currentState.tabId,
-      { type: MESSAGE_TYPE, action: "volume", value: newVol },
-      { frameId: currentState.frameId },
-      () => { if (chrome.runtime.lastError) { /* tab may be gone */ } }
-    );
-  }
-
-  let lastTitle = null, lastArtist = null, lastPaused = null, lastVolume = null;
-
-  // UPDATE UI
-  // --------------------------------------------------
-  function updateUI(data) {
-    if (!data) return;
-    currentState = data;
-
-    const titleText = data.title || "No media detected";
-    const artist = data.artist || data.hostname || '';
-    const paused = data.paused;
-    const volume = data.volume ?? 1;
-
-    if (titleText !== lastTitle) {
-      lastTitle = titleText;
-      let span = titleEl.querySelector("span");
-      if (!span) {
-        span = document.createElement("span");
-        titleEl.innerHTML = "";
-        titleEl.appendChild(span);
-      }
-      span.textContent = titleText;
-      span.setAttribute("data-text", titleText);
-      titleEl.classList.toggle("scroll", titleText.length > 30);
-      if (titleText.length > 30) {
-        const duration = Math.max(8, titleText.length * 0.4);
-        titleEl.style.setProperty('--scroll-duration', duration + 's');
-      }
-    }
-
-    if (artist !== lastArtist) {
-      lastArtist = artist;
-      artistEl.textContent = artist;
-    }
-
-    if (paused !== lastPaused) {
-      lastPaused = paused;
-      playBtn.innerHTML = paused ? playerIcons.pause : playerIcons.play;
-    }
-
-    if (!sliderDragging && volume !== lastVolume) {
-      lastVolume = volume;
-      volInput.value = volume;
-      updateVolumeIcon(volume);
-      updateSliderVisual(volume);
-    }
-  }
-
-  // CONTROLS
-  // --------------------------------------------------
-  playBtn.addEventListener('click', () => {
-    if (!currentState) return;
-    chrome.tabs.sendMessage(
-      currentState.tabId,
-      { type: MESSAGE_TYPE, action: currentState.paused ? "play" : "pause" },
-      { frameId: currentState.frameId },
-      () => { if (chrome.runtime.lastError) { /* tab may be gone */ } }
-    );
-  });
-
-  volumeBtn.addEventListener('click', () => {
-    if (!currentState) return;
-    applyVolume(parseFloat(volInput.value) === 0 ? 1 : 0);
-  });
-
-  // MAIN INJECTION
-  // --------------------------------------------------
-  function injectMain(messageType) {
-    if (window.__vmpMainInjected) return;
-    window.__vmpMainInjected = true;
-
-    let currentMedia = null;
-    let volEmitTimer = null;
-    const tracked = new WeakSet();
-
-    const origAddEventListener = EventTarget.prototype.addEventListener;
-    const origVideoPlay = HTMLVideoElement.prototype.play;
-    const origAudioPlay = HTMLAudioElement.prototype.play;
-
-    HTMLVideoElement.prototype.play = function () {
-      trackElement(this);
-      return origVideoPlay.apply(this, arguments);
-    };
-
-    HTMLAudioElement.prototype.play = function () {
-      trackElement(this);
-      return origAudioPlay.apply(this, arguments);
-    };
-
-    HTMLVideoElement.prototype.addEventListener = function () {
-      trackElement(this);
-      return origAddEventListener.apply(this, arguments);
-    };
-
-    HTMLAudioElement.prototype.addEventListener = function () {
-      trackElement(this);
-      return origAddEventListener.apply(this, arguments);
-    };
-
-    function getTitle() { return navigator.mediaSession.metadata?.title || document.title || null; }
-    function getArtist() { return navigator.mediaSession.metadata?.artist || null; }
-
-    function isActive(el) { return !el.paused && !el.ended && el.readyState >= 2; }
-
-    function hasMediaPlaying() {
-      return Array.from(document.querySelectorAll('video, audio')).some(el => isActive(el));
-    }
-
-    function getDataControl(el) {
-      return {
-        type: messageType,
-        title: getTitle(),
-        artist: getArtist(),
-        currentTime: el.currentTime,
-        duration: el.duration,
-        paused: el.paused,
-        volume: el.muted ? 0 : el.volume,
-        muted: el.muted,
-      };
-    }
-
-    function emit(el) {
-      window.postMessage({ type: messageType, data: getDataControl(el) }, '*');
-    }
-
-    let lastEmitTime = 0;
-    function mediaActivityHandler(event) {
-      if (event.target.paused) return;
-
-      currentMedia = event.target;
-
-      const now = Date.now();
-      if (now - lastEmitTime < 1000) return;
-
-      lastEmitTime = now;
-      emit(currentMedia);
-    }
-
-    function pauseHandler(event) {
-      if (!hasMediaPlaying()) {
-        currentMedia = event.target;
-        emit(currentMedia);
-      }
-    }
-
-    function volumechangeHandler(event) {
-      if (currentMedia !== event.target) return;
-      clearTimeout(volEmitTimer);
-      volEmitTimer = setTimeout(() => emit(currentMedia), 100);
-    }
-
-    function endedHandler() {
-      if (!hasMediaPlaying()) {
-        currentMedia = null;
-        window.postMessage({ type: messageType, data: { ended: true } }, '*');
-      }
-    }
-
-    function trackElement(el) {
-      if (tracked.has(el)) return;
-      tracked.add(el);
-
-      origAddEventListener.call(el, 'play', mediaActivityHandler);
-      origAddEventListener.call(el, 'playing', mediaActivityHandler);
-      origAddEventListener.call(el, 'timeupdate', mediaActivityHandler);
-      origAddEventListener.call(el, 'pause', pauseHandler);
-      origAddEventListener.call(el, 'volumechange', volumechangeHandler);
-      origAddEventListener.call(el, 'ended', endedHandler);
-      origAddEventListener.call(el, 'error', endedHandler);
-    }
-
-    // One-time scan for elements already in the DOM at inject time
-    document.querySelectorAll('video, audio').forEach(trackElement);
-
-    const observer = new MutationObserver(mutations => {
-      for (const m of mutations) {
-        for (const node of m.addedNodes) {
-          if (node.nodeType !== 1) continue;
-          if (node.tagName === 'VIDEO' || node.tagName === 'AUDIO') {
-            trackElement(node);
-          } else {
-            node.querySelectorAll('video, audio').forEach(trackElement);
-          }
-        }
-      }
-    });
-
-    observer.observe(document, { childList: true, subtree: true });
-
-    // Listen for commands forwarded from the bridge
-    window.addEventListener('message', event => {
-      if (!event.data || event.data.type !== messageType + '-cmd') return;
-      if (!currentMedia) return;
-      const { action, value } = event.data;
-      if (action === 'play') currentMedia.play();
-      else if (action === 'pause') currentMedia.pause();
-      else if (action === 'volume') {
-        currentMedia.volume = Math.max(0, Math.min(1, parseFloat(value)));
-        currentMedia.muted = false;
-      }
-    });
-  }
-
-  // BRIDGE
-  // --------------------------------------------------
-  function injectBridge(messageType) {
-    if (window.__vmpBridgeInjected) return;
-    window.__vmpBridgeInjected = true;
-
-    // Page → extension
-    window.addEventListener('message', event => {
-      if (!event.data || event.data.type !== messageType) return;
-      chrome.runtime.sendMessage(event.data);
-    });
-
-    // Extension → page
-    chrome.runtime.onMessage.addListener(msg => {
-      if (!msg || msg.type !== messageType) return;
-      window.postMessage({ type: messageType + '-cmd', action: msg.action, value: msg.value }, '*');
-    });
-  }
-
-  // TAB INJECTION
-  // --------------------------------------------------
-  function injectIntoTab(tabId, frameIds) {
-    const target = frameIds
-      ? { tabId, frameIds }
-      : { tabId, allFrames: true };
-
-    chrome.scripting.executeScript({
-      target, func: injectMain, args: [MESSAGE_TYPE], world: 'MAIN'
-    }, () => { if (chrome.runtime.lastError) { /* tab may not be scriptable */ } });
-
-    chrome.scripting.executeScript({
-      target, func: injectBridge, args: [MESSAGE_TYPE]
-    }, () => { if (chrome.runtime.lastError) { /* tab may not be scriptable */ } });
-  }
-
-  function injectIntoAllTabs() {
-    chrome.tabs.query({}, tabs => {
-      for (const tab of tabs) {
-        if (tab.id) injectIntoTab(tab.id);
-      }
-    });
-  }
-
-  injectIntoAllTabs();
-
-  chrome.webNavigation.onCommitted.addListener(details => {
-    injectIntoTab(details.tabId, [details.frameId]);
-  });
-
-  // MESSAGE HANDLER
-  // --------------------------------------------------
-  chrome.runtime.onMessage.addListener((msg, sender) => {
-    if (!msg || msg.type !== MESSAGE_TYPE) return;
-    if (!msg.data || !sender.tab) return;
-
-    const tabId = sender.tab.id;
-    const frameId = sender.frameId;
-
-    const tabEl = document.querySelector(`.tab-wrapper[data-id="tab-${tabId}"] .tab`);
-    const isAudioOn = tabEl?.classList.contains("audio-on");
-
-    // Ignore tabs with no audio indicator
-    if (!isAudioOn) return;
-
-    // Keep lock on current source unless it has lost its audio indicator
-    if (lockedSource && lockedSource.tabId !== tabId) {
-      const lockedTabEl = document.querySelector(`.tab-wrapper[data-id="tab-${lockedSource.tabId}"] .tab`);
-      const lockedActive = lockedTabEl?.classList.contains("audio-on");
-      if (lockedActive) return;
-    }
-
-    lockedSource = { tabId, frameId };
-    msg.data.tabId = tabId;
-    msg.data.frameId = frameId;
-    msg.data.hostname = sender.tab?.url ? new URL(sender.tab.url).hostname : '';
-    updateUI(msg.data);
-  });
-
-  chrome.tabs.onRemoved.addListener(tabId => {
-    if (lockedSource?.tabId === tabId) {
-      lockedSource = null;
-      lastAudioTime = 0;
-    }
-  });
-
-  // PLAYER VISIBILITY
-  // --------------------------------------------------
-  let visibilityInterval = null;
-
-  function updateMiniPlayerVisibility() {
-    const playingTab = document.querySelector(".tab-position .tab.audio-on");
-    const activeTab = document.querySelector(".tab-position .tab.active");
-    const isBackgroundTab = playingTab && playingTab !== activeTab;
-
-    if (isBackgroundTab) {
-      lastAudioTime = Date.now();
-    } else if (playingTab && playingTab === activeTab) {
-      lastAudioTime = 0;
-    }
-
-    chrome.tabs.query({ active: true, currentWindow: true }, tabs => {
-      const activeTabId = tabs[0]?.id;
-      const isDismissed = activeTabId && dismissedTabs.has(activeTabId);
-      const isSourceTab = activeTabId && lockedSource?.tabId === activeTabId;
-      const keepVisible = (Date.now() - lastAudioTime) < HIDE_DELAY_MS;
-      const shouldShow = (isBackgroundTab && !isDismissed && !isSourceTab) || (!isBackgroundTab && keepVisible);
-      root.classList.toggle("visible", shouldShow);
-    });
-  }
-
-  function scheduleVisibilityCheck() {
-    if (visibilityInterval) return;
-    visibilityInterval = setInterval(() => {
-      updateMiniPlayerVisibility();
-      if (Date.now() - lastAudioTime >= HIDE_DELAY_MS) {
-        clearInterval(visibilityInterval);
-        visibilityInterval = null;
-      }
-    }, 500);
-  }
-
-  chrome.tabs.onUpdated.addListener((_tabId, changeInfo) => {
-    if ('audible' in changeInfo) {
-      updateMiniPlayerVisibility();
-      scheduleVisibilityCheck();
-    }
-  });
-
-  chrome.tabs.onActivated.addListener(() => {
-    updateMiniPlayerVisibility();
-    scheduleVisibilityCheck();
-  });
-
-  updateMiniPlayerVisibility();
-
-  // Dismiss on double-click
-  root.addEventListener('dblclick', () => {
-    root.classList.add('vmp-close');
-    root.addEventListener('animationend', () => {
-      root.classList.remove('vmp-close');
-      root.classList.remove('visible');
-      chrome.tabs.query({ active: true, currentWindow: true }, tabs => {
-        if (tabs[0]?.id) dismissedTabs.add(tabs[0].id);
-      });
-    }, { once: true });
-  });
-
-  setTimeout(checkFlip, 100);
-})();
+:root {
+    --playerWidth: clamp(90px, 11vw, 280px);
+    --accentColor: rgba(253, 53, 53, 0.9);
+}
+
+/* Player container */
+#vmp { position: fixed; bottom: 8px; left: calc((95vw - var(--playerWidth))/ 2); opacity: 0; pointer-events: none; transition: opacity 0.8s ease; z-index: 999; }
+
+#vmp.visible { opacity: 1; pointer-events: auto; }
+
+/* Double click feedback */
+@keyframes vmp-close {
+  0%   { transform: scale(1);    opacity: 1; }
+  25%  { transform: scale(1.08); opacity: 1; }
+  100% { transform: scale(0.05); opacity: 0; }
+}
+
+.vmp-close { animation: vmp-close 0.35s ease forwards; transition: none; }
+
+/* Main bar */
+.vmp-bar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: fit-content;
+  height: 56px;
+  padding: 10px 14px;
+  border-radius: 999px;
+  background: rgba(20, 20, 20, 0.96);
+  backdrop-filter: blur(14px);
+  border: 1px solid rgba(50, 50, 50, 0.5);
+  color: white;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+}
+
+/* Play/Pause button */
+.vmp-play {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  border: none;
+  background: white;
+  color: black;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.vmp-play svg { height: 18px; width: 18px; }
+
+/* Track info container */
+.vmp-info { display: flex; flex-direction: column; width: var(--playerWidth); overflow: hidden; }
+
+/* Title */
+.vmp-title { position: relative; display: block; overflow: hidden; width: var(--playerWidth); height: 18px; font-size: 13px; font-weight: 500; }
+
+/* Title fade */
+.vmp-title::before, .vmp-title::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  height: 100%;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.vmp-title::before { left: -2px; width: 6px; background: linear-gradient(to right, rgba(20, 20, 20, 0.92), rgba(20, 20, 20, 0)); }
+
+.vmp-title::after { right: -10px; width: 35px; background: linear-gradient(to left, rgba(20, 20, 20, 0.92), rgba(20, 20, 20, 0)); }
+
+/* Scrolling content */
+.vmp-title span {
+  display: inline-block;
+  padding-right: 50px; /* space between repetitions */
+  white-space: nowrap;
+}
+
+.vmp-title span::after { content: attr(data-text); padding-left: 50px; }
+
+@keyframes scroll-title {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+.vmp-title.scroll span { animation: scroll-title var(--scroll-duration, 30s) linear infinite; }
+
+.vmp-title:not(.scroll) span::after { content: ""; padding-left: 0; }
+
+/* Artist */
+.vmp-artist { font-size: 12px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; opacity: 0.5; }
+
+/* Playback time */
+.vmp-time { font-size: 11px; opacity: 0.5; }
+
+/* Volume container */
+.vmp-volume {
+  display: flex;
+  align-items: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 14px;
+  background: rgba(255, 255, 255, .06);
+  overflow: hidden;
+  transition: width 0.25s ease;
+  cursor: pointer;
+}
+
+/* Volume button */
+.vmp-volume-btn {
+  width: 28px;
+  height: 28px;
+  flex: 0 0 28px;
+  border: none;
+  background: transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  padding: 0;
+}
+
+.vmp-volume-btn svg { width: 16px; height: 16px; fill: white; }
+
+/* Expand slider on hover */
+.vmp-volume:hover { width: 120px; overflow: hidden; }
+
+/* Hides slider when not expanded */
+.vmp-volume:not(:hover) .vmp-slider-thumb, .vmp-volume:not(:hover) .vmp-slider-fill, .vmp-volume:not(:hover) .vmp-custom-slider { opacity: 0; }
+
+.vmp-volume:hover .vmp-slider-thumb, .vmp-volume:hover .vmp-slider-fill, .vmp-volume:hover .vmp-custom-slider { opacity: 1; transition: opacity 0.15s ease; }
+
+/* Hide native slider */
+.vmp-slider-wrap .vmp-vol { position: absolute; width: 0; height: 0; opacity: 0; pointer-events: none; }
+
+/* Custom slider */
+.vmp-custom-slider { position: relative; width: 80px; height: 1px; background: black; cursor: pointer; }
+
+.vmp-slider-fill { position: absolute; height: 100%; width: 0; background: var(--accentColor); border-radius: 2px; }
+
+.vmp-slider-thumb {
+  position: absolute;
+  top: 50%;
+  left: 0%;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: rgba(28, 28, 28, 0.95);
+  border: 1px solid rgba(255, 255, 255, 0.9);
+  transform: translate(-50%, -50%);
+  cursor: pointer;
+  transition: transform 0.1s;
+}
+
+.vmp-slider-thumb:hover { background: rgba(255, 255, 255, 0.9); }
+
+#vmp input[type="range"] { outline: none; }
