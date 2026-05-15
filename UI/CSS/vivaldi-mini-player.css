@@ -1,5 +1,5 @@
 /*
-* Vivaldi Media Player (05/13/26)
+* Vivaldi Media Player (05/15/26)
 * For Vivaldi browser version 7.9 and up
 * Author: sudenim and Tam710562
 *
@@ -10,7 +10,7 @@
 
 :root {
     --playerWidth: clamp(90px, 11vw, 280px);
-    --accentColor: rgba(253, 53, 53, 0.9);
+    --accentColor: var(--colorHighlightBg);
 }
 
 /* Player container */
