@@ -1,5 +1,5 @@
 /*
-* Vivaldi Media Player (05/13/26)
+* Vivaldi Media Player (05/15/26)
 * For Vivaldi browser version 7.9 and up
 * Author: sudenim and Tam710562
 *
@@ -14,7 +14,7 @@
   // CONSTANTS
   // --------------------------------------------------
   const MESSAGE_TYPE = "vmp-media-controls";
-  const HIDE_DELAY_MS = 3000;
+  const HIDE_DELAY_MS = 5000;
 
   // STATE
   // --------------------------------------------------
@@ -34,7 +34,7 @@
     off: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="currentColor" d="M12,4L9.91,6.09L12,8.18M4.27,3L3,4.27L7.73,9H3V15H7L12,20V13.27L16.25,17.53C15.58,18.04 14.83,18.46 14,18.7V20.77C15.38,20.45 16.63,19.82 17.68,18.96L19.73,21L21,19.73L12,10.73M19,12C19,12.94 18.8,13.82 18.46,14.64L19.97,16.15C20.62,14.91 21,13.5 21,12C21,7.72 18,4.14 14,3.23V5.29C16.89,6.15 19,8.83 19,12M16.5,12C16.5,10.23 15.5,8.71 14,7.97V10.18L16.45,12.63C16.5,12.43 16.5,12.21 16.5,12Z"/></svg>`
   };
 
-  const playerIcons = {
+  const playbackStateIcons = {
     play: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="currentColor" d="M8,5.14V19.14L19,12.14L8,5.14Z"/></svg>`,
     pause: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="currentColor" d="M14,19H18V5H14M6,19H10V5H6V19Z"/></svg>`
   };
@@ -45,7 +45,7 @@
   root.id = "vmp";
   root.innerHTML = `
     <div class="vmp-bar">
-      <button class="vmp-play">${playerIcons.play}</button>
+      <button class="vmp-play">${playbackStateIcons.play}</button>
       <div class="vmp-info">
         <div class="vmp-title">Vivaldi Media Player</div>
         <div class="vmp-artist"></div>
@@ -59,6 +59,26 @@
     </div>
   `;
   (document.body || document.documentElement).appendChild(root);
+
+  // VIVALDI HIGHLIGHT COLOUR
+  // --------------------------------------------------
+  function applyThemeColor() {
+    const browser = document.querySelector('#browser');
+    if (!browser) { setTimeout(applyThemeColor, 100); return; }
+    const highlight = getComputedStyle(browser).getPropertyValue('--colorHighlightBg').trim();
+    if (!highlight) { setTimeout(applyThemeColor, 100); return; }
+    document.documentElement.style.setProperty('--accentColor', highlight);
+  }
+
+  setTimeout(() => {
+    applyThemeColor();
+    new MutationObserver(applyThemeColor).observe(document.documentElement, {
+      childList: true,
+      subtree: true,
+      attributes: true,
+      attributeFilter: ['style', 'class']
+    });
+  }, 500);
 
   // ELEMENTS
   // --------------------------------------------------
@@ -123,7 +143,7 @@
 
   // CUSTOM VOLUME SLIDER
   // --------------------------------------------------
-  setTimeout(() => {
+  requestAnimationFrame(() => {
     const sliderWrap = root.querySelector('.vmp-slider-wrap');
     if (!sliderWrap) return;
 
@@ -252,7 +272,7 @@
 
     if (paused !== lastPaused) {
       lastPaused = paused;
-      playBtn.innerHTML = paused ? playerIcons.pause : playerIcons.play;
+      playBtn.innerHTML = paused ? playbackStateIcons.pause : playbackStateIcons.play;
     }
 
     if (!sliderDragging && volume !== lastVolume) {
